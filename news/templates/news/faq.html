@@ -1,0 +1,38 @@
+{% extends 'kairozu.html' %}
+{% block title %}Kairozu FAQ{% endblock %}
+{% load static %}
+
+{% block content %}
+
+<!--#page-content-wrapper-->
+<div id="page-content-wrapper">
+	<div class="container container-kairozu">
+            <h1>Frequently Asked Questions</h1>
+            <div class="spacer-30"></div>
+            <div class="table-responsive">
+                <div class="toc-summary">
+                    <table class="generaltable">
+                        {% for faq in object_list %}
+                            <tr><td><a href="#{{ forloop.counter }}">{{ faq.question }}</a></td></tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+
+            <div class="spacer-40"></div>
+            {% for faq in object_list %}
+                <h3><div class="qa_question"><a name="{{ forloop.counter }}">{{ faq.question }}</a></div></h3>
+                <div class="qa_answer">{{ faq.answer|safe }}</div>
+                <div class="spacer-20"></div>
+            {% endfor %}
+
+        <br /><br /><br />
+        <div class="spacer-500"></div>
+        <div class="spacer-300 visible-xs"></div>
+
+    </div>  <!--/.container .kairozu-container-->
+    {% include 'footer.html' %}
+
+</div>  <!--/#page-content-wrapper-->
+
+{% endblock %}

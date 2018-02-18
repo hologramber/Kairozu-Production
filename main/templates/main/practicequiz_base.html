@@ -1,0 +1,54 @@
+<div id='island'></div>
+
+<!-- wrapper -->
+<div id='wrapper'>
+{% include 'main/sidebar.html' %}
+
+    <!-- page-content-wrapper -->
+    <div id='page-content-wrapper'>
+        <div class='container-fluid'>
+            <div class='row'>
+                <div class='col-lg-12'>
+					<div id='practiceholder'>
+
+                        <div id='practicefield'>
+                            <div id='context_one' class='context-container'></div>
+                            <div id='practice_eng_one' class='practice-grammar'></div>
+
+                            <div class='prompt-container'>
+                                <span id='hint_one' class='letterspacing5'></span>
+                            </div>
+
+                            <form id='practicequizform' action='' method='post'>{% csrf_token %}
+                                <input id='id_pone_attempt' type='text' name='pone_attempt' class='keiko_box1' />
+                            <div id='literal_one' class='literal-container'></div>
+
+                            <div class="spacer-40"></div>
+
+                            <div id='context_two' class='context-container'></div>
+                            <div id='practice_eng_two' class='practice-grammar'></div>
+
+                            <div class='prompt-container'>
+                                <span id='hint_two' class='letterspacing5'></span>
+                                <a id="bug-button" href="#" tabindex="-1" style="display: none;">
+                                    <i id="report-issue" class="fa fa-bug red-words" aria-hidden="true"><span class="raleway">&nbsp;Error?</span></i>
+                                </a>
+                            </div>
+
+                                <input id='id_ptwo_attempt' type='text' name='ptwo_attempt' class='keiko_box2' />
+                                <input id='poneact' type='hidden' name='pone_actual' value='' />
+                                <input id='ptwoact' type='hidden' name='ptwo_actual' value='' />
+                                <input id='pstrict' type='hidden' name='practice_strict' value='0' />
+                                <input id='pindex' type='hidden' name='pindex' value='' />
+                                <input id='ksubmit' type='submit' class='keiko_submit' value='&#8680;' />
+                            </form>
+                            <div id='literal_two' class='literal-container'></div>
+                        </div>  <!-- /#practicefield -->
+
+                    </div>  <!-- /#practiceholder -->
+                </div>  <!-- /.col-lg-12 -->
+            </div>  <!-- /.row -->
+        </div>  <!-- /.container-fluid -->
+    </div>  <!-- /#page-content-wrapper -->
+
+</div>  <!-- /#wrapper -->

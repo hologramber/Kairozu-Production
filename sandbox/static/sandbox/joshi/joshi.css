@@ -1,0 +1,151 @@
+.info-container {
+	width: 100%;
+	margin: 0 auto; }
+
+.info-container:after {
+	content: "";
+	display: block;
+	clear: both; }
+
+.score, .streak, #questions {
+	width: 100px;
+	height: auto;
+    border: 2px solid #2b2b2b;
+	padding: 5px 10px 15px 10px;
+	border-radius: 5px; }
+
+.score {
+	float: left;
+	margin-right: 10px;
+}
+.streak { float: left; }
+#questions { float: right; }
+
+.score_title, .streak_title, .questions_title {
+	text-align: center;
+	padding-bottom: 2px;
+	font-size: 20px;
+	font-variant: small-caps;
+	color: #2b2b2b;
+}
+
+.score_update, .score_streak { color: #2b2b2b; }
+.score_update, .score_streak, .questions_link {
+	width: 100%;
+	background: #ffffff;
+	text-align: center;
+	border-radius: 5px;
+	font-size: 20px; }
+.questions_link {
+	color: #d92425;
+	text-decoration: none; 
+    -webkit-transition: 200ms color ease-in-out;
+    -moz-transition: 200ms color ease-in-out;
+    -o-transition: 200ms color ease-in-out;
+    transition: 200ms color ease-in-out; }
+.questions_link:hover { color: #ff9729; }
+
+.sentence_container {
+	border-radius: 5px;
+	background: #d5d5d5;
+	width: 100%;
+	margin: 15px auto;
+	padding: 5vmin 0;
+	text-align: center;
+	vertical-align: middle;
+	font-size: 35px;
+	line-height: 100px;
+	color: #2b2b2b;
+}
+
+.translation_container {
+	border-radius: 5px;
+	background: #d5d5d5;
+	width: 100%;
+	margin: 0 auto;
+	padding: 4vmin 0;
+	text-align: center;
+	vertical-align: middle;
+	font-size: 3vmin;
+	line-height: 60px;
+	color: #2b2b2b;
+}
+
+.game_container {
+	background: #fff;
+	width: 100%;
+	margin: 0 auto;
+	text-align: justify;
+}
+
+.game_container div {
+  display: inline-block;
+}
+
+#answer1, #answer2, #answer3, #answer4 {
+	border: solid 2px #2b2b2b;
+	border-radius: 5px;
+	background: #fff;
+	min-width: 200px;
+	height: 100px;
+	line-height: 90px;
+	font-size: 3.5vmin;
+	margin: 0 auto;
+	text-align: center;
+}
+
+#answer1:hover, #answer2:hover, #answer3:hover, #answer4:hover { background: #89ae13; }
+
+.game_container:after {
+  content: '';
+  width: 100%; /* Ensures there are at least 2 lines of text, so justification works */
+  display: inline-block;
+}
+
+.overlay {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background: rgba(0,0,0,0.7);
+	transition: opacity 500ms;
+	visibility: hidden;
+	opacity: 0;
+}
+
+.overlay:target {
+	visibility: visible;
+	opacity: 1;
+}
+
+.popup {
+	margin: 90px auto;
+	padding: 15px 20px 20px 20px;
+	background: #fff;
+	width: 980px;
+	position: relative;
+	font-size: 14px;
+	transition: all 200ms ease-in-out;
+	color: #404040;
+}
+
+.popup .close {
+	position: absolute;
+	top: 5px;
+	right: 20px;
+	transition: all 200ms;
+	font-size: 30px;
+	font-weight: bold;
+	text-decoration: none;
+	color: #424242;
+}
+
+.popup .close:hover { color: #2b2b2b; }
+
+.popup .content {
+	max-height: 400px;
+	overflow: scroll;
+}
+
+.object_spacer { margin-bottom: 5px; }

@@ -1,0 +1,121 @@
+{% extends 'kairozu.html' %}
+{% block title %}Kairozu Sentence Review{% endblock %}
+
+{% load static %}
+{% block content %}
+
+{% include 'main/sentencereview_base.html' %}
+
+<!-- wanakana, menu toggle, and get/post mechanics -->
+<script type='text/javascript' src='{% static 'js/wanakana.js' %}'></script>
+<script type='text/javascript' src='{% static 'js/cookiemonster.js' %}'></script>
+
+<script type='text/javascript'>
+    var slevel = 3;
+    var sentencecode = 'A';
+    var input = document.getElementById('id_sentenceattempt');
+    wanakana.bind(input);
+
+    function sentenceNext(data) {
+        if (data['id'] != null) {
+            $('#sentence_eng').html(data['sentence']['english']);
+            $('#sactual').val(data['sentence']['kana_clean']);
+            $('#sstrict').val(data['sentence']['force_strict']);
+            $('#sid').val(data['id']);
+            if (data['sentence']['literal'].trim()) {
+                $('#literal_one').html('<div class="white-words litcontextbox upper">literal</div>' + data['sentence']['literal'] + '&nbsp;');
+            } else {
+                $('#literal_one').html('&nbsp;');
+            }
+            $('#context_one').html(data['sentence']['context'] + '&nbsp;');
+            $("#reflink").attr("href", '/main/lesson/' + data['sentence']['lesson'] + '/');
+            switch (slevel) {
+                case 3:
+                    if (data['sentence']['disamb_location'] != 0) {
+                        $('#sentence_hint').html(data['sentence']['kana_all_blank']);
+                        $('#sentence_hint').addClass('letterspacing5y');
+                    } else {
+                        $('#sentence_hint').html('&nbsp;');
+                    } break;
+                case 2:
+                    $('#sentence_hint').html(data['sentence']['kana_all_blank']);
+                    $('#sentence_hint').removeClass('letterspacing5y');
+                    break;
+                case 1:
+                    $('#sentence_hint').html(data['sentence']['kana_alt_blank']); break;
+                default:
+                    $('#sentence_hint').html(data['sentence']['kana']); break;
+            }
+            $('#sentencequizform').removeClass('answer_box_g answer_box_r');
+        } else {
+            $.get("{% url 'main:reviewsentencecurrent' %}").done(function (data) {
+                $('#allwrap').html(data);
+            });    
+        }
+    }
+
+    function processQuiz(attempt) {
+        if (attempt == 1) {
+            $('#sentencequizform').attr('class', 'answer_box answer_box_g');
+            $('#bug-button').hide();
+            if (slevel == 3) {
+                sentencecode = 'C';
+            } else {
+                slevel = 3;
+                sentencecode = 'N';
+            }
+        } else {
+            $('#bug-button').show();
+            $('#sentencequizform').attr('class', 'answer_box_red answer_box_r');
+            if (slevel == 3) {
+                sentencecode = 'I';
+            } else {
+                sentencecode = 'A';
+            }
+            if (slevel > 0) {
+                slevel--;
+            }
+        }
+        $('#scode').val(sentencecode);
+        var form_data = $('#sentencequizform').serialize();
+        $.post("{% url 'main:reviewsentencecheck' %}", form_data).done(function(data) {
+            $('#sentencequizform')[0].reset();
+            sentenceNext(data);
+        });
+    }
+
+    $('#sentencequizform').submit(function(event) {
+        event.preventDefault();
+        if ($('#sstrict').val() == '1') {
+            var clean_attempt = $('#id_sentenceattempt').val().replace(/[　。、？！「」'",.?!\s]/g, "");
+            if (clean_attempt == $('#sactual').val()) {
+                processQuiz(1);
+            } else {
+                processQuiz(0);
+            }
+        } else {
+            var clean_attempt = $('#id_sentenceattempt').val().replace(/[　。、？！「」'",.?!\s]/g, "").split("");
+            var actual_split = $('#sactual').val().split("");
+            if (wanakana.compare(clean_attempt, actual_split)) {
+                processQuiz(1);
+            } else {
+                processQuiz(0);
+            }
+        }
+    });
+
+    $(document).ready(function() {
+        $.get("{% url 'main:reviewsentencegrab' %}").done(function (data) {
+            sentenceNext(data);
+        });
+    });
+
+    $('#bug-button').click(function() {
+        $('#form-modal-body').load('/main/newissue/', function () {
+            $('#form-modal').modal('toggle');
+            formAjaxSubmit('#form-modal-body form', '#form-modal');
+        });
+    });
+</script>
+
+{% endblock %}

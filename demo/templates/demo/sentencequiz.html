@@ -1,0 +1,145 @@
+{% extends 'kairozu.html' %}
+{% block title %}Kairozu Demo クイズ{% endblock %}
+{% block sidecollapse %}<div id="sidecollapse"><a id="menu-toggle" href="#" class="btn-menu toggle"><span class="glyphicon glyphicon-list"></span></a></div>{% endblock %}
+
+{% load static %}
+{% block content %}
+
+<script type='text/javascript'>
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie != '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);       // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+            if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+                xhr.setRequestHeader('X-CSRFToken', getCookie('csrftoken'));    // Only send token to relative/local URLs
+            }
+        }
+    });
+</script>
+
+<div id='island2'></div>
+
+<!-- wrapper -->
+<div id='wrapper'>
+{% include 'demo/sidebar.html' %}
+
+    <!-- page-content-wrapper -->
+    <div id='page-content-wrapper'>
+        <div class='container-fluid'>
+            <div class='row'>
+                <div class='col-lg-12'>
+					<div id='sentenceholder'>
+
+                        <div id='sentencefield'>
+                            <div class='spacer-30 visible-xs'></div>
+                            <div id='sentence_eng' class='challenge-grammar'></div>
+                            <div class='prompt-container'>
+                                <span id='sentence_hint' class='letterspacing5r'></span>
+                            </div>
+
+                            <form id='sentencequizform' action='' class='answer_box' method='post'>{% csrf_token %}
+                                <input id='id_sentenceattempt' type='text' name='sentence_attempt' autofocus />
+                                <input id='sactual' type='hidden' name='sentence_actual' value='' />
+                                <input id='sindex' type='hidden' name='sindex' value='' />
+                                <input type='submit' value='&#8680;' />
+                            </form>
+                            <div id='literal_one' class='literal-container'></div>
+                        </div>  <!-- /#sentencefield -->
+
+                    </div>  <!-- /#vocabholder -->
+                </div>  <!-- /.col-lg-12 -->
+            </div>  <!-- /.row -->
+            <div class="quiz-tips dashed-grey-2">
+                <span class="bold">Tips:</span>
+                <ul>
+                    <li>Type the word in romaji; it should auto-convert into hiragana.</li>
+                    <li>Hold down shift to auto-convert roman characters into katakana.</li>
+                    <li>Spaces and punctuation are okay, but not necessary.</li>
+                </ul>
+            </div>
+        </div>  <!-- /.container-fluid -->
+    </div>  <!-- /#page-content-wrapper -->
+
+</div>  <!-- /#wrapper -->
+
+<!-- wanakana, menu toggle, and get/post mechanics -->
+<script type='text/javascript' src='{% static 'js/wanakana.js' %}'></script>
+<script type='text/javascript'>
+    var slevel = 3;
+    var sindex = 0;
+    var input = document.getElementById('id_sentenceattempt');
+    wanakana.bind(input);
+
+    function sentenceNext(data) {
+        if (data['id'] != null) {
+            $('#sentence_eng').html(data['english']);
+            if (data['literal'].trim()) {
+                $('#literal_one').html('<div class="white-words litcontextbox upper">literal</div>' + data['literal'] + '&nbsp;');
+            } else {
+                $('#literal_one').html('&nbsp;');
+            }
+            switch (slevel) {
+                case 3:
+                    $('#sentence_hint').html('&nbsp;'); break;
+                case 2:
+                    $('#sentence_hint').html(data['kana_all_blank']); break;
+                case 1:
+                    $('#sentence_hint').html(data['kana_alt_blank']); break;
+                default:
+                    $('#sentence_hint').html(data['kana']); break;
+            }
+            $('#sentencequizform').removeClass('answer_box_g answer_box_r');
+        } else {
+            $.get("{% url 'demo:demosentencesuccess' %}").done(function (data) {
+                $('#wrapper').html(data);
+            });    
+        }
+    }
+
+    $('#sentencequizform').submit(function(event) {
+        event.preventDefault();
+        var clean_attempt = $('#id_sentenceattempt').val().replace(/[　。、？！「」\'\",.?!\s]/g, "");
+        if (clean_attempt == $('#sactual').val()) {
+            $('#sentencequizform').attr('class', 'answer_box answer_box_g');
+            if (slevel == 3) {
+                sindex++;
+            } else {
+                slevel = 3;
+            }
+        } else {
+            $('#sentencequizform').attr('class', 'answer_box_red answer_box_r');
+            if (slevel > 0) {
+                slevel--;
+            }
+        }
+        $('#sentencequizform #sindex').val(sindex);
+        var form_data = $('#sentencequizform').serialize();
+        $.post("{% url 'demo:demosentencecheck' %}", form_data).done(function(data) {
+            $('#sentencequizform')[0].reset();
+            sentenceNext(data);
+        });
+    });
+
+    $(document).ready(function() {
+        var urlstring = "/demo/sentencequiz/grab/0";
+        $.get(urlstring).done(function (data) {
+            sentenceNext(data);
+            $('#id_sentenceattempt').focus();
+        });
+    });
+</script>
+
+{% endblock %}

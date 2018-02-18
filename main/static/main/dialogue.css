@@ -1,0 +1,78 @@
+.chat {
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  background: #eee;
+}
+.chat .message {
+  display: flex;
+  margin: 10px 0 20px 10px;
+  min-height: 30px;
+  height: auto;
+  text-align: left;
+}
+.chat .message.me img {
+  order: 2;
+  margin: 0 0 0 3px;
+}
+.chat .message.me div {
+  order: 1;
+  padding: 0 8px 0 0;
+}
+.chat .message.me div p {
+  float: right;
+}
+.chat .message.me div:before {
+  position: relative;
+  float: right;
+  content: '';
+  margin: 7px -8px 0 0;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 8px 0 8px 8px;
+  border-color: transparent transparent transparent #fff;
+}
+.chat .message img {
+  display: block;
+  order: 1;
+  margin: 0 10px 0 0;
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  box-sizing: border-box;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+}
+.chat .message div {
+  display: block;
+  flex: 1;
+  order: 2;
+}
+.chat .message div p {
+  display: inline-block;
+  margin: 0;
+  width: auto;
+  padding: 18px 10px 18px 18px;
+  background: #fff;
+  word-wrap: break-word;
+  font-family: Monospace;
+  border-radius: 3px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+.chat .message div:before {
+  position: relative;
+  float: left;
+  content: '';
+  margin: 7px 0 0 -8px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 8px 8px 8px 0;
+  border-color: transparent #fff transparent transparent;
+}
+
+.chat {
+  border-radius: 5px;
+}

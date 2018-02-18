@@ -1,0 +1,39 @@
+<link href="https://fonts.googleapis.com/css?family=Ubuntu+Condensed" rel="stylesheet">
+<div class="table-responsive">
+    <div class="hugtable-no-border">
+        <table class="grammar-point-table">
+            <tbody>
+            {% for row in tabledata %}
+                <tr>
+                    {% if row.0 == 'blank' %}
+                        <td class="blankline" colspan=3>&nbsp;</td>
+                    {% elif row.0 == 'rule' %}
+                        <td class="grule" colspan=2>&nbsp;</td>
+                        <td class="grule"><div class="grammar_rule">{{ row.1 }}</div></td>
+                    {% elif row.0 == 'skip' %}
+                        <td colspan=2>&nbsp;</td>
+                        <td>{% autoescape off %}{{ row.1 }}{% endautoescape %}</td>
+                    {% else %}
+                        <td>{% autoescape off %}{{ row.0 }}{% endautoescape %}</td>
+                        {% if row.1 == 'skip' %}
+                            <td colspan=2>&nbsp;</td>
+                        {% else %}
+                            <td><i class="fa fa-long-arrow-right" aria-hidden="true"></i></td>
+                            <td>{% autoescape off %}{{ row.1 }}{% endautoescape %}</td>
+                        {% endif %}
+                    {% endif %}
+                </tr>
+            {% endfor %}
+            {% if grammarnote %}
+                <tr>
+                    <td colspan=3>
+                        <div class="raleway xsmall lineheight-n">
+                            <i class="fa fa-star red-words"></i> Additional Grammar Note: <a href="{% url 'main:grammarnote' lessonid %}">{{ grammarnote.title }}</a>
+                        </div>
+                    </td>
+                </tr>
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>

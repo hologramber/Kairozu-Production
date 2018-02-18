@@ -1,0 +1,32 @@
+{% if title %}
+<h3>{{ title }}</h3>
+{% endif %}
+
+<div class="table-responsive">
+    <table class="kaitable kaitable-left-30">
+        {% if tablehead %}
+            <thead>
+                <tr>
+                    <th>{{ tablehead.0 }}</th>
+                    <th></th>
+                    <th>{{ tablehead.1 }}</th>
+                    <th>{{ tablehead.2 }}</th>
+                </tr>
+            </thead>
+        {% endif %}
+        <tbody>
+            {% for row in tabledata %}
+                <tr>
+                    {% if row.0 == 'blank' %}
+                        <td class="blankline" colspan=4>&nbsp;</td>
+                    {% else %}
+                        <td>{% autoescape off %}{{ row.0 }}{% endautoescape %}</td>
+                        <td><i class="fa fa-long-arrow-right" aria-hidden="true"></i></td>
+                        <td>{% autoescape off %}{{ row.1 }}{% endautoescape %}</td>
+                        <td>{% autoescape off %}{{ row.2 }}{% endautoescape %}</td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

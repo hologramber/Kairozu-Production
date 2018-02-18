@@ -1,0 +1,208 @@
+{% extends 'kairozu.html' %}
+{% block title %}Kairozu {{ chapter.title }} Dialogue{% endblock %}
+{% block sidecollapse %}<div id="sidecollapse"><a id="menu-toggle" href="#" class="btn-menu toggle"><span class="glyphicon glyphicon-list"></span></a></div>{% endblock %}
+
+{% load static %}
+{% block content %}
+
+<div id='island4'></div>
+<link rel="stylesheet" href="{% static 'main/dialogue.css' %}">
+<!-- wrapper -->
+<div id='wrapper'>
+{% include 'main/sidebar.html' %}
+
+    <!-- page-content-wrapper -->
+    <div id='page-content-wrapper'>
+        <div class='container-fluid'>
+            <div class='row'>
+                <div class='col-lg-12'>
+                    <h3 class="grey-words italics raleway">{{ exercise.description }}</h3>
+                    <div class="spacer-10 hidden-md"></div>
+
+                    <div class="dialogue-holder">
+                        <table id="dialogue-table" class="chat">
+
+                        </table>
+                    </div>
+
+                    <div id="dialogue-input">
+                        <div id="grammarholder">
+                            <div id='context_one' class='context-container'></div>
+                            <div id='dialogue_english' class='challenge-grammar'></div>
+                            <div class='prompt-container'>
+                                <span id='dialogue_hint' class='letterspacing5r'></span>
+                                <a id="bug-button" href="#" tabindex="-1" style="display: none;">
+                                    <i id="report-issue" class="fa fa-bug red-words" aria-hidden="true"><span class="raleway">&nbsp;Error?</span></i>
+                                </a>
+                            </div>
+                        </div>  <!-- /#grammarholder -->
+
+                        <form id='dialogue_form' action='' class='answer_box' method='post'>{% csrf_token %}
+                            <input id='id_dialogue_attempt' type='text' name='dialogue_attempt' autofocus />
+                            <input id='dialogue_actual' type='hidden' name='dialogue_actual' value='' />
+                            <input id='dialogue_index' type='hidden' name='dialogue_index' value='' />
+                            <input id='dialogue_kana' type='hidden' name='dialogue_kana' value='' />
+                            <input type='submit' value='&#8680;' />
+                        </form>
+                        <div id='literal_one' class='literal-container'></div>
+                    </div>
+
+                </div>  <!-- /.col-lg-12 -->
+            </div>  <!-- /.row -->
+            <div class="spacer-50"></div>
+        </div>  <!-- /.container-fluid -->
+    </div>  <!-- /#page-content-wrapper -->
+
+</div>  <!-- /#wrapper -->
+
+<!-- wanakana, menu toggle, and get/post mechanics -->
+<script type='text/javascript' src='{% static 'js/wanakana.js' %}'></script>
+<script type='text/javascript' src='{% static 'js/cookiemonster.js' %}'></script>
+<script type='text/javascript'>
+    var dialogue_level = 3;
+    var dialogue_index = 0;
+    var response_index = 0;
+    var response_length = 0;
+    var total_inputs = 0;
+    var incorrect_inputs = 0;
+    var next_step = 1;
+    var newly_wrong = 0;
+    var current_dialogue = '';
+    var current_prompt = '';
+    var current_response = '';
+    var current_name = '';
+    var newpromptline = '';
+    var newpromptline_a = "<tr><td class='dialogue-green'><i class='fa fa-user fa-lg green-words' aria-hidden='true'></i> <span id='dialoguename";
+    var newpromptline_b = "' class='green-words bigbold'></span></td></tr><tr><td><div class='message'><div><p><span id='dialogueprompt";
+    var newpromptline_c = "'></div></p></span></div></td></tr>";
+    var newresponseline = '';
+    var newresponseline_a ="<tr style='text-align:right;'><td class='dialogue-orange'><i class='fa fa-user fa-lg orange-words' aria-hidden='true'></i> <span class='orange-words bigbold'>You</span></td></tr><tr><td><div class='message me'><div><p><span id='responsekana"
+    var newresponseline_b = "' class='bold'></div></p></span></div></td></tr>";
+    var newsecondaryline = '';
+    var newsecondaryline_a = "<tr><td><div class='message me'><div><p><span id='responsekana"
+    var newsecondaryline_b = "' class='bold'></div></p></span></div></td></tr>";
+
+    var input = document.getElementById('id_dialogue_attempt');
+    wanakana.bind(input);
+
+    function dialogueNext(data) {
+        if (data['id'] != null) {
+            if (response_index == 0 && next_step == 1) {
+                newpromptline = newpromptline_a + dialogue_index + newpromptline_b + dialogue_index + newpromptline_c;
+                newresponseline = newresponseline_a + dialogue_index + '-' + response_index + newresponseline_b;
+                $('#dialogue-table').append(newpromptline, newresponseline);
+            } else if (next_step == 1) {
+                newsecondaryline = newsecondaryline_a + dialogue_index + '-' + response_index + newsecondaryline_b;
+                $('#dialogue-table').append(newsecondaryline);
+            }
+            response_length = data['responses'].length-1;
+            current_prompt = '#dialogueprompt' + dialogue_index;
+            current_response = '#responsekana' + dialogue_index + '-' + response_index;
+            current_name = '#dialoguename' + dialogue_index;
+            $(current_name).html(data['prompt_name']);
+            $(current_prompt).html(data['prompt_kana']);
+            var topelement = document.getElementById("grammarholder");
+            topelement.scrollIntoView();
+            $('#dialogue_actual').val(data['responses'][response_index]['response_kana_clean']);
+            $('#dialogue_kana').val(data['responses'][response_index]['response_kana']);
+            $('#dialogue_english').html(data['responses'][response_index]['response_english']);
+            if (data['responses'][response_index]['response_literal'].trim()) {
+                $('#literal_one').html('<div class="white-words litcontextbox upper">literal</div>' + data['responses'][response_index]['response_literal'] + '&nbsp;');
+            } else {
+                $('#literal_one').html('&nbsp;');
+            }
+            $('#context_one').html(data['responses'][response_index]['response_context'] + '&nbsp;');
+            switch (dialogue_level) {
+                case 3:
+                    if (data['responses'][response_index]['response_disamb_location'] != 0) {
+                        $('#dialogue_hint').html(data['responses'][response_index]['response_kana_all_blank']);
+                        $('#dialogue_hint').addClass('letterspacing5y');
+                    } else {
+                        $('#dialogue_hint').html('&nbsp;');
+                    } break;
+                case 2:
+                    $('#dialogue_hint').html(data['responses'][response_index]['response_kana_all_blank']);
+                    $('#dialogue_hint').removeClass('letterspacing5y');
+                    break;
+                case 1:
+                    $('#dialogue_hint').html(data['responses'][response_index]['response_kana_alt_blank']); break;
+                case 0:
+                    $('#dialogue_hint').html(data['responses'][response_index]['response_kana']); break;
+                default:
+                    $('#dialogue_hint').html('&nbsp;'); break;
+            }
+            $('#dialogue_form').removeClass('answer_box_g answer_box_r');
+        } else {
+            var dialogue_grade = (total_inputs-incorrect_inputs)/total_inputs;
+            var total_dialogue = $('#dialogue-table').html();
+            $.ajax({
+                url: "{% url 'main:exercisedialoguegrade' chapter.id exercise.id %}",
+                data: { 'dialogue_grade' : dialogue_grade }, type: "POST",
+                success: function (data) {
+                    $('#wrapper').html(data);
+                    $('#dialogue-table').html(total_dialogue);
+                }
+            })
+        }
+    }
+
+    $('#dialogue_form').submit(function(event) {
+        event.preventDefault();
+        var clean_attempt = $('#id_dialogue_attempt').val().replace(/[　。、？！「」'",.?!\s]/g, "");
+        if (clean_attempt == $('#dialogue_actual').val()) {
+            $('#dialogue_form').attr('class', 'answer_box answer_box_g');
+            $('#bug-button').hide();
+            $('#dialogue_english').attr('class', 'challenge-grammar');
+            if (dialogue_level == 3) {
+                total_inputs++;
+                next_step = 1;
+                newly_wrong = 0;
+                current_dialogue = $('#dialogue_kana').val();
+                $(current_response).html(current_dialogue);
+                if (response_index == response_length) {
+                    dialogue_index++;
+                    response_index = 0;
+                    current_dialogue = '';
+                } else {
+                    response_index++;
+                }
+            } else {
+                if (newly_wrong == 0) { incorrect_inputs++; }
+                newly_wrong = 1;
+                next_step = 0;
+                dialogue_level = 3;
+            }
+        } else {
+            $('#bug-button').show();
+            $('#dialogue_form').attr('class', 'answer_box_red answer_box_r');
+            $('#dialogue_english').attr('class', 'challenge-grammar red-words');
+            if (dialogue_level > 0) {
+                next_step = 0;
+                dialogue_level--;
+            }
+        }
+        $('#dialogue_index').val(dialogue_index);
+        var form_data = $('#dialogue_form').serialize();
+        $.post("{% url 'main:exercisedialoguecheck' chapter.id exercise.id %}", form_data).done(function(data) {
+            $('#dialogue_form')[0].reset();
+            dialogueNext(data);
+        })
+    });
+
+    $(document).ready(function() {
+        var urlstring = "/main/chapter/" + '{{ chapter.id }}' + "/exercise_d" + '{{ exercise.id }}' + "/grab/0";
+        $.get(urlstring).done(function (data) {
+            dialogueNext(data);
+            $('#id_dialogue_attempt').focus();
+        })
+    });
+
+    $('#bug-button').click(function() {
+        $('#form-modal-body').load('/main/newissue/', function () {
+            $('#form-modal').modal('toggle');
+            formAjaxSubmit('#form-modal-body form', '#form-modal');
+        });
+    });
+</script>
+
+{% endblock %}

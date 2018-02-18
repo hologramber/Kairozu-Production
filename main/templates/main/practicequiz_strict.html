@@ -1,0 +1,155 @@
+{% extends 'kairozu.html' %}
+{% block title %}Kairozu {{ chapter.title }}・{{ lesson.id }} Practice{% endblock %}
+{% block sidecollapse %}<div id="sidecollapse"><a id="menu-toggle" href="#" class="btn-menu toggle"><span class="glyphicon glyphicon-list"></span></a></div>{% endblock %}
+
+{% load static %}
+{% block content %}
+
+{% include 'main/practicequiz_base.html' %}
+
+<!-- wanakana, menu toggle, and get/post mechanics -->
+<script type='text/javascript' src="{% static 'js/wanakana.js' %}"></script>
+<script type='text/javascript' src='{% static 'js/cookiemonster.js' %}'></script>
+
+<script type='text/javascript'>
+    var plevel = 0;
+    var pindex = 0;
+    var pcode = 'AD';
+    var input = document.getElementById('id_pone_attempt');
+    var input2 = document.getElementById('id_ptwo_attempt');
+    wanakana.bind(input);
+    wanakana.bind(input2);
+
+    function practiceNext(data) {
+        if (data['vieworder'] != null) {
+            $('#practice_eng_one').html(data['pone_english']);
+            $('#practice_eng_two').html(data['ptwo_english']);
+            $('#poneact').val(data['pone_kana_clean']);
+            $('#ptwoact').val(data['ptwo_kana_clean']);
+            switch(pcode) {
+                case 'BC':
+                    $('#hint_one').html(data['pone_kana_all'] + '&nbsp;');
+                    $('#hint_two').html(data['ptwo_kana_all'] + '&nbsp;');
+                    break;
+                case 'OC':
+                    if (plevel == 1) {
+                        $('#hint_one').html(data['pone_kana'] + '&nbsp;');
+                        $('#hint_two').html(data['ptwo_kana_alt'] + '&nbsp;');
+                    } else {
+                        $('#hint_one').html(data['pone_kana'] + '&nbsp;');
+                        $('#hint_two').html(data['ptwo_kana'] + '&nbsp;');
+                    }
+                    break;
+                case 'TC':
+                    if (plevel == 1) {
+                        $('#hint_one').html(data['pone_kana_alt'] + '&nbsp;');
+                        $('#hint_two').html(data['ptwo_kana'] + '&nbsp;');
+                    } else {
+                        $('#hint_one').html(data['pone_kana'] + '&nbsp;');
+                        $('#hint_two').html(data['ptwo_kana'] + '&nbsp;');
+                    }
+                    break;
+                default:
+                    if (plevel == 1) {
+                        $('#hint_one').html(data['pone_kana_alt'] + '&nbsp;');
+                        $('#hint_two').html(data['ptwo_kana_alt'] + '&nbsp;');
+                    } else {
+                        $('#hint_one').html(data['pone_kana'] + '&nbsp;');
+                        $('#hint_two').html(data['ptwo_kana'] + '&nbsp;');
+                    }
+                    break;
+            }
+            if (data['pone_literal'].trim()) {
+                $('#literal_one').html('<div class="white-words litcontextbox upper">literal</div>' + data['pone_literal'] + '&nbsp;');
+            } else {
+                $('#literal_one').html('&nbsp;');
+            }
+            if (data['ptwo_literal'].trim()) {
+                $('#literal_two').html('<div class="white-words litcontextbox upper">literal</div>' + data['ptwo_literal'] + '&nbsp;');
+            } else {
+                $('#literal_two').html('&nbsp;');
+            }
+            $('#context_one').html(data['pone_context'] + '&nbsp;');
+            $('#context_two').html(data['ptwo_context'] + '&nbsp;');
+            $('#id_pone_attempt').removeClass('keiko_box1_g keiko_box1_r');
+            $('#id_ptwo_attempt').removeClass('keiko_box2_g keiko_box2_r');
+            $('#ksubmit').removeClass('keiko_submit_r keiko_submit_g');
+        } else {
+            $.get("{% url 'main:practicesuccess' lesson.id %}").done(function (data) {
+                $('#wrapper').html(data);
+            });
+        }
+    }
+
+    $('#practicequizform').submit(function(event) {
+        event.preventDefault();
+        var pone_clean_att = $('#id_pone_attempt').val().replace(/[　。、？！「」'",.?!\s]/g, "");
+        var ptwo_clean_att = $('#id_ptwo_attempt').val().replace(/[　。、？！「」'",.?!\s]/g, "");
+        if ((pone_clean_att == $('#poneact').val()) && (ptwo_clean_att == $('#ptwoact').val())) {
+            pcode = 'BC';
+            $('#bug-button').hide();
+            if (plevel == 2) {
+                pindex++;
+            } else {
+                plevel = 2;
+            }
+            $('#id_pone_attempt').attr('class', 'keiko_box1 keiko_box1_g').prop("disabled", false).val('').focus();
+            $('#id_ptwo_attempt').attr('class', 'keiko_box2 keiko_box2_g').prop("disabled", false).val('');
+            $('#ksubmit').attr('class', 'keiko_submit keiko_submit_g');
+            $('#hint_one').attr('class', 'letterspacing5');
+            $('#hint_two').attr('class', 'letterspacing5');
+        } else if ((pone_clean_att == $('#poneact').val()) && (ptwo_clean_att != $('#ptwoact').val())) {
+            pcode = 'OC';
+            $('#bug-button').show();
+            if (plevel > 0) {
+                plevel--;
+            }
+            $('#id_pone_attempt').attr('class', 'keiko_box1 keiko_box1_g').prop("disabled", true);
+            $('#id_ptwo_attempt').attr('class', 'keiko_box2_red keiko_box2_r').val('').focus();
+            $('#ksubmit').attr('class', 'keiko_submit_red keiko_submit_r');
+            $('#hint_one').attr('class', 'letterspacing5g');
+            $('#hint_two').attr('class', 'letterspacing5r');
+        } else if ((pone_clean_att != $('#poneact').val()) && (ptwo_clean_att == $('#ptwoact').val())) {
+            pcode = 'TC';
+            $('#bug-button').show();
+            if (plevel > 0) { plevel --; }
+            $('#id_pone_attempt').attr('class', 'keiko_box1_red keiko_box1_r').val('').focus();
+            $('#id_ptwo_attempt').attr('class', 'keiko_box2 keiko_box2_g').prop("disabled", true);
+            $('#ksubmit').attr('class', 'keiko_submit keiko_submit_g');
+            $('#hint_one').attr('class', 'letterspacing5r');
+            $('#hint_two').attr('class', 'letterspacing5g');
+        } else {
+            pcode = 'NC';
+            $('#bug-button').show();
+            if (plevel > 0) { plevel --; }
+            $('#id_pone_attempt').attr('class', 'keiko_box1_red keiko_box1_r').val('').focus();
+            $('#id_ptwo_attempt').attr('class', 'keiko_box2_red keiko_box2_r').val('');
+            $('#ksubmit').attr('class', 'keiko_submit_red keiko_submit_r');
+            $('#hint_one').attr('class', 'letterspacing5r');
+            $('#hint_two').attr('class', 'letterspacing5r');
+        }
+        $('#pindex').val(pindex);
+        var form_data = $('#practicequizform').serialize();
+        $.post("{% url 'main:practicecheck' lesson.id %}", form_data).done(function(data) {
+            practiceNext(data);
+        });
+    });
+
+    $(document).ready(function() {
+        var urlstring = "/main/lesson/" + '{{ lesson.id }}' + "/practicequiz/grab/0";
+        $.get(urlstring).done(function (data) {
+            practiceNext(data);
+            $('#id_pone_attempt').focus();
+        });
+    });
+
+    $('#bug-button').click(function() {
+        $('#form-modal-body').load('/main/newissue/', function () {
+            $('#form-modal').modal('toggle');
+            formAjaxSubmit('#form-modal-body form', '#form-modal');
+        });
+    });
+
+</script>
+
+{% endblock %}

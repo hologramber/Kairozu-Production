@@ -1,0 +1,15 @@
+<div class="row">
+    <div class="col-sm-12">
+        <form class="bugform" action="{% url 'main:issue' %}" method="post">
+            {% csrf_token %}
+            <div class="bugform-inner">
+                <span class="raleway">Please select the option which best describes the problem:</span>
+                {{ form.report_type }}
+                <div class="spacer-15"></div>
+                <span class="raleway">Any additional information you can give is appreciated:</span>
+                {{ form.report_comment }}
+            </div>
+            <input type="submit" class="btn btn-submit">
+        </form>
+    </div>
+</div>

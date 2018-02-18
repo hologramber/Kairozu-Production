@@ -1,0 +1,115 @@
+{% extends 'kairozu.html' %}
+{% block title %}Kairozu Vocabulary Review{% endblock %}
+
+{% load static %}
+{% block content %}
+
+<div id='island'></div>
+
+<div id="allwrap">
+    <!-- page-content-wrapper -->
+    <div id='page-content-wrapper'>
+	    <div class="container container-kairozu">
+            <div class='row'>
+                <div class='col-lg-12'>
+
+                    {% include 'main/vocab_base.html' %}
+
+                </div>  <!-- /.col-lg-12 -->
+            </div>  <!-- /.row -->
+
+            <div class="reference-link smaller">
+                <a id="reflink" href="">View Vocabulary List</a>
+            </div>
+
+            <div id="katakana-tips" style="display: none;">
+                <i class="fa fa-star red-words" aria-hidden="true"></i><span class="grey-words smaller"> This vocabulary uses katakana characters (press shift when typing).</span>
+            </div>
+
+        </div>  <!-- /.container-fluid -->
+    </div>  <!-- /#page-content-wrapper -->
+</div>
+<!-- wanakana, menu toggle, and get/post mechanics -->
+<script type='text/javascript' src='{% static 'js/wanakana.js' %}'></script>
+<script type='text/javascript' src='{% static 'js/cookiemonster.js' %}'></script>
+
+<script type='text/javascript'>
+    var vlevel = 3;
+    var vocabcode = 'A';
+    var input = document.getElementById('id_vocabattempt');
+    wanakana.bind(input);
+
+    function vocabNext(data) {
+        if (data['id'] != null) {
+            $('#literal_one').html('&nbsp;' + data['vocab']['note'] + '&nbsp;');
+            $('#vocab_english').html(data['vocab']['english']);
+            $('#vactual').val(data['vocab']['kana_clean']);
+            $('#vid').val(data['id']);
+            $("#reflink").attr("href", '/main/chapter/' + data['vocab']['chapter'] + '/vocablist/');
+            switch(vlevel) {
+                case 3:
+                    $('#hint_block').html('&nbsp;'); break;
+                case 2:
+                    $('#hint_block').html(data['vocab']['kana_all_blank']); break;
+                case 1:
+                    $('#hint_block').html(data['vocab']['kana_alt_blank']); break;
+                default:
+                    $('#hint_block').html(data['vocab']['kana']); break;
+            }
+            $('#vocabquizform').removeClass('answer_box_g answer_box_r');
+            if (data['vocab']['katakana'] == true) {
+                $('#katakana-tips').show();
+            } else {
+                $('#katakana-tips').hide();
+            }
+        } else {
+            $.get("{% url 'main:reviewvocabcurrent' %}").done(function (data) {
+                $('#allwrap').html(data);
+            });            
+        }
+    }
+    $('#vocabquizform').submit(function(event) {
+        event.preventDefault();
+        var clean_attempt = $('#id_vocabattempt').val().replace(/[　。、？！「」\'\",.?!\s]/g, "");
+        if (clean_attempt == $('#vactual').val()) {
+            $('#vocabquizform').attr('class', 'answer_box answer_box_g');
+            $('#bug-button').hide();
+            if (vlevel == 3) {
+                vocabcode = 'C';
+            } else {
+                vlevel = 3;
+                vocabcode = 'N';
+            }
+        } else {
+            $('#vocabquizform').attr('class', 'answer_box_red answer_box_r');
+            $('#bug-button').show();
+            if (vlevel == 3) {
+                vocabcode = 'I';
+            } else {
+                vocabcode = 'A';
+            }
+            if (vlevel > 0) { vlevel--; }
+        }
+        $('#vcode').val(vocabcode);
+        var form_data = $('#vocabquizform').serialize();
+        $.post("{% url 'main:reviewvocabcheck' %}", form_data).done(function(data) {
+            $('#vocabquizform')[0].reset();
+            vocabNext(data);
+        });
+    });
+
+    $(document).ready(function() {
+        $.get("{% url 'main:reviewvocabgrab' %}").done(function (data) {
+            vocabNext(data);
+        });
+    });
+
+    $('#bug-button').click(function() {
+        $('#form-modal-body').load('/main/newissue/', function () {
+            $('#form-modal').modal('toggle');
+            formAjaxSubmit('#form-modal-body form', '#form-modal');
+        });
+    });
+</script>
+
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'kairozu.html' %}
+{% block title %}Kairozu Sandbox{% endblock %}
+{% load static %}
+
+{% block content %}
+
+<!--#page-content-wrapper-->
+<div id="page-content-wrapper">
+    <div class="features-boxed dkgrey-words">
+        <div class="container container-kairozu">
+            <div class="row features">
+                {% for castle in object_list %}
+                    <div class="col-md-4 col-sm-6 item text-align-center">
+                        <a href="{% url 'sandbox:'|add:castle.location %}">
+                        <div class="box">
+                            <i class="glyphicon {{ castle.iconname }} icon"></i>
+                            <h3 class="name bold">{{ castle.title }}</h3>
+                            <p class="grey-words description">{{ castle.description }}</p>
+                        </div></a>
+                    </div>
+                {% endfor %}
+            </div>  <!--/.row features-->
+        </div>  <!--/.container .container-kairozu-->
+    </div>  <!--/.features-boxed-->
+</div>  <!--/#page-content-wrapper-->
+
+{% endblock %}

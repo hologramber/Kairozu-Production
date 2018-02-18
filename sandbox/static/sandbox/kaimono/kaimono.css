@@ -1,0 +1,405 @@
+.info-container {
+	width: 100%;
+	margin: 0 auto; }
+
+.info-container:after {
+	content: "";
+	display: block;
+	clear: both; }
+
+.score, .streak, #questions, #kanjikana {
+	width: 100px;
+	height: auto;
+    border: 2px solid #2b2b2b;
+    padding: 5px 10px 15px 10px;
+	border-radius: 5px; }
+
+.score {
+	float: left;
+	margin-right: 10px;
+}
+.streak { float: left; }
+#kanjikana {
+	float: right;
+	margin-right: 10px;
+}
+#questions { float: right; }
+
+.score_title, .streak_title, .questions_title, .kanjikana_title {
+	text-align: center;
+	font-size: 20px;
+    padding-bottom: 2px;
+	font-variant: small-caps;
+	color: #2b2b2b; }
+
+.score_update, .score_streak { color: #2b2b2b; }
+.score_update, .score_streak, .questions_link, .kanji_or_kana {
+	width: 100%;
+	text-align: center;
+	font-size: 20px; }
+.questions_link, .kanji_or_kana {
+	color: #d92425;
+	text-decoration: none; 
+    -webkit-transition: 200ms color ease-in-out;
+    -moz-transition: 200ms color ease-in-out;
+    -o-transition: 200ms color ease-in-out;
+    transition: 200ms color ease-in-out; }
+.questions_link:hover, .kanji_or_kana:hover { color: #ff9729; }
+
+.objects_container {
+	padding: 5vmin 0; 
+	width: 100%;
+	background-color: #d5d5d5;
+	margin: 15px auto;
+	border-radius: 5px;
+	text-align: center;
+	vertical-align: middle;
+	color: #2b2b2b; }
+
+.description_container {
+	padding: 4vmin 0;
+	background-color: #d5d5d5;
+	margin: 0 auto;
+	border-radius: 5px;
+	font-size: 3vmin;
+	text-align: center;
+	vertical-align: middle;
+	color: #2b2b2b; }
+
+#degreesc, #coffee, #beer, #misosoup, #bento, #balloons, #burger, #ramen, #fries, #people, #pills, #tomatoes, #candies, #baseballs,
+#apples, #doughnuts, #onigiri, #cookies, #chestnuts, #batteries, #paperclip, #oden, #rulers, #dango, #paintbrushes, #pencils, #bananas,
+#papers, #photographs, #envelopes, #shirts, #pizza, #books, #bicycles, #cars, #computers, #cats, #mice, #dogs, #bees, #insects, #fish,
+#birds, #rabbits, #boxes, #floors, #customers, #hours {
+	display: inline-block;
+	margin: 1vmin;
+}
+
+.keiko_box1 { text-align: center; }
+
+
+/* make keyframes that tell the start state and the end state of our object */
+@-webkit-keyframes correctAFlip { from { background-color:#89AE13; } to { background-color:#FFF; } }
+@-moz-keyframes correctAFlip { from { background-color:#89AE13; } to { background-color:#FFF; } }
+@keyframes correctAFlip { from { background-color:#89AE13; } to { background-color:#FFF; } }
+
+@-webkit-keyframes incorrectAFlip { from { background-color:#d92425; } to { background-color:#FFF; } }
+@-moz-keyframes incorrectAFlip { from { background-color:#d92425; } to { background-color:#FFF; } }
+@keyframes incorrectAFlip { from { background-color:#d92425; } to { background-color:#FFF; } }
+
+.keiko_box1_g_flip {
+	-webkit-animation:correctAFlip;				/* call keyframe correctA, ease-in and repeat it only 1 time */
+	-moz-animation:correctAFlip;
+	animation:correctAFlip; }
+
+.keiko_box1_r_flip {
+	-webkit-animation:incorrectAFlip;  			/* call keyframe correctA, ease-in and repeat it only 1 time */
+	-moz-animation:incorrectAFlip;
+	animation:incorrectAFlip; }
+
+.keiko_box1_g_flip, .keiko_box1_r_flip {
+	-webkit-animation-fill-mode:forwards;	/* makes sure that after animation is done we remain @ last keyframe value (white bg) */
+	-moz-animation-fill-mode:forwards;
+	animation-fill-mode:forwards;
+	-webkit-animation-duration:0.2s;
+	-moz-animation-duration:0.2s;
+	animation-duration:0.2s; }
+
+
+.ic {
+	width: 5vmin;
+	height: 5vmin;
+	display: inline-block;
+}
+
+.icon-apple {
+	background-image:url('graphics/apple.png');
+	background-size: contain;
+}
+
+.icon-balloon {
+	background-image:url('graphics/balloon.png');
+	background-size: contain;
+}
+
+.icon-banana {
+	background-image:url('graphics/banana.png');
+	background-size: contain;
+}
+
+.icon-baseball {
+	background-image:url('graphics/baseball.png');
+	background-size: contain;
+}
+
+.icon-battery {
+	background-image:url('graphics/battery.png');
+	background-size: contain;
+}
+
+.icon-bee {
+	background-image:url('graphics/bee.png');
+	background-size: contain;
+}
+
+.icon-beer {
+	background-image:url('graphics/beer.png');
+	background-size: contain;
+}
+
+.icon-bento {
+	background-image:url('graphics/bento.png');
+	background-size: contain;
+}
+
+.icon-bicycle {
+	background-image:url('graphics/bicycle.png');
+	background-size: contain;
+}
+
+.icon-bird {
+	background-image:url('graphics/bird.png');
+	background-size: contain;
+}
+
+.icon-book {
+	background-image:url('graphics/book.png');
+	background-size: contain;
+}
+
+.icon-box {
+	background-image: url('graphics/box.png');
+	background-size: contain;
+}
+
+.icon-burger {
+	background-image:url('graphics/burger.png');
+	background-size: contain;
+}
+
+.icon-candy {
+	background-image:url('graphics/candy.png');
+	background-size: contain;
+}
+
+.icon-car {
+	background-image:url('graphics/car.png');
+	background-size: contain;
+}
+
+.icon-cat {
+	background-image:url('graphics/cat.png');
+	background-size: contain;
+}
+
+.icon-chestnut {
+	background-image: url('graphics/chestnut.png');
+	background-size: contain;
+}
+
+.icon-coffee {
+	background-image: url('graphics/coffee.png');
+	background-size: contain;
+}
+
+.icon-computer {
+	background-image: url('graphics/computer.png');
+	background-size: contain;
+}
+
+.icon-cookie {
+	background-image:url('graphics/cookie.png');
+	background-size: contain;
+}
+
+.icon-customer {
+	background-image: url('graphics/customer.png');
+	background-size: contain;
+}
+
+.icon-dango {
+	background-image:url('graphics/dango.png');
+	background-size: contain;
+}
+
+.icon-degreesc {
+	background-image: url('graphics/degreesc.png');
+	background-size: contain;
+}
+
+.icon-dog {
+	background-image:url('graphics/dog.png');
+	background-size: contain;
+}
+
+.icon-doughnut {
+	background-image:url('graphics/doughnut.png');
+	background-size: contain;
+}
+
+.icon-envelope {
+	background-image:url('graphics/envelope.png');
+	background-size: contain;
+}
+
+.icon-fish {
+	background-image:url('graphics/fish.png');
+	background-size: contain;
+}
+
+.icon-floor {
+	background-image: url('graphics/floor.png');
+	background-size: contain;
+}
+
+.icon-fries {
+	background-image: url('graphics/fries.png');
+	background-size: contain;
+}
+
+.icon-hour {
+	background-image: url('graphics/hour.png');
+	background-size: contain;
+}
+
+.icon-insect {
+	background-image: url('graphics/insect.png');
+	background-size: contain;
+}
+
+.icon-misosoup {
+	background-image: url('graphics/misosoup.png');
+	background-size: contain;
+}
+
+.icon-mouse {
+	background-image:url('graphics/mouse.png');
+	background-size: contain;
+}
+
+.icon-oden {
+	background-image: url('graphics/oden.png');
+	background-size: contain;
+}
+
+.icon-onigiri {
+	background-image:url('graphics/onigiri.png');
+	background-size: contain;
+}
+
+.icon-paintbrush {
+	background-image:url('graphics/paintbrush.png');
+	background-size: contain;
+}
+
+.icon-paper {
+	background-image:url('graphics/paper.png');
+	background-size: contain;
+}
+
+.icon-paperclip {
+	background-image:url('graphics/paperclip.png');
+	background-size: contain;
+}
+
+.icon-pencil {
+	background-image:url('graphics/pencil.png');
+	background-size: contain;
+}
+
+.icon-person {
+	background-image:url('graphics/person.png');
+	background-size: contain;
+}
+
+.icon-photo {
+	background-image:url('graphics/photo.png');
+	background-size: contain;
+}
+
+.icon-pill {
+	background-image:url('graphics/pill.png');
+	background-size: contain;
+}
+
+.icon-pizza {
+	background-image:url('graphics/pizza.png');
+	background-size: contain;
+}
+
+.icon-rabbit {
+	background-image: url('graphics/rabbit.png');
+	background-size: contain;
+}
+
+.icon-ramen {
+	background-image: url('graphics/ramen.png');
+	background-size: contain;
+}
+
+.icon-ruler {
+	background-image: url('graphics/ruler.png');
+	background-size: contain;
+}
+
+.icon-tomato {
+	background-image:url('graphics/tomato.png');
+	background-size: contain;
+}
+
+.icon-tshirt {
+	background-image:url('graphics/tshirt.png');
+	background-size: contain;
+}
+
+.overlay {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background: rgba(0,0,0,0.7);
+	transition: opacity 500ms;
+	visibility: hidden;
+	opacity: 0;
+}
+
+.overlay:target {
+	visibility: visible;
+	opacity: 1;
+}
+
+.popup {
+	margin: 90px auto;
+	padding: 20px;
+	background: #fff;
+	border-radius: 5px;
+	width: 75%;
+	position: relative;
+	font-size: 14px;
+	transition: all 200ms ease-in-out;
+	color: #404040;
+}
+
+.popup .close {
+	position: absolute;
+	top: 20px;
+	right: 30px;
+	transition: all 200ms;
+	font-size: 30px;
+	font-weight: bold;
+	text-decoration: none;
+	color: #424242;
+}
+
+.popup .close:hover {
+	color: #bde52a;
+}
+
+.popup .content {
+	max-height: 700px;
+	overflow: scroll;
+}
+
+.object_spacer {
+	margin-bottom: 5px;
+}

@@ -1,0 +1,189 @@
+{% extends 'kairozu.html' %}
+{% block title %}Kairozu Demo Lesson{% endblock %}
+{% block sidecollapse %}<div id="sidecollapse"><a id="menu-toggle" href="#" class="btn-menu toggle"><span class="glyphicon glyphicon-list"></span></a></div>{% endblock %}
+
+{% load static %}
+
+{% block content %}
+
+<div id="wrapper">
+{% include 'demo/sidebar.html' %}
+
+    <div id="page-content-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+
+                    <div class="center-block text-align-center">
+                        <h1 class="lessonhead">The <span class="red-words">dog</span> is <span class="orange-words">cute</span>.</h1>
+                        <h1 class="lessonhead"><span class="red-words">いぬ</span>　<span class="red-words"><b>は</b></span>　<span class="orange-words">かわいい</span>　です。</h1>
+                    </div>
+
+                    <div id="grammar-explain">  
+                        <p>The sentence form <span class="red-words">X</span> <span class="red-words"><b>は</b></span> <span class="orange-words">Y</span> です means "<span class="red-words">X</span> is <span class="orange-words">Y</span>" or "<span class="red-words"><b>as for</b></span> <span class="red-words">X</span>, it is <span class="orange-words">Y</span>." The particle <span class="red-words"><b>は</b></span> marks <span class="red-words">X</span> as the <span class="red-words"><b>topic of the sentence</b></span> and is akin to saying "<span class="red-words"><b>as for</b></span> <span class="red-words">X</span>..."; or in the sentence above, "<span class="red-words"><b>as for the</b></span> <span class="red-words">dog</span>, it is <span class="orange-words">cute</span>." The copula です at the end of a sentence is equivalent to the English "am," "is," or "are."</p>
+                    
+                        <p><span class="red-words">X</span> is <span class="red-words">what</span> you are talking about; he, she, the dog, the cat, I, we, Mr. Smith, etc.</p>
+                    
+                        <p><span class="orange-words">Y</span> is the <span class="orange-words">information</span> that you are giving about something; occupation, name, description, etc.</p>
+                            
+                        <div class="table-responsive">
+                            <table class="kaitable kaitable-left-30">
+                                <tbody>
+                                    <tr> 
+                                        <td>The <span class="red-words">dog</span> is <span class="orange-words">cute</span>.</td>
+                                        <td><i class="fa fa-long-arrow-right" aria-hidden="true"></i></td>
+                                        <td><span class="red-words">いぬ</span>　<span class="red-words"><b>は</b></span>　<span class="orange-words">かわいい</span>　です。</td>
+                                        <td></td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>The <span class="red-words">cat</span> is <span class="orange-words">cute</span>.</td>
+                                        <td><i class="fa fa-long-arrow-right" aria-hidden="true"></i></td>
+                                        <td><span class="red-words">ねこ</span>　<span class="red-words"><b>は</b></span>　<span class="orange-words">かわいい</span>　です。</td>
+                                        <td></td>
+                                    </tr>
+                                
+                                    <tr>
+                                        <td class="blankline" colspan=4>&nbsp;</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>The <span class="red-words">bag</span> is <span class="orange-words">small</span>.</td>
+                                        <td><i class="fa fa-long-arrow-right" aria-hidden="true"></i></td>
+                                        <td><span class="red-words">かばん</span>　<span class="red-words"><b>は</b></span>　<span class="orange-words">ちいさい</span>　です。</td>
+                                        <td></td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>The <span class="red-words">bag</span> is <span class="orange-words">new</span>.</td>
+                                        <td><i class="fa fa-long-arrow-right" aria-hidden="true"></i></td>
+                                        <td><span class="red-words">かばん</span>　<span class="red-words"><b>は</b></span>　<span class="orange-words">あたらしい</span>　です。</td>
+                                        <td></td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td class="blankline" colspan=4>&nbsp;</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>The <span class="red-words">bag</span> is <span class="orange-words">large</span>.</td>
+                                        <td><i class="fa fa-long-arrow-right" aria-hidden="true"></i></td>
+                                        <td><span class="red-words">かばん</span>　<span class="red-words"><b>は</b></span>　<span class="orange-words">おおきい</span>　です。</td>
+                                        <td></td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>The <span class="red-words">dog</span> is <span class="orange-words">large</span>.</td>
+                                        <td><i class="fa fa-long-arrow-right" aria-hidden="true"></i></td>
+                                        <td><span class="red-words">いぬ</span>　<span class="red-words"><b>は</b></span>　<span class="orange-words">おおきい</span>　です。</td>
+                                        <td></td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>The <span class="red-words">book</span> is <span class="orange-words">large</span>.</td>
+                                        <td><i class="fa fa-long-arrow-right" aria-hidden="true"></i></td>
+                                        <td><span class="red-words">ほん</span>　<span class="red-words"><b>は</b></span>　<span class="orange-words">おおきい</span>　です。</td>
+                                        <td></td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>The <span class="red-words">cat</span> is <span class="orange-words">large</span>.</td>
+                                        <td><i class="fa fa-long-arrow-right" aria-hidden="true"></i></td>
+                                        <td><span class="red-words">ねこ</span>　<span class="red-words"><b>は</b></span>　<span class="orange-words">おおきい</span>　です。</td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+
+                        <div class="spacer-15"></div>
+                        <link href="https://fonts.googleapis.com/css?family=Ubuntu+Condensed" rel="stylesheet">
+                        <div class="table-responsive">
+                            <div class="hugtable">
+                                <table class="grammar-point-table">
+                                    <tbody>
+                                        <tr>
+                                            <td><span class="red_uw">X</span>　<span class="red-words"><b>は</b></span>　<span class="ora_uw">Y</span>　です｡</td>
+                                            <td><i class="fa fa-long-arrow-right" aria-hidden="true"></i></td>
+                                            <td><span class="red_uw">X</span> is <span class="ora_uw">Y</span>.</td>
+                                        </tr>
+                                    
+                                        <tr>
+                                            <td></td>
+                                            <td><i class="fa fa-long-arrow-right" aria-hidden="true"></i></td>
+                                            <td><span class="red-words"><b>As for</b></span> <span class="red_uw">X</span>, it is <span class="ora_uw">Y</span>.</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="gexample dashed-grey-2">
+                                    The <span class="red-words">cat</span> is <span class="orange-words">small</span>.<br />
+                                    <span class="red-words">ねこ</span>　<span class="red-words"><b>は</b></span>　<span class="orange-words">ちいさい</span>　です。
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="gexample dashed-grey-2">
+                                    The <span class="red-words">dog</span> is <span class="orange-words">cute</span>.<br />
+                                    <span class="red-words">いぬ</span>　<span class="red-words"><b>は</b></span>　<span class="orange-words">かわいい</span>　です。
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="gexample dashed-grey-2">
+                                    The <span class="red-words">book</span> is <span class="orange-words">new</span>.<br />
+                                    <span class="red-words">ほん</span>　<span class="red-words"><b>は</b></span>　<span class="orange-words">あたらしい</span>　です。
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div id="more-info">
+                                    <ul>
+                                        <li>The topic denoted by は, usually coming at the beginning of the sentence, establishes what the sentence is about. It must be someone or something that both the speaker and the listener can see or hear, or identify from previous conversation or shared knowledge.</li>
+                                        <li>です is polite speech; when speaking with family or friends, だ can be used instead.</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="practicebutton">
+                                    <a href="{% url 'demo:demosentencequiz' %}"><img id="lessonquiz" alt="クイズ" src="{% static 'img/quiz_button.png' %}" /></a>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="practicebutton">
+                                    <a href="{% url 'demo:demopracticequiz' %}"><img id="lessonpractice" alt="Practice" src="{% static 'img/practice_button.png' %}" /></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>  <!-- /.col-lg-12 -->
+            </div>  <!-- /.row -->
+        </div>  <!-- /.container-fluid -->
+    </div>  <!-- /#page-content-wrapper -->
+</div>  <!-- /#wrapper -->
+
+<script type='text/javascript'>
+    $(document).ready(function() {
+        $('#lessonquiz').hover(function() {
+            $(this).attr("src", "{% static 'img/quiz_button-hover.png' %}");
+        }, function() {
+            $(this).attr("src", "{% static 'img/quiz_button.png' %}");
+        });
+        $('#lessonpractice').hover(function() {
+            $(this).attr("src", "{% static 'img/practice_button-hover.png' %}");
+        }, function() {
+            $(this).attr("src", "{% static 'img/practice_button.png' %}");
+        });
+    });
+</script>
+
+{% endblock %}

@@ -1,0 +1,174 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+	<link href="https://fonts.googleapis.com/css?family=Raleway:400,600|Roboto:400,600|Open+Sans:400,600" rel="stylesheet" />
+
+	<script src="{% static 'js/jquery.min.js' %}"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+	<link rel="apple-touch-icon" sizes="57x57" href="{% static 'favicon/apple-icon-57x57.png' %}" />
+	<link rel="apple-touch-icon" sizes="60x60" href="{% static 'favicon/apple-icon-60x60.png' %}" />
+	<link rel="apple-touch-icon" sizes="72x72" href="{% static 'favicon/apple-icon-72x72.png' %}" />
+	<link rel="apple-touch-icon" sizes="76x76" href="{% static 'favicon/apple-icon-76x76.png' %}" />
+	<link rel="apple-touch-icon" sizes="114x114" href="{% static 'favicon/apple-icon-114x114.png' %}" />
+	<link rel="apple-touch-icon" sizes="120x120" href="{% static 'favicon/apple-icon-120x120.png' %}" />
+	<link rel="apple-touch-icon" sizes="144x144" href="{% static 'favicon/apple-icon-144x144.png' %}" />
+	<link rel="apple-touch-icon" sizes="152x152" href="{% static 'favicon/apple-icon-152x152.png' %}" />
+	<link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicon/apple-icon-180x180.png' %}" />
+	<link rel="icon" type="image/png" sizes="192x192"  href="{% static 'favicon/android-icon-192x192.png' %}" />
+	<link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon/favicon-32x32.png' %}" />
+	<link rel="icon" type="image/png" sizes="96x96" href="{% static 'favicon/favicon-96x96.png' %}" />
+	<link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon/favicon-16x16.png' %}" />
+
+	<link rel="manifest" href="{% static 'favicon/manifest.json' %}" />
+
+	<meta name="msapplication-TileColor" content="#ffffff" />
+	<meta name="msapplication-TileImage" content="{% static 'favicon/ms-icon-144x144.png' %}" />
+	<meta name="theme-color" content="#ffffff" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link rel="stylesheet" href="{% static 'css/sidebar.css' %}" />
+	<link rel="stylesheet" href="{% static 'css/kairozu.css' %}" />
+
+	<title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+	<header>
+		<nav class="navbar navbar-inverse navbar-fixed-top">
+			{% block sidecollapse %}{% endblock %}
+			<div class="container">
+
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#rightnav">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+				
+					<div class="navbar-brand">
+						<a href="{% url 'index' %}">回路図</a>
+					</div>
+				</div>
+
+				<div class="collapse navbar-collapse" id='rightnav'>
+					<ul class="nav navbar-nav navbar-right">
+						{% if user.is_authenticated %}
+							<li><a href="{% url 'main:main' %}">MAIN</a></li>
+                            <li class="dropdown">
+                            {% if user.profile.vrcount == 0 and user.profile.srcount == 0 and user.profile.ercount == 0 %}
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="grey-words">REVIEWS <span class="caret"></span></span></a>
+                            {% else %}
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">REVIEWS <span class="red-words"><span class="caret"></span></span></a>
+                            {% endif %}
+                                <ul class="dropdown-menu">
+                                    {% if user.profile.vrcount == 0 %}
+                                        <li>0 VOCABULARY</li>
+                                    {% else %}
+                                        <li><a href="{% url 'main:reviewvocab' %}">{{ user.profile.vrcount }} VOCABULARY</a></li>
+                                    {% endif %}
+                                    {% if user.profile.ercount == 0 %}
+                                        <li>0 EXPRESSIONS</li>
+                                    {% else %}
+                                        <li><a href="{% url 'main:reviewexpression' %}">{{ user.profile.ercount }} EXPRESSIONS</a></li>
+                                    {% endif %}
+                                    {% if user.profile.srcount == 0 %}
+                                        <li>0 SENTENCES</li>
+                                    {% else %}
+                                        <li><a href="{% url 'main:reviewsentence' %}">{{ user.profile.srcount }} SENTENCES</a></li>
+                                    {% endif %}
+                                </ul>
+                            </li>
+
+                            <li><a href="{% url 'sandbox:main' %}">SANDBOX</a></li>
+
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">KAIROZU <span class="red-words"><span class="caret"></span></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="{% url 'about' %}">ABOUT</a></li>
+                                    <li><a href="{% url 'news:main' %}">KAIROZU NEWS</a></li>
+                                    <li><a href="{% url 'news:faq' %}">FAQ</a></li>
+                                    <li><a href="{% url 'account' %}">YOUR ACCOUNT</a></li>
+                                    <li><a href="{% url 'main:progress' %}">YOUR PROGRESS</a></li>
+
+                                    <li><a id="comment-button" href="#">REPORT BUG　<i class="fa fa-bug red-words" aria-hidden="true"></i></a></li>
+                                    <li><a href="{% url 'logout' %}">SIGN OUT</a></li>
+                                </ul>
+                            </li>
+						{% else %}
+							<li><a href="{% url 'demo:demointerface' %}">DEMO</a></li>
+							<li><a href="{% url 'about' %}">ABOUT</a></li>
+                            <li><a href="{% url 'news:main' %}">NEWS</a></li>
+                            <li><a href="{% url 'news:faq' %}">FAQ</a></li>
+							<li><a href="{% url 'login' %}">SIGN IN</a></li>
+							<li><a href="{% url 'register' %}">SIGN UP</a></li>
+						{% endif %}
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</header>
+	<main role="main">
+
+        <div id="show-message">
+            {% for message in messages %}
+                <div class="alert {{ message.tags }} alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+
+        {% block content %}
+        {% endblock %}
+
+        {% if user.is_authenticated %}
+            <div class="modal fade" id="form-modal" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <span class="modal-title">Report Problems with Kairozu</span>
+                        </div>
+                        <div id="form-modal-body" class="modal-body"></div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+
+            <script>
+                var formAjaxSubmit = function(form, modal) {
+                    $(form).submit(function (bugevent) {
+                        bugevent.preventDefault();
+                        $.ajax({
+                            type: $(this).attr('method'),
+                            url: $(this).attr('action'),
+                            data: $(this).serialize(),
+                            success: function (xhr) {
+                                $(modal).modal('toggle');
+                                $('#show-message').html(xhr);
+                            }
+                        });
+                    });
+                };
+                $('#comment-button').click(function() {
+                    $('#form-modal-body').load('/main/newissue/', function () {
+                        $('#form-modal').modal('toggle');
+                        formAjaxSubmit('#form-modal-body form', '#form-modal');
+                    });
+                });
+            </script>
+        {% endif %}
+
+		<script>
+			$("#menu-toggle").click(function(e) {
+				e.preventDefault();
+				$("#wrapper").toggleClass("toggled");
+			});
+		</script>
+
+	</main>
+</body>
+</html>

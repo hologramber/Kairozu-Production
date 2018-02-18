@@ -1,0 +1,47 @@
+{% extends 'kairozu.html' %}
+{% block title %}Known Kairozu Issues{% endblock %}
+{% load static %}
+
+{% block content %}
+
+<!--#page-content-wrapper-->
+<div id="page-content-wrapper">
+	<div class="container container-kairozu">
+
+            <div class="row">
+                <div class="col-lg-12">
+
+					<h1>Known Kairozu Issues</h1>
+                    <p>A list of known issues, bugs, glitches, errors, woes, design troubles, and other unfortunate events. Planned features and reminders are also included.</p>
+
+                    <div class="spacer-20"></div>
+                    <div class="table-responsive">
+                        <table class="resourceslist">
+                            <tbody>
+                                <tr>
+                                    <td width="5%" class="bolder larger">Priority</td>
+                                    <td width="8%" class="bolder larger">Status</td>
+                                    <td width="14%" class="bolder larger">Category</td>
+                                    <td width="10%" class="bolder larger">Last Update</td>
+                                    <td class="bolder larger">Description</td>
+                                </tr>
+
+                                {% for issue in object_list %}
+                                    <tr>
+                                        <td>{{ issue.get_issue_priority_display }}</td>
+                                        <td>{{ issue.get_issue_status_display }}</td>
+                                        <td>{{ issue.get_issue_type_display }}</td>
+                                        <td>{{ issue.issue_date|date:"d M Y" }}</td>
+                                        <td>{{ issue.issue_description }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>  <!-- /.col-lg-12 -->
+            </div>  <!-- /.row -->
+
+    </div>  <!--/.container .container-kairozu-->
+</div>  <!--/#page-content-wrapper-->
+
+{% endblock %}

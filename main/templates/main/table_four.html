@@ -1,0 +1,48 @@
+{% if title %}
+<h3>{{ title }}</h3>
+{% endif %}
+
+<div class="table-responsive">
+    {% if centert %}
+        <div class="center-table">
+    {% else %}
+        <div class="not-center-table">
+    {% endif %}
+        <table class="kaitable">
+            {% if tablehead %}
+                <thead>
+                    <tr>
+                        <th>{% autoescape off %}{{ tablehead.0 }}{% endautoescape %}</th>
+                        <th>{% autoescape off %}{{ tablehead.1 }}{% endautoescape %}</th>
+                        <th>{% autoescape off %}{{ tablehead.2 }}{% endautoescape %}</th>
+                        <th></th>
+                        <th>{% autoescape off %}{{ tablehead.3 }}{% endautoescape %}</th>
+                        <th>{% autoescape off %}{{ tablehead.4 }}{% endautoescape %}</th>
+                        <th>{% autoescape off %}{{ tablehead.5 }}{% endautoescape %}</th>
+                    </tr>
+                </thead>
+            {% endif %}
+            <tbody>
+                {% for row in tabledata %}
+                    <tr>
+                        {% if row.0 == 'blank' %}
+                            <td colspan=7></td>
+                        {% else %}
+                            <td>{% autoescape off %}{{ row.0 }}{% endautoescape %}</td>
+                            <td>{% autoescape off %}{{ row.1 }}{% endautoescape %}</td>
+                            {% if arrowt %}
+                                <td>{% autoescape off %}{{ row.2 }}{% endautoescape %}</td>
+                                <td><i class="fa fa-long-arrow-right" aria-hidden="true"></i></td>
+                            {% else %}
+                                <td colspan=2>{% autoescape off %}{{ row.2 }}{% endautoescape %}</td>
+                            {% endif %}
+                            <td>{% autoescape off %}{{ row.3 }}{% endautoescape %}</td>
+                            <td>{% autoescape off %}{{ row.4 }}{% endautoescape %}</td>
+                            <td>{% autoescape off %}{{ row.5 }}{% endautoescape %}</td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        </div>
+</div>

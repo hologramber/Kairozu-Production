@@ -1,0 +1,72 @@
+{% extends 'kairozu.html' %}
+{% block title %}Kairozu Demo{% endblock %}
+{% block sidecollapse %}<div id="sidecollapse"><a id="menu-toggle" href="#" class="btn-menu toggle"><span class="glyphicon glyphicon-list"></span></a></div>{% endblock %}
+
+{% load static %}
+{% block content %}
+
+<div id="island5"></div>
+
+<div id="wrapper">
+{% include 'demo/sidebar.html' %}
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+					
+                    <h1>回路図・Kairozu Demo ようこそ！</h1>
+                    <div class="spot-table">
+                        <div class="margin-bottom-20">
+                            <div class="spot-image"><i class='fa fa-star fa-3x red-words' aria-hidden='true'></i></div>
+                            <div class="spot-text">
+                                Welcome to the Kairozu Demo! Start by reading through the <a href="{% url 'demo:demointro' %}">Introduction</a>. If you're new to hiragana and/or katakana, <a href="{% url 'demo:demokana' %}">Japanese Kana</a> has a list of resources to help you get started.
+                            </div>
+                        </div>
+
+                        <div class="margin-bottom-20">
+                            <div class="spot-image"><i class='fa fa-star fa-3x red-words' aria-hidden='true'></i></div>
+                            <div class="spot-text">
+                                Each chapter begins with a set of vocabulary words and commonly-used phrases. View the demo <a href="{% url 'demo:demovocablist' %}">Vocabulary</a> and <a href="{% url 'demo:demoexpressionlist' %}">Expression Lists</a>, then try the demo <a href="{% url 'demo:demovocabquiz' %}">Vocabulary</a> and <a href="{% url 'demo:demoexpressionquiz' %}">Expression Quizzes</a>.
+                            </div>
+                        </div>
+
+                        <div class="margin-bottom-20">
+                            <div class="spot-image"><i class='fa fa-star fa-3x red-words' aria-hidden='true'></i></div>
+                            <div class="spot-text">
+                                See an overview of the grammar covered in <a href="{% url 'demo:grammarlist' %}">Kairozu Chapters 1-6</a>.
+                            </div>
+                        </div>
+
+                        <div class="margin-bottom-20">
+                            <div class="spot-image"><i class='fa fa-star fa-3x red-words' aria-hidden='true'></i></div>
+                            <div class="spot-text">
+                                Each chapter has eight <a href="{% url 'demo:demolesson' %}">lessons</a> which introduce new grammar. Try the <a href="{% url 'demo:demopracticequiz' %}">Practice Sentences</a> and the <a href="{% url 'demo:demosentencequiz' %}">Grammar クイズ</a>.
+                            </div>
+                        </div>
+
+                        <div class="margin-bottom-20">
+                            <div class="spot-image"><i class='fa fa-star fa-3x red-words' aria-hidden='true'></i></div>
+                            <div class="spot-text">
+                                <a href="{% url 'demo:storydemo' %}"><i class="fa fa-edit" aria-hidden="true"></i> Passages</a> and <a href="{% url 'demo:dialoguedemo' %}"><i class="fa fa-comment-o" aria-hidden="true"></i> Dialogues</a> summarize the grammar you've learned from each chapter into more cohesive paragraphs and interactions.
+                            </div>
+                        </div>
+
+                        <div class="spacer-30"></div>
+
+                        <div class="margin-bottom-20">
+                            <div class="spot-image"><i class='fa fa-star-o fa-3x red-words' aria-hidden='true'></i></div>
+                            <div class="spot-text">
+                                Register for a <a href="{% url 'register' %}">Kairozu Account</a>!
+                            </div>
+                        </div>                             
+                    </div>
+
+                </div>  <!-- /.col-lg-12 -->
+            </div>  <!-- /.row -->
+        </div>  <!-- /.container-fluid -->
+    </div>  <!-- /#page-content-wrapper -->
+</div>  <!-- /#wrapper -->
+
+{% endblock %}

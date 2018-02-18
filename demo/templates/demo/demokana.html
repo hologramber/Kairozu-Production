@@ -1,0 +1,25 @@
+{% extends 'kairozu.html' %}
+{% block title %}Kairozu Kana{% endblock %}
+{% block sidecollapse %}<div id="sidecollapse"><a id="menu-toggle" href="#" class="btn-menu toggle"><span class="glyphicon glyphicon-list"></span></a></div>{% endblock %}
+
+{% load static %}
+{% block content %}
+
+<div id="wrapper">
+{% include 'demo/sidebar.html' %}
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+
+                    {% include 'sandbox/kanaresources.html' %}
+
+                </div>  <!-- /.col-lg-12 -->
+            </div>  <!-- /.row -->
+        </div>  <!-- /.container-fluid -->
+    </div>  <!-- /#page-content-wrapper -->
+</div>  <!-- /#wrapper -->
+
+{% endblock %}

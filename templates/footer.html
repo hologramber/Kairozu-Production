@@ -1,0 +1,62 @@
+<footer>
+    <div class="container-fluid">
+    <div class="row">
+        <div class="col-md-4 col-sm-6 footer-navigation">
+            <h3>回路図・Kairozu</h3>
+            <p class="links ltgrey-words">
+                {% if user.is_authenticated %}
+                    <a href="{% url 'main:main' %}">Main</a>
+                    <strong>・</strong>
+                    <a href="{% url 'sandbox:main' %}">Sandbox</a>
+                    <strong>・</strong>
+                    <a href="{% url 'news:main' %}">News</a>
+                    <strong>・</strong>
+                    <a href="{% url 'about' %}">About</a>
+                    <strong>・</strong>
+                    <a href="{% url 'contact' %}">Contact</a>
+                {% else %}
+                    <a href="{% url 'demo:demointerface' %}">Walkthrough</a>
+                    <strong>・</strong>
+                    <a href="{% url 'news:main' %}">News</a>
+                    <strong>・</strong>
+                    <a href="{% url 'about' %}">About</a>
+                    <strong>・</strong>
+                    <a href="{% url 'contact' %}">Contact</a>
+                {% endif %}
+            </p>
+            <span class="company-name">Kairozu &copy; 2017</span><br />
+            <a class="privacy-link" href="{% url 'privacy' %}">Terms & Privacy Policy</a>
+        </div>
+        <div class="col-md-4 col-sm-6 footer-contacts">
+            <div>
+                <span class="glyphicon glyphicon-globe footer-contacts-icon"></span>
+                <p>
+                    <span class="new-line-span">Kairozu is made in..</span>
+                    Minato-ku, Tokyo
+                </p>
+            </div>
+            <div>
+                <i class="glyphicon glyphicon-envelope footer-contacts-icon"></i>
+                <a href="{% url 'contact' %}">kairozu@kairozu.com</a>
+            </div>
+            <div>
+                <i class="glyphicon glyphicon-search footer-contacts-icon"></i>
+                <a href="#">Search Kairozu</a>
+            </div>
+        </div>
+        <div class="clearfix visible-sm-block"></div>
+        <div class="col-md-4 footer-about">
+            <h4 class="white-words bold">About Kairozu</h4>
+            <p>Socratic and programmed methods of learning are effective ways to acquire and retain knowledge. Explaining something you've learned to someone else is also very effective. Kairozu is my attempt to do the latter while implementing the former in a programmed introduction to basic Japanese grammar.</p>
+            <div class="social-links social-icons">
+                <a href="https://twitter.com/kairozukigou">
+                    <i class="fa fa-twitter"></i>
+                </a>
+                <a href="https://instagram.com/kairozu">
+                    <i class="fa fa-instagram"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    </div>
+</footer>

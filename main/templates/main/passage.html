@@ -1,0 +1,177 @@
+{% extends 'kairozu.html' %}
+{% block title %}Kairozu {{ chapter.title }} Passage{% endblock %}
+{% block sidecollapse %}<div id="sidecollapse"><a id="menu-toggle" href="#" class="btn-menu toggle"><span class="glyphicon glyphicon-list"></span></a></div>{% endblock %}
+
+{% load static %}
+{% block content %}
+
+<div id='island4'></div>
+
+<!-- wrapper -->
+<div id='wrapper'>
+{% include 'main/sidebar.html' %}
+
+<!-- page-content-wrapper -->
+<div id='page-content-wrapper'>
+    <div class='container-fluid'>
+        <div class='row'>
+            <div class='col-lg-12'>
+
+                <div id="retain-passage">
+                    <h3 class="grey-words italics raleway">{{ exercise.description }}</h3>
+                    <div class="passageholder hidden-sm hidden-xs">
+                        <div class="passage-english">
+                            {% for sentence in object_list %}
+                                <span id="sentence{{sentence.id}}">
+                                    {{ sentence.english }}
+                                </span>
+                            {% endfor %}
+                        </div>
+                        <div id='passage_jp' class='passage-japanese'></div>
+                    </div>  <!-- /#passageholder -->
+                </div>
+
+                <div id="dialogue-input">
+                    <div id="grammarholder">
+                        <div id='context_one' class='context-container'></div>
+                        <div id='passage_eng' class='challenge-grammar'></div>
+                        <div class='prompt-container'>
+                            <span id='passage_hint' class='letterspacing5r'></span>
+                            <a id="bug-button" href="#" tabindex="-1" style="display: none;">
+                                <i id="report-issue" class="fa fa-bug red-words" aria-hidden="true"><span class="raleway">&nbsp;Error?</span></i>
+                            </a>
+                        </div>
+                    </div>  <!-- /#grammarholder -->
+
+                    <form id='passageform' action='' class='answer_box' method='post'>{% csrf_token %}
+                        <input id='id_passageattempt' type='text' name='passageattempt' autofocus />
+                        <input id='passageactual' type='hidden' name='passageactual' value='' />
+                        <input id='passage_index' type='hidden' name='passage_index' value='' />
+                        <input id='passagekana' type='hidden' name='passagekana' value='' />
+                        <input type='submit' value='&#8680;' />
+                    </form>
+                    <div id='literal_one' class='literal-container'></div>
+                </div>
+
+            </div>  <!-- /.col-lg-12 -->
+        </div>  <!-- /.row -->
+        <div class="spacer-50"></div>
+    </div>  <!-- /.container-fluid -->
+</div>  <!-- /#page-content-wrapper -->
+
+</div>  <!-- /#wrapper -->
+
+<!-- wanakana, menu toggle, and get/post mechanics -->
+<script type='text/javascript' src='{% static 'js/wanakana.js' %}'></script>
+<script type='text/javascript' src='{% static 'js/cookiemonster.js' %}'></script>
+<script type='text/javascript'>
+    var passage_level = 3;
+    var passage_index = 0;
+    var current_passage = '';
+    var currentline = '';
+    var totalinputs = 0;
+    var incorrectinputs = 0;
+    var nextstep = 1;
+    var newlywrong = 0;
+    var input = document.getElementById('id_passageattempt');
+    wanakana.bind(input);
+
+    function passageNext(data) {
+        if (data['id'] != null) {
+            $('#passage_eng').html(data['english']);
+            $('#passageactual').val(data['kana_clean']);
+            $('#passagekana').val(data['kana']);
+            if (data['literal'].trim()) {
+                $('#literal_one').html('<div class="white-words litcontextbox upper">literal</div>' + data['literal'] + '&nbsp;');
+            } else {
+                $('#literal_one').html('&nbsp;');
+            }
+            $('#context_one').html(data['context'] + '&nbsp;');
+            $('#passage_jp').html(current_passage);
+            switch (passage_level) {
+                case 3:
+                    if (data['disamb_location'] != 0) {
+                        $('#passage_hint').html(data['kana_all_blank']);
+                        $('#passage_hint').addClass('letterspacing5y');
+                    } else {
+                        $('#passage_hint').html('&nbsp;');
+                    } break;
+                case 2:
+                    $('#passage_hint').html(data['kana_all_blank']);
+                    $('#passage_hint').removeClass('letterspacing5y');
+                    break;
+                case 1:
+                    $('#passage_hint').html(data['kana_alt_blank']); break;
+                default:
+                    $('#passage_hint').html(data['kana']); break;
+            }
+            currentline = '#sentence' + data['id'];
+            $(currentline).attr('class', 'green-words-bold');
+            $('#passageform').removeClass('answer_box_g answer_box_r');
+        } else {
+            var passage_grade = (totalinputs-incorrectinputs)/totalinputs;
+            var total_passage = $('#retain-passage').html();
+            $.ajax({
+                url: "{% url 'main:exercisepassagegrade' chapter.id exercise.id %}",
+                data: { 'passage_grade' : passage_grade }, type: "POST",
+                success: function (data) {
+                    $('#wrapper').html(data);
+                    $('#retain-passage').html(total_passage);
+                }
+            })
+        }
+    }
+
+    $('#passageform').submit(function(event) {
+        event.preventDefault();
+        var clean_attempt = $('#id_passageattempt').val().replace(/[　。、？！「」\'\",.?!\s]/g, "");
+        if (clean_attempt == $('#passageactual').val()) {
+            $('#bug-button').hide();
+            $('#passageform').attr('class', 'answer_box answer_box_g');
+            $('#passage_eng').attr('class', 'challenge-grammar');
+            if (passage_level == 3) {
+                totalinputs++;
+                nextstep = 1;
+                newlywrong = 0;
+                passage_index++;
+                $(currentline).removeClass('green-words-bold');
+                current_passage += $('#passagekana').val();
+            } else {
+                if (newlywrong == 0) { incorrectinputs++; }
+                newlywrong = 1;
+                nextstep = 0;
+                passage_level = 3;
+            }
+        } else {
+            $('#bug-button').show();
+            $('#passageform').attr('class', 'answer_box_red answer_box_r');
+            $('#passage_eng').attr('class', 'challenge-grammar red-words');
+            if (passage_level > 0) {
+                passage_level--;
+            }
+        }
+        $('#passage_index').val(passage_index);
+        var form_data = $('#passageform').serialize();
+        $.post("{% url 'main:exercisepassagecheck' chapter.id exercise.id %}", form_data).done(function(data) {
+            $('#passageform')[0].reset();
+            passageNext(data);
+        })
+    });
+
+    $(document).ready(function() {
+        var urlstring = "/main/chapter/" + '{{ chapter.id }}' + "/exercise_p" + '{{ exercise.id }}' + "/grab/0";
+        $.get(urlstring).done(function (data) {
+            passageNext(data);
+            $('#id_passageattempt').focus();
+        })
+    });
+
+    $('#bug-button').click(function() {
+        $('#form-modal-body').load('/main/newissue/', function () {
+            $('#form-modal').modal('toggle');
+            formAjaxSubmit('#form-modal-body form', '#form-modal');
+        });
+    });
+</script>
+
+{% endblock %}

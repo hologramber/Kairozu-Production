@@ -1,0 +1,78 @@
+{% extends 'kairozu.html' %}
+{% block title %}Kairozu {{ chapter.title }} Grammar{% endblock %}
+{% block sidecollapse %}<div id="sidecollapse"><a id="menu-toggle" href="#" class="btn-menu toggle"><span class="glyphicon glyphicon-list"></span></a></div>{% endblock %}
+
+{% load kairozu_summary from kairozu_tables %}
+
+{% load static %}
+{% block content %}
+
+<div id='island4'></div>
+
+<div id="wrapper">
+{% include 'main/sidebar.html' %}
+    <div id="page-content-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+
+					<h1>{{ chapter.title }} Grammar Summary</h1>
+					<div class="spacer-30"></div>
+
+					<div class="table-responsive">
+						<div class="hugtable-summary">
+							<table class="generaltable">
+                                {% for lesson in object_list %}
+									<tr>
+										<td><span class="bold">{{ lesson.title }}</span></td>
+                                        {% if user.profile.currentexpression > chapter.id and user.profile.currentlesson >= lesson.id %}
+										    <td><a href="{% url 'main:lesson' lesson.id %}">{{ lesson.overview }}</a></td>
+                                        {% else %}
+                                            <td class="grey-words">{{ lesson.overview }}</td>
+                                        {% endif %}
+									</tr>
+								{% endfor %}
+							</table>
+						</div>
+					</div>
+
+					<div class="spacer-40"></div>
+
+					{% for lesson in object_list %}
+                        {% if lesson.point_active %}
+                            <div class="row">
+                                <div class="col-md-4 col-sm-12">
+                                    <div class="hugtable-no-border">
+                                        <h2 style="margin-top: 0;">{{ lesson.f_english|safe }}</h2>
+                                        <h2>{{ lesson.f_hiragana|safe }}</h2>
+                                        <div class="spacer-5"></div>
+                                        <h4 class="raleway">{{ lesson.overview }}</h4>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3 col-sm-12">
+                                    <div class="hugtable-no-border">
+                                        {% for example in lesson.examples.all %}
+                                            <p>{{ example.f_english|safe }}<br />{{ example.f_hiragana|safe }}</p>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-5 col-sm-12">
+                                    {% kairozu_summary lesson %}
+                                </div>
+                            </div>
+
+                            <div class="spacer-30"></div>
+                            <div class="border-bottom-grey-dashed"></div>
+                            <div class="spacer-40"></div>
+                        {% endif %}
+					{% endfor %}
+
+                </div>  <!-- /.col-lg-12 -->
+            </div>  <!-- /.row -->
+        </div>  <!-- /.container-fluid -->
+    </div>  <!-- /#page-content-wrapper -->
+</div>  <!-- /#wrapper -->
+
+{% endblock %}

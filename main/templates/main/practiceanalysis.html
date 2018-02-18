@@ -1,0 +1,229 @@
+{% extends 'kairozu.html' %}
+{% block title %}Kairozu Practice Analysis{% endblock %}
+{% load static %}
+{% block content %}
+
+<!--#page-content-wrapper-->
+<div id="page-content-wrapper">
+	<div class="container-fluid">
+
+        <table width="100%">
+
+            <tr>
+                <td colspan="2" class="text-align-center">
+                    <h2 class="opensans">
+                        {% if lesson %}
+                            {% if last != 0 %}
+                                <a class="smaller" href="{% url 'main:pa_lesson' last %}"><< Last</a>
+                            {% else %}
+                                <span class="smaller"><< Last</span>
+                            {% endif %}
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="{% url 'main:interface' chapter.id %}">Chapter {{ chapter.id }}</a>, <a href="{% url 'main:lesson' lesson.id %}">Practice {{ lesson.id }}</a> Analysis (<a href="/admin/main/practice/?lesson__id__exact={{ lesson.id }}">{{ object_list.count }}</a>)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="smaller" href="{% url 'main:pa_lesson' next %}">Next >></a>
+                        {% else %}
+                            {% if last != 0 %}
+                                <a class="smaller" href="{% url 'main:pa_chapter' last %}"><< Last</a>
+                            {% else %}
+                                <span class="smaller"><< Last</span>
+                            {% endif %}
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="{% url 'main:interface' chapter.id %}">Chapter {{ chapter.id }}</a> ALL Practice Analysis ({{ object_list.count }})&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="smaller" href="{% url 'main:pa_chapter' next %}">Next >></a>
+                        {% endif %}
+                    </h2>
+                    <div class="spacer-20"></div>
+                </td>
+            </tr>
+
+            {% if lesson %}
+                <tr>
+                    <td colspan="2">
+                        <table style="margin: 0 auto;">
+                            <tr class="text-align-center">
+                                <td class="raleway" style="font-weight: bold; text-align: left; white-space: nowrap;">Index #:</td>
+                                {% for practice in object_list %}
+                                    <td style="padding: 0 3px;">
+                                        <a class="bold" href="#{{ forloop.counter }}">
+                                            {{ forloop.counter }}
+                                            <div class="spacer-5"></div>
+                                        </a>
+                                    </td>
+                                {% endfor %}
+                            </tr>
+                            <tr class="text-align-center">
+                                <td class="raleway" style="font-weight: bold; text-align: left; white-space: nowrap;">EN PoS-R:</td>
+                                {% for practice in object_list %}
+                                    <td style="padding: 0 3px;">
+                                        {{ practice.enposcompare|safe }}
+                                    </td>
+                                {% endfor %}
+                            </tr>
+                            <tr class="text-align-center">
+                                <td class="raleway" style="font-weight: bold; text-align: left; white-space: nowrap;">EN PoS:</td>
+                                {% for practice in object_list %}
+                                    <td style="padding: 0 3px;">
+                                        {{ practice.enposcomparelr|safe }}
+                                        <div class="spacer-10"></div>
+                                    </td>
+                                {% endfor %}
+                            </tr>
+
+                            <tr class="text-align-center">
+                                <td class="raleway" style="font-weight: bold; text-align: left; white-space: nowrap;">JP PoS-R:</td>
+                                {% for practice in object_list %}
+                                    <td style="padding: 0 3px;">
+                                        {{ practice.poscompare|safe }}
+                                    </td>
+                                {% endfor %}
+                            </tr>
+                            <tr class="text-align-center">
+                                <td class="raleway" style="font-weight: bold; text-align: left; white-space: nowrap;">JP Pos:</td>
+                                {% for practice in object_list %}
+                                    <td style="padding: 0 3px;">
+                                        {{ practice.poscomparelr|safe }}
+                                    <div class="spacer-10"></div>
+                                    </td>
+                                {% endfor %}
+                            </tr>
+
+                            <tr class="text-align-center">
+                                <td class="raleway" style="font-weight: bold; text-align: left; white-space: nowrap;">JP Type-R:</td>
+                                {% for practice in object_list %}
+                                    <td style="padding: 0 3px;">
+                                        {{ practice.poscomparetype|safe }}
+                                    </td>
+                                {% endfor %}
+                            </tr>
+                            <tr class="text-align-center">
+                                <td class="raleway" style="font-weight: bold; text-align: left; white-space: nowrap;">JP Type:</td>
+                                {% for practice in object_list %}
+                                    <td style="padding: 0 3px;">
+                                        {{ practice.poscomparetypelr|safe }}
+                                    </td>
+                                {% endfor %}
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <div class="spacer-40"></div>
+                    </td>
+                </tr>
+            {% endif %}
+            <tr>
+                <td style="vertical-align: top;" width="60%">
+                    <table>
+                        {% for practice in object_list %}
+                            <tr>
+                                <td>
+                                    <a name="{{ forloop.counter }}"></a><span class="bold">{{ forloop.counter }}&nbsp;</span>
+                                </td>
+                                <td class="raleway" style="padding: 2px;">{{ practice.pone_english }}&nbsp;</td>
+                                <td>
+                                    {% for tag in practice.pone_tags %}
+                                        {{ tag }}&nbsp;
+                                    {% endfor %}&nbsp;
+                                </td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td class="raleway" style="padding: 2px;">{{ practice.ptwo_english }}&nbsp;</td>
+                                <td>
+                                    {% for tag in practice.ptwo_tags %}
+                                        {{ tag }}&nbsp;
+                                    {% endfor %}&nbsp;
+                                </td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td colspan="4"><div class="spacer-5"></div></td>
+                            </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>{{ practice.pone_kprocess }}&nbsp;</td>
+                                <td>
+                                    {% for posid in practice.pone_posids %}
+                                        {{ posid }}&nbsp;
+                                    {% endfor %}&nbsp;
+                                </td>
+                                <td>
+                                    {% for posname in practice.pone_jpcab %}
+                                        <a href="http://jisho.org/search/{{ posname }}">{{ posname }}</a>&nbsp;
+                                    {% endfor %}&nbsp;
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>{{ practice.ptwo_kprocess }}&nbsp;</td>
+                                <td>
+                                    {% for posid in practice.ptwo_posids %}
+                                        {{ posid }}&nbsp;
+                                    {% endfor %}&nbsp;
+                                </td>
+                                <td>
+                                    {% for posname in practice.ptwo_jpcab %}
+                                        <a href="http://jisho.org/search/{{ posname }}">{{ posname }}</a>&nbsp;
+                                    {% endfor %}&nbsp;
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">&nbsp;</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </td>
+
+                <td style="vertical-align: top;" width="40%">
+                    <table>
+                        {% for practice in object_list %}
+                            {% if forloop.last %}
+                                {% if practice.missingvocab %}
+                                    <tr>
+                                        <td class="larger">Vocab Surplus</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="raleway">
+                                            {% for word in practice.missingvocab %}
+                                                {{ word }},
+                                            {% endfor %}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>&nbsp;</td>
+                                    </tr>
+                                {% endif %}
+                                {% if practice.missingwords %}
+                                    <tr>
+                                        <td class="larger">Unused <a href="{% url 'main:vocablist' chapter.id %}">Chapter {{ chapter.id }} Vocabulary</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="raleway">
+                                            {% for word in practice.missingwords %}
+                                                {{ word }},
+                                            {% endfor %}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>&nbsp;</td>
+                                    </tr>
+                                {% endif %}
+                                <tr>
+                                    <td class="larger">Most Frequently Used Words</td>
+                                </tr>
+                                <tr>
+                                    <td class="raleway">{{ practice.fullcount2|safe }}</td>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                    </table>
+                </td>
+
+            </tr>
+
+        </table>
+
+        <div class="spacer-100"></div>
+
+    </div>  <!--/.container .container-kairozu-->
+</div>  <!--/#page-content-wrapper-->
+
+{% endblock %}

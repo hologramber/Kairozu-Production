@@ -1,0 +1,141 @@
+{% extends 'kairozu.html' %}
+{% block title %}Kairozu Demo Expression Quiz{% endblock %}
+{% block sidecollapse %}<div id="sidecollapse"><a id="menu-toggle" href="#" class="btn-menu toggle"><span class="glyphicon glyphicon-list"></span></a></div>{% endblock %}
+
+{% load static %}
+{% block content %}
+
+<script type='text/javascript'>
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie != '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);       // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+$.ajaxSetup({
+    beforeSend: function(xhr, settings) {
+        if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+            xhr.setRequestHeader('X-CSRFToken', getCookie('csrftoken'));    // Only send token to relative/local URLs
+        }
+    }
+});
+</script>
+
+<div id='island'></div>
+
+<!-- wrapper -->
+<div id='wrapper'>
+{% include 'demo/sidebar.html' %}
+
+    <!-- page-content-wrapper -->
+    <div id='page-content-wrapper'>
+        <div class='container-fluid'>
+            <div class='row'>
+                <div class='col-lg-12'>
+					<div id='vocabholder'>
+
+                        <div id='vocabfield'>
+                            <div id='literal_one' class='vocab-note text-align-center'></div>
+                            <div id='vocab_english' class='vocab-challenge text-align-center'></div>
+
+                            <div class='vocab-prompt-container text-align-center'>
+                                <span id='hint_block' class='letterspacing5r'>&nbsp;</span>
+                            </div>
+
+                            <form id='vocabquizform' action='' method='post' class='answer_box'>{% csrf_token %}
+                                <input id='id_vocabattempt' type='text' name='vocab_attempt' autofocus />
+                                <input id='vactual' type='hidden' name='vocab_actual' value='' />
+                                <input id='vindex' type='hidden' name='vindex' value='' />
+                                <input type='submit' value='&#8680;' />
+                            </form>
+                        </div>  <!-- /#vocabfield -->
+                    </div>  <!-- /#vocabholder -->
+
+                </div>  <!-- /.col-lg-12 -->
+            </div>  <!-- /.row -->
+            <div class="quiz-tips dashed-grey-2">
+                <span class="bold">Tips:</span>
+                <ul>
+                    <li>Type the word in romaji; it should auto-convert into hiragana.</li>
+                    <li>Hold down shift to auto-convert roman characters into katakana.</li>
+                    <li>Spaces and punctuation are okay, but not necessary.</li>
+                </ul>
+            </div>
+
+        </div>  <!-- /.container-fluid -->
+    </div>  <!-- /#page-content-wrapper -->
+
+</div>  <!-- /#wrapper -->
+
+<!-- wanakana, menu toggle, and get/post mechanics -->
+<script type='text/javascript' src='{% static 'js/wanakana.js' %}'></script>
+<script type='text/javascript'>
+    var vlevel = 3;
+    var vindex = 0;
+    var input = document.getElementById('id_vocabattempt');
+    wanakana.bind(input);
+
+    function vocabNext(data) {
+        if (data['id'] != null) {
+            $('#vocab_english').html(data['english']);
+            $('#vocabquizform #vactual').val(data['kana_clean']);
+            switch(vlevel) {
+                case 3:
+                    $('#hint_block').html('&nbsp;'); break;
+                case 2:
+                    $('#hint_block').html(data['kana_all_blank']); break;
+                case 1:
+                    $('#hint_block').html(data['kana_alt_blank']); break;
+                default:
+                    $('#hint_block').html(data['kana']); break;
+            }
+            $('#vocabquizform').removeClass('answer_box_g answer_box_r');
+        } else {
+            $.get("{% url 'demo:demoexpressionsuccess' %}").done(function (data) {
+                $('#wrapper').html(data);
+            });            
+        }
+    }
+    $('#vocabquizform').submit(function(event) {
+        event.preventDefault();
+        var clean_attempt = $('#id_vocabattempt').val().replace(/[　。、？！「」\'\",.?!\s]/g, "");
+        if (clean_attempt == $('#vactual').val()) {
+            $('#vocabquizform').attr('class', 'answer_box answer_box_g');
+            if (vlevel == 3) {
+                vindex++;
+            } else {
+                vlevel = 3;
+            }
+        } else {
+            $('#vocabquizform').attr('class', 'answer_box_red answer_box_r');
+            if (vlevel > 0) {
+                vlevel--;
+            }
+        }
+        $('#vocabquizform #vindex').val(vindex);
+        var form_data = $('#vocabquizform').serialize();
+        $.post("{% url 'demo:demoexpressioncheck' %}", form_data).done(function(data) {
+            $('#vocabquizform')[0].reset();
+            vocabNext(data);
+        });
+    });
+
+    $(document).ready(function() {
+        var urlstring = "/demo/expressionquiz/grab/0";
+        $.get(urlstring).done(function (data) {
+            vocabNext(data);
+            $('#id_vocabattempt').focus();
+        });
+    });
+</script>
+
+{% endblock %}

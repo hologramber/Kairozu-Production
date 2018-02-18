@@ -1,0 +1,15 @@
+<div class="spacer-10"></div>
+<h2>
+    Score (of 3 stars):
+    {% if erecord.rating == 3 %}
+    <i class="fa fa-star" aria-hidden="true"></i>&nbsp;<i class="fa fa-star" aria-hidden="true"></i>&nbsp;<i class="fa fa-star" aria-hidden="true"></i>
+    {% elif erecord.rating == 2 %}
+    <i class="fa fa-star" aria-hidden="true"></i>&nbsp;<i class="fa fa-star" aria-hidden="true"></i>&nbsp;<i class="fa fa-star-o" aria-hidden="true"></i>
+    {% elif erecord.rating == 1 %}
+    <i class="fa fa-star" aria-hidden="true"></i>&nbsp;<i class="fa fa-star-o" aria-hidden="true"></i>&nbsp;<i class="fa fa-star-o" aria-hidden="true"></i>
+    {% else %}
+    <i class="fa fa-star-o" aria-hidden="true"></i>&nbsp;<i class="fa fa-star-o" aria-hidden="true"></i>&nbsp;<i class="fa fa-star-o" aria-hidden="true"></i>
+    {% endif %}
+</h2>
+
+<h4>You answered {{ erecord.newscore }}% of the lines correctly on the first try.</h4>

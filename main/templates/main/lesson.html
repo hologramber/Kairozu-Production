@@ -1,0 +1,112 @@
+{% extends 'kairozu.html' %}
+{% block title %}Kairozu {{ chapter.title }}・{{ lesson.id }}{% endblock %}
+{% block sidecollapse %}<div id="sidecollapse"><a id="menu-toggle" href="#" class="btn-menu toggle"><span class="glyphicon glyphicon-list"></span></a></div>{% endblock %}
+
+{% load kairozu_point from kairozu_tables %}
+{% load kairozu_table2 from kairozu_tables %}
+{% load kairozu_table4 from kairozu_tables  %}
+{% load static %}
+
+{% block content %}
+
+<div id="wrapper">
+{% include 'main/sidebar.html' %}
+    <div id="page-content-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    {% if lesson %}
+                        <div class="center-block text-align-center">
+                            <h1 class="lessonhead">{{ lesson.f_english|safe }}</h1>
+                            <h1 class="lessonhead">{{ lesson.f_hiragana|safe }}</h1>
+                        </div>
+
+                        <div id="grammar-explain">
+                            {% for x in pieces %}
+                                {% if x.shape is 0 %}
+                                    {{ x.f_text|safe }}
+                                {% elif x.shape is 1 %}
+                                    <p>{{ x.f_text|safe }}</p>
+                                {% elif x.shape is 2 %}
+                                    {% kairozu_table2 x %}
+                                {% elif x.shape is 4 %}
+                                    {% kairozu_table4 x %}
+                                {% endif %}
+                            {% endfor %}
+
+                            {% if lesson.point_active %}
+                                <div class="spacer-15"></div>
+                                {% kairozu_point lesson %}
+                            {% endif %}
+
+                            <div class="row">
+                                {% for example in lesson.examples.all %}
+                                    <div class="col-md-4">
+                                        <div class="gexample dashed-grey-2">
+                                            {{ example.f_english|safe }}<br />
+                                            {{ example.f_hiragana|safe }}
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+
+                            <div class="spacer-20"></div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div id="more-info">
+                                        <ul>
+                                            {% for moreinfo in lesson.moreinfos.all %}
+                                                <li>{{ moreinfo.text }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    {% if user.profile.currentpractice > lesson.id %}
+                                        <div class="practicebutton">
+                                            <a href="{% url 'main:sentencequiz' lesson.id %}"><img class="img-responsive" id="lessonquiz" alt="クイズ" src="{% static 'img/quiz_button.png' %}" /></a>
+                                        </div>
+                                        <script type='text/javascript'>
+                                            $(document).ready(function() {
+                                                $('#lessonquiz').hover(function() {
+                                                    $(this).attr("src", "{% static 'img/quiz_button-hover.png' %}");
+                                                }, function() {
+                                                    $(this).attr("src", "{% static 'img/quiz_button.png' %}");
+                                                });
+                                            });
+                                        </script>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-3">
+                                    {% if user.profile.currentlesson >= lesson.id or lesson.id == 1 %}
+                                        <div class="practicebutton">
+                                            <a href="{% url 'main:practicequiz' lesson.id %}"><img class="img-responsive" id="lessonpractice" alt="Practice" src="{% static 'img/practice_button.png' %}" /></a>
+                                        </div>
+                                        <script type='text/javascript'>
+                                            $(document).ready(function() {
+                                                $('#lessonpractice').hover(function() {
+                                                    $(this).attr("src", "{% static 'img/practice_button-hover.png' %}");
+                                                }, function() {
+                                                    $(this).attr("src", "{% static 'img/practice_button.png' %}");
+                                                });
+                                            });
+                                        </script>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <p>No lesson content is available.</p>
+                {% endif %}
+
+                </div>  <!-- /.col-lg-12 -->
+            </div>  <!-- /.row -->
+        </div>  <!-- /.container-fluid -->
+    </div>  <!-- /#page-content-wrapper -->
+</div>  <!-- /#wrapper -->
+
+
+{% endblock %}

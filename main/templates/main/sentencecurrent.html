@@ -1,0 +1,38 @@
+<!-- page-content-wrapper -->
+<div id='page-content-wrapper'>
+    <div class='container-fluid'>
+        <div class='row'>
+            <div class='col-lg-12'>
+                <div id='sentenceholder'>
+                    <div id='sentencefield'>
+                        <h1>おめでとう～！　You're caught up with Sentence Reviews!</h1>
+                        {% include 'main/reviewcurrent.html' %}
+
+                        <h3>Preview your upcoming sentence reviews～</h3>
+                        <div class="table-responsive">
+                            <table class="vocablist">
+                                <thead>
+                                    <tr>
+                                        <th>English ・英語</th>
+                                        <th>Kana ・仮名</th>
+                                        <th>Next Review</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for word in object_list %}
+                                        <tr>
+                                            <td>{{ word.sentence.english }}</td>
+                                            <td>{{ word.sentence.kana }}</td>
+                                            <td>{{ word.next_review }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>  <!-- /#sentencefield -->
+                </div>  <!-- /#sentenceholder -->
+            </div>  <!-- /.col-lg-12 -->
+        </div>  <!-- /.row -->
+    </div>  <!-- /.container-fluid -->
+</div>  <!-- /#page-content-wrapper -->

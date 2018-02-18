@@ -1,0 +1,56 @@
+{% extends 'kairozu.html' %}
+{% block title %}Kairozu Main{% endblock %}
+{% load static %}
+
+{% block content %}
+<!--#page-content-wrapper-->
+<div id="page-content-wrapper">
+	<div class="container container-kairozu">
+        <div class="spacer-50 hidden-xs"></div>
+        <div class="row pad-left-80">
+            {% for chapter in object_list %}
+                {% if chapter.status == 'H' %}
+                {% elif user.profile.currentchapter >= chapter.id and chapter.status != 'A' %}
+                    <a href="{% url 'main:interface' chapter.id %}">
+                        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 chapterbox">
+                            <h1 class="dashtitle">{{ chapter.title }}
+                            {% if chapter.status == 'B' %}<span class="betatag red-words bold">[BETA]</span>{% endif %}</h1>
+                            <h4 class="dashsubtitle">{{ chapter.subtitle }}</h4>
+                            <div class="dashprogress">
+                                {% if user.profile.currentvocab > chapter.id %}<i class="fa fa-check-circle" aria-hidden="true"></i>
+                                {% else %}<i class="fa fa-circle" aria-hidden="true"></i>{% endif %} Vocabulary<br />
+                                {% if user.profile.currentexpression > chapter.id %}<i class="fa fa-check-circle" aria-hidden="true"></i>
+                                {% else %}<i class="fa fa-circle" aria-hidden="true"></i>{% endif %} Expressions<br />
+                                {% if user.profile.currentstory > chapter.id %}<i class="fa fa-check-circle" aria-hidden="true"></i>
+                                {% else %}<i class="fa fa-circle" aria-hidden="true"></i>{% endif %} Lessons<br />
+                                {% if user.profile.pendingchapter > chapter.id %}<i class="fa fa-check-circle" aria-hidden="true"></i>
+                                {% else %}<i class="fa fa-circle" aria-hidden="true"></i>{% endif %} Exercises<br />
+                            </div>
+                        </div>
+                    </a>
+                {% elif user.profile.pendingchapter >= chapter.id and user.profile.pendingchapter > user.profile.currentchapter and chapter.status != 'A' %}
+                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 chapterbox-dim">
+                        <h1 class="dashtitle-dim">{{ chapter.title }}
+                        {% if chapter.status == 'B' %}<span class="betatag ltgrey-words bold">[BETA]</span>{% endif %}</h1>
+                        <h4 class="dashsubtitle-dim">{{ chapter.subtitle }}</h4>
+                            <div class="spacer-10"></div>
+                        <div class="width-60 text-align-center raleway"><a href="{% url "main:progress" %}">Unlock this chapter<br />by mastering<br />what you've learned<br />so far!</a></div>
+                    </div>
+                {% else %}
+                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 chapterbox-dim">
+                        <h1 class="dashtitle-dim">{{ chapter.title }}
+                        {% if chapter.status == 'B' %}<span class="betatag ltgrey-words bold">[BETA]</span>{% endif %}</h1>
+                        <h4 class="dashsubtitle-dim">{{ chapter.subtitle }}</h4>
+                        <div class="dashprogress">
+                            <span class="smaller ltgrey-words">
+                                {% if chapter.status == 'A' %}In Development!{% endif %}</span>
+                            <br /><br /><br /><br />
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>  <!-- /.row -->
+    </div>  <!--/.container .container-kairozu-->
+</div>  <!--/#page-content-wrapper-->
+
+{% endblock %}

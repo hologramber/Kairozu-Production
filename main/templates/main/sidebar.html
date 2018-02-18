@@ -1,0 +1,126 @@
+<div id="sidebar-wrapper">
+	<ul class="sidebar-nav">
+		<li class="sidebar-brand">
+			<a href="{% url 'main:interface' chapter.id %}">{{ chapter.title }}</a>
+		</li>
+
+
+        <li class="primarylinks">
+            {% if user.profile.currentchapter >= chapter.id %}
+                <a href="{% url 'main:vocablist' chapter.id %}">{{ chapter.title }} Vocabulary</a>
+            {% else %}
+                {{ chapter.title }} Vocabulary
+            {% endif %}
+        </li>
+
+		<li class="chapterlinks">
+			<div class="progress-status">
+				{% if user.profile.currentvocab > chapter.id %}
+					<span class="green-words normal"><i class="fa fa-check" aria-hidden="true"></i></span>
+				{% else %}
+					<span class="normal"><i class="fa fa-check" aria-hidden="true"></i></span>
+				{% endif %}
+			</div>
+            {% if user.profile.currentchapter >= chapter.id %}
+                <a href="{% url 'main:vocabquiz' chapter.id %}"><span class="pad-left-15">Vocabulary Quiz</span></a>
+            {% else %}
+                <span class="pad-left-15">Vocabulary Quiz</span>
+            {% endif %}
+		</li>
+
+        <li class="primarylinks">
+			{% if user.profile.currentvocab > chapter.id %}
+				<a href="{% url 'main:expressionlist' chapter.id %}">{{ chapter.title }} Expressions</a>
+			{% else %}
+				{{ chapter.title }} Expressions
+			{% endif %}
+        </li>
+
+        <li class="chapterlinks">
+            <div class="progress-status">
+				{% if user.profile.currentexpression > chapter.id %}
+					<span class="green-words normal"><i class="fa fa-check" aria-hidden="true"></i></span>
+				{% else %}
+					<span class="normal"><i class="fa fa-check" aria-hidden="true"></i></span>
+				{% endif %}
+			</div>
+			{% if user.profile.currentvocab > chapter.id %}
+                <a href="{% url 'main:expressionquiz' chapter.id %}"><span class="pad-left-15">Expression Quiz</span></a>
+			{% else %}
+                <span class="pad-left-15">Expression Quiz</span>
+			{% endif %}
+        </li>
+
+		<li class="primarylinks">
+			{% if user.profile.currentexpression > chapter.id %}
+				<a href="{% url 'main:summary' chapter.id %}">{{ chapter.title }} Grammar</a>
+			{% else %}
+				{{ chapter.title }} Grammar
+			{% endif %}
+		</li>
+	
+        {% for lesson in chapter.lesson_set.all %}
+			<li class="chapterlinks">
+				<div class="progress-status">
+					{% if user.profile.currentlesson > lesson.id %}
+						<span class="green-words normal"><i class="fa fa-check" aria-hidden="true"></i></span>
+					{% else %}
+						<span class="normal"><i class="fa fa-check" aria-hidden="true"></i></span>
+					{% endif %}
+				</div>
+				{% if user.profile.currentlesson >= lesson.id and user.profile.currentexpression > chapter.id %}
+                    <a href="{% url 'main:lesson' lesson.id %}"><span class="pad-left-15">{{ lesson.title }}</span></a>
+				{% else %}
+                    <span class="pad-left-15">{{ lesson.title }}</span>
+				{% endif %}
+			</li>
+		{% endfor %}
+
+
+        <li class="primarylinks">
+			{% if user.profile.currentstory > chapter.id %}
+				<a href="{% url 'main:exercises' chapter.id %}">{{ chapter.title }} Exercises</a>
+			{% else %}
+				{{ chapter.title }} Exercises
+			{% endif %}
+		</li>
+
+        {% for exercisesb in chapter.exercise_set.all %}
+			<li class="chapterlinks">
+				<div class="progress-status">
+                    {% if user.profile.currentexercise > exercisesb.exercise_order %}
+                        <span class="green-words normal"><i class="fa fa-check" aria-hidden="true"></i></span>
+                    {% elif user.profile.attemptexercise == exercisesb.exercise_order %}
+                        <span class="red-words normal"><i class="fa fa-refresh" aria-hidden="true"></i></span>
+                    {% else %}
+                        <span class="normal"><i class="fa fa-check" aria-hidden="true"></i></span>
+                    {% endif %}
+				</div>
+                {% if user.profile.currentstory > chapter.id and user.profile.currentexercise >= exercisesb.exercise_order %}
+                    {% if exercisesb.exercise_type == 'passage' %}
+                        <a href="{% url 'main:exercisepassage' chapter.id exercisesb.id %}"><span class="pad-left-15"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>　{{ exercisesb.exercise_word }}</span></a>
+                    {% else %}
+                        <a href="{% url 'main:exercisedialogue' chapter.id exercisesb.id %}"><span class="pad-left-15"><i class="fa fa-comment-o fa-fw" aria-hidden="true"></i>　{{ exercisesb.exercise_word }}</span></a>
+                    {% endif %}
+                {% else %}
+                    {% if exercisesb.exercise_type == 'passage' %}
+                        <span class="pad-left-15"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>　{{ exercisesb.exercise_word }}</span>
+                    {% else %}
+                        <span class="pad-left-15"><i class="fa fa-comment-o fa-fw" aria-hidden="true"></i>　{{ exercisesb.exercise_word }}</span>
+                    {% endif %}
+                {% endif %}
+			</li>
+		{% endfor %}
+
+        {% if user.profile.currentchapter > chapter.id %}
+            <li><br /></li>
+            <li class="primarylinks">
+                <span class="green-words">{{ chapter.title }}　は　おわりました！</span>
+                <a href="{% url 'main:interface' user.profile.currentchapter %}">第 {{ user.profile.currentchapter }} 章　に　いきましょう〜</a>
+            </li>
+        {% endif %}
+
+		<br /><br /><br />
+		
+	</ul>	<!-- /.sidebar-nav -->
+</div>	<!-- /#sidebar-wrapper -->
