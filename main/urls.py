@@ -34,12 +34,12 @@ urlpatterns = [
     url(r'^progress/$', views.ProgressView.as_view(), name='progress'),
     # url(r'^newissue/$', views.NewIssueView.as_view(), name='issue'),
 
-    url(r'^pa_lesson(?P<lesson_id>[0-9]+)/$', views.PracticeAnalysisView.as_view(), name='pa_lesson'),
-    url(r'^sa_lesson(?P<lesson_id>[0-9]+)/$', views.SentenceAnalysisView.as_view(), name='sa_lesson'),
-    url(r'^pa_chapter(?P<chapter_id>[0-9]+)/$', views.PracticeAnalysisChapterView.as_view(), name='pa_chapter'),
-    url(r'^sa_chapter(?P<chapter_id>[0-9]+)/$', views.SentenceAnalysisChapterView.as_view(), name='sa_chapter'),
-    url(r'^pa_full(?P<chapter_id>[0-9]+)/$', views.PracticeAnalysisFullView.as_view(), name='pa'),
-    url(r'^sa_full(?P<chapter_id>[0-9]+)/$', views.SentenceAnalysisFullView.as_view(), name='sa'),
+    # url(r'^pa_lesson(?P<lesson_id>[0-9]+)/$', views.PracticeAnalysisView.as_view(), name='pa_lesson'),
+    # url(r'^sa_lesson(?P<lesson_id>[0-9]+)/$', views.SentenceAnalysisView.as_view(), name='sa_lesson'),
+    # url(r'^pa_chapter(?P<chapter_id>[0-9]+)/$', views.PracticeAnalysisChapterView.as_view(), name='pa_chapter'),
+    # url(r'^sa_chapter(?P<chapter_id>[0-9]+)/$', views.SentenceAnalysisChapterView.as_view(), name='sa_chapter'),
+    # url(r'^pa_full(?P<chapter_id>[0-9]+)/$', views.PracticeAnalysisFullView.as_view(), name='pa'),
+    # url(r'^sa_full(?P<chapter_id>[0-9]+)/$', views.SentenceAnalysisFullView.as_view(), name='sa'),
 
     url(r'^lesson/(?P<lesson_id>[0-9]+)/$', views.LessonView.as_view(), name='lesson'),     # lesson interface
     url(r'^lesson/(?P<lesson_id>[0-9]+)/notes/$', views.GrammarNoteView.as_view(), name='grammarnote'),
@@ -87,8 +87,8 @@ urlpatterns = [
     url(r'^api/practicelist/$', api_views.PracticeList.as_view()),  # (api) /main/api/practicelist; practice API view
     url(r'^api/practicedetail/(?P<pk>[0-9]+)/$', api_views.PracticeDetail.as_view()),   # (api) practice API detail view
 
-    url(r'^api/profile/(?P<pk>[0-9]+)/$', api_views.ProfileDetail.as_view()),
-    url(r'^exercises/(?P<chapter_id>[0-9]+)/$', views.ExercisesAdminView.as_view()),
+    # url(r'^api/profile/(?P<pk>[0-9]+)/$', api_views.ProfileDetail.as_view()),
+    # url(r'^exercises/(?P<chapter_id>[0-9]+)/$', views.ExercisesAdminView.as_view()),
     # url(r'^adm/sentences/(?P<fix_id>[0-9]+)/$', api_views.SentenceAdminFixView.as_view()),
 ]
 
