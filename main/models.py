@@ -1049,36 +1049,36 @@ class SentenceRecord(models.Model):
         sentencerecord.save()
 
 
-# @receiver(post_save, sender=User)
-# def create_user_profile(sender, instance, created, **kwargs):
-#     if created:
-#         Profile.objects.create(user=instance)
-#         VocabRecord.objects.initial_vocab_record(user=instance)
-#         SentenceRecord.objects.initial_sentence_record(user=instance)
-#         ExerciseRecord.objects.initial_exercise_record(user=instance)
-#         ExpressionRecord.objects.initial_expression_record(user=instance)
-#         instance.profile.save()
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance)
+        VocabRecord.objects.initial_vocab_record(user=instance)
+        SentenceRecord.objects.initial_sentence_record(user=instance)
+        ExerciseRecord.objects.initial_exercise_record(user=instance)
+        ExpressionRecord.objects.initial_expression_record(user=instance)
+        instance.profile.save()
 
 
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
-    Profile.objects.create(user=instance)
+    # Profile.objects.create(user=instance)
     instance.profile.save()
 
 
-# @receiver(post_save, sender=Profile)
-# def update_records(sender, instance, **kwargs):
-#     VocabRecord.objects.update_vocab_record(profile=instance)
-#     SentenceRecord.objects.update_sentence_record(profile=instance)
-#     ExerciseRecord.objects.update_exercise_record(profile=instance)
-#     ExpressionRecord.objects.update_expression_record(profile=instance)
+@receiver(post_save, sender=Profile)
+def update_records(sender, instance, **kwargs):
+    VocabRecord.objects.update_vocab_record(profile=instance)
+    SentenceRecord.objects.update_sentence_record(profile=instance)
+    ExerciseRecord.objects.update_exercise_record(profile=instance)
+    ExpressionRecord.objects.update_expression_record(profile=instance)
     # VocabRecord.objects.fix_vocab_record(profile=instance)
     # SentenceRecord.objects.fix_sentence_record(profile=instance)
     # ExerciseRecord.objects.fix_exercise_record(profile=instance)
     # ExpressionRecord.objects.fix_expression_record(profile=instance)
 
 
-# @receiver(user_logged_in)
-# def update_vr_sr_counts(sender, user, request, **kwargs):
-    # Profile.has_reviews(user)
+@receiver(user_logged_in)
+def update_vr_sr_counts(sender, user, request, **kwargs):
+    Profile.has_reviews(user)
     #Profile.ok_to_graduate(user)
