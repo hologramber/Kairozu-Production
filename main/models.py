@@ -1060,9 +1060,10 @@ class SentenceRecord(models.Model):
 #         instance.profile.save()
 
 
-# @receiver(post_save, sender=User)
-# def save_user_profile(sender, instance, **kwargs):
-#     instance.profile.save()
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
+    Profile.objects.create(user=instance)
+    instance.profile.save()
 
 
 # @receiver(post_save, sender=Profile)

@@ -13,24 +13,25 @@ from main.tokens import activationtoken
 
 
 def register(request):
-    if request.method == 'POST':
-        form = SignUpForm(request.POST)
-        if form.is_valid():
-            user = form.save(commit=False)
-            user.is_active = False
-            user.save()
-            subject = 'Activate Your Kairozu Account'
-            message = render_to_string('email/activation_email.html', {
-                'user': user,
-                'uid': urlsafe_base64_encode(force_bytes(user.pk)).decode(),
-                #'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-                'token': activationtoken.make_token(user),
-            })
-            user.email_user(subject, message)
-            return redirect('activation_sent')
-    else:
-        form = SignUpForm()
-    return render(request, 'register.html', {'form': form})
+    # if request.method == 'POST':
+    #     form = SignUpForm(request.POST)
+    #     if form.is_valid():
+    #         user = form.save(commit=False)
+    #         user.is_active = False
+    #         user.save()
+    #         subject = 'Activate Your Kairozu Account'
+    #         message = render_to_string('email/activation_email.html', {
+    #             'user': user,
+    #             'uid': urlsafe_base64_encode(force_bytes(user.pk)).decode(),
+    #             #'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+    #             'token': activationtoken.make_token(user),
+    #         })
+    #         user.email_user(subject, message)
+    #         return redirect('activation_sent')
+    # else:
+    #     form = SignUpForm()
+    # return render(request, 'register.html', {'form': form})
+    return render(request, 'closed_register.html')
 
 
 def activation_sent(request):
