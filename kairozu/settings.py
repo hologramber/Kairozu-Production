@@ -143,3 +143,8 @@ MESSAGE_TAGS = {
     messages.WARNING: 'alert-warning',
     messages.ERROR: 'alert-danger',
 }
+
+try:
+    from kairozu.local_settings import *
+except ImportError:
+    pass
