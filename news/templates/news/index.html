@@ -12,8 +12,10 @@
                 <h1>Kairozu News & Site Updates</h1>
                 {% for post in posts %}
                     <h3 class="raleway"><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
-                    <p>{{ post.text|safe }}</p>
                     <span class="smaller">Posted on <time datetime="{{ post.published_date|date:"c" }}"> {{ post.published_date|date }}</time></span>
+                    <p>{{ post.text|safe|truncatewords_html:100 }}</p>
+                    <p><a class="read-more" href="{{ post.get_absolute_url }}">View Full Post &raquo;</a></p>
+                    <br />
                 {% endfor %}
             </div>
             <div class="col-sm-4">
