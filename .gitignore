@@ -60,6 +60,7 @@ migrations/
 db.sqlite3
 *.sqlite3
 staticfiles/
+kairozulocal/
 
 # Flask stuff:
 instance/
