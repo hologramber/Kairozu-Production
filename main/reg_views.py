@@ -87,6 +87,15 @@ def account(request):
         strictform = ChangeStrictModeForm(strictdata)
     return render(request, 'account.html', {'form': form, 'strictform': strictform, 'currentchapter': currentchapter, 'currentlesson': currentlesson})
 
+def error_400(request):
+    data = {}
+    return render(request, '400.html', data)
+
+
+def error_403(request):
+    data = {}
+    return render(request, '403.html', data)
+
 
 def error_404(request):
     data = {}

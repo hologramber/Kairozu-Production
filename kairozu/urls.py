@@ -5,7 +5,7 @@ function views: from my_app import views, url(r'^$', views.home, name='home')
 cbv: from other_app.views import Home, url(r'^$', Home.as_view(), name='home')
 import urlconf: from django.conf.urls import url, include, url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url, include, handler404, handler500
+from django.conf.urls import url, include, handler404, handler500, handler400, handler403
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.views.generic import TemplateView
@@ -34,11 +34,7 @@ urlpatterns = [
     url(r'^demo/', include('demo.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
+handler400 = reg_views.error_400
+handler403 = reg_views.error_403
 handler404 = reg_views.error_404
 handler500 = reg_views.error_500
-
-# if settings.DEBUG:
-#     import debug_toolbar
-#     urlpatterns += [
-#         url(r'^__debug__/', include(debug_toolbar.urls)),
-#     ]
