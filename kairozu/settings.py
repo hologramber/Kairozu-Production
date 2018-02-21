@@ -14,9 +14,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '(ds98#%m4v-=^5o53q+vh5za=zhjzs#ra@9eizbhqw2e+(qm#g'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False 
+# DEBUG = False 
 
-ALLOWED_HOSTS = ['35.224.138.192']
 #ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 #INTERNAL_IPS = ['127.0.0.1']
 
@@ -82,16 +81,16 @@ WSGI_APPLICATION = 'kairozu.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'kaidb',
-        'USER': 'kaidbadmin',
-        'PASSWORD': 'mdyxkJD383jxhXYk3200ip',
-        'HOST': 'localhost',
-        'PORT': '',
-    }
-}
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#        'NAME': 'kaidb',
+#        'USER': 'kaidbadmin',
+#        'PASSWORD': 'xxx',
+#        'HOST': 'localhost',
+#        'PORT': '',
+#    }
+#}
 
 
 # Password validation
