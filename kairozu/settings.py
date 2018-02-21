@@ -6,7 +6,6 @@ from django.contrib.messages import constants as messages
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-LOG_DIR = '/opt/kairozu/logs'
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '(ds98#%m4v-=^5o53q+vh5za=zhjzs#ra@9eizbhqw2e+(qm#g'
@@ -121,46 +120,6 @@ MESSAGE_TAGS = {
     messages.SUCCESS: 'alert-success',
     messages.WARNING: 'alert-warning',
     messages.ERROR: 'alert-danger',
-}
-
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'null': {
-            'level':'DEBUG',
-            'class':'django.utils.log.NullHandler',
-        },
-        'console':{
-            'level':'DEBUG',
-            'class':'logging.StreamHandler',
-            'formatter': 'verbose'
-        },
-        'logfile': {
-            'level':'DEBUG',
-            'class':'logging.handlers.RotatingFileHandler',
-            'filename': os.path.join(LOG_DIR, 'django.log'),
-            'maxBytes': 1024*1024*10, # 10MB
-            'backupCount': 0,
-            'formatter': 'verbose',
-        },
-    },
-    'formatters': {
-        'verbose': {
-            'format': '%(levelname)s|%(asctime)s|%(module)s|%(process)d|%(thread)d|%(message)s',
-            'datefmt' : "%d/%b/%Y %H:%M:%S"
-        },
-        'simple': {
-            'format': '%(levelname)s|%(message)s'
-        },
-    },
-    'loggers': {
-        'django': {
-            'level': 'WARNING',
-            'handlers': ['logfile'],
-            'propagate': True,
-        },
-    }
 }
 
 try:
