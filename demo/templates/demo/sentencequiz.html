@@ -86,6 +86,7 @@
     function sentenceNext(data) {
         if (data['id'] != null) {
             $('#sentence_eng').html(data['english']);
+            $('#sactual').val(data['kana_clean']);
             if (data['literal'].trim()) {
                 $('#literal_one').html('<div class="white-words litcontextbox upper">literal</div>' + data['literal'] + '&nbsp;');
             } else {
