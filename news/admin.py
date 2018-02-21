@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Post, FAQ, KnownIssue
+from .models import Post, FAQ, KnownIssue, SiteIssue
 
 
 class PostAdmin(admin.ModelAdmin):
@@ -12,3 +12,4 @@ class PostAdmin(admin.ModelAdmin):
 admin.site.register(KnownIssue)
 admin.site.register(Post, PostAdmin)
 admin.site.register(FAQ)
+admin.site.register(SiteIssue)
