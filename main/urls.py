@@ -32,7 +32,6 @@ urlpatterns = [
     url(r'^chapter/(?P<chapter_id>[0-9]+)/summary/$', views.SummaryView.as_view(), name='summary'),   # summary of chapter lessons
 
     url(r'^progress/$', views.ProgressView.as_view(), name='progress'),
-    # url(r'^newissue/$', views.NewIssueView.as_view(), name='issue'),
 
     # url(r'^pa_lesson(?P<lesson_id>[0-9]+)/$', views.PracticeAnalysisView.as_view(), name='pa_lesson'),
     # url(r'^sa_lesson(?P<lesson_id>[0-9]+)/$', views.SentenceAnalysisView.as_view(), name='sa_lesson'),
