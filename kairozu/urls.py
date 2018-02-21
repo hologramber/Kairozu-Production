@@ -8,12 +8,14 @@ import urlconf: from django.conf.urls import url, include, url(r'^blog/', includ
 from django.conf.urls import url, include, handler404, handler500, handler400, handler403
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, RedirectView
 from django.conf.urls.static import static
 from django.conf import settings
 from main import reg_views
 
 urlpatterns = [
+    url(r'^favicon\.ico$', RedirectView.as_view(url=settings.STATIC_URL + 'favicon/favicon.ico')),
+    url(r'^robots\.txt$', TemplateView.as_view(template_name="robots.txt", content_type='text/plain')),
     url(r'^$', TemplateView.as_view(template_name='index.html'), name='index'),
     url(r'^about/', TemplateView.as_view(template_name='about.html'), name='about'),
     url(r'^contact/', TemplateView.as_view(template_name='contact.html'), name='contact'),
