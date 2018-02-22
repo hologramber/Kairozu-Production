@@ -25,7 +25,7 @@ class KnownIssuesView(ListView):
     model = KnownIssue
 
     def get_queryset(self):
-        return KnownIssue.objects.all().order_by('-issue_status')
+        return KnownIssue.objects.all().order_by('-issue_status', 'issue_priority')
 
 
 
