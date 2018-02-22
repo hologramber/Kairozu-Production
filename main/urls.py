@@ -33,13 +33,6 @@ urlpatterns = [
 
     url(r'^progress/$', views.ProgressView.as_view(), name='progress'),
 
-    # url(r'^pa_lesson(?P<lesson_id>[0-9]+)/$', views.PracticeAnalysisView.as_view(), name='pa_lesson'),
-    # url(r'^sa_lesson(?P<lesson_id>[0-9]+)/$', views.SentenceAnalysisView.as_view(), name='sa_lesson'),
-    # url(r'^pa_chapter(?P<chapter_id>[0-9]+)/$', views.PracticeAnalysisChapterView.as_view(), name='pa_chapter'),
-    # url(r'^sa_chapter(?P<chapter_id>[0-9]+)/$', views.SentenceAnalysisChapterView.as_view(), name='sa_chapter'),
-    # url(r'^pa_full(?P<chapter_id>[0-9]+)/$', views.PracticeAnalysisFullView.as_view(), name='pa'),
-    # url(r'^sa_full(?P<chapter_id>[0-9]+)/$', views.SentenceAnalysisFullView.as_view(), name='sa'),
-
     url(r'^lesson/(?P<lesson_id>[0-9]+)/$', views.LessonView.as_view(), name='lesson'),     # lesson interface
     url(r'^lesson/(?P<lesson_id>[0-9]+)/notes/$', views.GrammarNoteView.as_view(), name='grammarnote'),
 
@@ -73,18 +66,18 @@ urlpatterns = [
     url(r'^chapter/(?P<chapter_id>[0-9]+)/exercise_d(?P<exercise_id>[0-9]+)/grab/(?P<dialogue_index>[0-9]+)$', api_views.ExerciseDialogueGrab.as_view(), name='exercisedialoguegrab'),
     url(r'^chapter/(?P<chapter_id>[0-9]+)/exercise_d(?P<exercise_id>[0-9]+)/success/$', views.ExerciseDialogueSuccessView.as_view(), name='exercisedialoguesuccess'),
 
-    url(r'^api/vocablist/$', api_views.VocabularyList.as_view()),   # (api) /main/api/vocablist; vocabulary API view
-    url(r'^api/vocabdetail/(?P<pk>[0-9]+)/$', api_views.VocabularyDetail.as_view()),   # (api) vocabulary API detail view
-    url(r'^api/vocabrecordlist/$', api_views.VocabRecordList.as_view()),   # (api) /main/api/vocabrecordlist; vocabrecord API view
-    url(r'^api/vocabrecorddetail/(?P<pk>[0-9]+)/$', api_views.VocabRecordDetail.as_view()),    # (api) vocabrecord API detail view
-
-    url(r'^api/sentencelist/$', api_views.SentenceList.as_view()), # (api) /main/api/sentencelist; sentence API view
-    url(r'^api/sentencedetail/(?P<pk>[0-9]+)/$', api_views.SentenceDetail.as_view()),  # (api) sentence API detail view
-    url(r'^api/sentencerecordlist/$', api_views.SentenceRecordList.as_view()),
-    url(r'^api/sentencerecorddetail/(?P<pk>[0-9]+)/$', api_views.SentenceRecordDetail.as_view()),
-
-    url(r'^api/practicelist/$', api_views.PracticeList.as_view()),  # (api) /main/api/practicelist; practice API view
-    url(r'^api/practicedetail/(?P<pk>[0-9]+)/$', api_views.PracticeDetail.as_view()),   # (api) practice API detail view
+    # url(r'^api/vocablist/$', api_views.VocabularyList.as_view()),   # (api) /main/api/vocablist; vocabulary API view
+    # url(r'^api/vocabdetail/(?P<pk>[0-9]+)/$', api_views.VocabularyDetail.as_view()),   # (api) vocabulary API detail view
+    # url(r'^api/vocabrecordlist/$', api_views.VocabRecordList.as_view()),   # (api) /main/api/vocabrecordlist; vocabrecord API view
+    # url(r'^api/vocabrecorddetail/(?P<pk>[0-9]+)/$', api_views.VocabRecordDetail.as_view()),    # (api) vocabrecord API detail view
+    #
+    # url(r'^api/sentencelist/$', api_views.SentenceList.as_view()), # (api) /main/api/sentencelist; sentence API view
+    # url(r'^api/sentencedetail/(?P<pk>[0-9]+)/$', api_views.SentenceDetail.as_view()),  # (api) sentence API detail view
+    # url(r'^api/sentencerecordlist/$', api_views.SentenceRecordList.as_view()),
+    # url(r'^api/sentencerecorddetail/(?P<pk>[0-9]+)/$', api_views.SentenceRecordDetail.as_view()),
+    #
+    # url(r'^api/practicelist/$', api_views.PracticeList.as_view()),  # (api) /main/api/practicelist; practice API view
+    # url(r'^api/practicedetail/(?P<pk>[0-9]+)/$', api_views.PracticeDetail.as_view()),   # (api) practice API detail view
 
     # url(r'^api/profile/(?P<pk>[0-9]+)/$', api_views.ProfileDetail.as_view()),
     # url(r'^exercises/(?P<chapter_id>[0-9]+)/$', views.ExercisesAdminView.as_view()),

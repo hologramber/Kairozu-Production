@@ -1,71 +1,57 @@
 from datetime import datetime
 from rest_framework import generics
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import TemplateView
 from .models import Vocabulary, Sentence, Practice, VocabRecord, Profile, SentenceRecord, ExpressionRecord, ExercisePrompt, ExerciseSentence
 from . import serializers
 
-
-# class SentenceAdminFixView(LoginRequiredMixin, generics.ListAPIView):
+# class SentenceList(LoginRequiredMixin, generics.ListAPIView):
+#     queryset = Sentence.objects.all()
 #     serializer_class = serializers.SentenceSerializer
-#     def get_queryset(self):
-#         sentences = Sentence.objects.filter(lesson__id__exact=self.kwargs['fix_id']).update(force_strict=True)
-#         return sentences
-
-
-class ProfileDetail(LoginRequiredMixin, generics.RetrieveAPIView):
-    queryset = Profile.objects.all()
-    serializer_class = serializers.ProfileSerializer
-
-
-class SentenceList(LoginRequiredMixin, generics.ListAPIView):
-    queryset = Sentence.objects.all()
-    serializer_class = serializers.SentenceSerializer
-
-
-class SentenceDetail(LoginRequiredMixin, generics.RetrieveAPIView):
-    queryset = Sentence.objects.all()
-    serializer_class = serializers.SentenceSerializer
-
-
-class SentenceRecordList(LoginRequiredMixin, generics.ListAPIView):
-    queryset = SentenceRecord.objects.all()
-    serializer_class = serializers.SentenceRecordSerializer
-
-
-class SentenceRecordDetail(LoginRequiredMixin, generics.RetrieveAPIView):
-    queryset = SentenceRecord.objects.all()
-    serializer_class = serializers.SentenceRecordSerializer
-
-
-class PracticeList(LoginRequiredMixin, generics.ListAPIView):
-    queryset = Practice.objects.all()
-    serializer_class = serializers.PracticeSerializer
-
-
-class PracticeDetail(LoginRequiredMixin, generics.RetrieveAPIView):
-    queryset = Practice.objects.all()
-    serializer_class = serializers.PracticeSerializer
-
-
-class VocabularyList(LoginRequiredMixin, generics.ListAPIView):
-    queryset = Vocabulary.objects.all()
-    serializer_class = serializers.VocabularySerializer
-
-
-class VocabularyDetail(LoginRequiredMixin, generics.RetrieveAPIView):
-    queryset = Vocabulary.objects.all()
-    serializer_class = serializers.VocabularySerializer
-
-
-class VocabRecordList(LoginRequiredMixin, generics.ListAPIView):
-    queryset = VocabRecord.objects.all()
-    serializer_class = serializers.VocabRecordSerializer
-
-
-class VocabRecordDetail(LoginRequiredMixin, generics.RetrieveAPIView):
-    queryset = VocabRecord.objects.all()
-    serializer_class = serializers.VocabRecordSerializer
+#
+#
+# class SentenceDetail(LoginRequiredMixin, generics.RetrieveAPIView):
+#     queryset = Sentence.objects.all()
+#     serializer_class = serializers.SentenceSerializer
+#
+#
+# class SentenceRecordList(LoginRequiredMixin, generics.ListAPIView):
+#     queryset = SentenceRecord.objects.all()
+#     serializer_class = serializers.SentenceRecordSerializer
+#
+#
+# class SentenceRecordDetail(LoginRequiredMixin, generics.RetrieveAPIView):
+#     queryset = SentenceRecord.objects.all()
+#     serializer_class = serializers.SentenceRecordSerializer
+#
+#
+# class PracticeList(LoginRequiredMixin, generics.ListAPIView):
+#     queryset = Practice.objects.all()
+#     serializer_class = serializers.PracticeSerializer
+#
+#
+# class PracticeDetail(LoginRequiredMixin, generics.RetrieveAPIView):
+#     queryset = Practice.objects.all()
+#     serializer_class = serializers.PracticeSerializer
+#
+#
+# class VocabularyList(LoginRequiredMixin, generics.ListAPIView):
+#     queryset = Vocabulary.objects.all()
+#     serializer_class = serializers.VocabularySerializer
+#
+#
+# class VocabularyDetail(LoginRequiredMixin, generics.RetrieveAPIView):
+#     queryset = Vocabulary.objects.all()
+#     serializer_class = serializers.VocabularySerializer
+#
+#
+# class VocabRecordList(LoginRequiredMixin, generics.ListAPIView):
+#     queryset = VocabRecord.objects.all()
+#     serializer_class = serializers.VocabRecordSerializer
+#
+#
+# class VocabRecordDetail(LoginRequiredMixin, generics.RetrieveAPIView):
+#     queryset = VocabRecord.objects.all()
+#     serializer_class = serializers.VocabRecordSerializer
 
 
 class VocabRecordGrab(LoginRequiredMixin, generics.RetrieveAPIView):
