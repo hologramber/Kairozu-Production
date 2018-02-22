@@ -570,8 +570,8 @@ class ProgressView(LoginRequiredMixin, ListView):
         return context
 
     def get_queryset(self):
-        vocabs = VocabRecord.objects.filter(user_id=self.request.user.id, rating__gt=0, score__lte=2).order_by('-score')
-        expressions = ExpressionRecord.objects.filter(user_id=self.request.user.id, rating__gt=0, score__lte=2).order_by('-score')
-        sentences = SentenceRecord.objects.filter(user_id=self.request.user.id, rating__gt=0, score__lte=2).order_by('-score')
+        vocabs = VocabRecord.objects.filter(user_id=self.request.user.id, rating__gt=0, score__lte=2).order_by('-score')[:200]
+        expressions = ExpressionRecord.objects.filter(user_id=self.request.user.id, rating__gt=0, score__lte=2).order_by('-score')[:100]
+        sentences = SentenceRecord.objects.filter(user_id=self.request.user.id, rating__gt=0, score__lte=2).order_by('-score')[:250]
         result_list = sorted(chain(vocabs, expressions, sentences), key=lambda instance: instance.score)
         return result_list
