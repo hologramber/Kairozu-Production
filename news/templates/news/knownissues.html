@@ -28,11 +28,19 @@
 
                                 {% for issue in object_list %}
                                     <tr>
-                                        <td>{{ issue.get_issue_priority_display }}</td>
-                                        <td>{{ issue.get_issue_status_display }}</td>
-                                        <td>{{ issue.get_issue_type_display }}</td>
-                                        <td>{{ issue.issue_date|date:"d M Y" }}</td>
-                                        <td>{{ issue.issue_description }}</td>
+                                        {% if issue.issue_status == "FIXED" %}
+                                            <td class="ltgrey-words">{{ issue.get_issue_priority_display }}</td>
+                                            <td class="ltgrey-words">{{ issue.get_issue_status_display }}</td>
+                                            <td class="ltgrey-words">{{ issue.get_issue_type_display }}</td>
+                                            <td class="ltgrey-words">{{ issue.issue_date|date:"d M Y" }}</td>
+                                            <td class="ltgrey-words">{{ issue.issue_description }}</td>
+                                        {% elif issue.issue_priority == "HIGH" %}
+                                            <td class="red-words">{{ issue.get_issue_priority_display }}</td>
+                                            <td class="red-words">{{ issue.get_issue_status_display }}</td>
+                                            <td class="red-words">{{ issue.get_issue_type_display }}</td>
+                                            <td class="red-words">{{ issue.issue_date|date:"d M Y" }}</td>
+                                            <td class="red-words">{{ issue.issue_description }}</td>
+                                        {% endif %}
                                     </tr>
                                 {% endfor %}
                             </tbody>

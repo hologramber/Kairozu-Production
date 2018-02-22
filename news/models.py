@@ -47,20 +47,18 @@ class KnownIssue(models.Model):
     issue_description = models.TextField(max_length=800, default='', blank=True)
 
     ISSUE_STATUS_CHOICES = (
-        ('UNFIXED', 'Unfixed'),
-        ('WIP', 'In Progress'),
-        ('TESTING', 'Testing'),
-        ('FIXED', 'Fixed'),
-        ('NONE', 'No Status'),
+        ('UNFIXED', 'Unfixed'),     # 1
+        ('TESTING', 'Testing'),     # 2
+        ('FIXED', 'Fixed'),         # 4
+        ('NONE', 'No Status'),      # 3
     )
     issue_status = models.CharField(max_length=10, choices=ISSUE_STATUS_CHOICES, default='NONE', blank=False)
 
     ISSUE_PRIORITY_CHOICES = (
-        ('FUTURE', 'Future'),
-        ('LOW', 'Low'),
-        ('NORMAL', 'Normal'),
-        ('HIGH', 'High'),
-        ('NONE', 'None'),
+        ('XFUTURE', 'Future'),      # 4
+        ('QLOW', 'Low'),            # 3
+        ('NORMAL', 'Normal'),       # 2
+        ('HIGH', 'High'),           # 1
     )
     issue_priority = models.CharField(max_length=10, choices=ISSUE_PRIORITY_CHOICES, default='NONE', blank=False)
 
