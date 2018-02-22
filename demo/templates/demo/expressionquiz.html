@@ -52,7 +52,7 @@ $.ajaxSetup({
                             </div>
 
                             <form id='vocabquizform' action='' method='post' class='answer_box'>{% csrf_token %}
-                                <input id='id_vocabattempt' type='text' name='vocab_attempt' autofocus />
+                                <input id='id_vocabattempt' type='text' name='vocab_attempt' autocapitalize='none' autocorrect='off' autofocus />
                                 <input id='vactual' type='hidden' name='vocab_actual' value='' />
                                 <input id='vindex' type='hidden' name='vindex' value='' />
                                 <input type='submit' value='&#8680;' />

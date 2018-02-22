@@ -44,7 +44,7 @@
                     </div>  <!-- /#grammarholder -->
 
                     <form id='passageform' action='' class='answer_box' method='post'>{% csrf_token %}
-                        <input id='id_passageattempt' type='text' name='passageattempt' autofocus />
+                        <input id='id_passageattempt' type='text' name='passageattempt' autocapitalize='none' autocorrect='off' autofocus />
                         <input id='passageactual' type='hidden' name='passageactual' value='' />
                         <input id='passage_index' type='hidden' name='passage_index' value='' />
                         <input id='passagekana' type='hidden' name='passagekana' value='' />

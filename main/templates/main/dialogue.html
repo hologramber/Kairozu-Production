@@ -38,7 +38,7 @@
                         </div>  <!-- /#grammarholder -->
 
                         <form id='dialogue_form' action='' class='answer_box' method='post'>{% csrf_token %}
-                            <input id='id_dialogue_attempt' type='text' name='dialogue_attempt' autofocus />
+                            <input id='id_dialogue_attempt' type='text' name='dialogue_attempt' autocapitalize='none' autocorrect='off' autofocus />
                             <input id='dialogue_actual' type='hidden' name='dialogue_actual' value='' />
                             <input id='dialogue_index' type='hidden' name='dialogue_index' value='' />
                             <input id='dialogue_kana' type='hidden' name='dialogue_kana' value='' />

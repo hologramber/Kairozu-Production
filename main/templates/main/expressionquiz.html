@@ -30,7 +30,7 @@
                             </div>
 
                             <form id='expressionquizform' action='' method='post' class='answer_box'>{% csrf_token %}
-                                <input id='id_expressionattempt' type='text' name='expression_attempt' autofocus />
+                                <input id='id_expressionattempt' type='text' name='expression_attempt' autocapitalize='none' autocorrect='off' autofocus />
                                 <input id='eactual' type='hidden' name='expression_actual' value='' />
                                 <input id='ecode' type='hidden' name='expression_code' value='A' />
                                 <input id='eid' type='hidden' name='expressionrecord_id' value='' />
