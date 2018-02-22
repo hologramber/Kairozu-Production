@@ -23,7 +23,7 @@
                                         <tr>
                                             <td>{{ word.sentence.english }}</td>
                                             <td>{{ word.sentence.kana }}</td>
-                                            <td>{{ word.next_review }}</td>
+                                            <td>{{ word.next_review|naturaltime }}</td>
                                         </tr>
                                     {% endfor %}
                                 </tbody>

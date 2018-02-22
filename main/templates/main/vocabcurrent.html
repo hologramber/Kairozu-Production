@@ -25,7 +25,7 @@
                                         <tr>
                                             <td>{{ word.vocab.english }}</td>
                                             <td>{{ word.vocab.kana }}</td>
-                                            <td>{{ word.next_review }}</td>
+                                            <td>{{ word.next_review|naturaltime }}</td>
                                         </tr>
                                     {% endfor %}
                                 </tbody>

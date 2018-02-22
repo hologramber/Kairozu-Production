@@ -2,6 +2,7 @@
 {% block title %}Kairozu Progress{% endblock %}
 
 {% load static %}
+{% load humanize %}
 {% block content %}
 
 <div id='island'></div>
@@ -89,7 +90,7 @@
                                                 <td>?</td>
                                                 <td>unknown</td>
                                             {% endif %}
-                                                <td>{{ obj.next_review }}</td>
+                                                <td>{{ obj.next_review|naturaltime }}</td>
                                                 {% if obj.score == 0 %}
                                                     <td>beginner</td>
                                                 {% elif obj.score == 1 %}

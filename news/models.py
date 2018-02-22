@@ -65,7 +65,7 @@ class KnownIssue(models.Model):
     issue_priority = models.CharField(max_length=10, choices=ISSUE_PRIORITY_CHOICES, default='NONE', blank=False)
 
     class Meta:
-        ordering = ['issue_priority', 'issue_status', 'issue_type', 'issue_date']
+        ordering = ['-issue_status', 'issue_priority', 'issue_type', 'issue_date']
 
     def __str__(self):
         return self.issue_description

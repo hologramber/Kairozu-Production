@@ -25,7 +25,7 @@
                                         <tr>
                                             <td>{{ express.express.english }}</td>
                                             <td>{{ express.express.kana }}</td>
-                                            <td>{{ express.next_review }}</td>
+                                            <td>{{ express.next_review|naturaltime }}</td>
                                         </tr>
                                     {% endfor %}
                                 </tbody>
