@@ -24,6 +24,10 @@ class KnownIssuesView(ListView):
     template_name = 'news/knownissues.html'
     model = KnownIssue
 
+    def get_queryset(self):
+        return KnownIssue.objects.all().order_by('-issue_status')
+
+
 
 class AjaxTemplateMixin(object):
     def dispatch(self, request, *args, **kwargs):
