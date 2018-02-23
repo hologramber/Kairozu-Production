@@ -656,6 +656,8 @@ class TwoTableData(models.Model):
         self.f_note = highlight(self.note, KairozuLexer(ensurenl=False), KairozuFormatter(style='kairozu'))
         super(TwoTableData, self).save(*args, **kwargs)
 
+    class Meta:
+        ordering = ['id']
 
 class FourTable(Piece):
     shape = models.PositiveSmallIntegerField(default=4, editable=False)
