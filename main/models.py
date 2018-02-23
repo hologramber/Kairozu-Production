@@ -697,6 +697,8 @@ class FourTableData(models.Model):
         self.f_postc = highlight(self.postc, KairozuLexer(ensurenl=False), KairozuFormatter(style='kairozu'))
         super(FourTableData, self).save(*args, **kwargs)
 
+    class Meta:
+        ordering = ['id']
 
 class Example(models.Model):
     lesson = models.ForeignKey(Lesson, related_name='examples', on_delete=models.CASCADE)
