@@ -40,6 +40,12 @@
                                             <td class="red-words">{{ issue.get_issue_type_display }}</td>
                                             <td class="red-words">{{ issue.issue_date|date:"d M Y" }}</td>
                                             <td class="red-words">{{ issue.issue_description }}</td>
+                                        {% else %}
+                                            <td>{{ issue.get_issue_priority_display }}</td>
+                                            <td>{{ issue.get_issue_status_display }}</td>
+                                            <td>{{ issue.get_issue_type_display }}</td>
+                                            <td>{{ issue.issue_date|date:"d M Y" }}</td>
+                                            <td>{{ issue.issue_description }}</td>
                                         {% endif %}
                                     </tr>
                                 {% endfor %}
