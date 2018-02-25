@@ -36,6 +36,80 @@ class ChapterInterfaceView(LoginRequiredMixin, UserPassesTestMixin, TemplateView
             return True
 
 
+# interface for each grammar point (title + grammar + point + examples + more info)
+class LessonView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
+    template_name = 'main/lesson.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(LessonView, self).get_context_data(**kwargs)
+        lesson = get_object_or_404(Lesson, pk=self.kwargs['lesson_id'])
+        context['lesson'] = lesson
+        context['chapter'] = lesson.chapter
+        context['pieces'] = lesson.lesson_pieces()
+        return context
+
+    def test_func(self, **kwargs):
+        if int(self.kwargs['lesson_id']) <= self.request.user.profile.currentlesson:
+            return True
+
+
+class GrammarNoteView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
+    template_name = 'main/grammarnote.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(GrammarNoteView, self).get_context_data(**kwargs)
+        lesson = get_object_or_404(Lesson, pk=self.kwargs['lesson_id'])
+        if GrammarNote.objects.filter(lesson__id__exact=self.kwargs['lesson_id']).exists():
+            grammarnote = GrammarNote.objects.get(lesson__id__exact=self.kwargs['lesson_id'])
+            context['grammarnote'] = grammarnote
+        context['lesson'] = lesson
+        context['chapter'] = lesson.chapter
+        return context
+
+    def test_func(self, **kwargs):
+        if int(self.kwargs['lesson_id']) <= self.request.user.profile.currentlesson:
+            return True
+
+
+class SummaryView(LoginRequiredMixin, UserPassesTestMixin, ListView):
+    template_name = 'main/summary.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(SummaryView, self).get_context_data(**kwargs)
+        Profile.has_reviews(self.request.user)
+        chapter = get_object_or_404(Chapter, pk=self.kwargs['chapter_id'])
+        context['chapter'] = chapter
+        return context
+
+    def get_queryset(self):
+        chapter_now = get_object_or_404(Chapter, pk=self.kwargs['chapter_id'])
+        return Lesson.objects.filter(chapter=chapter_now)
+
+    def test_func(self, **kwargs):
+        if int(self.kwargs['chapter_id']) <= self.request.user.profile.currentchapter:
+            return True
+
+
+class ProgressView(LoginRequiredMixin, ListView):
+    template_name = 'main/progress.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ProgressView, self).get_context_data(**kwargs)
+        Profile.has_reviews(self.request.user)
+        context['vmastery'] = Profile.chapter_mastery_level(self.request.user)
+        return context
+
+    def get_queryset(self):
+        vocabs = VocabRecord.objects.filter(user_id=self.request.user.id, rating__gt=0, score__lte=2).order_by('-score')[:200]
+        expressions = ExpressionRecord.objects.filter(user_id=self.request.user.id, rating__gt=0, score__lte=2).order_by('-score')[:100]
+        sentences = SentenceRecord.objects.filter(user_id=self.request.user.id, rating__gt=0, score__lte=2).order_by('-score')[:250]
+        result_list = sorted(chain(vocabs, expressions, sentences), key=lambda instance: instance.score)
+        return result_list
+
+
+# #################################################################################
+# ################################## VOCABULARY ###################################
+# #################################################################################
 
 # list of vocabulary per chapter
 class VocabListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
@@ -72,6 +146,7 @@ class VocabQuizView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
             return True
 
 
+# assign vocab code depending if vocab quiz submission was correct or not
 def vocab_check(request, chapter_id):
     vocab_code = request.POST['vocab_code']
     vocabrecord_id = int(request.POST['vocabrecord_id'])
@@ -103,6 +178,14 @@ class VocabSuccessView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
         if int(self.kwargs['chapter_id']) <= self.request.user.profile.currentvocab:
             return True
 
+
+# #################################################################################
+# ############################## END VOCABULARY ###################################
+# #################################################################################
+
+# #################################################################################
+# ############################## EXPRESSIONS ######################################
+# #################################################################################
 
 # list of expressions per chapter
 class ExpressionListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
@@ -170,41 +253,13 @@ class ExpressionSuccessView(LoginRequiredMixin, UserPassesTestMixin, TemplateVie
         if int(self.kwargs['chapter_id']) <= self.request.user.profile.currentexpression:
             return True
 
+# #################################################################################
+# ############################# END EXPRESSIONS ###################################
+# #################################################################################
 
-# interface for each grammar point (title + grammar + point + examples + more info)
-class LessonView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
-    template_name = 'main/lesson.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(LessonView, self).get_context_data(**kwargs)
-        lesson = get_object_or_404(Lesson, pk=self.kwargs['lesson_id'])
-        context['lesson'] = lesson
-        context['chapter'] = lesson.chapter
-        context['pieces'] = lesson.lesson_pieces()
-        return context
-
-    def test_func(self, **kwargs):
-        if int(self.kwargs['lesson_id']) <= self.request.user.profile.currentlesson:
-            return True
-
-
-class GrammarNoteView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
-    template_name = 'main/grammarnote.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(GrammarNoteView, self).get_context_data(**kwargs)
-        lesson = get_object_or_404(Lesson, pk=self.kwargs['lesson_id'])
-        if GrammarNote.objects.filter(lesson__id__exact=self.kwargs['lesson_id']).exists():
-            grammarnote = GrammarNote.objects.get(lesson__id__exact=self.kwargs['lesson_id'])
-            context['grammarnote'] = grammarnote
-        context['lesson'] = lesson
-        context['chapter'] = lesson.chapter
-        return context
-
-    def test_func(self, **kwargs):
-        if int(self.kwargs['lesson_id']) <= self.request.user.profile.currentlesson:
-            return True
-
+# #################################################################################
+# ############################# PRACTICES #########################################
+# #################################################################################
 
 # practice quiz first-load (future loads aren't full refreshes)
 class PracticeQuizView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
@@ -258,6 +313,13 @@ class PracticeSuccessView(LoginRequiredMixin, UserPassesTestMixin, TemplateView)
         if int(self.kwargs['lesson_id']) <= self.request.user.profile.currentpractice:
             return True
 
+# #################################################################################
+# ############################### END PRACTICES ###################################
+# #################################################################################
+
+# #################################################################################
+# ############################### SENTENCES #######################################
+# #################################################################################
 
 # sentence quiz first-load (future loads aren't full refreshes)
 class SentenceQuizView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
@@ -312,25 +374,13 @@ class SentenceSuccessView(LoginRequiredMixin, UserPassesTestMixin, TemplateView)
         if int(self.kwargs['lesson_id']) <= self.request.user.profile.currentlesson:
             return True
 
+# #################################################################################
+# ################################ END SENTENCES ##################################
+# #################################################################################
 
-class SummaryView(LoginRequiredMixin, UserPassesTestMixin, ListView):
-    template_name = 'main/summary.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(SummaryView, self).get_context_data(**kwargs)
-        Profile.has_reviews(self.request.user)
-        chapter = get_object_or_404(Chapter, pk=self.kwargs['chapter_id'])
-        context['chapter'] = chapter
-        return context
-
-    def get_queryset(self):
-        chapter_now = get_object_or_404(Chapter, pk=self.kwargs['chapter_id'])
-        return Lesson.objects.filter(chapter=chapter_now)
-
-    def test_func(self, **kwargs):
-        if int(self.kwargs['chapter_id']) <= self.request.user.profile.currentchapter:
-            return True
-
+# #################################################################################
+# ################################ REVIEWS ########################################
+# #################################################################################
 
 # vocabulary quiz first-load (future loads aren't full refreshes)
 class ReviewVocabView(LoginRequiredMixin, TemplateView):
@@ -428,17 +478,13 @@ class ReviewExpressionCurrentView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         return ExpressionRecord.objects.filter(user_id=self.request.user.id).exclude(next_review__isnull=True).order_by('-next_review')[:10]
 
+# #################################################################################
+# ################################ END REVIEWS ####################################
+# #################################################################################
 
-class ExercisesAdminView(LoginRequiredMixin, TemplateView):
-    template_name = 'main/admin_exercises.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(ExercisesAdminView, self).get_context_data(**kwargs)
-        prompts = Exercise.exercise_pieces_admin_prompt(self.kwargs['chapter_id'])
-        context['prompts'] = prompts
-        context['sentences'] = Exercise.exercise_pieces_admin_sentence(self.kwargs['chapter_id'])
-        return context
-
+# #################################################################################
+# ################################ EXERCISES ######################################
+# #################################################################################
 
 class ExercisesView(LoginRequiredMixin, UserPassesTestMixin, ListView):
     template_name = 'main/exercises.html'
@@ -559,19 +605,6 @@ class ExerciseDialogueSuccessView(LoginRequiredMixin, UserPassesTestMixin, Templ
         if int(self.kwargs['exercise_id']) <= self.request.user.profile.currentexercise:
             return True
 
-
-class ProgressView(LoginRequiredMixin, ListView):
-    template_name = 'main/progress.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(ProgressView, self).get_context_data(**kwargs)
-        Profile.has_reviews(self.request.user)
-        context['vmastery'] = Profile.chapter_mastery_level(self.request.user)
-        return context
-
-    def get_queryset(self):
-        vocabs = VocabRecord.objects.filter(user_id=self.request.user.id, rating__gt=0, score__lte=2).order_by('-score')[:200]
-        expressions = ExpressionRecord.objects.filter(user_id=self.request.user.id, rating__gt=0, score__lte=2).order_by('-score')[:100]
-        sentences = SentenceRecord.objects.filter(user_id=self.request.user.id, rating__gt=0, score__lte=2).order_by('-score')[:250]
-        result_list = sorted(chain(vocabs, expressions, sentences), key=lambda instance: instance.score)
-        return result_list
+# #################################################################################
+# ############################ END EXERCISES ######################################
+# #################################################################################

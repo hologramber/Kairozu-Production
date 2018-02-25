@@ -1,5 +1,5 @@
 """
-kairozu base-level URLconf: https://docs.djangoproject.com/en/1.10/topics/http/urls/
+base-level kairozu URL configuration
 
 function views: from my_app import views, url(r'^$', views.home, name='home')
 cbv: from other_app.views import Home, url(r'^$', Home.as_view(), name='home')
