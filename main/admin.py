@@ -1,8 +1,6 @@
 from django.contrib import admin
 import nested_admin
-from .models import Profile, Chapter, Lesson, PointTable, Block, Exercise, ExerciseResponse, ExerciseSentence, ExerciseRecord, ExercisePrompt, \
-    DivBlock, TwoTable, TwoTableData, FourTable, FourTableData, Example, MoreInfo, Practice, Sentence, Vocabulary, VocabRecord, SentenceRecord, \
-    Expression, ExpressionRecord, GrammarNote
+from .models import Profile, Chapter, Lesson, PointTable, Block, Exercise, ExerciseResponse, ExerciseSentence, ExerciseRecord, ExercisePrompt, DivBlock, TwoTable, TwoTableData, FourTable, FourTableData, Example, MoreInfo, Practice, Sentence, Vocabulary, VocabRecord, SentenceRecord, Expression, ExpressionRecord, GrammarNote
 
 
 class FourTableDataInline(nested_admin.NestedTabularInline):
@@ -82,7 +80,7 @@ class ExpressionAdmin(nested_admin.NestedModelAdmin):
 
 
 class PracticeAdmin(admin.ModelAdmin):
-    list_display = ('pone_english', 'pone_kanji', 'pone_literal', 'ptwo_english', 'ptwo_kanji', 'ptwo_literal', 'vieworder', 'force_strict')
+    list_display = ('pone_english', 'pone_kanji', 'pone_literal', 'pone_disamb_location', 'ptwo_english', 'ptwo_kanji', 'ptwo_literal', 'ptwo_disamb_location', 'vieworder', 'force_strict')
     list_filter = ('lesson',)
     ordering = ('vieworder',)
     search_fields = ['pone_english', 'ptwo_english', 'pone_kana', 'ptwo_kana', 'pone_kanji', 'ptwo_kanji']
@@ -110,7 +108,7 @@ class ExerciseAdmin(nested_admin.NestedModelAdmin):
 
 
 class SentenceAdmin(admin.ModelAdmin):
-    list_display = ('english', 'kanji', 'literal', 'context', 'lesson')
+    list_display = ('english', 'kanji', 'literal', 'context', 'disamb_location', 'force_strict', 'lesson')
     list_filter = ('lesson',)
     search_fields = ['english', 'kana', 'kanji']
 
@@ -135,11 +133,6 @@ class ExerciseRecordAdmin(admin.ModelAdmin):
     list_filter = ('user',)
 
 
-class SiteIssueAdmin(admin.ModelAdmin):
-    list_display = ('report_type', 'report_datetime', 'report_by_user', 'report_from_url')
-    readonly_fields = ('report_by_user', 'report_from_url', 'report_datetime')
-
-
 class GrammarNoteAdmin(admin.ModelAdmin):
     list_display = ('title', 'lesson')
 
@@ -152,7 +145,6 @@ admin.site.register(Chapter, ChapterAdmin)
 admin.site.register(Exercise, ExerciseAdmin)
 admin.site.register(Lesson, LessonAdmin)
 admin.site.register(Profile)
-# admin.site.register(SiteIssue, SiteIssueAdmin)
 admin.site.register(VocabRecord, VocabRecordAdmin)
 admin.site.register(SentenceRecord, SentenceRecordAdmin)
 admin.site.register(ExerciseRecord, ExerciseRecordAdmin)
