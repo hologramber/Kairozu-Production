@@ -34,7 +34,6 @@
                         <h1 class="dashtitle-dim">{{ chapter.title }}
                         {% if chapter.status == 'B' %}<span class="betatag ltgrey-words bold">[BETA]</span>{% endif %}</h1>
                         <h4 class="dashsubtitle-dim">{{ chapter.subtitle }}</h4>
-                            <div class="spacer-10"></div>
                         <div class="width-60 text-align-center raleway"><a href="{% url "main:progress" %}">Unlock this chapter<br />by mastering<br />what you've learned<br />so far!</a></div>
                     </div>
                 {% else %}
