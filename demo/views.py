@@ -4,8 +4,8 @@ from django.http import HttpResponseRedirect
 # from django.core.urlresolvers import reverse
 from django.urls import reverse
 from main.models import Lesson
-from .models import DemoVocab, DemoExpression
-# from .forms import EmailBetaForm
+from .models import DemoVocab, DemoExpression, BetaEmail
+from .forms import EmailBetaForm
 
 
 def demointerface(request):
@@ -99,7 +99,7 @@ def demo_sentence_check(request):
 class DemoSentenceSuccessView(TemplateView):
     template_name = 'demo/sentencesuccess.html'
 
-#
-# class BetaEmailView(CreateView):
-#     template_name = 'closed_register.html'
-#     form_class = EmailBetaForm
+
+class BetaEmailView(CreateView):
+    template_name = 'closed_register.html'
+    form_class = EmailBetaForm
