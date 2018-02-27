@@ -103,3 +103,10 @@ class DemoSentenceSuccessView(TemplateView):
 class BetaEmailView(CreateView):
     template_name = 'closed_register.html'
     form_class = EmailBetaForm
+
+    def get_success_url(self):
+        return reverse('betaconfirm')
+
+
+class BetaConfirmView(TemplateView):
+    template_name = 'closed_success.html'

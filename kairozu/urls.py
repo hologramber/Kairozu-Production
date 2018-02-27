@@ -12,7 +12,7 @@ from django.views.generic import TemplateView, RedirectView
 from django.conf.urls.static import static
 from django.conf import settings
 from main import reg_views
-from demo.views import BetaEmailView
+from demo.views import BetaEmailView, BetaConfirmView
 
 urlpatterns = [
     url(r'^favicon\.ico$', RedirectView.as_view(url=settings.STATIC_URL + 'favicon/favicon.ico')),
@@ -29,6 +29,7 @@ urlpatterns = [
     url(r'^accounts/login/$', auth_views.login, {'template_name': 'login.html'}, name='login'),
     url(r'^accounts/logout/$', auth_views.logout, {'next_page': 'login'}, name='logout'),
     url(r'^accounts/register/$', BetaEmailView.as_view(), name='register'),
+    url(r'^accounts/beta-confirm/$', BetaConfirmView.as_view(), name='betaconfirm'),
     #url(r'^accounts/register/$', reg_views.register, name='register'),
     # url(r'^accounts/activation_sent/$', reg_views.activation_sent, name='activation_sent'),
     # url(r'^accounts/activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$', reg_views.activate, name='activate'),
