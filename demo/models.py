@@ -2,10 +2,6 @@ import re
 from django.db import models
 
 
-class BetaEmail(models.Model):
-    user_beta_email = models.EmailField(max_length=50, unique=True)
-    user_beta_submitted = models.DateTimeField(auto_now_add=True, blank=True)
-
 
 class DemoSentence(models.Model):
     english = models.CharField(max_length=250, default='')
