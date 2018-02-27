@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import DemoVocab, DemoPractice, DemoSentence, DemoExpression, BetaEmail
+from .models import DemoVocab, DemoPractice, DemoSentence, DemoExpression
 
 
 class DemoVocabAdmin(admin.ModelAdmin):
@@ -22,4 +22,4 @@ admin.site.register(DemoVocab, DemoVocabAdmin)
 admin.site.register(DemoPractice, DemoPracticeAdmin)
 admin.site.register(DemoSentence, DemoSentenceAdmin)
 admin.site.register(DemoExpression, DemoExpressionAdmin)
-admin.site.register(BetaEmail)
+# admin.site.register(BetaEmail)
