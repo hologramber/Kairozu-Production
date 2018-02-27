@@ -1,14 +1,32 @@
 {% extends 'kairozu.html' %}
 {% block title %}Kairozu Registration{% endblock %}
-{% load static %}
 
+{% load static %}
 {% block content %}
+
 <!--#page-content-wrapper-->
 <div id="page-content-wrapper">
-    <div class="container container-kairozu">
-        <h3>Registration isn't currently open to the public, sorry!</h3>
-        <h3>Please e-mail kairozu@kairozu.com for access. Thanks!</h3>
-    </div>  <!--/.container .container-kairozu-->
+    <div class="container kairozu-container">
+        <div class="row">
+            <div class="col-md-6">
+                <img alt="かい" id="welcomekoi" src="{% static 'img/welcome_koi.png' %}" />
+            </div>
+            <div class="col-md-6">
+                <div class="spacer-10 hidden-xs"></div>
+                <h1>〜ゆらゆら〜</h1>
+                <h2>初めまして！「かい」と呼んで下さい。</h2>
+                <div class="spacer-10"></div>
+                <h3 class="raleway">Kairozu is in closed beta, but I can send you an email if we open registration to the public.</h3>
+                <span class="bolder">Enter a valid email address:</span>
+                <form method="post" class="reg-user-input">{% csrf_token %}
+                    {{ form }}
+                    <div class="xsmall ltgrey-words">I won't use your email for anything else, ever. I won't give, sell, or otherwise provide it to anyone. You will receive one email if registration opens to the public, and I won't keep your email address after that.</div>
+                    <div class="spacer-10"></div>
+                    <input type="submit" value="Submit" class="btn btn-success"/>
+                </form>
+            </div>
+        </div>
+    </div>  <!--/.container .kairozu-container-->
 </div>  <!--/#page-content-wrapper-->
 
 {% endblock %}

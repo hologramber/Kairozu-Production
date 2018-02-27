@@ -11,49 +11,47 @@ from main.models import Chapter, Lesson, Profile
 from main.forms import SignUpForm, ChangeStrictModeForm
 from main.tokens import activationtoken
 
-
-def register(request):
-    # if request.method == 'POST':
-    #     form = SignUpForm(request.POST)
-    #     if form.is_valid():
-    #         user = form.save(commit=False)
-    #         user.is_active = False
-    #         user.save()
-    #         subject = 'Activate Your Kairozu Account'
-    #         message = render_to_string('email/activation_email.html', {
-    #             'user': user,
-    #             'uid': urlsafe_base64_encode(force_bytes(user.pk)).decode(),
-    #             #'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-    #             'token': activationtoken.make_token(user),
-    #         })
-    #         user.email_user(subject, message)
-    #         return redirect('activation_sent')
-    # else:
-    #     form = SignUpForm()
-    # return render(request, 'register.html', {'form': form})
-    return render(request, 'closed_register.html')
-
-
-def activation_sent(request):
-    return render(request, 'email/activation_sent.html')
-
-
-def activate(request, uidb64, token):
-    try:
-        uid = urlsafe_base64_decode(uidb64).decode()
-        #uid = force_text(urlsafe_base64_decode(uidb64))
-        user = User.objects.get(pk=uid)
-    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
-        user = None
-
-    if user is not None and activationtoken.check_token(user, token):
-        user.is_active = True
-        user.profile.emailconfirmed = True
-        user.save()
-        login(request, user)
-        return redirect('newuser')
-    else:
-        return render(request, 'email/activation_invalid.html')
+# def register(request):
+#     if request.method == 'POST':
+#         form = SignUpForm(request.POST)
+#         if form.is_valid():
+#             user = form.save(commit=False)
+#             user.is_active = False
+#             user.save()
+#             subject = 'Activate Your Kairozu Account'
+#             message = render_to_string('email/activation_email.html', {
+#                 'user': user,
+#                 'uid': urlsafe_base64_encode(force_bytes(user.pk)).decode(),
+#                 #'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+#                 'token': activationtoken.make_token(user),
+#             })
+#             user.email_user(subject, message)
+#             return redirect('activation_sent')
+#     else:
+#         form = SignUpForm()
+#     return render(request, 'register.html', {'form': form})
+#
+#
+# def activation_sent(request):
+#     return render(request, 'email/activation_sent.html')
+#
+#
+# def activate(request, uidb64, token):
+#     try:
+#         uid = urlsafe_base64_decode(uidb64).decode()
+#         #uid = force_text(urlsafe_base64_decode(uidb64))
+#         user = User.objects.get(pk=uid)
+#     except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+#         user = None
+#
+#     if user is not None and activationtoken.check_token(user, token):
+#         user.is_active = True
+#         user.profile.emailconfirmed = True
+#         user.save()
+#         login(request, user)
+#         return redirect('newuser')
+#     else:
+#         return render(request, 'email/activation_invalid.html')
 
 
 def newuser(request):

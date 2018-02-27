@@ -771,6 +771,15 @@ div.social-links {
 .max-width-1400 { max-width: 1400px; }
 .inline-block { display: inline-block; }
 .width-60 { width: 60%; }
+.width-100 { width: 100%; }
+.reg-user-input input[type=email] { width: 100%; }
+.btn-success {
+    background-color: #89AE13;
+    border-color: #89AE13; }
+
+.btn-success:hover {
+    background-color: #6A870E;
+    border-color: #6A870E; }
 
 .lineheight-n { line-height: normal; }
 .lineheight-20 { line-height: 20px; }
