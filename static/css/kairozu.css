@@ -322,12 +322,12 @@ table.grammar-point-table > tbody > tr > td.blankline { line-height: 5px; }
 
 .vocablist { width: 80%; max-width: 1400px; border-radius: 5px; background: rgba(255,255,255,0.8); }
 .vocablist > thead th { padding: 5px; border-bottom: 2px solid #bcbcbc; }
-.vocablist > tbody td { padding: 5px 10px; }
+.vocablist > tbody td { padding: 5px; }
 .vocablist > tbody tr { border-bottom: 1px solid #bcbcbc; }
 .vocablist > tbody tr:last-child { border-bottom: none; }
 
 .resourceslist { width: 100%; background: rgba(255,255,255,0.8); }
-.resourceslist > tbody td { padding: 5px 10px; }
+.resourceslist > tbody td { padding: 5px; }
 .resourceslist > tbody td.resourceheader { padding: 5px 0; }
 .resourceslist > tbody tr { border-bottom: 1px solid #8a8a8a; }
 
