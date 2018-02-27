@@ -410,7 +410,7 @@ class ReviewVocabCurrentView(LoginRequiredMixin, ListView):
         return context
 
     def get_queryset(self):
-        return VocabRecord.objects.filter(user_id=self.request.user.id).exclude(next_review__isnull=True).order_by('-next_review')[:10]
+        return VocabRecord.objects.filter(user_id=self.request.user.id).exclude(next_review__isnull=True).order_by('next_review')[:10]
 
 
 class ReviewSentenceView(LoginRequiredMixin, TemplateView):
@@ -445,7 +445,7 @@ class ReviewSentenceCurrentView(LoginRequiredMixin, ListView):
         return context
 
     def get_queryset(self):
-        return SentenceRecord.objects.filter(user_id=self.request.user.id).exclude(next_review__isnull=True).order_by('-next_review')[:10]
+        return SentenceRecord.objects.filter(user_id=self.request.user.id).exclude(next_review__isnull=True).order_by('next_review')[:10]
 
 
 class ReviewExpressionView(LoginRequiredMixin, TemplateView):
@@ -476,7 +476,7 @@ class ReviewExpressionCurrentView(LoginRequiredMixin, ListView):
         return context
 
     def get_queryset(self):
-        return ExpressionRecord.objects.filter(user_id=self.request.user.id).exclude(next_review__isnull=True).order_by('-next_review')[:10]
+        return ExpressionRecord.objects.filter(user_id=self.request.user.id).exclude(next_review__isnull=True).order_by('next_review')[:10]
 
 # #################################################################################
 # ################################ END REVIEWS ####################################
