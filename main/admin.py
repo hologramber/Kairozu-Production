@@ -83,7 +83,7 @@ class PracticeAdmin(admin.ModelAdmin):
     list_display = ('pone_english', 'pone_kanji', 'pone_literal', 'pone_disamb_location', 'ptwo_english', 'ptwo_kanji', 'ptwo_literal', 'ptwo_disamb_location', 'vieworder', 'force_strict')
     list_filter = ('lesson',)
     ordering = ('vieworder',)
-    search_fields = ['pone_english', 'ptwo_english', 'pone_kana', 'ptwo_kana', 'pone_kanji', 'ptwo_kanji']
+    search_fields = ['pone_english', 'ptwo_english', 'pone_kana', 'ptwo_kana', 'pone_kanji', 'ptwo_kanji', 'pone_literal', 'ptwo_literal']
 
 
 class ExerciseSentenceInline(nested_admin.NestedTabularInline):
