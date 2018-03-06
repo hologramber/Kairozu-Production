@@ -375,9 +375,7 @@ table.grammar-point-table > tbody > tr > td.blankline { line-height: 5px; }
 
 .groupdatatable { width: 100%; max-width: 350px; white-space:nowrap; margin: 0 auto; background: rgba(255,255,255,0.8); }
 .groupdatatable > thead th { padding: 5px; border-bottom: 2px solid #bcbcbc; }
-.groupdatatable > tbody td {
-	padding: 8px 10px 8px 10px;
-	font-size: small; }
+.groupdatatable > tbody td { padding: 8px 10px 8px 10px; }
 .groupdatatable > tbody tr { border-bottom: 1px solid #bcbcbc; }
 .groupdatatable > tbody tr:last-child { border-bottom: none; }
 
