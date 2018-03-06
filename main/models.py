@@ -646,9 +646,9 @@ class TwoTableData(models.Model):
     prea = models.CharField(max_length=254, blank=True)
     posta = models.CharField(max_length=254, blank=True)
     note = models.CharField(max_length=254, blank=True)
-    f_prea = models.CharField(max_length=500, blank=True)
-    f_posta = models.CharField(max_length=500, blank=True)
-    f_note = models.CharField(max_length=500, blank=True)
+    f_prea = models.CharField(max_length=512, blank=True)
+    f_posta = models.CharField(max_length=512, blank=True)
+    f_note = models.CharField(max_length=512, blank=True)
 
     def save(self, *args, **kwargs):
         self.f_prea = highlight(self.prea, KairozuLexer(ensurenl=False), KairozuFormatter(style='kairozu'))
@@ -681,12 +681,12 @@ class FourTableData(models.Model):
     posta = models.CharField(max_length=254, blank=True)
     postb = models.CharField(max_length=254, blank=True)
     postc = models.CharField(max_length=254, blank=True)
-    f_prea = models.CharField(max_length=500, blank=True)
-    f_preb = models.CharField(max_length=500, blank=True)
-    f_prec = models.CharField(max_length=500, blank=True)
-    f_posta = models.CharField(max_length=500, blank=True)
-    f_postb = models.CharField(max_length=500, blank=True)
-    f_postc = models.CharField(max_length=500, blank=True)
+    f_prea = models.CharField(max_length=512, blank=True)
+    f_preb = models.CharField(max_length=512, blank=True)
+    f_prec = models.CharField(max_length=512, blank=True)
+    f_posta = models.CharField(max_length=512, blank=True)
+    f_postb = models.CharField(max_length=512, blank=True)
+    f_postc = models.CharField(max_length=512, blank=True)
 
     def save(self, *args, **kwargs):
         self.f_prea = highlight(self.prea, KairozuLexer(ensurenl=False), KairozuFormatter(style='kairozu'))
@@ -704,8 +704,8 @@ class Example(models.Model):
     lesson = models.ForeignKey(Lesson, related_name='examples', on_delete=models.CASCADE)
     english = models.CharField(max_length=254, unique=True, blank=True)
     hiragana = models.CharField(max_length=254, unique=True, blank=True)
-    f_english = models.CharField(max_length=500, blank=True)
-    f_hiragana = models.CharField(max_length=500, blank=True)
+    f_english = models.CharField(max_length=512, blank=True)
+    f_hiragana = models.CharField(max_length=512, blank=True)
 
     def save(self, *args, **kwargs):
         self.f_english = highlight(self.english, KairozuLexer(ensurenl=False), KairozuFormatter(style='kairozu'))
