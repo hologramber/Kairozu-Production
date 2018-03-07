@@ -80,7 +80,7 @@ class ExpressionAdmin(nested_admin.NestedModelAdmin):
 
 
 class PracticeAdmin(admin.ModelAdmin):
-    list_display = ('pone_english', 'pone_kanji', 'pone_literal', 'pone_disamb_location', 'ptwo_english', 'ptwo_kanji', 'ptwo_literal', 'ptwo_disamb_location', 'vieworder', 'force_strict')
+    list_display = ('pone_english', 'pone_literal', 'pone_kana_all', 'ptwo_english', 'ptwo_literal', 'ptwo_kana_all', 'vieworder', 'force_strict')
     list_filter = ('lesson',)
     ordering = ('vieworder',)
     search_fields = ['pone_english', 'ptwo_english', 'pone_kana', 'ptwo_kana', 'pone_kanji', 'ptwo_kanji', 'pone_literal', 'ptwo_literal']
@@ -108,7 +108,7 @@ class ExerciseAdmin(nested_admin.NestedModelAdmin):
 
 
 class SentenceAdmin(admin.ModelAdmin):
-    list_display = ('english', 'kanji', 'literal', 'context', 'disamb_location', 'force_strict', 'lesson')
+    list_display = ('english', 'literal', 'context', 'kana_all_blank', 'force_strict')
     list_filter = ('lesson',)
     search_fields = ['english', 'kana', 'kanji']
 
