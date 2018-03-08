@@ -66,11 +66,11 @@
         event.preventDefault();
         var clean_attempt = $('#id_vocabattempt').val().replace(/[　。、？！「」\'\",.?!\s]/g, "");
         $('#vocabquizform #max_number').val($("input[name=optradio]:checked").val());
+        var form_data = $('#vocabquizform').serialize();
         if (clean_attempt == $('#vactual').val()) {
             $('#vocabquizform').attr('class', 'answer_box answer_box_g');
             $('#bug-button').hide();
             $('#hint_block').html('&nbsp;');
-            var form_data = $('#vocabquizform').serialize();
             $.post("{% url 'sandbox:numbergrab' %}", form_data).done(function(data) {
                 $('#vocabquizform')[0].reset();
                 numberNext(data);
