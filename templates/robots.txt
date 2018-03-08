@@ -2,3 +2,10 @@ User-agent: *
 Disallow: /static/
 Disallow: /main/
 Disallow: /accounts/
+Disallow: /demo/expressionquiz/
+Disallow: /sandbox/numbers/
+Disallow: /sandbox/kaimono/
+Disallow: /sandbox/joshi/
+Disallow: /demo/vocabquiz/
+Disallow: /demo/practicequiz/
+Disallow: /demo/sentencequiz/

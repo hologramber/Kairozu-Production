@@ -9,7 +9,6 @@ urlpatterns = [
     url(r'^kaimono/$', views.kaimono, name='kaimono'),
     url(r'^katakana/$', views.katakana, name='katakana'),
     url(r'^numbers/$', views.NumberQuizView.as_view(), name='numberquiz'),
-    # url(r'^numbers/check/$', views.reviewsentence_check, name='reviewsentencecheck'),
     url(r'^numbers/grab/$', views.numquiz_grab, name='numbergrab'),
     url(r'^hiragana/$', views.hiragana, name='hiragana'),
     url(r'^resources/$', views.ResourcesView.as_view(), name='resources'),

@@ -264,17 +264,7 @@ class Expression(models.Model):
     expression_type = models.CharField(choices=EXPRESSION_TYPE_CHOICES, default=EXPRESSION_TYPE_CHOICES.general, max_length=15)
 
     def save(self, *args, **kwargs):
-        self.kana_all_blank = all_blanks(self.kana)
-        alt_blank = ''
-        count = 0
-        for k in self.kana:
-            if count % 2 == 0:
-                alt_blank += k
-            else:
-                alt_blank += '＿'
-            count += 1
-        self.kana_alt_blank = alt_blank
-        self.kana_clean = clean_sentence(self.kana)
+        self.kana_all_blank, self.kana_alt_blank, self.kana_clean = create_blanks(self.kana, 0, False)
         super(Expression, self).save(*args, **kwargs)
 
 
