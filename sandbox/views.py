@@ -65,14 +65,7 @@ class NumberQuizView(LoginRequiredMixin, TemplateView):
 
 def numquiz_grab(request):
     if request.POST:
-        try:
-            max_num = int(request.POST['max_number'])
-            if max_num > 999999:
-                max_num = 999999
-            elif max_num < 1:
-                max_num = 99
-        except ValueError:
-            max_num = 99
+        max_num = int(request.POST['max_number'])
     else:
         max_num = 99
     num_digits, num_kana = num2jp_kana(1, max_num)

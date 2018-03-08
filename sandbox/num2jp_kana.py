@@ -1,7 +1,6 @@
 from random import *
 
 def num2jp_kana(num_start, num_end):
-
     num_numeric = randint(num_start, num_end)  # Pick a random number between start and end inclusive
 
     kana1to9 = ['いち', 'に', 'さん', 'よん', 'ご', 'ろく', 'なな', 'はち', 'きゅう']
@@ -72,25 +71,6 @@ def num2jp_kana(num_start, num_end):
         num_b = collect_tens(num_components[4])
         num_a = collect_ones(num_components[5])
         num_kana = num_f + num_e + num_d + num_c + num_b + num_a
-    elif len(num_components) == 7:
-        num_g = collect_hundreds(num_components[0])
-        num_f = collect_tens(num_components[1])
-        num_e = collect_ones(num_components[2]) + 'まん'
-        num_d = collect_thousands(num_components[3])
-        num_c = collect_hundreds(num_components[4])
-        num_b = collect_tens(num_components[5])
-        num_a = collect_ones(num_components[6])
-        num_kana = num_g + num_f + num_e + num_d + num_c + num_b + num_a
-    elif len(num_components) == 8:
-        num_h = collect_thousands(num_components[0])
-        num_g = collect_hundreds(num_components[1])
-        num_f = collect_tens(num_components[2])
-        num_e = collect_ones(num_components[3]) + 'まん'
-        num_d = collect_thousands(num_components[4])
-        num_c = collect_hundreds(num_components[5])
-        num_b = collect_tens(num_components[6])
-        num_a = collect_ones(num_components[7])
-        num_kana = num_h + num_g + num_f + num_e + num_d + num_c + num_b + num_a
 
     return num_numeric, num_kana
 
