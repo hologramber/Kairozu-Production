@@ -1,8 +1,11 @@
 from django.shortcuts import render
 from django.views.generic import ListView, TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponse
 from main.models import Profile
 from .models import Sandcastle, Resource
+from .num2jp_kana import num2jp_kana
+import json
 
 
 class SandboxView(LoginRequiredMixin, ListView):
@@ -54,3 +57,25 @@ class ResourcesView(LoginRequiredMixin, TemplateView):
         context['other'] = Resource.objects.filter(type__exact='other')
         Profile.has_reviews(self.request.user)
         return context
+
+
+class NumberQuizView(LoginRequiredMixin, TemplateView):
+    template_name = 'sandbox/numberquiz.html'
+
+
+def numquiz_grab(request):
+    if request.POST:
+        try:
+            max_num = int(request.POST['max_number'])
+            if max_num > 999999:
+                max_num = 999999
+            elif max_num < 1:
+                max_num = 99
+        except ValueError:
+            max_num = 99
+    else:
+        max_num = 99
+    num_digits, num_kana = num2jp_kana(1, max_num)
+    data = {'numd': "{:,}".format(num_digits), 'numk': num_kana}
+    return HttpResponse(json.dumps(data))
+

@@ -1,0 +1,101 @@
+{% extends 'kairozu.html' %}
+{% block title %}Kairozu 番号クイズ{% endblock %}
+{% load static %}
+
+{% block content %}
+
+<!--#page-content-wrapper-->
+<div id="page-content-wrapper">
+	<div class="container container-kairozu">
+        <div class='row'>
+            <div class='col-lg-12'>
+
+                <div id='vocabholder'>
+                    <div id='vocabfield'>
+                        <div id='literal_one' class='vocab-note text-align-center'>&nbsp;</div>
+                        <div id='vocab_english' class='vocab-challenge text-align-center'></div>
+
+                            <div class='vocab-prompt-container text-align-center'>
+                                <span id='hint_block' class='letterspacing5r'>&nbsp;</span>
+                                <a id="bug-button" href="#" tabindex="-1" style="display: none;">
+                                    <i id="report-issue" class="fa fa-bug red-words" aria-hidden="true"><span class="raleway">&nbsp;Error?</span></i>
+                                </a>
+                            </div>
+
+                        <form id='vocabquizform' action='' method='post' class='answer_box'>{% csrf_token %}
+                            <input id='id_vocabattempt' type='text' name='vocab_attempt' autocapitalize='none' autocorrect='off' autofocus />
+                            <input id='vactual' type='hidden' name='vocab_actual' value='' />
+                            <input id='max_number' type='hidden' name='max_number' value='' />
+                            <input type='submit' value='&#8680;' />
+                        </form>
+                    </div>  <!-- /#vocabfield -->
+                </div>  <!-- /#vocabholder -->
+
+            </div>
+        </div>
+
+        <div class="spacer-15"></div>
+        <form>
+            <label class="radio-inline"><input type="radio" name="optradio" value="99" autocomplete="off" checked>1 - 99</label>
+            <label class="radio-inline"><input type="radio" name="optradio" value="999" autocomplete="off">1 - 999</label>
+            <label class="radio-inline"><input type="radio" name="optradio" value="9999" autocomplete="off">1 - 9,999</label>
+            <label class="radio-inline"><input type="radio" name="optradio" value="99999" autocomplete="off">1 - 99,999</label>
+            <label class="radio-inline"><input type="radio" name="optradio" value="999999" autocomplete="off">1 - 999,999</label>
+        </form>
+
+    </div>  <!--/.container .container-kairozu-->
+</div>  <!--/#page-content-wrapper-->
+
+<!-- wanakana, menu toggle, and get/post mechanics -->
+<script type='text/javascript' src='{% static 'js/wanakana.js' %}'></script>
+<script type='text/javascript' src='{% static 'js/cookiemonster.js' %}'></script>
+
+<script type='text/javascript'>
+    var input = document.getElementById('id_vocabattempt');
+    wanakana.bind(input);
+
+    function numberNext(data) {
+        if (data != null) {
+            data = JSON.parse(data);
+            $('#vocab_english').html(data['numd']);
+            $('#vactual').val(data['numk']);
+            $('#vocabquizform').removeClass('answer_box_g answer_box_r');
+        }
+    }
+    $('#vocabquizform').submit(function(event) {
+        event.preventDefault();
+        var clean_attempt = $('#id_vocabattempt').val().replace(/[　。、？！「」\'\",.?!\s]/g, "");
+        $('#vocabquizform #max_number').val($("input[name=optradio]:checked").val());
+        if (clean_attempt == $('#vactual').val()) {
+            $('#vocabquizform').attr('class', 'answer_box answer_box_g');
+            $('#bug-button').hide();
+            $('#hint_block').html('&nbsp;');
+            var form_data = $('#vocabquizform').serialize();
+            $.post("{% url 'sandbox:numbergrab' %}", form_data).done(function(data) {
+                $('#vocabquizform')[0].reset();
+                numberNext(data);
+            });
+        } else {
+            $('#vocabquizform').attr('class', 'answer_box_red answer_box_r');
+            $('#hint_block').html($('#vactual').val());
+            $('#vocabquizform')[0].reset();
+            $('#bug-button').show();
+        }
+    });
+
+    $(document).ready(function() {
+        $.get("{% url 'sandbox:numbergrab' %}").done(function (data) {
+            numberNext(data);
+        });
+    });
+
+    $('#bug-button').click(function() {
+        $('#form-modal-body').load('/news/newissue/', function () {
+            $('#form-modal').modal('toggle');
+            formAjaxSubmit('#form-modal-body form', '#form-modal');
+        });
+    });
+</script>
+
+
+{% endblock %}
