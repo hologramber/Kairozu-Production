@@ -116,14 +116,9 @@ class Profile(models.Model):
     @staticmethod
     def ok_to_graduate(user):
         """check to see if user has too many pending reviews"""
-        #Profile.has_reviews(user)
         if user.profile.vrcount < 75 and user.profile.srcount < 100 and user.profile.ercount < 25:
-            if Profile.chapter_mastery_level(user) > 80 and user.profile.pendingchapter > user.profile.currentchapter:
+            if Profile.chapter_mastery_level(user) > 80 and user.profile.pendingchapter == int(user.profile.currentchapter)+1:
                 Profile.graduate_chapter(user, user.profile.currentchapter)
-            #else:
-            #    print('not ok to graduate: fewer than 100 for each, but mastery level < 80% or pendingchapter <= currentchapter')
-        #else:
-        #    print('not ok to graduate: too many (>100 of at least one category) reviews')
 
     @staticmethod
     def has_reviews(user):
@@ -148,29 +143,12 @@ class Profile(models.Model):
             vmastery = (1-((vbeginner+sbeginner+ebeginner)/(vtotal+stotal+etotal)))*100
         else:
             vmastery = 0
-        # print("vtotal, vbeginner, stotal, sbeginner, etotal, ebeginner, vmastery")
-        # print(vtotal, vbeginner, stotal, sbeginner, etotal, ebeginner, vmastery)
         return vmastery
-
-    # @staticmethod
-    # def records_under(user):
-    #     if VocabRecord.objects.filter(user_id=user.id, score__lte=2).count() > 20:
-    #         print(VocabRecord.objects.filter(user_id=user.id, score__lte=2).count())
-    #         return False
-    #     elif SentenceRecord.objects.filter(user_id=user.id, score__lte=2).count() > 20:
-    #         print(SentenceRecord.objects.filter(user_id=user.id, score__lte=2).count())
-    #         return False
-    #     elif ExpressionRecord.objects.filter(user_id=user.id, score__lte=2).count() > 20:
-    #         print(ExpressionRecord.objects.filter(user_id=user.id, score__lte=2).count())
-    #         return False
-    #     else:
-    #         print("no more than 20 ea of VR, SR, or ER which are score lte 2")
-    #         return True
 
     @staticmethod
     def graduate_exercise(user, exercise_view):
         """increase user's current exercise to exercise_view+1 -- allows access to next exercise"""
-        if user.profile.currentexercise <= int(exercise_view):
+        if user.profile.currentexercise == int(exercise_view):
             user.profile.currentexercise = int(exercise_view) + 1
         user.profile.save()
 
@@ -184,28 +162,28 @@ class Profile(models.Model):
     @staticmethod
     def graduate_vocab(user, chapter_id):
         """increase user's currentvocab to chapter.id+1 -- allows access to first lesson"""
-        if user.profile.currentvocab <= int(chapter_id):
+        if user.profile.currentvocab == int(chapter_id):
             user.profile.currentvocab = int(chapter_id) + 1
         user.profile.save()
 
     @staticmethod
     def graduate_expression(user, chapter_id):
         """increase user's currentvocab to chapter.id+1 -- allows access to first lesson"""
-        if user.profile.currentexpression <= int(chapter_id):
+        if user.profile.currentexpression == int(chapter_id):
             user.profile.currentexpression = int(chapter_id) + 1
         user.profile.save()
 
     @staticmethod
     def graduate_chapter(user, chapter_id):
         """increase user's currentchapter to chapter.id+1 -- allows access to next chapter"""
-        if user.profile.currentchapter <= int(chapter_id):
+        if user.profile.currentchapter == int(chapter_id):
             user.profile.currentchapter = int(chapter_id) + 1
         user.profile.save()
 
     @staticmethod
     def graduate_pending(user, chapter_id):
         """increase user's pendingchapter to chapter.id+1 -- allows grad to next chapter after reviews"""
-        if user.profile.pendingchapter <= int(chapter_id):
+        if user.profile.pendingchapter == int(chapter_id):
             user.profile.pendingchapter = int(chapter_id) + 1
         user.profile.save()
 
@@ -216,15 +194,16 @@ class Profile(models.Model):
         currentchapter = currentlesson.chapter
         lastlesson = currentchapter.lesson_set.last()
         if int(lesson_id) == lastlesson.id:
-            if user.profile.currentstory <= currentchapter.id:
+            if user.profile.currentstory == currentchapter.id:
                 user.profile.currentstory = currentchapter.id + 1
-        user.profile.currentlesson = int(lesson_id) + 1
+        if user.profile.currentlesson == lesson_id:
+            user.profile.currentlesson = int(lesson_id) + 1
         user.profile.save()
 
     @staticmethod
     def graduate_practice(user, lesson_id):
         """increase user's currentpractice to lesson.id+1 -- allows access to sentences"""
-        if user.profile.currentpractice <= int(lesson_id):
+        if user.profile.currentpractice == int(lesson_id):
             user.profile.currentpractice = int(lesson_id) + 1
         user.profile.save()
 
@@ -894,11 +873,9 @@ class ExerciseRecord(models.Model):
     @staticmethod
     def check_chapter_exercises(user, chapter_id):
         exerciserecord_check = ExerciseRecord.objects.filter(user_id=user.id, exercise__chapter__id=chapter_id, rating__lt=2).first()
-        if exerciserecord_check is None:
-            # run ok to graduate?
+        if exerciserecord_check is None and user.profile.pendingchapter == chapter_id:
             Profile.graduate_pending(user, chapter_id)
             Profile.ok_to_graduate(user)
-            #Profile.graduate_chapter(user, chapter_id)
 
     @staticmethod
     def update_grade(exerciserecord_id, exercise_grade, user):
