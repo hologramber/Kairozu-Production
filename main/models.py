@@ -71,7 +71,6 @@ def disamb_all_blanks(kana, disamb_location):        # position 0 = disamb_loc 1
 def create_blanks(kana, disamb_location, altindex):
     sentence_split = kana.split('　')
     sep = '　'
-    kana_all_blank, kana_alt_blank, kana_clean = '', '', ''
 
     if disamb_location > 0:
         kana_all_blank = disamb_all_blanks(kana, disamb_location)
@@ -88,9 +87,6 @@ def create_blanks(kana, disamb_location, altindex):
 
     kana_alt_blank = sep.join(sentence_split)
     kana_clean = clean_sentence(kana)
-    print(kana_all_blank)
-    print(kana_alt_blank)
-    print(kana_clean)
     return kana_all_blank, kana_alt_blank, kana_clean
 
 
@@ -822,7 +818,7 @@ class ExerciseResponse(models.Model):
         if '(' in self.response_english:
             self.response_context = create_context(self.response_english)
 
-        self.response_kana_all_blank, self.response_kana_alt_blank, self.response_kana_clean = create_blanks(self.kana, self.disamb_location, False)
+        self.response_kana_all_blank, self.response_kana_alt_blank, self.response_kana_clean = create_blanks(self.response_kana, self.response_disamb_location, False)
         super(ExerciseResponse, self).save(*args, **kwargs)
 
 
@@ -1052,4 +1048,3 @@ def update_records(sender, instance, **kwargs):
 @receiver(user_logged_in)
 def update_vr_sr_counts(sender, user, request, **kwargs):
     Profile.has_reviews(user)
-    #Profile.ok_to_graduate(user)
