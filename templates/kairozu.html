@@ -108,6 +108,7 @@
 			</div>
 		</nav>
 	</header>
+
 	<main role="main">
 
         <div id="show-message">
@@ -135,6 +136,9 @@
                 </div><!-- /.modal-dialog -->
             </div><!-- /.modal -->
 
+            <script src="{% static 'js/jquery.min.js' %}"></script>
+	        <script async src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+            
             <script>
                 var formAjaxSubmit = function(form, modal) {
                     $(form).submit(function (bugevent) {
@@ -167,9 +171,5 @@
 		</script>
 
 	</main>
-
-    <script src="{% static 'js/jquery.min.js' %}"></script>
-	<script async src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-
 </body>
 </html>
