@@ -108,8 +108,8 @@ Kaimono.prototype.newQuestion = function() {
 	}
 	var textInput = document.getElementById('counter_entry');
 
-    if (textInput.getAttribute('class') == 'keiko_box1 keiko_box1_g') {
-        textInput.setAttribute('class', 'keiko_box1 keiko_box1_g_flip');
+    if (textInput.getAttribute('class') == 'kbox1 kbox1_g') {
+        textInput.setAttribute('class', 'kbox1 kbox1_g_flip');
     }
 
 };
@@ -137,7 +137,7 @@ Kaimono.prototype.answerListener = function() {
 			self.currentScore++;
 			self.currentStreak++;
 		}
-		textInput.setAttribute('class', 'keiko_box1 keiko_box1_g');
+		textInput.setAttribute('class', 'kbox1 kbox1_g');
 		self.scoreHolder.textContent = self.currentScore;
 		self.streakHolder.textContent = self.currentStreak;
 		self.currentAttempts = 0;
@@ -149,7 +149,7 @@ Kaimono.prototype.answerListener = function() {
 		self.currentStreak = 0;
 		self.streakHolder.textContent = self.currentStreak;
 		textInput.style.color = "#d92425";
-		textInput.setAttribute('class', 'keiko_box1 keiko_box1_r');
+		textInput.setAttribute('class', 'kbox1 kbox1_r');
 		self.currentAttempts = 1;
 	}
 };

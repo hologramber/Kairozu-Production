@@ -24,13 +24,13 @@
         <h3 class="no-arrow-box">
             Review vocabulary and grammar via spaced-repetition to practice recognition;<br />avoid the visual memorization-recognition trap that usually occurs when using flashcards.
         </h3>
-        <div class="spacer-60 hidden-sm hidden-xs"></div>
+        <div class="s-60 hidden-sm hidden-xs"></div>
 
         <div class="row">
             <div class="col-sm-12 col-md-6">
                 <a href="{% url 'demo:demointerface' %}"><img id='wthrough' alt="walkthrough" src="{% static 'img/walkthrough.png' %}" /></a>
             </div>
-            <div class="spacer-30"></div>
+            <div class="s-30"></div>
             <div class="col-sm-12 col-md-6">
                 {% if user.is_authenticated %}
                     <a href="{% url 'profile' %}"><img id='yaccount' alt="your account" src="{% static 'img/youraccount.png' %}" /></a>
@@ -49,9 +49,9 @@
             </div>
         </div>  <!--/.row-->
 
-        <div class="spacer-500"></div>
-        <div class="spacer-200 visible-sm"></div>
-        <div class="spacer-600 visible-xs"></div>
+        <div class="s-500"></div>
+        <div class="s-200 visible-sm"></div>
+        <div class="s-600 visible-xs"></div>
 
     </div>  <!--/.container .kairozu-container-->  
     {% include 'footer.html' %}

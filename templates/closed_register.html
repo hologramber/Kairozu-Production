@@ -12,18 +12,18 @@
                 <img alt="かい" id="welcomekoi" src="{% static 'img/welcome_koi.png' %}" />
             </div>
             <div class="col-md-6">
-                <div class="spacer-10 hidden-xs"></div>
+                <div class="s-10 hidden-xs"></div>
                 <h1>〜ゆらゆら〜</h1>
                 <h2>初めまして！ ｢かい｣と呼んで下さい。</h2>
-                <div class="spacer-10"></div>
+                <div class="s-10"></div>
                 <h3 class="raleway">Kairozu is in closed beta, but I can send you an email if we open registration to the public.</h3>
-                <div class="spacer-15"></div>
+                <div class="s-15"></div>
                 <span class="bolder">Enter a valid email address:</span>
-                <div class="spacer-5"></div>
+                <div class="s-5"></div>
                 <form method="post" class="reg-user-input">{% csrf_token %}
                     {{ form }}
                     <div class="registration-text">I won't use your email for anything else, ever. I won't give, sell, or otherwise provide it to anyone. You will receive one email if registration opens to the public, and I won't keep your email address after that.</div>
-                    <div class="spacer-15"></div>
+                    <div class="s-15"></div>
                     <input type="submit" value="Submit" class="btn btn-success"/>
                 </form>
             </div>

@@ -71,9 +71,9 @@
             }
             $('#context_one').html(data['pone_context'] + '&nbsp;');
             $('#context_two').html(data['ptwo_context'] + '&nbsp;');
-            $('#id_pone_attempt').removeClass('keiko_box1_g keiko_box1_r');
-            $('#id_ptwo_attempt').removeClass('keiko_box2_g keiko_box2_r');
-            $('#ksubmit').removeClass('keiko_submit_r keiko_submit_g');
+            $('#id_pone_attempt').removeClass('kbox1_g kbox1_r');
+            $('#id_ptwo_attempt').removeClass('kbox2_g kbox2_r');
+            $('#ksubmit').removeClass('ksub_r ksub_g');
         } else {
             $.get("{% url 'main:practicesuccess' lesson.id %}").done(function (data) {
                 $('#wrapper').html(data);
@@ -93,40 +93,40 @@
             } else {
                 plevel = 2;
             }
-            $('#id_pone_attempt').attr('class', 'keiko_box1 keiko_box1_g').prop("disabled", false).val('').focus();
-            $('#id_ptwo_attempt').attr('class', 'keiko_box2 keiko_box2_g').prop("disabled", false).val('');
-            $('#ksubmit').attr('class', 'keiko_submit keiko_submit_g');
-            $('#hint_one').attr('class', 'letterspacing5');
-            $('#hint_two').attr('class', 'letterspacing5');
+            $('#id_pone_attempt').attr('class', 'kbox1 kbox1_g').prop("disabled", false).val('').focus();
+            $('#id_ptwo_attempt').attr('class', 'kbox2 kbox2_g').prop("disabled", false).val('');
+            $('#ksubmit').attr('class', 'ksub ksub_g');
+            $('#hint_one').attr('class', 'ls5');
+            $('#hint_two').attr('class', 'ls5');
         } else if ((pone_clean_att == $('#poneact').val()) && (ptwo_clean_att != $('#ptwoact').val())) {
             pcode = 'OC';
             $('#bug-button').show();
             if (plevel > 0) {
                 plevel--;
             }
-            $('#id_pone_attempt').attr('class', 'keiko_box1 keiko_box1_g').prop("disabled", true);
-            $('#id_ptwo_attempt').attr('class', 'keiko_box2_red keiko_box2_r').val('').focus();
-            $('#ksubmit').attr('class', 'keiko_submit_red keiko_submit_r');
-            $('#hint_one').attr('class', 'letterspacing5g');
-            $('#hint_two').attr('class', 'letterspacing5r');
+            $('#id_pone_attempt').attr('class', 'kbox1 kbox1_g').prop("disabled", true);
+            $('#id_ptwo_attempt').attr('class', 'kbox2_red kbox2_r').val('').focus();
+            $('#ksubmit').attr('class', 'ksub_red ksub_r');
+            $('#hint_one').attr('class', 'ls5g');
+            $('#hint_two').attr('class', 'ls5r');
         } else if ((pone_clean_att != $('#poneact').val()) && (ptwo_clean_att == $('#ptwoact').val())) {
             pcode = 'TC';
             $('#bug-button').show();
             if (plevel > 0) { plevel --; }
-            $('#id_pone_attempt').attr('class', 'keiko_box1_red keiko_box1_r').val('').focus();
-            $('#id_ptwo_attempt').attr('class', 'keiko_box2 keiko_box2_g').prop("disabled", true);
-            $('#ksubmit').attr('class', 'keiko_submit keiko_submit_g');
-            $('#hint_one').attr('class', 'letterspacing5r');
-            $('#hint_two').attr('class', 'letterspacing5g');
+            $('#id_pone_attempt').attr('class', 'kbox1_red kbox1_r').val('').focus();
+            $('#id_ptwo_attempt').attr('class', 'kbox2 kbox2_g').prop("disabled", true);
+            $('#ksubmit').attr('class', 'ksub ksub_g');
+            $('#hint_one').attr('class', 'ls5r');
+            $('#hint_two').attr('class', 'ls5g');
         } else {
             pcode = 'NC';
             $('#bug-button').show();
             if (plevel > 0) { plevel --; }
-            $('#id_pone_attempt').attr('class', 'keiko_box1_red keiko_box1_r').val('').focus();
-            $('#id_ptwo_attempt').attr('class', 'keiko_box2_red keiko_box2_r').val('');
-            $('#ksubmit').attr('class', 'keiko_submit_red keiko_submit_r');
-            $('#hint_one').attr('class', 'letterspacing5r');
-            $('#hint_two').attr('class', 'letterspacing5r');
+            $('#id_pone_attempt').attr('class', 'kbox1_red kbox1_r').val('').focus();
+            $('#id_ptwo_attempt').attr('class', 'kbox2_red kbox2_r').val('');
+            $('#ksubmit').attr('class', 'ksub_red ksub_r');
+            $('#hint_one').attr('class', 'ls5r');
+            $('#hint_two').attr('class', 'ls5r');
         }
         $('#pindex').val(pindex);
         var form_data = $('#practicequizform').serialize();

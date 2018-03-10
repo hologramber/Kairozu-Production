@@ -14,7 +14,7 @@
         <p>Most of the Japanese content is computer-generated using common words and grammar patterns compiled from Japanese-language sources aimed at beginners, namely NHK Easy News、福娘、毎日小学生新聞、毎日１５歳のニュース、朝日小学生新聞、朝日中学生新聞、and FNN News.</p>
         <p><span class="bold">If you wish to contact me, please read this first: <a href="{% url 'contact' %}">Contact Kairozu</a></span>.</p>
         
-        <div class="spacer-40"></div>
+        <div class="s-40"></div>
 
         <h1>Basic Introduction</h1>
         <div class="important-abouttext dashed-grey-2 bolder">
@@ -91,13 +91,13 @@
             </div>  <!--/.col-xs-12 .col-sm-6 .col-md-3-->
         </div> <!--/.row-->
 
-        <div class="spacer-60"></div>
+        <div class="s-60"></div>
 
         <div class="row">
             <div class="col-sm-12 col-md-6">
                 <a href="{% url 'demo:demointerface' %}"><img id='wthrough' alt="walkthrough" src="{% static 'img/walkthrough.png' %}" /></a>
             </div>
-            <div class="spacer-30"></div>
+            <div class="s-30"></div>
             <div class="col-sm-12 col-md-6">
                 {% if user.is_authenticated %}
                     <a href="{% url 'profile' %}"><img id='yaccount' alt="your account" src="{% static 'img/youraccount.png' %}" /></a>
@@ -116,9 +116,9 @@
             </div>
         </div>  <!--/.row-->
 
-        <div class="spacer-500"></div>
-        <div class="spacer-200 visible-sm"></div>
-        <div class="spacer-600 visible-xs"></div>
+        <div class="s-500"></div>
+        <div class="s-200 visible-sm"></div>
+        <div class="s-600 visible-xs"></div>
 
     </div>  <!--/.container .kairozu-container-->  
 

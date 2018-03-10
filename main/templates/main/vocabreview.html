@@ -4,7 +4,7 @@
 {% load static %}
 {% block content %}
 
-<div id='island'></div>
+<div id='isl'></div>
 
 <div id="allwrap">
     <!-- page-content-wrapper -->
@@ -56,7 +56,7 @@
                 default:
                     $('#hint_block').html(data['vocab']['kana']); break;
             }
-            $('#vocabquizform').removeClass('answer_box_g answer_box_r');
+            $('#vocabquizform').removeClass('abox_g abox_r');
             if (data['vocab']['katakana'] == true) {
                 $('#katakana-tips').show();
             } else {
@@ -72,7 +72,7 @@
         event.preventDefault();
         var clean_attempt = $('#id_vocabattempt').val().replace(/[　。、？！「」\'\",.?!\s]/g, "");
         if (clean_attempt == $('#vactual').val()) {
-            $('#vocabquizform').attr('class', 'answer_box answer_box_g');
+            $('#vocabquizform').attr('class', 'abox abox_g');
             $('#bug-button').hide();
             if (vlevel == 3) {
                 vocabcode = 'C';
@@ -81,7 +81,7 @@
                 vocabcode = 'N';
             }
         } else {
-            $('#vocabquizform').attr('class', 'answer_box_red answer_box_r');
+            $('#vocabquizform').attr('class', 'abox_red abox_r');
             $('#bug-button').show();
             if (vlevel == 3) {
                 vocabcode = 'I';

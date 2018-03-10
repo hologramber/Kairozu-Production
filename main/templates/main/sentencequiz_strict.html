@@ -32,20 +32,20 @@
                 case 3:
                     if (data['sentence']['disamb_location'] != 0) {
                         $('#sentence_hint').html(data['sentence']['kana_all_blank']);
-                        $('#sentence_hint').addClass('letterspacing5y');
+                        $('#sentence_hint').addClass('ls5y');
                     } else {
                         $('#sentence_hint').html('&nbsp;');
                     } break;
                 case 2:
                     $('#sentence_hint').html(data['sentence']['kana_all_blank']);
-                    $('#sentence_hint').removeClass('letterspacing5y');
+                    $('#sentence_hint').removeClass('ls5y');
                     break;
                 case 1:
                     $('#sentence_hint').html(data['sentence']['kana_alt_blank']); break;
                 default:
                     $('#sentence_hint').html(data['sentence']['kana']); break;
             }
-            $('#sentencequizform').removeClass('answer_box_g answer_box_r');
+            $('#sentencequizform').removeClass('abox_g abox_r');
         } else {
             $.get("{% url 'main:sentencesuccess' lesson.id %}").done(function (data) {
                 $('#wrapper').html(data);
@@ -58,7 +58,7 @@
         var clean_attempt = $('#id_sentenceattempt').val().replace(/[　。、？！「」'",.?!\s]/g, "");
         if (clean_attempt == $('#sactual').val()) {
             $('#bug-button').hide();
-            $('#sentencequizform').attr('class', 'answer_box answer_box_g');
+            $('#sentencequizform').attr('class', 'abox abox_g');
             if (slevel == 3) {
                 sentencecode = 'C';
             } else {
@@ -67,7 +67,7 @@
             }
         } else {
             $('#bug-button').show();
-            $('#sentencequizform').attr('class', 'answer_box_red answer_box_r');
+            $('#sentencequizform').attr('class', 'abox_red abox_r');
             if (slevel == 3) {
                 sentencecode = 'I';
             } else {

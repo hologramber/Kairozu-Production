@@ -5,7 +5,7 @@
 {% load static %}
 {% block content %}
 
-<div id='island'></div>
+<div id='isl'></div>
 
 <!-- wrapper -->
 <div id='wrapper'>
@@ -18,18 +18,18 @@
                 <div class='col-lg-12'>
 					<div id='vocabholder'>
 
-                        <div id='vocabfield'>
+                        <div id='vfield'>
                             <div id='literal_one' class='vocab-note text-align-center'></div>
                             <div id='expression_english' class='vocab-challenge text-align-center'></div>
 
-                            <div class='vocab-prompt-container text-align-center'>
-                                <span id='hint_block' class='letterspacing5r'>&nbsp;</span>
+                            <div class='vocab-promptc text-align-center'>
+                                <span id='hint_block' class='ls5r'>&nbsp;</span>
                                 <a id="bug-button" href="#" tabindex="-1" style="display: none;">
                                     <i id="report-issue" class="fa fa-bug red-words" aria-hidden="true"><span class="raleway">&nbsp;Error?</span></i>
                                 </a>
                             </div>
 
-                            <form id='expressionquizform' action='' method='post' class='answer_box'>{% csrf_token %}
+                            <form id='expressionquizform' action='' method='post' class='abox'>{% csrf_token %}
                                 <input id='id_expressionattempt' type='text' name='expression_attempt' autocapitalize='none' autocorrect='off' autofocus />
                                 <input id='eactual' type='hidden' name='expression_actual' value='' />
                                 <input id='ecode' type='hidden' name='expression_code' value='A' />
@@ -37,7 +37,7 @@
                                 <input type='submit' value='&#8680;' />
                             </form>
 
-                        </div>  <!-- /#vocabfield -->
+                        </div>  <!-- /#vfield -->
 
                     </div>  <!-- /#vocabholder -->
                 </div>  <!-- /.col-lg-12 -->
@@ -88,7 +88,7 @@
                 default:
                     $('#hint_block').html(data['express']['kana']); break;
             }
-            $('#expressionquizform').removeClass('answer_box_g answer_box_r');
+            $('#expressionquizform').removeClass('abox_g abox_r');
             if (data['express']['katakana'] == true) {
                 $('#katakana-tips').show();
             } else {
@@ -111,7 +111,7 @@
         var clean_attempt = $('#id_expressionattempt').val().replace(/[　。、？！「」\'\",.?!\s]/g, "");
         if (clean_attempt == $('#eactual').val()) {
             $('#bug-button').hide();
-            $('#expressionquizform').attr('class', 'answer_box answer_box_g');
+            $('#expressionquizform').attr('class', 'abox abox_g');
             if (elevel == 3) {
                 expressioncode = 'C';
             } else {
@@ -119,7 +119,7 @@
                 expressioncode = 'N';
             }
         } else {
-            $('#expressionquizform').attr('class', 'answer_box_red answer_box_r');
+            $('#expressionquizform').attr('class', 'abox_red abox_r');
             $('#bug-button').show();
             if (elevel == 3) {
                 expressioncode = 'I';

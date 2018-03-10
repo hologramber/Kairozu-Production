@@ -30,7 +30,7 @@
     });
 </script>
 
-<div id='island2'></div>
+<div id='isl2'></div>
 
 <!-- wrapper -->
 <div id='wrapper'>
@@ -43,21 +43,21 @@
                 <div class='col-lg-12'>
 					<div id='sentenceholder'>
 
-                        <div id='sentencefield'>
-                            <div class='spacer-30 visible-xs'></div>
+                        <div id='sfield'>
+                            <div class='s-30 visible-xs'></div>
                             <div id='sentence_eng' class='challenge-grammar'></div>
-                            <div class='prompt-container'>
-                                <span id='sentence_hint' class='letterspacing5r'></span>
+                            <div class='promptc'>
+                                <span id='sentence_hint' class='ls5r'></span>
                             </div>
 
-                            <form id='sentencequizform' action='' class='answer_box' method='post'>{% csrf_token %}
+                            <form id='sentencequizform' action='' class='abox' method='post'>{% csrf_token %}
                                 <input id='id_sentenceattempt' type='text' name='sentence_attempt' autocapitalize='none' autocorrect='off' autofocus />
                                 <input id='sactual' type='hidden' name='sentence_actual' value='' />
                                 <input id='sindex' type='hidden' name='sindex' value='' />
                                 <input type='submit' value='&#8680;' />
                             </form>
-                            <div id='literal_one' class='literal-container'></div>
-                        </div>  <!-- /#sentencefield -->
+                            <div id='literal_one' class='lit-c'></div>
+                        </div>  <!-- /#sfield -->
 
                     </div>  <!-- /#vocabholder -->
                 </div>  <!-- /.col-lg-12 -->
@@ -102,7 +102,7 @@
                 default:
                     $('#sentence_hint').html(data['kana']); break;
             }
-            $('#sentencequizform').removeClass('answer_box_g answer_box_r');
+            $('#sentencequizform').removeClass('abox_g abox_r');
         } else {
             $.get("{% url 'demo:demosentencesuccess' %}").done(function (data) {
                 $('#wrapper').html(data);
@@ -114,14 +114,14 @@
         event.preventDefault();
         var clean_attempt = $('#id_sentenceattempt').val().replace(/[　。、？！「」\'\",.?!\s]/g, "");
         if (clean_attempt == $('#sactual').val()) {
-            $('#sentencequizform').attr('class', 'answer_box answer_box_g');
+            $('#sentencequizform').attr('class', 'abox abox_g');
             if (slevel == 3) {
                 sindex++;
             } else {
                 slevel = 3;
             }
         } else {
-            $('#sentencequizform').attr('class', 'answer_box_red answer_box_r');
+            $('#sentencequizform').attr('class', 'abox_red abox_r');
             if (slevel > 0) {
                 slevel--;
             }

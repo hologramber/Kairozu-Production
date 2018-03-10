@@ -5,7 +5,7 @@
 {% load static %}
 {% block content %}
 
-<div id='island4'></div>
+<div id='isl4'></div>
 
 <div id="wrapper">
 {% include 'demo/sidebar.html' %}
@@ -17,7 +17,7 @@
                 <div class="col-lg-12">
 					
                     <h1>Introduction to Kairozu</h1>
-                    <div class="spacer-15"></div>
+                    <div class="s-15"></div>
                     <div class="faded-white-bg">
                         <p>Kairozu uses <a href="https://en.wikipedia.org/wiki/Programmed_learning">programmed learning</a> to build an understanding of Japanese grammar using English-to-Japanese sentence construction. Grammatical constructs are introduced in small, logical steps, which are organized by chapter around groups of new vocabulary words. <span class="bold">A solid grasp on hiragana and katakana is necessary</span> before attempting any of the material on this site! If you're new to hiragana and/or katakana, <a href="{% url 'demo:demokana' %}">Japanese Kana</a> has a list of resources to help you get started.</p>
 
@@ -32,12 +32,12 @@
                                 <p class="raleway">Each chapter begins with ~80 new <a href="{% url 'demo:demovocablist' %}">Vocabulary</a> (the demo has eight) -- words are a necessary evil when it comes to sentence formation, and care should be taken to memorize the vocabulary before starting the grammar. A basic <a href="{% url 'demo:demovocabquiz' %}">Vocabulary Quiz</a> must be completed before the first <a href="{%url 'demo:demolesson' %}">Grammar Lesson</a> is unlocked.</p>
                                 <p class="raleway">The <a href="{% url 'demo:demovocabquiz' %}">Vocabulary Quiz</a> presents a word in English, and expects the Japanese translation to be entered as a response. It is possible to enter your answer in romaji (roman characters) even if no Japanese input system is installed on your device; the input box will auto-convert roman characters to hiragana or katakana (press shift) automatically. For example, if the vocabulary word is "dog" you would enter "inu" -- it will auto-convert to いぬ inside the box (requires JavaScript). It is also possible to enter text using a standard Japanese IME.</p>
 
-                                <div class="spacer-10"></div>
+                                <div class="s-10"></div>
                             <li class="bold">Expression List <i class="fa fa-long-arrow-right" aria-hidden="true"></i> Expression Quiz</li>
 
                                 <p class="raleway">Each chapter includes a series of ~30 set phrases and expressions (the demo has five) that are commonly used in everyday life (e.g. "Cheers!"). Studying the <a href="{% url 'demo:demoexpressionlist' %}">Expression List</a> will help you complete the <a href="{% url 'demo:demoexpressionquiz' %}">Expression Quiz</a>.</p>
 
-                                <div class="spacer-10"></div>
+                                <div class="s-10"></div>
                             <li class="bold">Grammar Lessons <i class="fa fa-long-arrow-right" aria-hidden="true"></i> Practice Sentences <i class="fa fa-long-arrow-right" aria-hidden="true"></i> Practice クイズ</li>
 
                                 <p class="raleway">Each chapter has eight <a href="{%url 'demo:demolesson' %}">Grammar Lessons</a> which introduce ~2 Japanese grammar topics each, with each lesson building upon those prior. Once you've read through a lesson, start the <a href="{% url 'demo:demopracticequiz' %}">Practice Sentences</a> by clicking the dragonfly link. Practices are the heart of Kairozu -- English sentences are presented in pairs, initially only differing by a word or two. Practices start with the expected Japanese translation fully shown -- all you need to do in this case is copy what you see. If that is done successfully, the Japanese hint will disappear, asking you to repeat the input without a prompt.</p>
@@ -45,18 +45,18 @@
                                 <p class="raleway">The practice exercises must be successfully completed in full (in a single session) to unlock the <a href="{% url 'demo:demosentencequiz' %}">Sentence クイズ</a> for each lesson. The quiz is similar to the practice session, but with only one sentence at a time. </p>
                                 <p class="raleway">A note on grammar: often Japanese sentences rely on information which is inferred and not directly stated, making some of the example sentences in Kairozu feel stunted at best. When describing yourself in English, you wouldn't prefix every sentence with "I am," even if the sentences would be grammatically correct. The focus of Kairozu is developing reliable grammar patterns, not sounding natural. Here is a list of the <a href="{% url 'demo:grammarlist' %}">grammar taught in Kairozu Chapters 1-6</a>.
 
-                                <div class="spacer-10"></div>
+                                <div class="s-10"></div>
                             <li class="bold">Dialogues & Passages (Exercises)</li>
 
                             <p class="raleway"><a href="{% url 'demo:storydemo' %}"><i class="fa fa-edit" aria-hidden="true"></i> Passages</a> and <a href="{% url 'demo:dialoguedemo' %}"><i class="fa fa-comment-o" aria-hidden="true"></i> Dialogues</a> are unlocked after you complete the last grammar lesson in each chapter. These summarize the grammar you've learned learned thus far; they attempt to mix previously encountered grammar constructs into cohesive paragraphs and interactions.</p>
 
-                                <div class="spacer-10"></div>
+                                <div class="s-10"></div>
                             <li class="bold">Stay up-to-date with Vocabulary, Expression, and Sentence Reviews</li>
 
                             <p class="raleway">Vocabulary words, expressions, and sentences follow a <a href="https://en.wikipedia.org/wiki/Spaced_repetition">spaced-repetition system</a> review pattern. Pending reviews can be accessed through the navigation bar; if too many reviews accumulate you won't be able to unlock additional chapters until the reviews have been cleared.</p>
                         </ol>
 
-                        <div class="spacer-30"></div>
+                        <div class="s-30"></div>
                         <h2>If you're interested in trying Kairozu proper, please <a href="{% url 'register' %}">Register for a Kairozu Account</a>. :)</h2>
 
                     </div>

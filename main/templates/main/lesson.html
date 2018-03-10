@@ -21,7 +21,7 @@
                             <h1 class="lessonhead">{{ lesson.f_hiragana|safe }}</h1>
                         </div>
 
-                        <div id="grammar-explain">
+                        <div id="gex">
                             {% for x in pieces %}
                                 {% if x.shape is 0 %}
                                     {{ x.f_text|safe }}
@@ -35,7 +35,7 @@
                             {% endfor %}
 
                             {% if lesson.point_active %}
-                                <div class="spacer-15"></div>
+                                <div class="s-15"></div>
                                 {% kairozu_point lesson %}
                             {% endif %}
 
@@ -50,7 +50,7 @@
                                 {% endfor %}
                             </div>
 
-                            <div class="spacer-20"></div>
+                            <div class="s-20"></div>
 
                             <div class="row">
                                 <div class="col-md-6">

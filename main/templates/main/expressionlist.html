@@ -5,7 +5,7 @@
 {% load static %}
 {% block content %}
 
-<div id="island5"></div>
+<div id="isl5"></div>
 
 <div id="wrapper">
 {% include 'main/sidebar.html' %}
@@ -16,14 +16,14 @@
                 <div class="col-lg-12">
 
 					<h1>{{ chapter.title }} Expressions</h1>
-					<div class="spacer-15"></div>
+					<div class="s-15"></div>
 					{% if user.profile.currentexpression > chapter.id %}
 						<p class="raleway">Congrats! You've finished the expressions for this chapter, but the <a href="{% url 'main:expressionquiz' chapter.id %}">Expression Quiz</a> interface is always available if you want more practice.</p>
 					{% else %}
 						<p class="raleway">This is a list of the expressions used throughout the {{ chapter.title }} material. Complete the <a href="{% url 'main:expressionquiz' chapter.id %}">Expression Quiz</a> to unlock the grammar lessons.</p>
 					{% endif %}
                     <p class="raleway smaller">Expressions marked with <i class="fa fa-star red-words" aria-hidden="true"></i> involve the <a href="{% url 'sandbox:japanesekana' %}">katakana character set</a>; these words are often foreign in origin or onomatopoeic. Hold down shift when entering text to switch from hiragana to katakana.</p>
-                    <div class="spacer-5"></div>
+                    <div class="s-5"></div>
                     <div class="table-responsive">
                         <table class="vocablist">
                             <thead>

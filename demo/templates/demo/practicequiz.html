@@ -5,7 +5,7 @@
 {% load static %}
 {% block content %}
 
-<div id='island'></div>
+<div id='isl'></div>
 
 <!-- wrapper -->
 <div id='wrapper'>
@@ -18,32 +18,32 @@
                 <div class='col-lg-12'>
 					<div id='practiceholder'>
 
-                        <div id='practicefield'>
+                        <div id='pfield'>
                             <div id='practice_eng_one' class='practice-grammar'></div>
 
-                            <div class='prompt-container'>
-                                <span id='hint_one' class='letterspacing5'></span>
+                            <div class='promptc'>
+                                <span id='hint_one' class='ls5'></span>
                             </div>
 
                             <form id='practicequizform' action='' method='post'>{% csrf_token %}
-                                <input id='id_pone_attempt' type='text' name='pone_attempt' class='keiko_box1' autocapitalize='none' autocorrect='off' />
-                            <div id='literal_one' class='literal-container'></div>
+                                <input id='id_pone_attempt' type='text' name='pone_attempt' class='kbox1' autocapitalize='none' autocorrect='off' />
+                            <div id='literal_one' class='lit-c'></div>
 
                             <div id='practice_eng_two' class='practice-grammar'></div>
 
-                            <div class='prompt-container'>
-                                <span id='hint_two' class='letterspacing5'></span>
+                            <div class='promptc'>
+                                <span id='hint_two' class='ls5'></span>
                             </div>
 
-                                <input id='id_ptwo_attempt' type='text' name='ptwo_attempt' class='keiko_box2' autocapitalize='none' autocorrect='off' />
+                                <input id='id_ptwo_attempt' type='text' name='ptwo_attempt' class='kbox2' autocapitalize='none' autocorrect='off' />
                                 <input id='poneact' type='hidden' name='pone_actual' value='' />
                                 <input id='ptwoact' type='hidden' name='ptwo_actual' value='' />
                                 <input id='pstrict' type='hidden' name='practice_strict' value='0' />
                                 <input id='pindex' type='hidden' name='pindex' value='' />
-                                <input id='ksubmit' type='submit' class='keiko_submit' value='&#8680;' />
+                                <input id='ksubmit' type='submit' class='ksub' value='&#8680;' />
                             </form>
-                            <div id='literal_two' class='literal-container'></div>
-                        </div>  <!-- /#practicefield -->
+                            <div id='literal_two' class='lit-c'></div>
+                        </div>  <!-- /#pfield -->
 
                     </div>  <!-- /#practiceholder -->
                 </div>  <!-- /.col-lg-12 -->
@@ -143,9 +143,9 @@
             } else {
                 $('#literal_two').html('&nbsp;');
             }
-            $('#id_pone_attempt').removeClass('keiko_box1_g keiko_box1_r');
-            $('#id_ptwo_attempt').removeClass('keiko_box2_g keiko_box2_r');
-            $('#ksubmit').removeClass('keiko_submit_r keiko_submit_g');
+            $('#id_pone_attempt').removeClass('kbox1_g kbox1_r');
+            $('#id_ptwo_attempt').removeClass('kbox2_g kbox2_r');
+            $('#ksubmit').removeClass('ksub_r ksub_g');
         } else {
             $.get("{% url 'demo:demopracticesuccess' %}").done(function (data) {
                 $('#wrapper').html(data);
@@ -164,41 +164,41 @@
             } else {
                 plevel = 2;
             }
-            $('#id_pone_attempt').attr('class', 'keiko_box1 keiko_box1_g').prop("disabled", false).val('').focus();
-            $('#id_ptwo_attempt').attr('class', 'keiko_box2 keiko_box2_g').prop("disabled", false).val('');
-            $('#ksubmit').attr('class', 'keiko_submit keiko_submit_g');
-            $('#hint_one').attr('class', 'letterspacing5');
-            $('#hint_two').attr('class', 'letterspacing5');
+            $('#id_pone_attempt').attr('class', 'kbox1 kbox1_g').prop("disabled", false).val('').focus();
+            $('#id_ptwo_attempt').attr('class', 'kbox2 kbox2_g').prop("disabled", false).val('');
+            $('#ksubmit').attr('class', 'ksub ksub_g');
+            $('#hint_one').attr('class', 'ls5');
+            $('#hint_two').attr('class', 'ls5');
         } else if ((pone_clean_att == $('#poneact').val()) && (ptwo_clean_att != $('#ptwoact').val())) {
             pcode = 'OC';
             if (plevel > 0) {
                plevel --;
            }
-            $('#id_pone_attempt').attr('class', 'keiko_box1 keiko_box1_g').prop("disabled", true);
-            $('#id_ptwo_attempt').attr('class', 'keiko_box2_red keiko_box2_r').val('').focus();
-            $('#ksubmit').attr('class', 'keiko_submit_red keiko_submit_r');
-            $('#hint_one').attr('class', 'letterspacing5g');
-            $('#hint_two').attr('class', 'letterspacing5r');
+            $('#id_pone_attempt').attr('class', 'kbox1 kbox1_g').prop("disabled", true);
+            $('#id_ptwo_attempt').attr('class', 'kbox2_red kbox2_r').val('').focus();
+            $('#ksubmit').attr('class', 'ksub_red ksub_r');
+            $('#hint_one').attr('class', 'ls5g');
+            $('#hint_two').attr('class', 'ls5r');
         } else if ((pone_clean_att != $('#poneact').val()) && (ptwo_clean_att == $('#ptwoact').val())) {
             pcode = 'TC';
            if (plevel > 0) {
                plevel --;
            }
-            $('#id_pone_attempt').attr('class', 'keiko_box1_red keiko_box1_r').val('').focus();  
-            $('#id_ptwo_attempt').attr('class', 'keiko_box2 keiko_box2_g').prop("disabled", true);
-            $('#ksubmit').attr('class', 'keiko_submit keiko_submit_g');
-            $('#hint_one').attr('class', 'letterspacing5r');
-            $('#hint_two').attr('class', 'letterspacing5g');
+            $('#id_pone_attempt').attr('class', 'kbox1_red kbox1_r').val('').focus();
+            $('#id_ptwo_attempt').attr('class', 'kbox2 kbox2_g').prop("disabled", true);
+            $('#ksubmit').attr('class', 'ksub ksub_g');
+            $('#hint_one').attr('class', 'ls5r');
+            $('#hint_two').attr('class', 'ls5g');
         } else {
             pcode = 'NC';
            if (plevel > 0) {
                plevel --;
            }
-            $('#id_pone_attempt').attr('class', 'keiko_box1_red keiko_box1_r').val('').focus();
-            $('#id_ptwo_attempt').attr('class', 'keiko_box2_red keiko_box2_r').val('');
-            $('#ksubmit').attr('class', 'keiko_submit_red keiko_submit_r');
-            $('#hint_one').attr('class', 'letterspacing5r');
-            $('#hint_two').attr('class', 'letterspacing5r');
+            $('#id_pone_attempt').attr('class', 'kbox1_red kbox1_r').val('').focus();
+            $('#id_ptwo_attempt').attr('class', 'kbox2_red kbox2_r').val('');
+            $('#ksubmit').attr('class', 'ksub_red ksub_r');
+            $('#hint_one').attr('class', 'ls5r');
+            $('#hint_two').attr('class', 'ls5r');
         }
         $('#practicequizform #pindex').val(pindex);
         var form_data = $('#practicequizform').serialize();

@@ -19,30 +19,30 @@
                 {% endfor %}
             </div>
             <div class="col-sm-4">
-                <div class="spacer-20"></div>
+                <div class="s-20"></div>
                 <div class=" bolder lineheight-20 opensans smaller dashed-grey-2 text-align-center">
-                    <div class="spacer-10"></div>
+                    <div class="s-10"></div>
                     Next Maintenance Downtime<br />
                     Mar 12 02:00-04:00 UTC
-                    <div class="spacer-10"></div>
+                    <div class="s-10"></div>
                     <a href="{% url 'news:knownissues' %}">&nbsp;Known Issues & Bug Updates&nbsp;</a>
-                    <div class="spacer-10"></div>
+                    <div class="s-10"></div>
                 </div>
 
-                <div class="spacer-50"></div>
+                <div class="s-50"></div>
 
                 <i class="fa fa-twitter fa-fw fa-lg"></i>&nbsp;&nbsp;<a class="raleway" href="https://twitter.com/kairozukigou">kairozukigou</a>
-                <div class="spacer-10"></div>
+                <div class="s-10"></div>
                 <i class="fa fa-instagram fa-fw fa-lg"></i>&nbsp;&nbsp;<a class="raleway" href="https://instagram.com/kairozu">kairozu</a>
-                <div class="spacer-10"></div>
+                <div class="s-10"></div>
                 <i class="fa fa-github fa-fw fa-lg"></i>&nbsp;&nbsp;<a class="raleway" href="https://github.com/kairozu">kairozu</a>
-                <div class="spacer-10"></div>
+                <div class="s-10"></div>
                 <i class="fa fa-envelope-square fa-fw fa-lg"></i>&nbsp;&nbsp;<a class="raleway" href="{% url 'contact' %}">kairozu@kairozu.com</a>
 
-                <div class="spacer-40"></div>
+                <div class="s-40"></div>
 
                 <span class="opensans bolder larger">Recent Updates</span>
-                <div class="spacer-5"></div>
+                <div class="s-5"></div>
                 <ul>
                     {% for post in posts %}
                         <li><a class="raleway" href="{{ post.get_absolute_url }}">{{ post.title }}</a></li> 

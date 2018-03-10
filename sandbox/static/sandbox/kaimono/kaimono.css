@@ -74,7 +74,7 @@
 	margin: 1vmin;
 }
 
-.keiko_box1 { text-align: center; }
+.kbox1 { text-align: center; }
 
 
 /* make keyframes that tell the start state and the end state of our object */
@@ -86,17 +86,17 @@
 @-moz-keyframes incorrectAFlip { from { background-color:#d92425; } to { background-color:#FFF; } }
 @keyframes incorrectAFlip { from { background-color:#d92425; } to { background-color:#FFF; } }
 
-.keiko_box1_g_flip {
+.kbox1_g_flip {
 	-webkit-animation:correctAFlip;				/* call keyframe correctA, ease-in and repeat it only 1 time */
 	-moz-animation:correctAFlip;
 	animation:correctAFlip; }
 
-.keiko_box1_r_flip {
+.kbox1_r_flip {
 	-webkit-animation:incorrectAFlip;  			/* call keyframe correctA, ease-in and repeat it only 1 time */
 	-moz-animation:incorrectAFlip;
 	animation:incorrectAFlip; }
 
-.keiko_box1_g_flip, .keiko_box1_r_flip {
+.kbox1_g_flip, .kbox1_r_flip {
 	-webkit-animation-fill-mode:forwards;	/* makes sure that after animation is done we remain @ last keyframe value (white bg) */
 	-moz-animation-fill-mode:forwards;
 	animation-fill-mode:forwards;

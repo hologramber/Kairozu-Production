@@ -43,11 +43,11 @@
                     </div>
                 </div>
 
-                <div class="spacer-30"></div>
+                <div class="s-30"></div>
 
                 <h2>Kairozu Account</h2>
                 <h4 class="ltgrey-words">Change administrative settings and basic account info.</h4>
-                <div class="spacer-10"></div>
+                <div class="s-10"></div>
                 <div class="panel-group" id="accordion">
                     <div class="panel panel-default kai-panel">
                         <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
@@ -67,13 +67,13 @@
                                         <td><span class="bolder">Email:</span></td><td><span class="pad-left-15">{{ user.email }}</span></td>
                                     </tr>
                                     <tr>
-                                        <td colspan="2"><div class="spacer-5"></div><span class="change-text"><ul><li>Please email kairozu@kairozu.com for assistance with changing your email address.</li><li>Usernames cannot currently be changed (sorry!).</li></ul></span></td>
+                                        <td colspan="2"><div class="s-5"></div><span class="change-text"><ul><li>Please email kairozu@kairozu.com for assistance with changing your email address.</li><li>Usernames cannot currently be changed (sorry!).</li></ul></span></td>
                                     </tr>
                                 </table>
                             </div>
                         </div>
                     </div>
-                    <div class="spacer-10"></div>
+                    <div class="s-10"></div>
                     <div class="panel panel-default kai-panel">
                         <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
                             <div class="panel-heading kai-panel-header">
@@ -85,7 +85,7 @@
                         <div id="collapse2" class="panel-collapse collapse">
                             <div class="panel-body kai-panel-body">
                                 <div class="authform">
-                                    <div class="spacer-5"></div>
+                                    <div class="s-5"></div>
                                     <form method="post">{% csrf_token %}
                                         {% for field in strictform %}
                                             <div class="form-group">
@@ -106,7 +106,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="spacer-10"></div>
+                    <div class="s-10"></div>
                     <div class="panel panel-default kai-panel">
                         <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">
                             <div class="panel-heading kai-panel-header">
@@ -118,7 +118,7 @@
                         <div id="collapse3" class="panel-collapse collapse">
                             <div class="panel-body kai-panel-body">
                                 <div class="authform">
-                                    <div class="spacer-5"></div>
+                                    <div class="s-5"></div>
                                     <form method="post">{% csrf_token %}
                                         {% for field in form %}
                                             <div class="form-group">
@@ -126,7 +126,7 @@
                                                 {{ field }}<br />
 
                                                 {% if field.help_text %}
-                                                    <div class="spacer-10"></div>
+                                                    <div class="s-10"></div>
                                                     <span class="change-text">{{ field.help_text|safe }}</span>
                                                 {% endif %}
 

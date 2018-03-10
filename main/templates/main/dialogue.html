@@ -5,7 +5,7 @@
 {% load static %}
 {% block content %}
 
-<div id='island4'></div>
+<div id='isl4'></div>
 <link rel="stylesheet" href="{% static 'main/dialogue.css' %}">
 <!-- wrapper -->
 <div id='wrapper'>
@@ -17,7 +17,7 @@
             <div class='row'>
                 <div class='col-lg-12'>
                     <h3 class="grey-words italics raleway">{{ exercise.description }}</h3>
-                    <div class="spacer-10 hidden-md"></div>
+                    <div class="s-10 hidden-md"></div>
 
                     <div class="dialogue-holder">
                         <table id="dialogue-table" class="chat">
@@ -29,27 +29,27 @@
                         <div id="grammarholder">
                             <div id='context_one' class='context-container'></div>
                             <div id='dialogue_english' class='challenge-grammar'></div>
-                            <div class='prompt-container'>
-                                <span id='dialogue_hint' class='letterspacing5r'></span>
+                            <div class='promptc'>
+                                <span id='dialogue_hint' class='ls5r'></span>
                                 <a id="bug-button" href="#" tabindex="-1" style="display: none;">
                                     <i id="report-issue" class="fa fa-bug red-words" aria-hidden="true"><span class="raleway">&nbsp;Error?</span></i>
                                 </a>
                             </div>
                         </div>  <!-- /#grammarholder -->
 
-                        <form id='dialogue_form' action='' class='answer_box' method='post'>{% csrf_token %}
+                        <form id='dialogue_form' action='' class='abox' method='post'>{% csrf_token %}
                             <input id='id_dialogue_attempt' type='text' name='dialogue_attempt' autocapitalize='none' autocorrect='off' autofocus />
                             <input id='dialogue_actual' type='hidden' name='dialogue_actual' value='' />
                             <input id='dialogue_index' type='hidden' name='dialogue_index' value='' />
                             <input id='dialogue_kana' type='hidden' name='dialogue_kana' value='' />
                             <input type='submit' value='&#8680;' />
                         </form>
-                        <div id='literal_one' class='literal-container'></div>
+                        <div id='literal_one' class='lit-c'></div>
                     </div>
 
                 </div>  <!-- /.col-lg-12 -->
             </div>  <!-- /.row -->
-            <div class="spacer-50"></div>
+            <div class="s-50"></div>
         </div>  <!-- /.container-fluid -->
     </div>  <!-- /#page-content-wrapper -->
 
@@ -116,13 +116,13 @@
                 case 3:
                     if (data['responses'][response_index]['response_disamb_location'] != 0) {
                         $('#dialogue_hint').html(data['responses'][response_index]['response_kana_all_blank']);
-                        $('#dialogue_hint').addClass('letterspacing5y');
+                        $('#dialogue_hint').addClass('ls5y');
                     } else {
                         $('#dialogue_hint').html('&nbsp;');
                     } break;
                 case 2:
                     $('#dialogue_hint').html(data['responses'][response_index]['response_kana_all_blank']);
-                    $('#dialogue_hint').removeClass('letterspacing5y');
+                    $('#dialogue_hint').removeClass('ls5y');
                     break;
                 case 1:
                     $('#dialogue_hint').html(data['responses'][response_index]['response_kana_alt_blank']); break;
@@ -131,7 +131,7 @@
                 default:
                     $('#dialogue_hint').html('&nbsp;'); break;
             }
-            $('#dialogue_form').removeClass('answer_box_g answer_box_r');
+            $('#dialogue_form').removeClass('abox_g abox_r');
         } else {
             var dialogue_grade = (total_inputs-incorrect_inputs)/total_inputs;
             var total_dialogue = $('#dialogue-table').html();
@@ -150,7 +150,7 @@
         event.preventDefault();
         var clean_attempt = $('#id_dialogue_attempt').val().replace(/[　。、？！「」'",.?!\s]/g, "");
         if (clean_attempt == $('#dialogue_actual').val()) {
-            $('#dialogue_form').attr('class', 'answer_box answer_box_g');
+            $('#dialogue_form').attr('class', 'abox abox_g');
             $('#bug-button').hide();
             $('#dialogue_english').attr('class', 'challenge-grammar');
             if (dialogue_level == 3) {
@@ -174,7 +174,7 @@
             }
         } else {
             $('#bug-button').show();
-            $('#dialogue_form').attr('class', 'answer_box_red answer_box_r');
+            $('#dialogue_form').attr('class', 'abox_red abox_r');
             $('#dialogue_english').attr('class', 'challenge-grammar red-words');
             if (dialogue_level > 0) {
                 next_step = 0;

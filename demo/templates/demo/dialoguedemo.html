@@ -5,7 +5,7 @@
 {% load static %}
 {% block content %}
 
-<div id='island2'></div><link rel="stylesheet" href="{% static 'main/dialogue.css' %}">
+<div id='isl2'></div><link rel="stylesheet" href="{% static 'main/dialogue.css' %}">
 <div id="wrapper">
 {% include 'demo/sidebar.html' %}
 
@@ -16,14 +16,14 @@
                 <div class="col-lg-12">
 
                     <div class="dashed-grey-2 jp-resources">
-                        <div class="spacer-15"></div>
+                        <div class="s-15"></div>
                         This is an example of the Exercise interface for Dialogues; it is best viewed on a large screen. Each dialogue begins with a prompt -- in the case below, the green chat bubble from やまださん. Your response is given in English, and it must be entered in Japanese (text entry is similar to the practice and quiz interfaces found in the grammar lessons). As responses are entered correctly, they're added to your orange chat bubbles. The first few dialogues feel, at best, like talking to a chatbot from the 90s. As more grammar is acquired the dialogues become more fluid and relevant to everyday life.
                     </div>
-                    <div class="spacer-10"></div>
+                    <div class="s-10"></div>
 
 
                     <h2 class="grey-words italics raleway">You're meeting Yamada-san for the first time. Your name is Sam.</h2>
-                    <div class="spacer-10"></div>
+                    <div class="s-10"></div>
 
                     <div class="dialogue-holder">
 
@@ -146,12 +146,12 @@
                     <div id="dialogue-input">
                         <div id="grammarholder">
                             <div id="dialogue_english" class="challenge-grammar">(I) am a student.</div>
-                            <div class="prompt-container">
-                                <span id="dialogue_hint" class="letterspacing5r">&nbsp;</span>
+                            <div class="promptc">
+                                <span id="dialogue_hint" class="ls5r">&nbsp;</span>
                             </div>
                         </div>  <!-- /#grammarholder -->
 
-                        <form id="dialogue_form" class="answer_box">
+                        <form id="dialogue_form" class="abox">
                             <input id="id_dialogue_attempt" type="text" disabled="True">
                             <input type='submit' value='→' disabled=True />
                         </form>

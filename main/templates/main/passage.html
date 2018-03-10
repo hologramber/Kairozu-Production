@@ -5,7 +5,7 @@
 {% load static %}
 {% block content %}
 
-<div id='island4'></div>
+<div id='isl4'></div>
 
 <!-- wrapper -->
 <div id='wrapper'>
@@ -20,14 +20,14 @@
                 <div id="retain-passage">
                     <h3 class="grey-words italics raleway">{{ exercise.description }}</h3>
                     <div class="passageholder hidden-sm hidden-xs">
-                        <div class="passage-english">
+                        <div class="pass-e">
                             {% for sentence in object_list %}
                                 <span id="sentence{{sentence.id}}">
                                     {{ sentence.english }}
                                 </span>
                             {% endfor %}
                         </div>
-                        <div id='passage_jp' class='passage-japanese'></div>
+                        <div id='passage_jp' class='pass-j'></div>
                     </div>  <!-- /#passageholder -->
                 </div>
 
@@ -35,27 +35,27 @@
                     <div id="grammarholder">
                         <div id='context_one' class='context-container'></div>
                         <div id='passage_eng' class='challenge-grammar'></div>
-                        <div class='prompt-container'>
-                            <span id='passage_hint' class='letterspacing5r'></span>
+                        <div class='promptc'>
+                            <span id='passage_hint' class='ls5r'></span>
                             <a id="bug-button" href="#" tabindex="-1" style="display: none;">
                                 <i id="report-issue" class="fa fa-bug red-words" aria-hidden="true"><span class="raleway">&nbsp;Error?</span></i>
                             </a>
                         </div>
                     </div>  <!-- /#grammarholder -->
 
-                    <form id='passageform' action='' class='answer_box' method='post'>{% csrf_token %}
+                    <form id='passageform' action='' class='abox' method='post'>{% csrf_token %}
                         <input id='id_passageattempt' type='text' name='passageattempt' autocapitalize='none' autocorrect='off' autofocus />
                         <input id='passageactual' type='hidden' name='passageactual' value='' />
                         <input id='passage_index' type='hidden' name='passage_index' value='' />
                         <input id='passagekana' type='hidden' name='passagekana' value='' />
                         <input type='submit' value='&#8680;' />
                     </form>
-                    <div id='literal_one' class='literal-container'></div>
+                    <div id='literal_one' class='lit-c'></div>
                 </div>
 
             </div>  <!-- /.col-lg-12 -->
         </div>  <!-- /.row -->
-        <div class="spacer-50"></div>
+        <div class="s-50"></div>
     </div>  <!-- /.container-fluid -->
 </div>  <!-- /#page-content-wrapper -->
 
@@ -92,13 +92,13 @@
                 case 3:
                     if (data['disamb_location'] != 0) {
                         $('#passage_hint').html(data['kana_all_blank']);
-                        $('#passage_hint').addClass('letterspacing5y');
+                        $('#passage_hint').addClass('ls5y');
                     } else {
                         $('#passage_hint').html('&nbsp;');
                     } break;
                 case 2:
                     $('#passage_hint').html(data['kana_all_blank']);
-                    $('#passage_hint').removeClass('letterspacing5y');
+                    $('#passage_hint').removeClass('ls5y');
                     break;
                 case 1:
                     $('#passage_hint').html(data['kana_alt_blank']); break;
@@ -107,7 +107,7 @@
             }
             currentline = '#sentence' + data['id'];
             $(currentline).attr('class', 'green-words-bold');
-            $('#passageform').removeClass('answer_box_g answer_box_r');
+            $('#passageform').removeClass('abox_g abox_r');
         } else {
             var passage_grade = (totalinputs-incorrectinputs)/totalinputs;
             var total_passage = $('#retain-passage').html();
@@ -127,7 +127,7 @@
         var clean_attempt = $('#id_passageattempt').val().replace(/[　。、？！「」\'\",.?!\s]/g, "");
         if (clean_attempt == $('#passageactual').val()) {
             $('#bug-button').hide();
-            $('#passageform').attr('class', 'answer_box answer_box_g');
+            $('#passageform').attr('class', 'abox abox_g');
             $('#passage_eng').attr('class', 'challenge-grammar');
             if (passage_level == 3) {
                 totalinputs++;
@@ -144,7 +144,7 @@
             }
         } else {
             $('#bug-button').show();
-            $('#passageform').attr('class', 'answer_box_red answer_box_r');
+            $('#passageform').attr('class', 'abox_red abox_r');
             $('#passage_eng').attr('class', 'challenge-grammar red-words');
             if (passage_level > 0) {
                 passage_level--;

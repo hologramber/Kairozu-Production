@@ -7,7 +7,7 @@
 {% load static %}
 {% block content %}
 
-<div id='island4'></div>
+<div id='isl4'></div>
 
 <div id="wrapper">
 {% include 'main/sidebar.html' %}
@@ -17,10 +17,10 @@
                 <div class="col-lg-12">
 
 					<h1>{{ chapter.title }} Grammar Summary</h1>
-					<div class="spacer-30"></div>
+					<div class="s-30"></div>
 
 					<div class="table-responsive">
-						<div class="hugtable-summary">
+						<div class="ht-summary">
 							<table class="generaltable">
                                 {% for lesson in object_list %}
 									<tr>
@@ -36,22 +36,22 @@
 						</div>
 					</div>
 
-					<div class="spacer-40"></div>
+					<div class="s-40"></div>
 
 					{% for lesson in object_list %}
                         {% if lesson.point_active %}
                             <div class="row">
                                 <div class="col-md-4 col-sm-12">
-                                    <div class="hugtable-no-border">
+                                    <div class="ht-no-border">
                                         <h2 style="margin-top: 0;">{{ lesson.f_english|safe }}</h2>
                                         <h2>{{ lesson.f_hiragana|safe }}</h2>
-                                        <div class="spacer-5"></div>
+                                        <div class="s-5"></div>
                                         <h4 class="raleway">{{ lesson.overview }}</h4>
                                     </div>
                                 </div>
 
                                 <div class="col-md-3 col-sm-12">
-                                    <div class="hugtable-no-border">
+                                    <div class="ht-no-border">
                                         {% for example in lesson.examples.all %}
                                             <p>{{ example.f_english|safe }}<br />{{ example.f_hiragana|safe }}</p>
                                         {% endfor %}
@@ -63,9 +63,9 @@
                                 </div>
                             </div>
 
-                            <div class="spacer-30"></div>
+                            <div class="s-30"></div>
                             <div class="border-bottom-grey-dashed"></div>
-                            <div class="spacer-40"></div>
+                            <div class="s-40"></div>
                         {% endif %}
 					{% endfor %}
 

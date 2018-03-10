@@ -5,7 +5,7 @@
 {% load static %}
 {% block content %}
 
-<div id="island5"></div>
+<div id="isl5"></div>
 
 <div id="wrapper">
 {% include 'main/sidebar.html' %}
@@ -16,7 +16,7 @@
                 <div class="col-lg-12">
 
 					<h1>{{ chapter.title }} Vocabulary</h1>
-					<div class="spacer-15"></div>
+					<div class="s-15"></div>
 					{% if user.profile.currentvocab > chapter.id %}
 						<p class="raleway">Congrats! You've finished the vocabulary for this chapter, but the <a href="{% url 'main:vocabquiz' chapter.id %}">Vocabulary Quiz</a> interface is always available if you want more practice.</p>
 					{% else %}
@@ -30,7 +30,7 @@
                             <li class="smaller">Verbs labeled with <span class="partofspeech orange-words">V5</span> are godan, class 5, or う-verbs. Verbs that do not end in 〜いる and 〜える (as well as a few that do) are godan verbs.</li>
                             <li class="smaller"><i class="fa fa-exclamation-triangle ltgrey-words" aria-hidden="true"></i> indicates an irregular verb: くる, する, and verbs that end in 〜する.</li>
                         </ul>
-                    <div class="spacer-10"></div>
+                    <div class="s-10"></div>
                     <div class="table-responsive">
                         <table class="vocablist">
                             <thead>
