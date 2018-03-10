@@ -6,16 +6,16 @@ app_name = 'main'
 urlpatterns = [
     url(r'^$', views.MainView.as_view(), name='main'),                                                    # /main; main interface
     url(r'^chapter/(?P<chapter_id>[0-9]+)/$', views.ChapterInterfaceView.as_view(), name='interface'),    # /main/chapter/1; ch interface
-    url(r'^lesson/(?P<lesson_id>[0-9]+)/$', views.LessonView.as_view(), name='lesson'),  # lesson interface
+    url(r'^lesson/(?P<lesson_id>[0-9]+)/$', views.LessonView.as_view(), name='lesson'),                   # lesson interface
     url(r'^lesson/(?P<lesson_id>[0-9]+)/notes/$', views.GrammarNoteView.as_view(), name='grammarnote'),
-    url(r'^chapter/(?P<chapter_id>[0-9]+)/summary/$', views.SummaryView.as_view(), name='summary'), # summary of chapter lessons
+    url(r'^chapter/(?P<chapter_id>[0-9]+)/summary/$', views.SummaryView.as_view(), name='summary'),       # summary of ch lessons
     url(r'^progress/$', views.ProgressView.as_view(), name='progress'),
 
 
     # ################## VOCABULARY ####################
     url(r'^chapter/(?P<chapter_id>[0-9]+)/vocablist/$', views.VocabListView.as_view(), name='vocablist'), # /main/chapter/1/vocablist
     url(r'^chapter/(?P<chapter_id>[0-9]+)/vocabquiz/$', views.VocabQuizView.as_view(), name='vocabquiz'), # /main/chapter/1/vocabquiz
-    url(r'^chapter/(?P<chapter_id>[0-9]+)/vocabquiz/check/$', views.vocab_check, name='vocabcheck'),      # is vocab attempt correct?
+    url(r'^chapter/(?P<chapter_id>[0-9]+)/vocabquiz/check/$', views.vocab_check, name='vocabcheck'),      # is attempt correct?
     url(r'^chapter/(?P<chapter_id>[0-9]+)/vocabquiz/success/$', views.VocabSuccessView.as_view(), name='vocabsuccess'), # vocab quiz finished
     url(r'^chapter/(?P<chapter_id>[0-9]+)/vocabquiz/grab/$', api_views.VocabRecordGrab.as_view(), name='vocabgrab'), # grab next vocab for quiz
 
