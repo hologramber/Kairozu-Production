@@ -33,7 +33,7 @@ def create_context(sentence):
         context = "Listener understands you're asking them from the context of the conversation."
     elif whowhat == 'you':
         context = "Listener understands you're referring to them from the context of the conversation."
-    elif whowhat == 'your' or whowhat == 'yours' and sentence.endswith('?'):
+    elif sentence.endswith('?') and (whowhat == 'your' or whowhat == 'yours'):
         context = "Listener understands you're asking about someone/thing related to them from the context of the conversation."
     elif whowhat == 'your' or whowhat == 'yours':
         context = "Listener understands you're referring to someone/thing related to them from the context of the conversation."
