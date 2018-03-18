@@ -1039,10 +1039,10 @@ def update_records(sender, instance, **kwargs):
     SentenceRecord.objects.update_sentence_record(profile=instance)
     ExerciseRecord.objects.update_exercise_record(profile=instance)
     ExpressionRecord.objects.update_expression_record(profile=instance)
-    # VocabRecord.objects.fix_vocab_record(profile=instance)
-    # SentenceRecord.objects.fix_sentence_record(profile=instance)
-    # ExerciseRecord.objects.fix_exercise_record(profile=instance)
-    # ExpressionRecord.objects.fix_expression_record(profile=instance)
+    VocabRecord.objects.fix_vocab_record(profile=instance)
+    SentenceRecord.objects.fix_sentence_record(profile=instance)
+    ExerciseRecord.objects.fix_exercise_record(profile=instance)
+    ExpressionRecord.objects.fix_expression_record(profile=instance)
 
 
 @receiver(user_logged_in)
