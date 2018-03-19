@@ -18,7 +18,7 @@ def demointro(request):
 
 class GrammarListView(ListView):
     context_object_name = 'grammar_list'
-    queryset = Lesson.objects.filter(id__lte=64)
+    queryset = Lesson.objects.filter(id__lte=40)
     template_name = 'demo/grammarlist.html'
 
 
