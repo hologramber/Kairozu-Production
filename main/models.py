@@ -218,6 +218,10 @@ class Chapter(models.Model):
         (HIDDEN, 'Hidden')
     )
     status = models.CharField(max_length=1, choices=CHAPTER_STATUS_CHOICES, default=ALPHA, blank=False)
+    season = models.CharField(max_length=5, default='SXCX')
+
+    class Meta:
+        ordering = ['season']
 
     def __str__(self):
         return self.title
