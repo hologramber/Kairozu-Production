@@ -11,6 +11,13 @@ class Post(models.Model):
     published = models.BooleanField(default=False)
     published_date = models.DateTimeField(auto_now_add=True)
 
+    POST_CATEGORY_CHOICES = (
+        ('KAI', 'Kairozu'),     # 1
+        ('NLP', 'NLP'),     # 2
+        ('JPN', 'Japanese'),         # 4
+    )
+    post_category = models.CharField(max_length=8, choices=POST_CATEGORY_CHOICES, default='KAI', blank=False)
+
     class Meta:
         ordering = ['-published_date']
 

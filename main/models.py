@@ -249,18 +249,6 @@ class Expression(models.Model):
 
 class ExpressionRecordManager(models.Manager):
     """create and manage expressionrecords for each user"""
-
-    def fix_expression_record(self, profile):
-        userexpression = profile.currentexpression
-        expressions = Expression.objects.filter(chapter_id__lte=userexpression)
-        user = profile.user
-
-        if len(expressions) == 0:
-            pass
-        else:
-            for exp in expressions:
-                self.get_or_create(user=user, express=exp)
-
     def update_expression_record(self, profile):
         userexpression = profile.currentexpression
         expressions = Expression.objects.filter(chapter_id__exact=userexpression)
@@ -316,7 +304,6 @@ class ExpressionRecord(models.Model):
             addhours = 4000
         else:
             addhours = hours_scale[expressionrecord.score]
-
         expressionrecord.next_review = datetime.now() + timedelta(hours=addhours)
         expressionrecord.save()
 
@@ -438,18 +425,6 @@ class Vocabulary(models.Model):
 
 class VocabRecordManager(models.Manager):
     """create and manage vocabrecords for each user"""
-
-    def fix_vocab_record(self, profile):
-        uservocab = profile.currentvocab
-        vocabularies = Vocabulary.objects.filter(chapter_id__lte=uservocab)
-        user = profile.user
-
-        if len(vocabularies) == 0:
-            pass
-        else:
-            for voc in vocabularies:
-                self.get_or_create(user=user, vocab=voc)
-
     def update_vocab_record(self, profile):
         uservocab = profile.currentvocab
         vocabularies = Vocabulary.objects.filter(chapter_id__exact=uservocab)
@@ -833,17 +808,6 @@ class ExerciseResponse(models.Model):
 
 
 class ExerciseRecordManager(models.Manager):
-    def fix_exercise_record(self, profile):
-        userstory = profile.currentstory
-        exercises = Exercise.objects.filter(chapter_id__lte=userstory)
-        user = profile.user
-
-        if len(exercises) == 0:
-            pass
-        else:
-            for exer in exercises:
-                self.get_or_create(user=user, exercise=exer)
-
     def update_exercise_record(self, profile):
         userstory = profile.currentstory
         exercises = Exercise.objects.filter(chapter_id__exact=userstory)
@@ -928,17 +892,6 @@ class Sentence(models.Model):
 
 class SentenceRecordManager(models.Manager):
     """create and manage sentencerecords for each user"""
-
-    def fix_sentence_record(self, profile):
-        usersentence = profile.currentlesson
-        sentences = Sentence.objects.filter(lesson_id__lte=usersentence)
-        user = profile.user
-
-        if len(sentences) == 0:
-            pass
-        else:
-            for sen in sentences:
-                self.get_or_create(user=user, sentence=sen)
 
     def update_sentence_record(self, profile):
         usersentence = profile.currentlesson
@@ -1052,10 +1005,6 @@ def update_records(sender, instance, **kwargs):
     SentenceRecord.objects.update_sentence_record(profile=instance)
     ExerciseRecord.objects.update_exercise_record(profile=instance)
     ExpressionRecord.objects.update_expression_record(profile=instance)
-    # VocabRecord.objects.fix_vocab_record(profile=instance)
-    # SentenceRecord.objects.fix_sentence_record(profile=instance)
-    # ExerciseRecord.objects.fix_exercise_record(profile=instance)
-    # ExpressionRecord.objects.fix_expression_record(profile=instance)
 
 
 @receiver(user_logged_in)
