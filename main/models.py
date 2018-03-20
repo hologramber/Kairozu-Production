@@ -246,9 +246,6 @@ class Expression(models.Model):
         self.kana_all_blank, self.kana_alt_blank, self.kana_clean = create_blanks(self.kana, 0, False)
         super(Expression, self).save(*args, **kwargs)
 
-    class Meta:
-        ordering = ['next_review']
-
 
 class ExpressionRecordManager(models.Manager):
     """create and manage expressionrecords for each user"""
@@ -295,6 +292,9 @@ class ExpressionRecord(models.Model):
     rating = models.IntegerField(default=0)
     objects = ExpressionRecordManager()
 
+    class Meta:
+        ordering = ['next_review']
+        
     @staticmethod
     def review_new_attempt(expressionrecord_id):
         """updates the current time of last attempt where success was finally achieved"""
