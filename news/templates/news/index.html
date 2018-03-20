@@ -41,11 +41,27 @@
 
                 <div class="s-40"></div>
 
-                <span class="opensans bolder larger">Recent Updates</span>
+                <span class="opensans bolder larger">Kairozu Updates</span>
                 <div class="s-5"></div>
                 <ul>
-                    {% for post in posts %}
-                        <li><a class="raleway" href="{{ post.get_absolute_url }}">{{ post.title }}</a></li> 
+                    {% for kai in kaiposts %}
+                        <li><a class="raleway" href="{{ kai.get_absolute_url }}">{{ kai.title }}</a></li>
+                    {% endfor %}
+                </ul>
+
+                <span class="opensans bolder larger">Tech/NLP Updates</span>
+                <div class="s-5"></div>
+                <ul>
+                    {% for nlp in nlpposts %}
+                        <li><a class="raleway" href="{{ nlp.get_absolute_url }}">{{ nlp.title }}</a></li>
+                    {% endfor %}
+                </ul>
+
+                <span class="opensans bolder larger">Japanese Updates</span>
+                <div class="s-5"></div>
+                <ul>
+                    {% for jpn in jpnposts %}
+                        <li><a class="raleway" href="{{ jpn.get_absolute_url }}">{{ jpn.title }}</a></li>
                     {% endfor %}
                 </ul>
             </div>

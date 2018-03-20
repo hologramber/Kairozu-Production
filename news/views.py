@@ -4,10 +4,12 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from .models import Post, FAQ, KnownIssue, SiteIssue
 
-
 def index(request):
     posts = Post.objects.filter(published=True)
-    return render(request, 'news/index.html', {'posts': posts})
+    kaiposts = posts.filter(post_category__exact='KAI')
+    nlpposts = posts.filter(post_category__exact='NLP')
+    jpnposts = posts.filter(post_category__exact='JPN')
+    return render(request, 'news/index.html', {'posts': posts, 'kaiposts': kaiposts, 'nlpposts': nlpposts, 'jpnposts': jpnposts})
 
 
 def post(request, slug):
