@@ -37,7 +37,7 @@ class ReviewExpressionRecordGrab(LoginRequiredMixin, generics.RetrieveAPIView):
 
     def get_object(self):
         now = datetime.now()
-        next_expression = ExpressionRecord.objects.filter(user_id=self.request.user.id, next_review__lte=now).order_by('last_attempt').first()
+        next_expression = ExpressionRecord.objects.filter(user_id=self.request.user.id, next_review__lte=now).first()
         return next_expression
 
 
@@ -46,7 +46,7 @@ class ReviewVocabRecordGrab(LoginRequiredMixin, generics.RetrieveAPIView):
 
     def get_object(self):
         now = datetime.now()
-        next_vocab = VocabRecord.objects.filter(user_id=self.request.user.id, next_review__lte=now).order_by('last_attempt').first()
+        next_vocab = VocabRecord.objects.filter(user_id=self.request.user.id, next_review__lte=now).first()
         return next_vocab
 
 
@@ -87,7 +87,7 @@ class ReviewSentenceRecordGrab(LoginRequiredMixin, generics.RetrieveAPIView):
 
     def get_object(self):
         now = datetime.now()
-        next_sentence = SentenceRecord.objects.filter(user_id=self.request.user.id, next_review__lte=now).order_by('last_attempt').first()
+        next_sentence = SentenceRecord.objects.filter(user_id=self.request.user.id, next_review__lte=now).first()
         return next_sentence
 
 

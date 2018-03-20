@@ -246,6 +246,9 @@ class Expression(models.Model):
         self.kana_all_blank, self.kana_alt_blank, self.kana_clean = create_blanks(self.kana, 0, False)
         super(Expression, self).save(*args, **kwargs)
 
+    class Meta:
+        ordering = ['next_review']
+
 
 class ExpressionRecordManager(models.Manager):
     """create and manage expressionrecords for each user"""
@@ -477,6 +480,9 @@ class VocabRecord(models.Model):
     score = models.IntegerField(default=0)
     rating = models.IntegerField(default=0)
     objects = VocabRecordManager()
+
+    class Meta:
+        ordering = ['next_review']
 
     @staticmethod
     def review_new_attempt(vocabrecord_id):
@@ -964,6 +970,9 @@ class SentenceRecord(models.Model):
     score = models.IntegerField(default=0)                          # number of consecutive corrects
     rating = models.IntegerField(default=0)                 # turns 1 if completed successfully in quiz
     objects = SentenceRecordManager()
+
+    class Meta:
+        ordering = ['next_review']
 
     @staticmethod
     def review_new_attempt(sentencerecord_id):
