@@ -103,7 +103,7 @@ class ProgressView(LoginRequiredMixin, ListView):
         vocabs = VocabRecord.objects.filter(user_id=self.request.user.id, rating__gt=0, score__lte=2).order_by('-next_review')[:100]
         expressions = ExpressionRecord.objects.filter(user_id=self.request.user.id, rating__gt=0, score__lte=2).order_by('-next_review')[:50]
         sentences = SentenceRecord.objects.filter(user_id=self.request.user.id, rating__gt=0, score__lte=2).order_by('-next_review')[:150]
-        result_list = sorted(chain(vocabs, expressions, sentences), key=lambda instance: instance.score)
+        result_list = sorted(chain(vocabs, expressions, sentences), key=lambda instance: instance.next_review)
         return result_list
 
 
