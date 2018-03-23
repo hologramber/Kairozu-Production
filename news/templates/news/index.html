@@ -13,7 +13,7 @@
                 {% for post in posts %}
                     <h3 class="raleway"><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
                     <span class="smaller">Posted on <time datetime="{{ post.published_date|date:"c" }}"> {{ post.published_date|date }}</time></span>
-                    <p>{{ post.text|safe|truncatewords_html:100 }}</p>
+                    <p>{{ post.text|striptags|truncatewords_html:100 }}</p>
                     <p><a class="read-more" href="{{ post.get_absolute_url }}">View Full Post &raquo;</a></p>
                     <br />
                 {% endfor %}
