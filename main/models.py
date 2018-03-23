@@ -136,7 +136,7 @@ class Profile(models.Model):
         etotal = ExpressionRecord.objects.filter(user_id=user.id, rating__gt=0).count()
         ebeginner = ExpressionRecord.objects.filter(user_id=user.id, rating__gt=0, score__lte=2).count()
         if vtotal+stotal+etotal > 0:
-            vmastery = (1-((vbeginner+sbeginner+ebeginner)/(vtotal+stotal+etotal)))*100
+            vmastery = int((1-((vbeginner+sbeginner+ebeginner)/(vtotal+stotal+etotal)))*100)
         else:
             vmastery = 0
         return vmastery
