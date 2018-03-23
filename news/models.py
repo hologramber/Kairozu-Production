@@ -7,6 +7,7 @@ class Post(models.Model):
     author = models.ForeignKey(User, on_delete=models.PROTECT)
     title = models.CharField(max_length=250, blank=False)
     slug = models.SlugField(unique=True, max_length=250)
+    indextext = models.TextField(default='')
     text = models.TextField(blank=False)
     published = models.BooleanField(default=False)
     published_date = models.DateTimeField(auto_now_add=True)
