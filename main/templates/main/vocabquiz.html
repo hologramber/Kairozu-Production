@@ -76,6 +76,7 @@
         event.preventDefault();
         var clean_attempt = $('#id_vocabattempt').val().replace(/[　。、？！「」\'\",.?!\s]/g, "");
         if (clean_attempt == $('#vactual').val()) {
+            alert("yes");
             alert(clean_attempt);
             alert($('#vactual').val());
             $('#bug-button').hide();
@@ -87,6 +88,7 @@
                 vocabcode = 'N';
             }
         } else {
+            alert("no");
             alert(clean_attempt);
             alert($('#vactual').val());
             $('#bug-button').show();
