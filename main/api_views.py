@@ -12,7 +12,7 @@ class VocabRecordGrab(LoginRequiredMixin, generics.RetrieveAPIView):
         if self.request.user.profile.currentvocab > chapter_id:
             next_vocab = VocabRecord.objects.filter(user_id=self.request.user.id, vocab__chapter__id__exact=chapter_id).order_by('last_attempt').first()
         else:
-            next_vocab = VocabRecord.objects.filter(user_id=self.request.user.id, vocab__chapter__id__exact=chapter_id, rating__lte=0).order_by('last_attempt').first()
+            next_vocab = VocabRecord.objects.filter(user_id=self.request.user.id, vocab__chapter__id__exact=chapter_id, rating__lte=0).order_by('last_attempt').order_by('id').first()
             if next_vocab is None and self.request.user.profile.currentvocab == chapter_id:
                 Profile.graduate_vocab(self.request.user, chapter_id)
         return next_vocab

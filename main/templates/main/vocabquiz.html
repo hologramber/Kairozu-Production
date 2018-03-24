@@ -74,11 +74,8 @@
     }
     $('#vocabquizform').submit(function(event) {
         event.preventDefault();
-        var clean_attempt = $('#id_vocabattempt').val().replace(/[　。、？！「」\'\",.?!\s]/g, "");
+        var clean_attempt = $('#id_vocabattempt').val().replace(/[　。、？！「」'",.?!\s]/g, "");
         if (clean_attempt == $('#vactual').val()) {
-            alert("yes");
-            alert(clean_attempt);
-            alert($('#vactual').val());
             $('#bug-button').hide();
             $('#vocabquizform').attr('class', 'abox abox_g');
             if (vlevel == 3) {
@@ -88,9 +85,6 @@
                 vocabcode = 'N';
             }
         } else {
-            alert("no");
-            alert(clean_attempt);
-            alert($('#vactual').val());
             $('#bug-button').show();
             $('#vocabquizform').attr('class', 'abox_red abox_r');
             if (vlevel == 3) {
