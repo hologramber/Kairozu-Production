@@ -231,6 +231,7 @@ class Expression(models.Model):
     chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE, blank=False, null=False)
     english = models.CharField(max_length=250, unique=False, blank=False)
     prompt = models.CharField(max_length=250, unique=False, blank=True)
+    literal = models.CharField(max_length=250, unique=False, blank=True)
     katakana = models.BooleanField(default=False)
     kana = models.CharField(max_length=250, blank=False)
     kana_clean = models.CharField(max_length=250, blank=True)
