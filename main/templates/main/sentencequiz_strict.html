@@ -55,7 +55,7 @@
 
     $('#sentencequizform').submit(function(event) {
         event.preventDefault();
-        var clean_attempt = $('#id_sentenceattempt').val().replace(/[　。、？！「」'",.?!\s]/g, "");
+        var clean_attempt = $('#id_sentenceattempt').val().replace(/[　｡。、？！「」'",.?!\s]/g, "");
         if (clean_attempt == $('#sactual').val()) {
             $('#bug-button').hide();
             $('#sentencequizform').attr('class', 'abox abox_g');

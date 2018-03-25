@@ -47,12 +47,12 @@ def create_context(sentence):
 
 
 def clean_sentence(kana):
-    cleaned = re.sub(r'[　。、？！「」\s]', "", kana)
+    cleaned = re.sub(r'[　｡。、？！「」\s]', "", kana)
     return cleaned
 
 
 def all_blanks(kana):
-    all_blank = re.sub(r'[^　。、？！]', "＿", kana)
+    all_blank = re.sub(r'[^　｡。、？！]', "＿", kana)
     return all_blank
 
 
@@ -63,7 +63,7 @@ def disamb_all_blanks(kana, disamb_location):        # position 0 = disamb_loc 1
         if index == disamb_location - 1:
             disamb_split[index] = segment
         else:
-            disamb_split[index] = re.sub(r'[^　。、？！]', "＿", segment)
+            disamb_split[index] = re.sub(r'[^　｡。、？！]', "＿", segment)
     disamb = sep.join(disamb_split)
     return disamb
 
@@ -80,10 +80,10 @@ def create_blanks(kana, disamb_location, altindex):
     for index, segment in enumerate(sentence_split):
         if altindex is True:
             if index % 2 == 0 and index != disamb_location - 1:
-                sentence_split[index] = re.sub(r'[^　。、？！]', "＿", segment)
+                sentence_split[index] = re.sub(r'[^　｡。、？！]', "＿", segment)
         else:
             if index % 2 != 0 and index != disamb_location - 1:
-                sentence_split[index] = re.sub(r'[^　。、？！]', "＿", segment)
+                sentence_split[index] = re.sub(r'[^　｡。、？！]', "＿", segment)
 
     kana_alt_blank = sep.join(sentence_split)
     kana_clean = clean_sentence(kana)
@@ -401,7 +401,7 @@ class Vocabulary(models.Model):
     partofspeech = models.PositiveSmallIntegerField(choices=PARTOFSPEECH_CHOICES, default=UNCLASSIFIED, blank=False, null=False)
 
     def save(self, *args, **kwargs):
-        self.kana_all_blank = re.sub(r'[^　。、？！]', "＿", self.kana)
+        self.kana_all_blank = re.sub(r'[^　｡。、？！]', "＿", self.kana)
         alt_blank = ''
         count = 0
         for k in self.kana:
@@ -411,7 +411,7 @@ class Vocabulary(models.Model):
                 alt_blank += '＿'
             count += 1
         self.kana_alt_blank = alt_blank
-        self.kana_clean = re.sub(r'[　。、？！「」\s]', "", self.kana)
+        self.kana_clean = re.sub(r'[　｡。、？！「」\s]', "", self.kana)
         super(Vocabulary, self).save(*args, **kwargs)
 
     class Meta:
