@@ -74,7 +74,7 @@ class VocabularyAdmin(nested_admin.NestedModelAdmin):
 
 
 class ExpressionAdmin(nested_admin.NestedModelAdmin):
-    list_display = ('english', 'kana', 'kanji', 'chapter', 'note')
+    list_display = ('english', 'kana', 'literal', 'chapter', 'note')
     list_filter = ('chapter',)
     search_fields = ['english', 'kana']
 
