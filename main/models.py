@@ -240,9 +240,6 @@ class Expression(models.Model):
     kana_alt_blank = models.CharField(max_length=250, blank=True)
     note = models.CharField(max_length=250, blank=True)
 
-    EXPRESSION_TYPE_CHOICES = Choices('general', 'greeting', 'question')
-    expression_type = models.CharField(choices=EXPRESSION_TYPE_CHOICES, default=EXPRESSION_TYPE_CHOICES.general, max_length=15)
-
     def save(self, *args, **kwargs):
         self.kana_all_blank, self.kana_alt_blank, self.kana_clean = create_blanks(self.kana, 0, False)
         super(Expression, self).save(*args, **kwargs)
