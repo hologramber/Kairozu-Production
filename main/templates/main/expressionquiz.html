@@ -19,7 +19,7 @@
 					<div id='vocabholder'>
 
                         <div id='vfield'>
-                            <div id='literal_one' class='vocab-note text-align-center'></div>
+                            <div id='literal_note' class='vocab-note text-align-center'></div>
                             <div id='expression_english' class='vocab-challenge text-align-center'></div>
 
                             <div class='vocab-promptc text-align-center'>
@@ -75,7 +75,7 @@
 
     function expressionNext(data) {
         if (data['id'] != null) {
-            $('#literal_one').html('&nbsp;' + data['express']['note'] + '&nbsp;');
+            $('#literal_note').html('&nbsp;' + data['express']['note'] + '&nbsp;');
             $('#expression_english').html(data['express']['english']);
             $('#eactual').val(data['express']['kana_clean']);
             $('#eid').val(data['id']);
