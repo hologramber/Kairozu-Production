@@ -274,7 +274,7 @@ class ExpressionRecord(models.Model):
     """tracking user progress for each expression"""
     user = models.ForeignKey(User, on_delete=models.CASCADE, blank=False, null=False)
     express = models.ForeignKey(Expression, on_delete=models.CASCADE, blank=False, null=False)
-    last_attempt = models.DateTimeField(null=True, blank=True)
+    last_attempt = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     next_review = models.DateTimeField(null=True, blank=True)
     score = models.IntegerField(default=0)
     rating = models.IntegerField(default=0)
@@ -450,7 +450,7 @@ class VocabRecord(models.Model):
     """tracking user progress for each vocabulary word"""
     user = models.ForeignKey(User, on_delete=models.CASCADE, blank=False, null=False)
     vocab = models.ForeignKey(Vocabulary, on_delete=models.CASCADE, blank=False, null=False)
-    last_attempt = models.DateTimeField(null=True, blank=True)
+    last_attempt = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     next_review = models.DateTimeField(null=True, blank=True)
     score = models.IntegerField(default=0)
     rating = models.IntegerField(default=0)
@@ -918,7 +918,7 @@ class SentenceRecord(models.Model):
     """tracking user progress for each sentence"""
     user = models.ForeignKey(User, on_delete=models.CASCADE, blank=False, null=False)
     sentence = models.ForeignKey(Sentence, on_delete=models.CASCADE, blank=False, null=False)
-    last_attempt = models.DateTimeField(null=True, blank=True)
+    last_attempt = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     next_review = models.DateTimeField(null=True, blank=True)
     score = models.IntegerField(default=0)                          # number of consecutive corrects
     rating = models.IntegerField(default=0)                 # turns 1 if completed successfully in quiz
