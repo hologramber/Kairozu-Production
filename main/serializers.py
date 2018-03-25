@@ -14,13 +14,13 @@ class VocabRecordSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = VocabRecord
-        exclude = ('')
+        fields = '__all__'
 
 
 class ExpressionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Expression
-        exclude = ('expression_type',)
+        fields = '__all__'
 
 
 class ExpressionRecordSerializer(serializers.ModelSerializer):
@@ -29,7 +29,7 @@ class ExpressionRecordSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ExpressionRecord
-        exclude = ('')
+        fields = '__all__'
 
 
 class SentenceSerializer(serializers.ModelSerializer):
