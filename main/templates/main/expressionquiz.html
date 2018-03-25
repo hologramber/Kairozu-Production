@@ -68,7 +68,7 @@
 <script type='text/javascript' src='{% static 'js/cookiemonster.js' %}'></script>
 
 <script type='text/javascript'>
-    var elevel = 3;
+    var elevel = 2;
     var expressioncode = 'A';
     var input = document.getElementById('id_expressionattempt');
     wanakana.bind(input);
@@ -85,12 +85,10 @@
                 $('#literal_one').html('&nbsp;');
             }
             switch(elevel) {
-                case 3:
-                    $('#hint_block').html(data['express']['kana_all_blank']); break;
                 case 2:
-                    $('#hint_block').html(data['express']['kana_alt_blank']); break;
+                    $('#hint_block').html(data['express']['kana_all_blank']); break;
                 case 1:
-                    $('#hint_block').html(data['express']['kana']); break;
+                    $('#hint_block').html(data['express']['kana_alt_blank']); break;
                 default:
                     $('#hint_block').html(data['express']['kana']); break;
             }
@@ -118,17 +116,17 @@
         if (clean_attempt == $('#eactual').val()) {
             $('#bug-button').hide();
             $('#expressionquizform').attr('class', 'abox abox_g');
-            if (elevel == 3) {
+            if (elevel == 2) {
                 expressioncode = 'C';
             } else {
-                elevel = 3;
+                elevel = 2;
                 expressioncode = 'N';
             }
             $('#hint_block').attr('class', 'ls5');
         } else {
             $('#expressionquizform').attr('class', 'abox_red abox_r');
             $('#bug-button').show();
-            if (elevel == 3) {
+            if (elevel == 2) {
                 expressioncode = 'I';
             } else {
                 expressioncode = 'A';

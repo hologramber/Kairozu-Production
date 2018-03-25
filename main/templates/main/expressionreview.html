@@ -59,7 +59,7 @@
 <script type='text/javascript' src='{% static 'js/cookiemonster.js' %}'></script>
 
 <script type='text/javascript'>
-    var elevel = 3;
+    var elevel = 2;
     var expressioncode = 'A';
     var input = document.getElementById('id_expressionattempt');
     wanakana.bind(input);
@@ -77,12 +77,10 @@
             }
             $("#reflink").attr("href", '/main/chapter/' + data['express']['chapter'] + '/expressionlist/');
             switch(elevel) {
-                case 3:
-                    $('#hint_block').html(data['express']['kana_all_blank']); break;
                 case 2:
-                    $('#hint_block').html(data['express']['kana_alt_blank']); break;
+                    $('#hint_block').html(data['express']['kana_all_blank']); break;
                 case 1:
-                    $('#hint_block').html(data['express']['kana']); break;
+                    $('#hint_block').html(data['express']['kana_alt_blank']); break;
                 default:
                     $('#hint_block').html(data['express']['kana']); break;
             }
@@ -106,21 +104,21 @@
     }
     $('#expressionquizform').submit(function(event) {
         event.preventDefault();
-        var clean_attempt = $('#id_expressionattempt').val().replace(/[　。、？！「」\'\",.?!\s]/g, "");
+        var clean_attempt = $('#id_expressionattempt').val().replace(/[　。、？！「」'",.?!\s]/g, "");
         if (clean_attempt == $('#eactual').val()) {
             $('#expressionquizform').attr('class', 'abox abox_g');
             $('#bug-button').hide();
-            if (elevel == 3) {
+            if (elevel == 2) {
                 expressioncode = 'C';
             } else {
-                elevel = 3;
+                elevel = 2;
                 expressioncode = 'N';
             }
             $('#hint_block').attr('class', 'ls5');
         } else {
             $('#expressionquizform').attr('class', 'abox_red abox_r');
             $('#bug-button').show();
-            if (elevel == 3) {
+            if (elevel == 2) {
                 expressioncode = 'I';
             } else {
                 expressioncode = 'A';

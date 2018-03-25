@@ -12,7 +12,7 @@ class VocabRecordGrab(LoginRequiredMixin, generics.RetrieveAPIView):
         if self.request.user.profile.currentvocab > chapter_id:
             next_vocab = VocabRecord.objects.filter(user_id=self.request.user.id, vocab__chapter__id__exact=chapter_id).order_by('last_attempt').first()
         else:
-            next_vocab = VocabRecord.objects.filter(user_id=self.request.user.id, vocab__chapter__id__exact=chapter_id, rating__lte=0).order_by('last_attempt').order_by('id').first()
+            next_vocab = VocabRecord.objects.filter(user_id=self.request.user.id, vocab__chapter__id__exact=chapter_id, rating__lte=0).order_by('last_attempt').first()
             if next_vocab is None and self.request.user.profile.currentvocab == chapter_id:
                 Profile.graduate_vocab(self.request.user, chapter_id)
         return next_vocab
@@ -26,7 +26,7 @@ class ExpressionRecordGrab(LoginRequiredMixin, generics.RetrieveAPIView):
         if self.request.user.profile.currentexpression > chapter_id:
             next_expression = ExpressionRecord.objects.filter(user_id=self.request.user.id, express__chapter__id__exact=chapter_id).order_by('last_attempt').first()
         else:
-            next_expression = ExpressionRecord.objects.filter(user_id=self.request.user.id, express__chapter__id__exact=chapter_id, rating__lte=0).order_by('last_attempt').order_by('id').first()
+            next_expression = ExpressionRecord.objects.filter(user_id=self.request.user.id, express__chapter__id__exact=chapter_id, rating__lte=0).order_by('last_attempt').first()
             if next_expression is None and self.request.user.profile.currentexpression == chapter_id:
                 Profile.graduate_expression(self.request.user, chapter_id)
         return next_expression
@@ -76,7 +76,7 @@ class SentenceRecordGrab(LoginRequiredMixin, generics.RetrieveAPIView):
         if self.request.user.profile.currentlesson > lesson_id:
             next_sentence = SentenceRecord.objects.filter(user_id=self.request.user.id, sentence__lesson__id__exact=lesson_id).order_by('last_attempt').first()
         else:
-            next_sentence = SentenceRecord.objects.filter(user_id=self.request.user.id, sentence__lesson__id__exact=lesson_id, rating__lte=0).order_by('last_attempt').order_by('id').first()
+            next_sentence = SentenceRecord.objects.filter(user_id=self.request.user.id, sentence__lesson__id__exact=lesson_id, rating__lte=0).order_by('last_attempt').first()
             if next_sentence is None and self.request.user.profile.currentlesson == lesson_id:
                 Profile.graduate_lesson(self.request.user, lesson_id)
         return next_sentence

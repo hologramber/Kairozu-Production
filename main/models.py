@@ -103,7 +103,6 @@ class Profile(models.Model):
     attemptexercise = models.PositiveSmallIntegerField(default=0)
     currentvocab = models.PositiveSmallIntegerField(default=1)
     currentstory = models.PositiveSmallIntegerField(default=1)
-    lastgraddate = models.DateTimeField(auto_now_add=True, blank=True)
     strictmode = models.BooleanField(default=False)
     vrcount = models.PositiveIntegerField(default=0)
     srcount = models.PositiveIntegerField(default=0)
@@ -256,7 +255,7 @@ class ExpressionRecordManager(models.Manager):
             pass    # raise ImproperlyConfigured('Error: Vocabulary set is empty.')
         else:
             for exp in expressions:
-                self.get_or_create(user=user, express=exp)
+                self.get_or_create(user=user, express=exp, last_attempt=datetime.now())
 
     def initial_expression_record(self, user):   # create the vocab records for chapter 1 when user is created
         expressions = Expression.objects.filter(chapter_id__exact=1)
@@ -265,14 +264,14 @@ class ExpressionRecordManager(models.Manager):
             pass
         else:
             for exp in expressions:
-                self.get_or_create(user=user, express=exp)
+                self.get_or_create(user=user, express=exp, last_attempt=datetime.now())
 
 
 class ExpressionRecord(models.Model):
     """tracking user progress for each expression"""
     user = models.ForeignKey(User, on_delete=models.CASCADE, blank=False, null=False)
     express = models.ForeignKey(Expression, on_delete=models.CASCADE, blank=False, null=False)
-    last_attempt = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    last_attempt = models.DateTimeField(null=True, blank=True)
     next_review = models.DateTimeField(null=True, blank=True)
     score = models.IntegerField(default=0)
     rating = models.IntegerField(default=0)
@@ -432,7 +431,7 @@ class VocabRecordManager(models.Manager):
             pass    # raise ImproperlyConfigured('Error: Vocabulary set is empty.')
         else:
             for voc in vocabularies:
-                self.get_or_create(user=user, vocab=voc)
+                self.get_or_create(user=user, vocab=voc, last_attempt=datetime.now())
 
     def initial_vocab_record(self, user):   # create the vocab records for chapter 1 when user is created
         vocabularies = Vocabulary.objects.filter(chapter_id__exact=1)
@@ -441,14 +440,14 @@ class VocabRecordManager(models.Manager):
             pass
         else:
             for voc in vocabularies:
-                self.get_or_create(user=user, vocab=voc)
+                self.get_or_create(user=user, vocab=voc, last_attempt=datetime.now())
 
 
 class VocabRecord(models.Model):
     """tracking user progress for each vocabulary word"""
     user = models.ForeignKey(User, on_delete=models.CASCADE, blank=False, null=False)
     vocab = models.ForeignKey(Vocabulary, on_delete=models.CASCADE, blank=False, null=False)
-    last_attempt = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    last_attempt = models.DateTimeField(null=True, blank=True)
     next_review = models.DateTimeField(null=True, blank=True)
     score = models.IntegerField(default=0)
     rating = models.IntegerField(default=0)
@@ -900,7 +899,7 @@ class SentenceRecordManager(models.Manager):
             pass
         else:
             for sen in sentences:
-                self.get_or_create(user=user, sentence=sen)
+                self.get_or_create(user=user, sentence=sen, last_attempt=datetime.now())
 
     def initial_sentence_record(self, user):   # create the sentence records for lesson 1 when user is created
         sentences = Sentence.objects.filter(lesson_id__exact=1)
@@ -909,14 +908,14 @@ class SentenceRecordManager(models.Manager):
             pass
         else:
             for sen in sentences:
-                self.get_or_create(user=user, sentence=sen)
+                self.get_or_create(user=user, sentence=sen, last_attempt=datetime.now())
 
 
 class SentenceRecord(models.Model):
     """tracking user progress for each sentence"""
     user = models.ForeignKey(User, on_delete=models.CASCADE, blank=False, null=False)
     sentence = models.ForeignKey(Sentence, on_delete=models.CASCADE, blank=False, null=False)
-    last_attempt = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    last_attempt = models.DateTimeField(null=True, blank=True)
     next_review = models.DateTimeField(null=True, blank=True)
     score = models.IntegerField(default=0)                          # number of consecutive corrects
     rating = models.IntegerField(default=0)                 # turns 1 if completed successfully in quiz
