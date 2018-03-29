@@ -549,6 +549,9 @@ class PointTable(models.Model):
         self.f_pointb = highlight(self.pointb, KairozuLexer(ensurenl=False), KairozuFormatter(style='kairozu'))
         super(PointTable, self).save(*args, **kwargs)
 
+    class Meta:
+        ordering = ['id']
+
 
 class Piece(models.Model):
     lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE)
