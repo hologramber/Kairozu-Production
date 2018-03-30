@@ -17,7 +17,7 @@ for sentence in sentences13:
 
 for practice in practices13:
     practice.lesson_id = 56
-    sentence.save()
+    practice.save()
 
 for sentence in sentences16:
     sentence.lesson_id = 13
@@ -25,7 +25,7 @@ for sentence in sentences16:
 
 for practice in practices16:
     practice.lesson_id = 13
-    sentence.save()
+    practice.save()
 
 for sentence in sentences15:
     sentence.lesson_id = 16
@@ -33,7 +33,7 @@ for sentence in sentences15:
 
 for practice in practices15:
     practice.lesson_id = 16
-    sentence.save()
+    practice.save()
 
 for sentence in sentences14:
     sentence.lesson_id = 15
@@ -41,7 +41,7 @@ for sentence in sentences14:
 
 for practice in practices14:
     practice.lesson_id = 15
-    sentence.save()
+    practice.save()
 
 for sentence in sentences13:
     sentence.lesson_id = 14
@@ -49,4 +49,4 @@ for sentence in sentences13:
 
 for practice in practices13:
     practice.lesson_id = 14
-    sentence.save()
+    practice.save()
