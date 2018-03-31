@@ -813,8 +813,12 @@ div.social-links {
 .grey-words { color: #8a8a8a; }
 .orange-words { color: #FF9729; }
 .blue-words { color: #3587B7; }
-.red-words-bold { font-weight: bold; color: #d92425; }
-.green-words-bold { font-weight: bold; color: #89AE13; }
+.red-words-bold, .r-w-b { font-weight: bold; color: #d92425; }
+.green-words-bold, .g-w-b { font-weight: bold; color: #89AE13; }
+.b-w-b { font-weight: bold; color: #3587B7; }
+.p-w-b { font-weight: bold; color: #564DBC; }
+.o-w-b { font-weight: bold; color: #FF9729; }
+.y-w-b { font-weight: bold; color: #8a8a8a; }
 
 .red_uw { background-color: #d92425; color: #fff; padding: 2px 4px; margin: 2px 2px; font-family: 'Ubuntu Condensed', sans-serif; }
 .ora_uw { background-color: #FF9729; color: #fff; padding: 2px 4px; margin: 2px 2px; font-family: 'Ubuntu Condensed', sans-serif; }

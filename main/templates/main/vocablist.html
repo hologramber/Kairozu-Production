@@ -26,7 +26,7 @@
                         <ul class="thin-list raleway">
                             <li class="smaller"><i class="fa fa-star red-words" aria-hidden="true"></i> words use the <a href="{% url 'sandbox:japanesekana' %}">katakana character set</a>; these words are often foreign in origin or onomatopoeic. Hold shift when entering text to switch to katakana.</li>
                             <li class="smaller"><span class="green-words partofspeech">い</span>, <span class="partofspeech blue-words">な</span>, and <span class="partofspeech orange-words">の</span> indicate adjective type: い-adjectives, な-adjectives, and の-adjectives respectively.</li>
-                            <li class="smaller">Verbs labeled with <span class="partofspeech red-words">V1</span> are ichidan, class 1, or る-verbs. Most verbs that end in 〜いる and 〜える are ichidan verbs.</li>
+                            <li class="smaller">Verbs labeled with <span class="partofspeech purple-words">V1</span> are ichidan, class 1, or る-verbs. Most verbs that end in 〜いる and 〜える are ichidan verbs.</li>
                             <li class="smaller">Verbs labeled with <span class="partofspeech orange-words">V5</span> are godan, class 5, or う-verbs. Verbs that do not end in 〜いる and 〜える (as well as a few that do) are godan verbs.</li>
                             <li class="smaller"><i class="fa fa-exclamation-triangle ltgrey-words" aria-hidden="true"></i> indicates an irregular verb: くる, する, and verbs that end in 〜する.</li>
                         </ul>
@@ -58,7 +58,7 @@
                                             {% elif word.partofspeech == 19 %}
                                                 <span class="partofspeech orange-words" title="の-adjective">の</span>
                                             {% elif word.partofspeech == 20 %}
-                                                <span class="partofspeech red-words" title="ichidan/る-verb">V1</span>
+                                                <span class="partofspeech purple-words" title="ichidan/る-verb">V1</span>
                                             {% elif word.partofspeech == 21 %}
                                                 <span class="partofspeech orange-words" title="godan/う-verb">V5</span>
                                             {% elif word.partofspeech == 22 %}
