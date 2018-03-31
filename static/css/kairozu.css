@@ -287,7 +287,6 @@ table.gpt > tbody > tr > td.blankline { line-height: 5px; }
 .grammar_rule {									/* mini note text in grammar points, e.g. how to make verb stems */
 	font-family: 'Roboto', sans-serif;
 	font-size: x-small;
-	font-weight: bold;
 	line-height: 50%;
 	text-align: right; }
 
@@ -807,7 +806,9 @@ div.social-links {
 .white-words { color: #ffffff; }
 .dkgrey-words { color: #2b2b2b; }
 .ltgrey-words { color: #bcbcbc; }
+/* .red-words { color: #d92425; } */
 .red-words { color: #d92425; }
+.purple-words { color: #564DBC; }
 .green-words { color: #89AE13; }
 .grey-words { color: #8a8a8a; }
 .orange-words { color: #FF9729; }
@@ -821,6 +822,7 @@ div.social-links {
 .bla_uw { background-color: #2b2b2b; color: #fff; padding: 2px 4px; margin: 2px 2px; font-family: 'Ubuntu Condensed', sans-serif; }
 .gra_uw { background-color: #8a8a8a; color: #fff; padding: 2px 4px; margin: 2px 2px; font-family: 'Ubuntu Condensed', sans-serif; }
 .blu_uw { background-color: #3587B7; color: #fff; padding: 2px 4px; margin: 2px 2px; font-family: 'Ubuntu Condensed', sans-serif; }
+.pur_uw { background-color: #564DBC; color: #fff; padding: 2px 4px; margin: 2px 2px; font-family: 'Ubuntu Condensed', sans-serif; }
 
 .red_c { background-color: #d92425; color: #fff; padding: 2px 2px 3px 2px; font-family: 'Ubuntu Condensed', sans-serif; }
 .ora_c { background-color: #FF9729; color: #fff; padding: 2px 2px 3px 2px; font-family: 'Ubuntu Condensed', sans-serif; }
@@ -828,9 +830,11 @@ div.social-links {
 .bla_c { background-color: #2b2b2b; color: #fff; padding: 2px 2px 3px 2px; font-family: 'Ubuntu Condensed', sans-serif; }
 .gra_c { background-color: #8a8a8a; color: #fff; padding: 2px 2px 3px 2px; font-family: 'Ubuntu Condensed', sans-serif; }
 .blu_c { background-color: #3587B7; color: #fff; padding: 2px 2px 3px 2px; font-family: 'Ubuntu Condensed', sans-serif; }
+.pur_c { background-color: #564DBC; color: #fff; padding: 2px 2px 3px 2px; font-family: 'Ubuntu Condensed', sans-serif; }
 
 .bla_c_short { background-color: #2b2b2b; color: #fff; padding: 4px 3px 3px 3px; }
 .red_c_short { background-color: #d92425; color: #fff; padding: 4px 3px 3px 3px; }
+.pur_c_short { background-color: #564DBC; color: #fff; padding: 4px 3px 3px 3px; }
 .ora_c_short { background-color: #FF9729; color: #fff; padding: 4px 3px 3px 3px; }
 
 .user-hello > li { padding: 5px 0; }
