@@ -1,4 +1,5 @@
-from datetime import datetime, timedelta
+from datetime import timedelta
+from django.utils import timezone
 import re
 
 from django.db import models
@@ -118,7 +119,7 @@ class Profile(models.Model):
     @staticmethod
     def has_reviews(user):
         """check to see if a user has any pending reviews, and if so, how many"""
-        now = datetime.now()
+        now = timezone.now()
         user.profile.vrcount = VocabRecord.objects.filter(user_id=user.id, next_review__lte=now).count()
         user.profile.srcount = SentenceRecord.objects.filter(user_id=user.id, next_review__lte=now).count()
         user.profile.ercount = ExpressionRecord.objects.filter(user_id=user.id, next_review__lte=now).count()
@@ -257,7 +258,8 @@ class ExpressionRecordManager(models.Manager):
             pass    # raise ImproperlyConfigured('Error: Vocabulary set is empty.')
         else:
             for exp in expressions:
-                self.get_or_create(user=user, express=exp, last_attempt=datetime.now())
+                # self.get_or_create(user=user, express=exp, last_attempt=datetime.now())
+                self.get_or_create(user=user, express=exp)
 
     def initial_expression_record(self, user):   # create the vocab records for chapter 1 when user is created
         expressions = Expression.objects.filter(chapter_id__exact=1)
@@ -266,14 +268,15 @@ class ExpressionRecordManager(models.Manager):
             pass
         else:
             for exp in expressions:
-                self.get_or_create(user=user, express=exp, last_attempt=datetime.now())
+                # self.get_or_create(user=user, express=exp, last_attempt=datetime.now())
+                self.get_or_create(user=user, express=exp)
 
 
 class ExpressionRecord(models.Model):
     """tracking user progress for each expression"""
     user = models.ForeignKey(User, on_delete=models.CASCADE, blank=False, null=False)
     express = models.ForeignKey(Expression, on_delete=models.CASCADE, blank=False, null=False)
-    last_attempt = models.DateTimeField(null=True, blank=True)
+    last_attempt = models.DateTimeField(default=timezone.now, blank=True)
     next_review = models.DateTimeField(null=True, blank=True)
     score = models.IntegerField(default=0)
     rating = models.IntegerField(default=0)
@@ -286,15 +289,15 @@ class ExpressionRecord(models.Model):
     def review_new_attempt(expressionrecord_id):
         """updates the current time of last attempt where success was finally achieved"""
         expressionrecord = ExpressionRecord.objects.get(id=expressionrecord_id)
-        expressionrecord.last_attempt = datetime.now()
-        expressionrecord.next_review = datetime.now() + timedelta(hours=1)
+        expressionrecord.last_attempt = timezone.now()
+        expressionrecord.next_review = timezone.now() + timedelta(hours=1)
         expressionrecord.save()
 
     @staticmethod
     def review_correct_attempt(expressionrecord_id):
         expressionrecord = ExpressionRecord.objects.get(id=expressionrecord_id)
         expressionrecord.score += 1
-        expressionrecord.last_attempt = datetime.now()
+        expressionrecord.last_attempt = timezone.now()
         # score        0, 1,  2,  3,  4,   5,   6,   7,   8,   9,   10,   11,   12
         hours_scale = [1, 7, 24, 48, 72, 120, 240, 336, 480, 984, 1680, 2328, 3000]
         if expressionrecord.score < 0:
@@ -303,7 +306,7 @@ class ExpressionRecord(models.Model):
             addhours = 4000
         else:
             addhours = hours_scale[expressionrecord.score]
-        expressionrecord.next_review = datetime.now() + timedelta(hours=addhours)
+        expressionrecord.next_review = timezone.now() + timedelta(hours=addhours)
         expressionrecord.save()
 
     @staticmethod
@@ -316,17 +319,17 @@ class ExpressionRecord(models.Model):
     def new_attempt(expressionrecord_id):
         """updates the current time of last attempt where success was finally achieved"""
         expressionrecord = ExpressionRecord.objects.get(id=expressionrecord_id)
-        expressionrecord.last_attempt = datetime.now()
+        expressionrecord.last_attempt = timezone.now()
         expressionrecord.save()
 
     @staticmethod
     def correct_attempt(expressionrecord_id):
         """updates the number of times correct/current time"""
         expressionrecord = ExpressionRecord.objects.get(id=expressionrecord_id)
-        expressionrecord.last_attempt = datetime.now()
+        expressionrecord.last_attempt = timezone.now()
         expressionrecord.rating += 1
         if expressionrecord.next_review is None:
-            expressionrecord.next_review = datetime.now() + timedelta(hours=1)
+            expressionrecord.next_review = timezone.now() + timedelta(hours=1)
         expressionrecord.save()
 
     @staticmethod
@@ -433,7 +436,8 @@ class VocabRecordManager(models.Manager):
             pass    # raise ImproperlyConfigured('Error: Vocabulary set is empty.')
         else:
             for voc in vocabularies:
-                self.get_or_create(user=user, vocab=voc, last_attempt=datetime.now())
+                # self.get_or_create(user=user, vocab=voc, last_attempt=datetime.now())
+                self.get_or_create(user=user, vocab=voc)
 
     def initial_vocab_record(self, user):   # create the vocab records for chapter 1 when user is created
         vocabularies = Vocabulary.objects.filter(chapter_id__exact=1)
@@ -442,14 +446,15 @@ class VocabRecordManager(models.Manager):
             pass
         else:
             for voc in vocabularies:
-                self.get_or_create(user=user, vocab=voc, last_attempt=datetime.now())
+                # self.get_or_create(user=user, vocab=voc, last_attempt=datetime.now())
+                self.get_or_create(user=user, vocab=voc)
 
 
 class VocabRecord(models.Model):
     """tracking user progress for each vocabulary word"""
     user = models.ForeignKey(User, on_delete=models.CASCADE, blank=False, null=False)
     vocab = models.ForeignKey(Vocabulary, on_delete=models.CASCADE, blank=False, null=False)
-    last_attempt = models.DateTimeField(null=True, blank=True)
+    last_attempt = models.DateTimeField(default=timezone.now, blank=True)
     next_review = models.DateTimeField(null=True, blank=True)
     score = models.IntegerField(default=0)
     rating = models.IntegerField(default=0)
@@ -462,15 +467,15 @@ class VocabRecord(models.Model):
     def review_new_attempt(vocabrecord_id):
         """updates the current time of last attempt where success was finally achieved"""
         vocabrecord = VocabRecord.objects.get(id=vocabrecord_id)
-        vocabrecord.last_attempt = datetime.now()
-        vocabrecord.next_review = datetime.now() + timedelta(hours=1)
+        vocabrecord.last_attempt = timezone.now()
+        vocabrecord.next_review = timezone.now() + timedelta(hours=1)
         vocabrecord.save()
 
     @staticmethod
     def review_correct_attempt(vocabrecord_id):
         vocabrecord = VocabRecord.objects.get(id=vocabrecord_id)
         vocabrecord.score += 1
-        vocabrecord.last_attempt = datetime.now()
+        vocabrecord.last_attempt = timezone.now()
         # score        0, 1,  2,  3,  4,   5,   6,   7,   8,   9,   10,   11,   12
         hours_scale = [1, 7, 24, 48, 72, 120, 240, 336, 480, 984, 1680, 2328, 3000]
         if vocabrecord.score < 0:
@@ -479,7 +484,7 @@ class VocabRecord(models.Model):
             addhours = 4000
         else:
             addhours = hours_scale[vocabrecord.score]
-        vocabrecord.next_review = datetime.now() + timedelta(hours=addhours)
+        vocabrecord.next_review = timezone.now() + timedelta(hours=addhours)
         vocabrecord.save()
 
     @staticmethod
@@ -492,17 +497,17 @@ class VocabRecord(models.Model):
     def new_attempt(vocabrecord_id):
         """updates the current time of last attempt where success was finally achieved"""
         vocabrecord = VocabRecord.objects.get(id=vocabrecord_id)
-        vocabrecord.last_attempt = datetime.now()
+        vocabrecord.last_attempt = timezone.now()
         vocabrecord.save()
 
     @staticmethod
     def correct_attempt(vocabrecord_id):
         """updates the number of times correct/current time"""
         vocabrecord = VocabRecord.objects.get(id=vocabrecord_id)
-        vocabrecord.last_attempt = datetime.now()
+        vocabrecord.last_attempt = timezone.now()
         vocabrecord.rating += 1
         if vocabrecord.next_review is None:
-            vocabrecord.next_review = datetime.now() + timedelta(hours=1)
+            vocabrecord.next_review = timezone.now() + timedelta(hours=1)
         vocabrecord.save()
 
     @staticmethod
@@ -857,7 +862,7 @@ class ExerciseRecord(models.Model):
     def update_grade(exerciserecord_id, exercise_grade, user):
         grade = float(exercise_grade)
         exerciserecord = ExerciseRecord.objects.get(id=exerciserecord_id)
-        exerciserecord.last_attempt = datetime.now()
+        exerciserecord.last_attempt = timezone.now()
         exerciserecord.score = grade
         if grade >= 0.98:
             exerciserecord.rating = 3
@@ -908,7 +913,8 @@ class SentenceRecordManager(models.Manager):
             pass
         else:
             for sen in sentences:
-                self.get_or_create(user=user, sentence=sen, last_attempt=datetime.now())
+                # self.get_or_create(user=user, sentence=sen, last_attempt=datetime.now())
+                self.get_or_create(user=user, sentence=sen)
 
     def initial_sentence_record(self, user):   # create the sentence records for lesson 1 when user is created
         sentences = Sentence.objects.filter(lesson_id__exact=1)
@@ -917,14 +923,15 @@ class SentenceRecordManager(models.Manager):
             pass
         else:
             for sen in sentences:
-                self.get_or_create(user=user, sentence=sen, last_attempt=datetime.now())
+                # self.get_or_create(user=user, sentence=sen, last_attempt=datetime.now())
+                self.get_or_create(user=user, sentence=sen)
 
 
 class SentenceRecord(models.Model):
     """tracking user progress for each sentence"""
     user = models.ForeignKey(User, on_delete=models.CASCADE, blank=False, null=False)
     sentence = models.ForeignKey(Sentence, on_delete=models.CASCADE, blank=False, null=False)
-    last_attempt = models.DateTimeField(null=True, blank=True)
+    last_attempt = models.DateTimeField(default=timezone.now, blank=True)
     next_review = models.DateTimeField(null=True, blank=True)
     score = models.IntegerField(default=0)                          # number of consecutive corrects
     rating = models.IntegerField(default=0)                 # turns 1 if completed successfully in quiz
@@ -937,15 +944,15 @@ class SentenceRecord(models.Model):
     def review_new_attempt(sentencerecord_id):
         """updates the current time of last attempt where success was finally achieved"""
         sentencerecord = SentenceRecord.objects.get(id=sentencerecord_id)
-        sentencerecord.last_attempt = datetime.now()
-        sentencerecord.next_review = datetime.now() + timedelta(hours=1)
+        sentencerecord.last_attempt = timezone.now()
+        sentencerecord.next_review = timezone.now() + timedelta(hours=1)
         sentencerecord.save()
 
     @staticmethod
     def review_correct_attempt(sentencerecord_id):
         sentencerecord = SentenceRecord.objects.get(id=sentencerecord_id)
         sentencerecord.score += 1
-        sentencerecord.last_attempt = datetime.now()
+        sentencerecord.last_attempt = timezone.now()
         # score        0, 1,  2,  3,  4,   5,   6,   7,   8,   9,   10,   11,   12
         hours_scale = [1, 7, 24, 48, 72, 120, 240, 336, 480, 984, 1680, 2328, 3000]
         if sentencerecord.score < 0:
@@ -954,7 +961,7 @@ class SentenceRecord(models.Model):
             addhours = 4000
         else:
             addhours = hours_scale[sentencerecord.score]
-        sentencerecord.next_review = datetime.now() + timedelta(hours=addhours)
+        sentencerecord.next_review = timezone.now() + timedelta(hours=addhours)
         sentencerecord.save()
 
     @staticmethod
@@ -967,16 +974,16 @@ class SentenceRecord(models.Model):
     def new_attempt(sentencerecord_id):
         """updates the current time of last attempt where success was finally achieved"""
         sentencerecord = SentenceRecord.objects.get(id=sentencerecord_id)
-        sentencerecord.last_attempt = datetime.now()
+        sentencerecord.last_attempt = timezone.now()
         sentencerecord.save()
 
     @staticmethod
     def correct_attempt(sentencerecord_id):
         """updates the number of times correct/current time"""
         sentencerecord = SentenceRecord.objects.get(id=sentencerecord_id)
-        sentencerecord.last_attempt = datetime.now()
+        sentencerecord.last_attempt = timezone.now()
         if sentencerecord.next_review is None:
-            sentencerecord.next_review = datetime.now() + timedelta(hours=1)
+            sentencerecord.next_review = timezone.now() + timedelta(hours=1)
         sentencerecord.rating += 1
         sentencerecord.save()
 
