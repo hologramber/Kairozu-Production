@@ -109,6 +109,28 @@ class Profile(models.Model):
     srcount = models.PositiveIntegerField(default=0)
     ercount = models.PositiveIntegerField(default=0)
 
+    @receiver(post_save, sender=User)
+    def create_user_profile(sender, instance, created, **kwargs):
+        if created:
+            Profile.objects.create(user=instance)
+            VocabRecord.objects.initial_vocab_record(user=instance)
+            SentenceRecord.objects.initial_sentence_record(user=instance)
+            ExerciseRecord.objects.initial_exercise_record(user=instance)
+            ExpressionRecord.objects.initial_expression_record(user=instance)
+            instance.profile.save()
+
+    @receiver(post_save, sender=User)
+    def save_user_profile(sender, instance, **kwargs):
+        # Profile.objects.create(user=instance)
+        instance.profile.save()
+
+    # @receiver(post_save, sender=Profile)
+    # def update_records(sender, instance, **kwargs):
+    #     VocabRecord.objects.update_vocab_record(profile=instance)
+    #     SentenceRecord.objects.update_sentence_record(profile=instance)
+    #     ExerciseRecord.objects.update_exercise_record(profile=instance)
+    #     ExpressionRecord.objects.update_expression_record(profile=instance)
+
     @staticmethod
     def ok_to_graduate(user):
         """check to see if user has too many pending reviews"""
@@ -161,6 +183,7 @@ class Profile(models.Model):
         if user.profile.currentvocab == int(chapter_id):
             user.profile.currentvocab = int(chapter_id) + 1
         user.profile.save()
+        VocabRecord.objects.update_vocab_record(profile=user.profile)
 
     @staticmethod
     def graduate_expression(user, chapter_id):
@@ -168,6 +191,7 @@ class Profile(models.Model):
         if user.profile.currentexpression == int(chapter_id):
             user.profile.currentexpression = int(chapter_id) + 1
         user.profile.save()
+        ExpressionRecord.objects.update_expression_record(profile=user.profile)
 
     @staticmethod
     def graduate_chapter(user, chapter_id):
@@ -175,6 +199,7 @@ class Profile(models.Model):
         if user.profile.currentchapter == int(chapter_id):
             user.profile.currentchapter = int(chapter_id) + 1
         user.profile.save()
+        ExerciseRecord.objects.update_exercise_record(profile=user.profile)
 
     @staticmethod
     def graduate_pending(user, chapter_id):
@@ -195,6 +220,7 @@ class Profile(models.Model):
         if user.profile.currentlesson == lesson_id:
             user.profile.currentlesson = int(lesson_id) + 1
         user.profile.save()
+        SentenceRecord.objects.update_sentence_record(profile=user.profile)
 
     @staticmethod
     def graduate_practice(user, lesson_id):
@@ -254,21 +280,15 @@ class ExpressionRecordManager(models.Manager):
         expressions = Expression.objects.filter(chapter_id__exact=userexpression)
         user = profile.user
 
-        if len(expressions) == 0:
-            pass    # raise ImproperlyConfigured('Error: Vocabulary set is empty.')
-        else:
+        if not ExpressionRecord.objects.filter(user=user, express__chapter_id__exact=userexpression).exists() and len(expressions) > 0:
             for exp in expressions:
-                # self.get_or_create(user=user, express=exp, last_attempt=datetime.now())
-                self.get_or_create(user=user, express=exp)
+                self.create(user=user, express=exp)
 
     def initial_expression_record(self, user):   # create the vocab records for chapter 1 when user is created
         expressions = Expression.objects.filter(chapter_id__exact=1)
 
-        if len(expressions) == 0:
-            pass
-        else:
+        if len(expressions) > 0:
             for exp in expressions:
-                # self.get_or_create(user=user, express=exp, last_attempt=datetime.now())
                 self.get_or_create(user=user, express=exp)
 
 
@@ -432,21 +452,15 @@ class VocabRecordManager(models.Manager):
         vocabularies = Vocabulary.objects.filter(chapter_id__exact=uservocab)
         user = profile.user
 
-        if len(vocabularies) == 0:
-            pass    # raise ImproperlyConfigured('Error: Vocabulary set is empty.')
-        else:
+        if not VocabRecord.objects.filter(user=user, vocab__chapter_id__exact=uservocab).exists() and len(vocabularies) > 0:
             for voc in vocabularies:
-                # self.get_or_create(user=user, vocab=voc, last_attempt=datetime.now())
-                self.get_or_create(user=user, vocab=voc)
+                self.create(user=user, vocab=voc)
 
     def initial_vocab_record(self, user):   # create the vocab records for chapter 1 when user is created
         vocabularies = Vocabulary.objects.filter(chapter_id__exact=1)
 
-        if len(vocabularies) == 0:
-            pass
-        else:
+        if len(vocabularies) > 0:
             for voc in vocabularies:
-                # self.get_or_create(user=user, vocab=voc, last_attempt=datetime.now())
                 self.get_or_create(user=user, vocab=voc)
 
 
@@ -824,18 +838,14 @@ class ExerciseRecordManager(models.Manager):
         exercises = Exercise.objects.filter(chapter_id__exact=userstory)
         user = profile.user
 
-        if len(exercises) == 0:
-            pass
-        else:
+        if len(exercises) > 0:
             for exer in exercises:
                 self.get_or_create(user=user, exercise=exer)
 
     def initial_exercise_record(self, user):
         exercises = Exercise.objects.filter(chapter_id__exact=1)
 
-        if len(exercises) == 0:
-            pass
-        else:
+        if len(exercises) > 0:
             for exer in exercises:
                 self.get_or_create(user=user, exercise=exer)
 
@@ -909,21 +919,15 @@ class SentenceRecordManager(models.Manager):
         user = profile.user
         sentences = Sentence.objects.filter(lesson_id__exact=usersentence)
 
-        if len(sentences) == 0:
-            pass
-        else:
+        if not SentenceRecord.objects.filter(user=user, sentence__lesson_id__exact=usersentence).exists() and len(sentences) > 0:
             for sen in sentences:
-                # self.get_or_create(user=user, sentence=sen, last_attempt=datetime.now())
-                self.get_or_create(user=user, sentence=sen)
+                self.create(user=user, sentence=sen)
 
     def initial_sentence_record(self, user):   # create the sentence records for lesson 1 when user is created
         sentences = Sentence.objects.filter(lesson_id__exact=1)
 
-        if len(sentences) == 0:
-            pass
-        else:
+        if len(sentences) > 0:
             for sen in sentences:
-                # self.get_or_create(user=user, sentence=sen, last_attempt=datetime.now())
                 self.get_or_create(user=user, sentence=sen)
 
 
@@ -993,31 +997,6 @@ class SentenceRecord(models.Model):
         sentencerecord = SentenceRecord.objects.get(id=sentencerecord_id)
         sentencerecord.rating = 0
         sentencerecord.save()
-
-
-@receiver(post_save, sender=User)
-def create_user_profile(sender, instance, created, **kwargs):
-    if created:
-        Profile.objects.create(user=instance)
-        VocabRecord.objects.initial_vocab_record(user=instance)
-        SentenceRecord.objects.initial_sentence_record(user=instance)
-        ExerciseRecord.objects.initial_exercise_record(user=instance)
-        ExpressionRecord.objects.initial_expression_record(user=instance)
-        instance.profile.save()
-
-
-@receiver(post_save, sender=User)
-def save_user_profile(sender, instance, **kwargs):
-    #Profile.objects.create(user=instance)
-    instance.profile.save()
-
-
-@receiver(post_save, sender=Profile)
-def update_records(sender, instance, **kwargs):
-    VocabRecord.objects.update_vocab_record(profile=instance)
-    SentenceRecord.objects.update_sentence_record(profile=instance)
-    ExerciseRecord.objects.update_exercise_record(profile=instance)
-    ExpressionRecord.objects.update_expression_record(profile=instance)
 
 
 @receiver(user_logged_in)
