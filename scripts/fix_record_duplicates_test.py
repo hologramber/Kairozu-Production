@@ -16,10 +16,10 @@ for prof in profiles:
     keeprecords = []
     vocabrecords = VocabRecord.objects.filter(user_id=prof.user.id).order_by('vocab__id', 'id')
     for vr in vocabrecords:
-        if vr.id in keeprecords:
+        if vr.vocab.id in keeprecords:
             vr.rating = 333
             vr.save()
         else:
-            keeprecords.append(vr.id)
+            keeprecords.append(vr.vocab.id)
 
 

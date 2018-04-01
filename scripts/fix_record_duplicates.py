@@ -16,25 +16,25 @@ for prof in profiles:
     keep_vr = []
     vocabrecords = VocabRecord.objects.filter(user_id=prof.user.id).order_by('vocab__id', 'id')
     for vr in vocabrecords:
-        if vr.id in keep_vr:
+        if vr.vocab.id in keep_vr:
             vr.delete()
         else:
-            keep_vr.append(vr.id)
+            keep_vr.append(vr.vocab.id)
 
     keep_sr = []
     sentencerecords = SentenceRecord.objects.filter(user_id=prof.user.id).order_by('sentence__id', 'id')
     for sr in sentencerecords:
-        if sr.id in keep_sr:
+        if sr.sentence.id in keep_sr:
             sr.delete()
         else:
-            keep_sr.append(sr.id)
+            keep_sr.append(sr.sentence.id)
 
     keep_er = []
     expressionrecords = ExpressionRecord.objects.filter(user_id=prof.user.id).order_by('express__id', 'id')
     for er in expressionrecords:
-        if er.id in keep_er:
+        if er.express.id in keep_er:
             er.delete()
         else:
-            keep_er.append(er.id)
+            keep_er.append(er.express.id)
 
 
