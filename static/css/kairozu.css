@@ -10,7 +10,7 @@ a, a:focus, a:hover, li.highlightlinks a:hover {
     -o-transition: 200ms color ease-in-out;
     transition: 200ms color ease-in-out; }
 b, strong { font-weight: 600; }
-h1.lessonhead { white-space: pre-wrap; font-family: 'Raleway', sans-serif; }
+h1.lessonhead { white-space: pre-wrap; font-family: 'Raleway', '游ゴシック' , '游ゴシック体' , YuGothic , 'Yu Gothic' , 'メイリオ' , Meiryo, sans-serif; }
 li.highlightlinks { border-top: 1px #2b2b2b solid; }
 li.highlightlinks:hover {
     text-decoration: none;
@@ -204,7 +204,7 @@ textarea:focus, input:focus { outline: none; }
 
 table.kaitable > tbody > tr > td {
 	padding: 5px 20px 5px 20px;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto', '游ゴシック' , '游ゴシック体' , YuGothic , 'Yu Gothic' , 'メイリオ' , Meiryo, sans-serif;
 	text-align: left;
 	border: none; }
 
@@ -241,7 +241,7 @@ div.table-container { display: inline-block; }
 	margin-top: 30px;
 	margin-bottom: 30px;
 	text-align: center;
-	font-family: 'Roboto', sans-serif; }
+	font-family: 'Roboto', '游ゴシック' , '游ゴシック体' , YuGothic , 'Yu Gothic' , 'メイリオ' , Meiryo, sans-serif; }
 
 .table-responsive { 
 	border-radius: 5px; 
@@ -285,7 +285,7 @@ table.gpt > tbody > tr > td.blankline { line-height: 5px; }
 	display: table; }
 
 .grammar_rule {									/* mini note text in grammar points, e.g. how to make verb stems */
-	font-family: 'Roboto', sans-serif;
+	font-family: 'Roboto', '游ゴシック' , '游ゴシック体' , YuGothic , 'Yu Gothic' , 'メイリオ' , Meiryo, sans-serif;
 	font-size: x-small;
 	line-height: 50%;
 	text-align: right; }
@@ -390,7 +390,7 @@ table.gpt > tbody > tr > td.blankline { line-height: 5px; }
 	font-size: 50px;
 	margin-bottom: 15px;
     position: relative;
-	font-family: 'Roboto', sans-serif; }
+	font-family: 'Roboto', '游ゴシック' , '游ゴシック体' , YuGothic , 'Yu Gothic' , 'メイリオ' , Meiryo, sans-serif; }
 .promptc {	padding-left: 5px; } 	/* when missed ? on challenge/quizzes, the help text that pops up */
 
 #report-issue {
@@ -575,7 +575,7 @@ input[type=text]:disabled {
     background: rgba(255,255,255,0.8);
 	padding-left: 5px;
 	font-size: 50px;
-	font-family: 'Roboto', sans-serif;
+	font-family: 'Roboto', '游ゴシック' , '游ゴシック体' , YuGothic , 'Yu Gothic' , 'メイリオ' , Meiryo, sans-serif;
 	padding-top: 5px; }
 .vocab-challenge {
     background: rgba(255,255,255,0.8);
@@ -583,7 +583,7 @@ input[type=text]:disabled {
 	line-height: 85px;
 	padding-top: 10px;
 	padding-bottom: 30px;
-	font-family: 'Roboto', sans-serif; }
+	font-family: 'Roboto', '游ゴシック' , '游ゴシック体' , YuGothic , 'Yu Gothic' , 'メイリオ' , Meiryo, sans-serif; }
 
 .primarylinks {					/* sidebar links */
 	font-weight: 700;
@@ -736,13 +736,13 @@ div.social-links {
 .registration-text {
     font-size: 85%;
     color: #bcbcbc;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto', '游ゴシック' , '游ゴシック体' , YuGothic , 'Yu Gothic' , 'メイリオ' , Meiryo, sans-serif;
 }
 
 .registration-text ul li {
     margin-top: 3px;
     color: #bcbcbc;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto', '游ゴシック' , '游ゴシック体' , YuGothic , 'Yu Gothic' , 'メイリオ' , Meiryo, sans-serif;
 }
 
 .s-5 { width: 100%; height: 5px; }
