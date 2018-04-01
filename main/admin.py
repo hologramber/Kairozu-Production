@@ -114,17 +114,17 @@ class SentenceAdmin(admin.ModelAdmin):
 
 
 class VocabRecordAdmin(admin.ModelAdmin):
-    list_display = ('user', 'id', 'score', 'rating')
+    list_display = ('user', 'id', 'score', 'rating', 'last_attempt', 'next_review')
     list_filter = ('user',)
 
 
 class ExpressionRecordAdmin(admin.ModelAdmin):
-    list_display = ('user', 'id', 'score', 'rating')
+    list_display = ('user', 'id', 'score', 'rating', 'last_attempt', 'next_review')
     list_filter = ('user',)
 
 
 class SentenceRecordAdmin(admin.ModelAdmin):
-    list_display = ('user', 'id', 'score', 'rating')
+    list_display = ('user', 'id', 'score', 'rating', 'last_attempt', 'next_review')
     list_filter = ('user',)
 
 
