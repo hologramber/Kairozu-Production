@@ -241,6 +241,8 @@ class Expression(models.Model):
 
     def save(self, *args, **kwargs):
         self.kana_all_blank, self.kana_alt_blank, self.kana_clean = create_blanks(self.kana, 0, False)
+        self.kana = re.sub(r'。', '｡', self.kana)
+        self.kanji = re.sub(r'。', '｡', self.kanji)
         super(Expression, self).save(*args, **kwargs)
 
 

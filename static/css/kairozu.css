@@ -119,7 +119,9 @@ textarea:focus, input:focus { outline: none; }
 #sidecollapse {				/* collapse-sidebar button in upper left corner on pages w/sidebar */
 	color: #d5d5d5;
 	float: left;
-	padding: 15px 15px 0 15px; }
+	padding: 15px 15px 0 15px;
+    font-size: 18px;
+    line-height: 20px; }
 
 .important-abouttext {							/* hiragana/katakana warning on the about static page */
 	font-family: 'Raleway', sans-serif;
@@ -798,6 +800,11 @@ div.social-links {
 
 .thin-list { line-height: 20px; }
 
+.variabletext {
+    font-variant: small-caps;
+    font-family: 'Raleway', sans-serif;
+    font-weight: bold;
+    vertical-align: text-bottom; }
 .partofspeech {
     font-size: 14px;
     font-weight: bold; }
