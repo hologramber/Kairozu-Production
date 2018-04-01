@@ -1,4 +1,5 @@
-body, h1, h2, h3, h4, h5, h6, p, ol, ul, td { font-family: 'Roboto', sans-serif; color: #2B2B2B; word-break: keep-all; }
+body, p, ol, ul, td { font-family: 'Roboto', sans-serif; color: #2B2B2B; word-break: keep-all; }
+h1, h2, h3, h4, h5, h6 { font-family: 'Raleway', '游ゴシック' , '游ゴシック体' , YuGothic , 'Yu Gothic' , 'メイリオ' , Meiryo, sans-serif; color: #2B2B2B; word-break: keep-all; }
 body { overflow: scroll !important; }
 a, a:link, a:visited, li.highlightlinks a  { text-decoration: none; color: #d92425; }
 a, a:focus, a:hover, li.highlightlinks a:hover {
@@ -10,7 +11,7 @@ a, a:focus, a:hover, li.highlightlinks a:hover {
     -o-transition: 200ms color ease-in-out;
     transition: 200ms color ease-in-out; }
 b, strong { font-weight: 600; }
-h1.lessonhead { white-space: pre-wrap; font-family: 'Raleway', '游ゴシック' , '游ゴシック体' , YuGothic , 'Yu Gothic' , 'メイリオ' , Meiryo, sans-serif; }
+h1.lessonhead { white-space: pre-wrap; }
 li.highlightlinks { border-top: 1px #2b2b2b solid; }
 li.highlightlinks:hover {
     text-decoration: none;
@@ -204,7 +205,7 @@ textarea:focus, input:focus { outline: none; }
 
 table.kaitable > tbody > tr > td {
 	padding: 5px 20px 5px 20px;
-    font-family: 'Roboto', "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", Osaka, "メイリオ", Meiryo, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+    font-family: 'Roboto', sans-serif;
 	text-align: left;
 	border: none; }
 
