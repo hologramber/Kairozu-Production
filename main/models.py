@@ -528,6 +528,7 @@ class Lesson(models.Model):
     def save(self, *args, **kwargs):
         self.f_english = highlight(self.english, KairozuLexer(ensurenl=False), KairozuFormatter(style='kairozu'))
         self.f_hiragana = highlight(self.hiragana, KairozuLexer(ensurenl=False), KairozuFormatter(style='kairozu'))
+        self.f_hiragana = re.sub(r'。', '｡', self.f_hiragana)
         super(Lesson, self).save(*args, **kwargs)
 
     def __str__(self):
@@ -547,6 +548,8 @@ class PointTable(models.Model):
     def save(self, *args, **kwargs):
         self.f_pointa = highlight(self.pointa, KairozuLexer(ensurenl=False), KairozuFormatter(style='kairozu'))
         self.f_pointb = highlight(self.pointb, KairozuLexer(ensurenl=False), KairozuFormatter(style='kairozu'))
+        self.f_pointa = re.sub(r'。', '｡', self.f_pointa)
+        self.f_pointb = re.sub(r'。', '｡', self.f_pointb)
         super(PointTable, self).save(*args, **kwargs)
 
     class Meta:
@@ -660,6 +663,7 @@ class Example(models.Model):
     def save(self, *args, **kwargs):
         self.f_english = highlight(self.english, KairozuLexer(ensurenl=False), KairozuFormatter(style='kairozu'))
         self.f_hiragana = highlight(self.hiragana, KairozuLexer(ensurenl=False), KairozuFormatter(style='kairozu'))
+        self.f_hiragana = re.sub(r'。', '｡', self.f_hiragana)
         super(Example, self).save(*args, **kwargs)
 
 
