@@ -15,6 +15,11 @@ for prof in profiles:
     # userexpression = prof.currentexpression
     # usersentence = prof.currentlesson
 
+    # for expression in expressions:
+    #     if not ExpressionRecord.objects.filter(user=user, express_id__exact=expression.id).exists():
+    #         self.create(user=user, express=expression)
+
+
     vocabrecords = VocabRecord.objects.filter(user_id=prof.user.id)
     for vr in vocabrecords:
         if vr.last_attempt is None:

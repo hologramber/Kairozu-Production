@@ -5,7 +5,7 @@ function views: from my_app import views, url(r'^$', views.home, name='home')
 cbv: from other_app.views import Home, url(r'^$', Home.as_view(), name='home')
 import urlconf: from django.conf.urls import url, include, url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url, include, handler404, handler500, handler400, handler403
+from django.conf.urls import url, include
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.views.generic import TemplateView, RedirectView
@@ -30,7 +30,7 @@ urlpatterns = [
     url(r'^accounts/logout/$', auth_views.logout, {'next_page': 'login'}, name='logout'),
     url(r'^accounts/register/$', BetaEmailView.as_view(), name='register'),
     url(r'^accounts/beta-confirm/$', BetaConfirmView.as_view(), name='betaconfirm'),
-    #url(r'^accounts/register/$', reg_views.register, name='register'),
+    # url(r'^accounts/register/$', reg_views.register, name='register'),
     # url(r'^accounts/activation_sent/$', reg_views.activation_sent, name='activation_sent'),
     # url(r'^accounts/activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$', reg_views.activate, name='activate'),
     url(r'^main/', include('main.urls')),
@@ -39,7 +39,7 @@ urlpatterns = [
     url(r'^demo/', include('demo.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
-handler400 = reg_views.error_400
-handler403 = reg_views.error_403
-handler404 = reg_views.error_404
-handler500 = reg_views.error_500
+handler400 = 'reg_views.error_400'      # bad request
+handler403 = 'reg_views.error_403'      # permission denied
+handler404 = 'reg_views.error_404'      # page not found
+handler500 = 'reg_views.error_500'      # internal error
