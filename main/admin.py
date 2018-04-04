@@ -70,20 +70,20 @@ class ChapterAdmin(admin.ModelAdmin):
 class VocabularyAdmin(nested_admin.NestedModelAdmin):
     list_display = ('english', 'kana', 'kanji', 'partofspeech', 'chapter', 'note')
     list_filter = ('chapter',)
-    search_fields = ['english', 'kana', 'kanji']
+    search_fields = ['english', 'kana', 'kanji', 'note']
 
 
 class ExpressionAdmin(nested_admin.NestedModelAdmin):
     list_display = ('english', 'kana', 'literal', 'chapter', 'note')
     list_filter = ('chapter',)
-    search_fields = ['english', 'kana']
+    search_fields = ['english', 'kana', 'literal', 'note']
 
 
 class PracticeAdmin(admin.ModelAdmin):
     list_display = ('pone_english', 'pone_literal', 'pone_kana_all', 'ptwo_english', 'ptwo_literal', 'ptwo_kana_all', 'vieworder', 'force_strict')
     list_filter = ('lesson',)
     ordering = ('vieworder',)
-    search_fields = ['pone_english', 'ptwo_english', 'pone_kana', 'ptwo_kana', 'pone_kanji', 'ptwo_kanji', 'pone_literal', 'ptwo_literal']
+    search_fields = ['pone_english', 'ptwo_english', 'pone_kana', 'ptwo_kana', 'pone_kanji', 'ptwo_kanji', 'pone_literal', 'ptwo_literal', 'pone_context', 'ptwo_context']
 
 
 class ExerciseSentenceInline(nested_admin.NestedTabularInline):
@@ -110,7 +110,7 @@ class ExerciseAdmin(nested_admin.NestedModelAdmin):
 class SentenceAdmin(admin.ModelAdmin):
     list_display = ('english', 'literal', 'context', 'kana_all_blank', 'force_strict')
     list_filter = ('lesson',)
-    search_fields = ['english', 'kana', 'kanji']
+    search_fields = ['english', 'kana', 'kanji', 'context', 'literal']
 
 
 class VocabRecordAdmin(admin.ModelAdmin):
@@ -135,6 +135,7 @@ class ExerciseRecordAdmin(admin.ModelAdmin):
 
 class GrammarNoteAdmin(admin.ModelAdmin):
     list_display = ('title', 'lesson')
+
 
 admin.site.register(GrammarNote, GrammarNoteAdmin)
 admin.site.register(Sentence, SentenceAdmin)

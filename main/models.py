@@ -38,8 +38,10 @@ def create_context(sentence):
         context = "Listener understands you're asking about someone/thing related to them from the context of the conversation."
     elif whowhat == 'your' or whowhat == 'yours':
         context = "Listener understands you're referring to someone/thing related to them from the context of the conversation."
-    elif whowhat == 'we':
+    elif whowhat == 'we' and "shall" not in sentence:
         context = "Listener understands to whom you're referring from the context of the conversation."
+    elif whowhat == 'we' and "shall" in sentence:
+        context = "You're asking the listener about a proposed plan of action."
     elif whowhat == 'our':
         context = "Listener understands to whom someone/thing belongs from the context of the conversation."
     else:
