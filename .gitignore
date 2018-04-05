@@ -61,6 +61,7 @@ db.sqlite3
 *.sqlite3
 staticfiles/
 kairozulocal/
+analysis/
 
 # Flask stuff:
 instance/
