@@ -16,7 +16,9 @@ from pygments.formatters import KairozuFormatter
 
 def create_context(sentence):
     whowhat = sentence[sentence.find("(") + 1:sentence.find(")")].lower()
-    if whowhat == 'it':
+    if whowhat == 'it' and 'half past' or 'clock' or 'PM' or 'AM' or ':' in sentence:
+        context = "Listener understands you're referring to the time."
+    elif whowhat == 'it':
         context = "Listener can infer what 'it' is from the context of the conversation."
     elif whowhat == 'he' or whowhat == 'his':
         context = "Listener can infer who 'he' is from the context of the conversation."
@@ -44,6 +46,8 @@ def create_context(sentence):
         context = "You're asking the listener about a proposed plan of action."
     elif whowhat == 'our':
         context = "Listener understands to whom someone/thing belongs from the context of the conversation."
+    elif whowhat == 'the color':
+        context = "You are indicating color as an attribute; use the noun form of the color."
     else:
         context = ''
     return context

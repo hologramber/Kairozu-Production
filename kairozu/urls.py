@@ -39,7 +39,7 @@ urlpatterns = [
     url(r'^demo/', include('demo.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
-# handler400 = 'main.reg_views.error_400'      # bad request
-# handler403 = 'main.reg_views.error_403'      # permission denied
-# handler404 = 'main.reg_views.error_404'      # page not found
-# handler500 = 'main.reg_views.error_500'      # internal error
+if settings.DEBUG:
+    urlpatterns += [
+        url(r'^analysis/', include('analysis.urls'))
+    ]
