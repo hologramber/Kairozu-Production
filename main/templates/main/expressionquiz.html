@@ -14,7 +14,7 @@
     <!-- page-content-wrapper -->
     <div id='page-content-wrapper'>
         <div class='container-fluid'>
-            <div class='row'>
+            <div class='row faded-white-div'>
                 <div class='col-lg-12'>
 					<div id='vocabholder'>
 
@@ -43,21 +43,23 @@
                     </div>  <!-- /#vocabholder -->
                 </div>  <!-- /.col-lg-12 -->
             </div>  <!-- /.row -->
+            <div class='row faded-white-div'>
+                <div class='col-lg-12'>
+                    <div id="expression-example" style="display: none;">
+                        <i class="fa fa-info-circle green-words" aria-hidden="true"></i>&nbsp;&nbsp;<span id="prompt-text" class="grey-words smaller"></span>
+                    </div>
 
-            <div id="expression-example" style="display: none;">
-                <i class="fa fa-info-circle green-words" aria-hidden="true"></i>&nbsp;&nbsp;<span id="prompt-text" class="grey-words smaller"></span>
-            </div>
+                    <div id="katakana-tips" style="display: none;">
+                        <i class="fa fa-star red-words" aria-hidden="true"></i>&nbsp;&nbsp;<span class="grey-words smaller">This expression uses katakana characters (press shift when typing).</span>
+                    </div>
 
-            <div id="katakana-tips" style="display: none;">
-                <i class="fa fa-star red-words" aria-hidden="true"></i>&nbsp;&nbsp;<span class="grey-words smaller">This expression uses katakana characters (press shift when typing).</span>
-            </div>
-
-            {% if user.profile.currentexpression > chapter.id %}
-                <div id="finished-quiz">
-                    <i class="fa fa-star green-words" aria-hidden="true"></i><span class="grey-words smaller"> You've successfully completed this quiz; expressions will loop for as long as you'd like to practice.</span>
+                    {% if user.profile.currentexpression > chapter.id %}
+                        <div id="finished-quiz">
+                            <i class="fa fa-star green-words" aria-hidden="true"></i><span class="grey-words smaller"> You've successfully completed this quiz; expressions will loop for as long as you'd like to practice.</span>
+                        </div>
+                    {% endif %}
                 </div>
-            {% endif %}
-
+            </div>
         </div>  <!-- /.container-fluid -->
     </div>  <!-- /#page-content-wrapper -->
 

@@ -39,42 +39,40 @@ $.ajaxSetup({
     <!-- page-content-wrapper -->
     <div id='page-content-wrapper'>
         <div class='container-fluid'>
-            <div class="faded-white-div">
-                <div class='row'>
-                    <div class='col-lg-12'>
-                        <div id='vocabholder'>
-                            <div id='vfield'>
-                                <div id='literal_one' class='vocab-note text-align-center'></div>
-                                <div id='vocab_english' class='vocab-challenge text-align-center'></div>
+            <div class='row faded-white-div'>
+                <div class='col-lg-12'>
+                    <div id='vocabholder'>
+                        <div id='vfield'>
+                            <div id='literal_one' class='vocab-note text-align-center'></div>
+                            <div id='vocab_english' class='vocab-challenge text-align-center'></div>
 
-                                <div class='vocab-promptc text-align-center'>
-                                    <span id='hint_block' class='ls5r'>&nbsp;</span>
-                                </div>
+                            <div class='vocab-promptc text-align-center'>
+                                <span id='hint_block' class='ls5r'>&nbsp;</span>
+                            </div>
 
-                                <form id='vocabquizform' action='' method='post' class='abox'>{% csrf_token %}
-                                    <input id='id_vocabattempt' type='text' name='vocab_attempt' autocapitalize='none' autocorrect='off' autofocus />
-                                    <input id='vactual' type='hidden' name='vocab_actual' value='' />
-                                    <input id='vindex' type='hidden' name='vindex' value='' />
-                                    <input type='submit' value='&#8680;' />
-                                </form>
-                            </div>  <!-- /#vfield -->
-                        </div>  <!-- /#vocabholder -->
-                    </div>  <!-- /.col-lg-12 -->
-                </div>  <!-- /.row -->
-                <div class='row'>
-                    <div class='col-lg-12'>
-                        <div class="quiz-tips dashed-grey-2">
-                            <span class="bold">Tips:</span>
-                            <ul>
-                                <li>Type the word in romaji; it should auto-convert into hiragana.</li>
-                                <li>Hold down shift to auto-convert roman characters into katakana.</li>
-                                <li>Spaces and punctuation are okay, but not necessary.</li>
-                            </ul>
-                        </div>
-                    </div> <!-- /.col-lg-12 -->
-                </div>  <!-- /.row -->
-                <div class="s-30"></div>
-            </div>
+                            <form id='vocabquizform' action='' method='post' class='abox'>{% csrf_token %}
+                                <input id='id_vocabattempt' type='text' name='vocab_attempt' autocapitalize='none' autocorrect='off' autofocus />
+                                <input id='vactual' type='hidden' name='vocab_actual' value='' />
+                                <input id='vindex' type='hidden' name='vindex' value='' />
+                                <input type='submit' value='&#8680;' />
+                            </form>
+                        </div>  <!-- /#vfield -->
+                    </div>  <!-- /#vocabholder -->
+                </div>  <!-- /.col-lg-12 -->
+            </div>  <!-- /.row -->
+            <div class='row faded-white-div'>
+                <div class='col-lg-12'>
+                    <div class="quiz-tips dashed-grey-2">
+                        <span class="bold">Tips:</span>
+                        <ul>
+                            <li>Type the word in romaji; it should auto-convert into hiragana.</li>
+                            <li>Hold down shift to auto-convert roman characters into katakana.</li>
+                            <li>Spaces and punctuation are okay, but not necessary.</li>
+                        </ul>
+                    </div>
+                    <div class="s-30"></div>
+                </div> <!-- /.col-lg-12 -->
+            </div>  <!-- /.row -->
         </div>  <!-- /.container-fluid -->
     </div>  <!-- /#page-content-wrapper -->
 </div>  <!-- /#wrapper -->
