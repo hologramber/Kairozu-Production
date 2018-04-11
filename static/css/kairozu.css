@@ -707,13 +707,13 @@ div.social-links {
 	background-color: #fff;
     border-radius: 5px;
 	margin-bottom: 30px; 
-	border: 2px dashed #8a8a8a;
+	border: 0;
     -webkit-transition: 200ms background ease-in-out, 200ms border ease-in-out;
     -moz-transition: 200ms background ease-in-out, 200ms border ease-in-out;
     -o-transition: 200ms background ease-in-out, 200ms border ease-in-out;
-    transition: 200ms background ease-in-out, 200ms border ease-in-out; }
+    transition: 200ms background ease-in-out, 200ms border ease-in-out;
+	box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.2); }
 .features-boxed .item .box:hover { 
-	border: 2px dashed #2b2b2b;
 	background: #f7f7f7; }
 .features-boxed .item .box .glyphicon { 
 	color: #d92425;
@@ -888,13 +888,12 @@ div.social-links {
 .kai-panel {
 	background-color: #fff;
     border-radius: 5px;
-    box-shadow: none;
-	border: 2px dashed #8a8a8a;
+    box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.2);
+	border: 0;
     -webkit-transition: 200ms background ease-in-out, 200ms border ease-in-out;
     -moz-transition: 200ms background ease-in-out, 200ms border ease-in-out;
     -o-transition: 200ms background ease-in-out, 200ms border ease-in-out;
     transition: 200ms background ease-in-out, 200ms border ease-in-out; }
-.kai-panel:hover { border: 2px dashed #2b2b2b; }
 .kai-panel-header:hover { background: #f7f7f7; }
 
 .kairozu_closeform { max-width: 100%; min-width: 260px; padding-top: 0; }
@@ -912,7 +911,8 @@ div.social-links {
 	font-size: 16px;
 	padding: 8px 20px;
 	margin: 5px 0 25px 0;
-	border-radius: 5px; }
+	border-radius: 5px;
+    box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.2); }
 
 .authform .kairozu_cancel {
 	background-color: #d92425;
