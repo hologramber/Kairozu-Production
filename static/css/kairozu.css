@@ -66,17 +66,17 @@ textarea:focus, input:focus { outline: none; }
 
 .interface-fg, .quiz-tips {						/* tips on the interface page */
     background: rgba(255,255,255,0.8);
+    border-radius: 5px;
 	display: table;
 	padding: 15px; }
 #katakana-tips, #finished-quiz, #expression-example, .visible-block, .reference-link { background: rgba(255,255,255,0.8); display: table; }
 .interface-fg, .interface-fg li, .interface-fg ul, #katakana-tips, #finished-quiz, .reference-link, #expression-example, .quiz-tips, .quiz-tips li, .quiz-tips ul { font-family: 'Raleway', sans-serif; margin: 0; }
 .quiz-tips, #katakana-tips, #finished-quiz, #expression-example { margin-top: 30px; }
 
-.spot-table { display: table; margin: 35px 30px 30px 30px; }
-.spot-tablei { display: table; margin: 25px 10px 15px 0; }
+.spot-table { display: table; margin: 35px 30px 30px 30px; background: rgba(255,255,255,0.8); border-radius: 5px; }
+.spot-tablei { display: table; margin: 25px 10px 15px 0; background: rgba(255,255,255,0.8); border-radius: 5px; }
 .spot-image { display: table-cell; }
 .spot-text {
-    background: rgba(255,255,255,0.8);
 	display: table-cell;
 	vertical-align: middle;
 	font-family: 'Open Sans', sans-serif;
@@ -84,7 +84,6 @@ textarea:focus, input:focus { outline: none; }
 	padding-left: 10px; }
 
 .spot-texti {
-    background: rgba(255,255,255,0.8);
     display: table-cell;
 	vertical-align: middle;
 	font-size: 22px;
@@ -335,7 +334,7 @@ table.gpt > tbody > tr > td.blankline { line-height: 5px; }
 .vocablist > tbody tr { border-bottom: 1px solid #bcbcbc66; }
 .vocablist > tbody tr:last-child { border-bottom: none; }
 
-.rlist { width: 100%; background: rgba(255,255,255,0.8); }
+.rlist { width: 100%; background: rgba(255,255,255,0.8); border-radius: 5px; }
 .rlist > tbody td { padding: 5px; }
 .rlist > tbody td.resourceheader { padding: 5px 0; }
 .rlist > tbody tr { border-bottom: 1px solid #bcbcbc66; }
