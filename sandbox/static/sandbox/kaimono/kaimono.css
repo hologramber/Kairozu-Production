@@ -386,8 +386,8 @@
 
 .popup .close {
 	position: absolute;
-	top: 20px;
-	right: 30px;
+	top: 10px;
+	right: 20px;
 	transition: all 200ms;
 	font-size: 30px;
 	font-weight: bold;
@@ -395,9 +395,7 @@
 	color: #d92425;
 }
 
-.popup .close:hover {
-	color: #FF9729;
-}
+.popup .close:hover { color: #FF9729; }
 
 .popup .content {
 	max-height: 400px;

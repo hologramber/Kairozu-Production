@@ -9,7 +9,6 @@
 
 #level, #score, #streak, #reset, #reversemode {
 	font-size: 20px;
-    box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.2);
 	font-weight: bold;
 	margin-top: 5px; }
 #reset, #reversemode, #level {
@@ -29,6 +28,7 @@
 	width: 10vmin;
 	margin-right: 10px;
 	padding: 10px 5px 20px 5px;
+    box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.2);
 	font-size: 20px;
 	color: #fff;
 	border-radius: 5px;
@@ -41,6 +41,7 @@
 	width: 10vmin;
 	margin-left: 10px;
 	padding: 10px 5px 20px 5px;
+    box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.2);
 	font-size: 20px;
 	border-radius: 5px;
 	color: #fff;
@@ -73,7 +74,8 @@
 	font-size: 6vmin;
 	line-height: 10.5vmin;
 	text-align: center;
-	border-radius: 5px; }
+	border-radius: 5px;
+    box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.2); }
 
 .blank_space {
 	background-color: #424242;
@@ -91,7 +93,8 @@
 	cursor: pointer;
 	margin-top: 1vmin;
 	border-radius: 5px;
-	float: left; }
+	float: left;
+    box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.2); }
 
 .arrow_down {
 	width: 0;
@@ -139,7 +142,8 @@
 	color: #ffffff;
 	z-index: 10;
 	border-radius: 5px;
-	text-align: center; }
+	text-align: center;
+    box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.2); }
 
 #question_holder {
 	background-color: #757575;
