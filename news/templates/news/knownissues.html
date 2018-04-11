@@ -17,15 +17,16 @@
                     <div class="s-20"></div>
                     <div class="table-responsive">
                         <table class="rlist">
-                            <tbody>
+                            <thead>
                                 <tr>
-                                    <td width="5%" class="bolder larger">Priority</td>
-                                    <td width="8%" class="bolder larger">Status</td>
-                                    <td width="14%" class="bolder larger">Category</td>
-                                    <td width="10%" class="bolder larger">Last Update</td>
-                                    <td class="bolder larger">Description</td>
+                                    <th width="5%">Priority</th>
+                                    <th width="8%">Status</th>
+                                    <th width="14%">Category</th>
+                                    <th width="10%">Last Update</th>
+                                    <th>Description</th>
                                 </tr>
-
+                            </thead>
+                            <tbody>
                                 {% for issue in object_list %}
                                     <tr>
                                         {% if issue.issue_status == "FIXED" %}
