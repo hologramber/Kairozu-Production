@@ -339,10 +339,7 @@ table.gpt > tbody > tr > td.blankline { line-height: 5px; }
 .rlist > tbody td.resourceheader { padding: 5px 0; }
 .rlist > tbody tr { border-bottom: 1px solid #bcbcbc66; }
 
-#passage-holder h1, #passage-holder h2, #passage-holder h3, #passage-holder ul li,
-#sfield h1, #sfield h2, #sfield h3, #sfield ul li,
-#pfield h1, #pfield h2, #pfield h3, #pfield ul li,
-#vfield h1, #vfield h2, #vfield h3, #vfield ul li { background: rgba(255,255,255,0.8); }
+#practiceholder, #sentenceholder, #vocabholder, #retain-passage, #dialogue-input { background: rgba(255,255,255,0.8); border-radius: 5px; }
 
 .freq_arrow { width: 100%; }
 .freq_line {
@@ -394,7 +391,6 @@ table.gpt > tbody > tr > td.blankline { line-height: 5px; }
     text-align: left; }
 
 .promptc, .vocab-promptc {
-    background: rgba(255,255,255,0.8);
 	font-size: 50px;
 	margin-bottom: 15px;
     position: relative;
@@ -462,7 +458,6 @@ table.gpt > tbody > tr > td.blankline { line-height: 5px; }
 	float: left; }
 
 .pass-j, .pass-e {
-    background: rgba(255,255,255,0.8);
 	width: 49%;
 	display: inline-block;
 	padding: 15px 15px 15px 25px;
@@ -580,13 +575,11 @@ input[type=text]:disabled {
     -webkit-text-fill-color: #89AE13; }
 
 .challenge-grammar, .practice-grammar {
-    background: rgba(255,255,255,0.8);
 	padding-left: 5px;
 	font-size: 50px;
 	font-family: 'Roboto', sans-serif;
 	padding-top: 5px; }
 .vocab-challenge {
-    background: rgba(255,255,255,0.8);
 	font-size: 80px;
 	line-height: 85px;
 	padding-top: 10px;
