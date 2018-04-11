@@ -57,7 +57,7 @@ textarea:focus, input:focus { outline: none; }
     border-radius: 5px;
     margin: 0 auto; }
 .chartable > tbody tr td { padding: 1px 12px; }
-.chartable > tbody tr { border-bottom: 1px solid #bcbcbc; }
+.chartable > tbody tr { border-bottom: 1px solid #bcbcbc66; }
 .chartable > tbody tr:last-child { border-bottom: none; }
 
 .interface-fg, .quiz-tips {						/* tips on the interface page */
@@ -323,16 +323,16 @@ table.gpt > tbody > tr > td.blankline { line-height: 5px; }
 	margin-left: 80px;
 	text-align: left; }
 
-.vocablist { width: 80%; max-width: 1400px; border-radius: 5px; background: rgba(255,255,255,0.8); }
-.vocablist > thead th { padding: 5px; border-bottom: 2px solid #bcbcbc; }
+.vocablist { width: 100%; max-width: 1400px; border-radius: 5px; background: rgba(255,255,255,0.8); }
+.vocablist > thead th { padding: 10px 5px; }
 .vocablist > tbody td { padding: 5px; }
-.vocablist > tbody tr { border-bottom: 1px solid #bcbcbc; }
+.vocablist > tbody tr { border-bottom: 1px solid #bcbcbc66; }
 .vocablist > tbody tr:last-child { border-bottom: none; }
 
 .rlist { width: 100%; background: rgba(255,255,255,0.8); }
 .rlist > tbody td { padding: 5px; }
 .rlist > tbody td.resourceheader { padding: 5px 0; }
-.rlist > tbody tr { border-bottom: 1px solid #8a8a8a; }
+.rlist > tbody tr { border-bottom: 1px solid #bcbcbc66; }
 
 #passage-holder h1, #passage-holder h2, #passage-holder h3, #passage-holder ul li,
 #sfield h1, #sfield h2, #sfield h3, #sfield ul li,
