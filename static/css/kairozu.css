@@ -93,6 +93,8 @@ textarea:focus, input:focus { outline: none; }
 .faded-white-bg p, .faded-white-bg h1, .faded-white-bg h2, .faded-white-bg h3, .faded-white-bg h4,
 .faded-white-bg ul li, .faded-white-bg a { background: rgba(255,255,255,0.8); }
 
+.faded-white-div { background: rgba(255,255,255,0.8); border-radius: 5px; }
+
 .navbar-inverse {
 	background-color: #2b2b2b;
 	border-color: #1c1c1c; }
