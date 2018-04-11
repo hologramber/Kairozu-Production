@@ -15,21 +15,23 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-12">
+                    <div class="faded-white-div">
 					
-                    <h1>Kairozu Grammar Chapters 1-5</h1>
-                    <div class="s-15"></div>
+                        <h1>Kairozu Grammar Chapters 1-5</h1>
+                        <div class="s-15"></div>
 
-                    <div class="table-responsive">
-                        <table class="vocablist">
-                            {% for grammar in grammar_list %}
-                                <tr>
-                                    <td>{{ grammar.title }}</td>
-                                    <td>{{ grammar.overview }}</td>
-                                </tr>
-                            {% endfor %}
-                        </table>
-                    </div>
+                        <div class="table-responsive">
+                            <table class="vocablist">
+                                {% for grammar in grammar_list %}
+                                    <tr>
+                                        <td>{{ grammar.title }}</td>
+                                        <td>{{ grammar.overview }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </table>
+                        </div>
 
+                    </div><!-- /.faded-white-div -->
                 </div>  <!-- /.col-lg-12 -->
             </div>  <!-- /.row -->
         </div>  <!-- /.container-fluid -->

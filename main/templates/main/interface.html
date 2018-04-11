@@ -16,99 +16,101 @@
             <div class="row">
                 <div class="col-lg-12">
 
-                    <h1>{{ chapter.title }} ようこそ！</h1>
-                    <div class="spot-table">
-                        {% if user.profile.pendingchapter > chapter.id %}
-                            <div class="margin-bottom-20">
-                                <div class="spot-image"><i class='fa fa-star fa-3x red-words' aria-hidden='true'></i></div>
-                                    <div class="spot-text">
-                                        おめでとう〜 you've finished this chapter! The <a href="{% url 'main:vocablist' chapter.id %}">Vocabulary</a>, <a href="{% url 'main:expressionlist' chapter.id %}">Expressions</a>, <a href="{% url 'main:summary' chapter.id %}">Grammar</a>, and <a href="{% url 'main:exercises' chapter.id %}">Exercises</a> from {{ chapter.title }} will always be available for review.
-                                    </div>
-                            </div>
-                            {% if user.profile.currentchapter <= chapter.id %}
+                    <div class="faded-white-div">
+                        <h1>{{ chapter.title }} ようこそ！</h1>
+                        <div class="spot-table">
+                            {% if user.profile.pendingchapter > chapter.id %}
                                 <div class="margin-bottom-20">
-                                    <div class="spot-image"><i class='fa fa-star-half-o fa-3x red-words' aria-hidden='true'></i></div>
+                                    <div class="spot-image"><i class='fa fa-star fa-3x red-words' aria-hidden='true'></i></div>
+                                        <div class="spot-text">
+                                            おめでとう〜 you've finished this chapter! The <a href="{% url 'main:vocablist' chapter.id %}">Vocabulary</a>, <a href="{% url 'main:expressionlist' chapter.id %}">Expressions</a>, <a href="{% url 'main:summary' chapter.id %}">Grammar</a>, and <a href="{% url 'main:exercises' chapter.id %}">Exercises</a> from {{ chapter.title }} will always be available for review.
+                                        </div>
+                                </div>
+                                {% if user.profile.currentchapter <= chapter.id %}
+                                    <div class="margin-bottom-20">
+                                        <div class="spot-image"><i class='fa fa-star-half-o fa-3x red-words' aria-hidden='true'></i></div>
+                                        <div class="spot-text">
+                                            Check the <a href="{% url 'main:progress' %}">progress you've made toward unlocking the next chapter</a>.
+                                        </div>
+                                    </div>
+                                {% endif %}
+
+                            {% else %}
+                                <div class="margin-bottom-20">
+                                    <div class="spot-image"><i class='fa fa-star fa-3x red-words' aria-hidden='true'></i></div>
                                     <div class="spot-text">
-                                        Check the <a href="{% url 'main:progress' %}">progress you've made toward unlocking the next chapter</a>.
+                                        {% if user.profile.currentvocab > chapter.id %}
+                                            Review the <a href="{% url 'main:vocablist' chapter.id %}">Vocabulary</a> you've learned or revisit the <a href="{% url 'main:vocabquiz' chapter.id %}">Vocabulary Quiz</a> for additional practice.
+                                        {% else %}
+                                            Study the <a href="{% url 'main:vocablist' chapter.id %}">Vocabulary List</a> and complete the <a href="{% url 'main:vocabquiz' chapter.id %}">Vocabulary Quiz</a> to unlock the {{ chapter.title }} Expressions.
+                                        {% endif %}
                                     </div>
                                 </div>
-                            {% endif %}
 
-                        {% else %}
-                            <div class="margin-bottom-20">
-                                <div class="spot-image"><i class='fa fa-star fa-3x red-words' aria-hidden='true'></i></div>
-                                <div class="spot-text">
-                                    {% if user.profile.currentvocab > chapter.id %}
-                                        Review the <a href="{% url 'main:vocablist' chapter.id %}">Vocabulary</a> you've learned or revisit the <a href="{% url 'main:vocabquiz' chapter.id %}">Vocabulary Quiz</a> for additional practice.
+                                <div class="margin-bottom-20">
+                                    {% if user.profile.currentexpression > chapter.id %}
+                                        <div class="spot-image"><i class='fa fa-star fa-3x red-words' aria-hidden='true'></i></div>
+                                        <div class="spot-text">
+                                            Review the <a href="{% url 'main:expressionlist' chapter.id %}">Expressions</a> you've learned or revisit the <a href="{% url 'main:expressionquiz' chapter.id %}">Expression Quiz</a> for additional practice.
+                                        </div>
+                                    {% elif user.profile.currentvocab > chapter.id %}
+                                        <div class="spot-image"><i class='fa fa-star-half-o fa-3x red-words' aria-hidden='true'></i></div>
+                                        <div class="spot-text">
+                                            Study the <a href="{% url 'main:expressionlist' chapter.id %}">Expression List</a> and complete the <a href="{% url 'main:expressionquiz' chapter.id %}">Expression Quiz</a> to unlock Grammar Lessons.
+                                        </div>
                                     {% else %}
-                                        Study the <a href="{% url 'main:vocablist' chapter.id %}">Vocabulary List</a> and complete the <a href="{% url 'main:vocabquiz' chapter.id %}">Vocabulary Quiz</a> to unlock the {{ chapter.title }} Expressions.
+                                        <div class="spot-image"><i class='fa fa-star-o fa-3x grey-words' aria-hidden='true'></i></div>
+                                        <div class="spot-text grey-words">
+                                            Complete the {{ chapter.title }} Vocabulary Quiz to unlock {{ chapter.title }} Expressions.
+                                        </div>
                                     {% endif %}
                                 </div>
-                            </div>
 
-                            <div class="margin-bottom-20">
-                                {% if user.profile.currentexpression > chapter.id %}
-                                    <div class="spot-image"><i class='fa fa-star fa-3x red-words' aria-hidden='true'></i></div>
-                                    <div class="spot-text">
-                                        Review the <a href="{% url 'main:expressionlist' chapter.id %}">Expressions</a> you've learned or revisit the <a href="{% url 'main:expressionquiz' chapter.id %}">Expression Quiz</a> for additional practice.
-                                    </div>
-                                {% elif user.profile.currentvocab > chapter.id %}
-                                    <div class="spot-image"><i class='fa fa-star-half-o fa-3x red-words' aria-hidden='true'></i></div>
-                                    <div class="spot-text">
-                                        Study the <a href="{% url 'main:expressionlist' chapter.id %}">Expression List</a> and complete the <a href="{% url 'main:expressionquiz' chapter.id %}">Expression Quiz</a> to unlock Grammar Lessons.
-                                    </div>
-                                {% else %}
-                                    <div class="spot-image"><i class='fa fa-star-o fa-3x grey-words' aria-hidden='true'></i></div>
-                                    <div class="spot-text grey-words">
-                                        Complete the {{ chapter.title }} Vocabulary Quiz to unlock {{ chapter.title }} Expressions.
-                                    </div>
-                                {% endif %}
-                            </div>
+                                <div class="margin-bottom-20">
+                                    {% if user.profile.currentstory > chapter.id %}
+                                        <div class="spot-image"><i class='fa fa-star fa-3x red-words' aria-hidden='true'></i></div>
+                                        <div class="spot-text">
+                                            You've completed the <a href="{% url 'main:summary' chapter.id %}">Grammar Lessons</a> for this chapter, but they're always available for review.
+                                        </div>
+                                    {% elif user.profile.currentexpression > chapter.id %}
+                                        <div class="spot-image"><i class='fa fa-star-half-o fa-3x red-words' aria-hidden='true'></i></div>
+                                        <div class="spot-text">
+                                            Each <a href="{% url 'main:lesson' user.profile.currentlesson %}">Lesson</a> introduces new grammar; apply what you've learned with the Practice Sentences and test yourself with each Lesson's クイズ.
+                                        </div>
+                                    {% else %}
+                                        <div class="spot-image"><i class='fa fa-star-o fa-3x grey-words' aria-hidden='true'></i></div>
+                                        <div class="spot-text grey-words">
+                                            Complete the {{ chapter.title }} Expression Quiz to unlock {{ chapter.title }} Grammar.
+                                        </div>
+                                    {% endif %}
+                                </div>
 
-                            <div class="margin-bottom-20">
-                                {% if user.profile.currentstory > chapter.id %}
-                                    <div class="spot-image"><i class='fa fa-star fa-3x red-words' aria-hidden='true'></i></div>
-                                    <div class="spot-text">
-                                        You've completed the <a href="{% url 'main:summary' chapter.id %}">Grammar Lessons</a> for this chapter, but they're always available for review.
-                                    </div>
-                                {% elif user.profile.currentexpression > chapter.id %}
-                                    <div class="spot-image"><i class='fa fa-star-half-o fa-3x red-words' aria-hidden='true'></i></div>
-                                    <div class="spot-text">
-                                        Each <a href="{% url 'main:lesson' user.profile.currentlesson %}">Lesson</a> introduces new grammar; apply what you've learned with the Practice Sentences and test yourself with each Lesson's クイズ.
-                                    </div>
-                                {% else %}
-                                    <div class="spot-image"><i class='fa fa-star-o fa-3x grey-words' aria-hidden='true'></i></div>
-                                    <div class="spot-text grey-words">
-                                        Complete the {{ chapter.title }} Expression Quiz to unlock {{ chapter.title }} Grammar.
-                                    </div>
-                                {% endif %}
-                            </div>
+                                <div class="margin-bottom-20">
+                                    {% if user.profile.currentstory > chapter.id %}
+                                        <div class="spot-image"><i class='fa fa-star-half-o fa-3x red-words' aria-hidden='true'></i></div>
+                                        <div class="spot-text">
+                                            Complete the {{ chapter.title }} <a href="{% url 'main:exercises' chapter.id %}">Exercises</a> to practice everything you've learned so far.
+                                        </div>
+                                    {% else %}
+                                        <div class="spot-image"><i class='fa fa-star-o fa-3x grey-words' aria-hidden='true'></i></div>
+                                        <div class="spot-text grey-words">
+                                            Complete the {{ chapter.title }} Grammar Lessons to unlock {{ chapter.title }} Exercises.
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                        </div>
 
-                            <div class="margin-bottom-20">
-                                {% if user.profile.currentstory > chapter.id %}
-                                    <div class="spot-image"><i class='fa fa-star-half-o fa-3x red-words' aria-hidden='true'></i></div>
-                                    <div class="spot-text">
-                                        Complete the {{ chapter.title }} <a href="{% url 'main:exercises' chapter.id %}">Exercises</a> to practice everything you've learned so far.
-                                    </div>
-                                {% else %}
-                                    <div class="spot-image"><i class='fa fa-star-o fa-3x grey-words' aria-hidden='true'></i></div>
-                                    <div class="spot-text grey-words">
-                                        Complete the {{ chapter.title }} Grammar Lessons to unlock {{ chapter.title }} Exercises.
-                                    </div>
-                                {% endif %}
-                            </div>
-                        {% endif %}
-                    </div>
-
-                    <div class="interface-fg dashed-grey-2">
-                        <span class="bold">Tips:</span>
-                        <ul>
-                            <li>Type the whole word or sentence, including any hints provided. Spaces and punctuation are okay, but unnecessary.</li>
-                            <li>Use kana only (should be automatic; hold shift). Kanji coming soon!</li>
-                            <li>Strict mode forces exact matching on sentence word order; toggle this setting from your <a href="{% url 'account' %}">Kairozu Account</a> page.</li>
-                        </ul>
-                    </div>
-
+                        <div class="interface-fg dashed-grey-2">
+                            <span class="bold">Tips:</span>
+                            <ul>
+                                <li>Type the whole word or sentence, including any hints provided. Spaces and punctuation are okay, but unnecessary.</li>
+                                <li>Use kana only (should be automatic; hold shift). Kanji coming soon!</li>
+                                <li>Strict mode forces exact matching on sentence word order; toggle this setting from your <a href="{% url 'account' %}">Kairozu Account</a> page.</li>
+                            </ul>
+                        </div>
+                        <div class="s-30"></div>
+                    </div> <!-- /.faded-white-div -->
                 </div>  <!-- /.col-lg-12 -->
             </div>  <!-- /.row -->
         </div>  <!-- /.container-fluid -->

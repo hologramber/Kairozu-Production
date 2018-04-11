@@ -15,37 +15,38 @@
             <div class="row">
                 <div class="col-lg-12">
 
-					<h1>回路図 Demo Expressions</h1>
-					<div class="s-15"></div>
-						<p class="raleway">This is a list of the expressions used in the Kairozu Demo. Try the <a href="{% url 'demo:demoexpressionquiz' %}">expression quiz demo</a> once you've learned these phrases -- in the regular interface, individual chapter quizzes remain accessible post-completion for review purposes, and a cumulative quiz becomes available to review content across chapters.</p>
+                    <div class="faded-white-div">
+                        <h1>回路図 Demo Expressions</h1>
+                        <p class="raleway">This is a list of the expressions used in the Kairozu Demo. Try the <a href="{% url 'demo:demoexpressionquiz' %}">expression quiz demo</a> once you've learned these phrases -- in the regular interface, individual chapter quizzes remain accessible post-completion for review purposes, and a cumulative quiz becomes available to review content across chapters.</p>
                         <div class="s-5"></div>
-                    <div class="table-responsive">
-                        <table class="vocablist">
-                            <thead>
-                                <tr>
-                                    <th>English・英語</th>
-                                    <th>Kana・仮名</th>
-                                    <th>Note</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for phrase in object_list %}
+                        <div class="table-responsive">
+                            <table class="vocablist">
+                                <thead>
                                     <tr>
-                                        <td>{{ phrase.english }}</td>
-                                        <td>{{ phrase.kana }}</td>
-                                        <td>
-                                            {{ phrase.note }}
-                                            {% if phrase.prompt %}
-                                                <br />
-                                                <span class="smaller grey-words raleway">Example: {{ phrase.prompt }}</span>
-                                            {% endif %}
-                                        </td>
+                                        <th>English・英語</th>
+                                        <th>Kana・仮名</th>
+                                        <th>Note</th>
                                     </tr>
+                                </thead>
+                                <tbody>
+                                    {% for phrase in object_list %}
+                                        <tr>
+                                            <td>{{ phrase.english }}</td>
+                                            <td>{{ phrase.kana }}</td>
+                                            <td>
+                                                {{ phrase.note }}
+                                                {% if phrase.prompt %}
+                                                    <br />
+                                                    <span class="smaller grey-words raleway">Example: {{ phrase.prompt }}</span>
+                                                {% endif %}
+                                            </td>
+                                        </tr>
 
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div> <!--/.faded-white-div -->
                 </div>  <!-- /.col-lg-12 -->
             </div>  <!-- /.row -->
         </div>  <!-- /.container-fluid -->
