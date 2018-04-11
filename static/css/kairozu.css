@@ -762,7 +762,8 @@ div.social-links {
 .reg-user-input input[type=email] { width: 100%; }
 .btn-success {
     background-color: #89AE13;
-    border-color: #89AE13; }
+    border-color: #89AE13;
+	box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.2); }
 
 .btn-success:hover {
     background-color: #6A870E;

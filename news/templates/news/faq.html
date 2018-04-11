@@ -8,7 +8,7 @@
 <div id="page-content-wrapper">
 	<div class="container container-kairozu">
             <h1>Frequently Asked Questions</h1>
-            <div class="s-30"></div>
+            <div class="s-20"></div>
             <div class="table-responsive">
                 <div class="toc-summary">
                     <table class="generaltable">
@@ -19,7 +19,7 @@
                 </div>
             </div>
 
-            <div class="s-40"></div>
+            <div class="s-30"></div>
             {% for faq in object_list %}
                 <h3><div class="qa_question"><a name="{{ forloop.counter }}">{{ faq.question }}</a></div></h3>
                 <div class="qa_answer">{{ faq.answer|safe }}</div>
