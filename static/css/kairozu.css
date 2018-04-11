@@ -65,16 +65,15 @@ textarea:focus, input:focus { outline: none; }
 .chartable > tbody tr:last-child { border-bottom: none; }
 
 .interface-fg, .quiz-tips {						/* tips on the interface page */
-    background: rgba(255,255,255,0.8);
     border-radius: 5px;
 	display: table;
 	padding: 15px; }
-#katakana-tips, #finished-quiz, #expression-example, .visible-block, .reference-link { background: rgba(255,255,255,0.8); display: table; }
+#katakana-tips, #finished-quiz, #expression-example, .visible-block, .reference-link { display: table; }
 .interface-fg, .interface-fg li, .interface-fg ul, #katakana-tips, #finished-quiz, .reference-link, #expression-example, .quiz-tips, .quiz-tips li, .quiz-tips ul { font-family: 'Raleway', sans-serif; margin: 0; }
 .quiz-tips, #katakana-tips, #finished-quiz, #expression-example { margin-top: 30px; }
 
-.spot-table { display: table; margin: 35px 30px 30px 30px; background: rgba(255,255,255,0.8); border-radius: 5px; }
-.spot-tablei { display: table; margin: 25px 10px 15px 0; background: rgba(255,255,255,0.8); border-radius: 5px; }
+.spot-table { display: table; margin: 35px 30px 30px 30px; }
+.spot-tablei { display: table; margin: 25px 10px 15px 0; }
 .spot-image { display: table-cell; }
 .spot-text {
 	display: table-cell;
@@ -89,10 +88,7 @@ textarea:focus, input:focus { outline: none; }
 	font-size: 22px;
 	padding-left: 10px; }
 
-.faded-white-bg p, .faded-white-bg h1, .faded-white-bg h2, .faded-white-bg h3, .faded-white-bg h4,
-.faded-white-bg ul li, .faded-white-bg a { background: rgba(255,255,255,0.8); }
-
-.faded-white-div { background: rgba(255,255,255,0.8); border-radius: 5px; }
+/* .faded-white-div { background: rgba(255,255,255,0.8); border-radius: 5px; } */
 
 .navbar-inverse {
 	background-color: #2b2b2b;
@@ -204,7 +200,6 @@ textarea:focus, input:focus { outline: none; }
 	line-height: 18px; }
 
 .jp-resources {
-    background: rgba(255,255,255,0.8);
 	padding: 0 15px 15px 20px;
 	margin-top: 15px;
 	margin-bottom: 15px; }					/* containers for resource lists on about page */
@@ -273,13 +268,11 @@ div.table-container { display: inline-block; }
 table.gpt > tbody > tr > td.blankline { line-height: 5px; }
 
 .ht-no-border {
-    background: rgba(255,255,255,0.8);
 	border-radius: 5px;
     overflow-x: auto;
 	padding: 20px 15px 10px 15px; }
 
 .ht, .ht-summary {
-    background: rgba(255,255,255,0.8);
 	border: 2px solid #2b2b2b;
 	border-radius: 5px;
 	display: table;
@@ -287,7 +280,6 @@ table.gpt > tbody > tr > td.blankline { line-height: 5px; }
 .ht { padding: 20px 15px 10px 15px; }
 .ht-summary, .toc-summary { padding: 20px 15px 20px 15px; }
 .toc-summary {
-    background: rgba(255,255,255,0.8);
 	border: 2px solid #2b2b2b;
 	border-radius: 5px;
 	display: table; }
@@ -328,18 +320,16 @@ table.gpt > tbody > tr > td.blankline { line-height: 5px; }
 	margin-left: 80px;
 	text-align: left; }
 
-.vocablist { width: 100%; max-width: 1400px; border-radius: 5px; background: rgba(255,255,255,0.8); }
+.vocablist { width: 100%; max-width: 1400px; }
 .vocablist > thead th { padding: 10px 5px; }
 .vocablist > tbody td { padding: 5px; }
 .vocablist > tbody tr { border-bottom: 1px solid #bcbcbc66; }
 .vocablist > tbody tr:last-child { border-bottom: none; }
 
-.rlist { width: 100%; background: rgba(255,255,255,0.8); border-radius: 5px; }
+.rlist { width: 100%; }
 .rlist > tbody td { padding: 5px; }
 .rlist > tbody td.resourceheader { padding: 5px 0; }
 .rlist > tbody tr { border-bottom: 1px solid #bcbcbc66; }
-
-#practiceholder, #sentenceholder, #vocabholder, #retain-passage, #dialogue-input { background: rgba(255,255,255,0.8); border-radius: 5px; }
 
 .freq_arrow { width: 100%; }
 .freq_line {
@@ -378,7 +368,7 @@ table.gpt > tbody > tr > td.blankline { line-height: 5px; }
 .grt_o > tbody tr:nth-child(even) { background-color: #efebea; }
 
 
-.groupdt { width: 100%; max-width: 350px; white-space:nowrap; margin: 0 auto; background: rgba(255,255,255,0.8); }
+.groupdt { width: 100%; max-width: 350px; white-space:nowrap; margin: 0 auto; }
 .groupdt > thead th { padding: 10px 5px; }
 .groupdt > tbody td { padding: 8px 10px 8px 10px; }
 .groupdt > tbody tr { border-bottom: 1px solid #bcbcbc66; }
@@ -414,7 +404,6 @@ table.gpt > tbody > tr > td.blankline { line-height: 5px; }
     text-align: center; }
 
 .lit-c, .vocab-note, .context-container {
-    background: rgba(255,255,255,0.8);
 	color: #bcbcbc;
 	font-family: 'Raleway', sans-serif; }
 .lit-c { margin-bottom: 20px; clear: both; }
