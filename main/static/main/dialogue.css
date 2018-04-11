@@ -3,11 +3,11 @@
   height: 100%;
   overflow-y: scroll;
   overflow-x: hidden;
-  background: #eee;
+  background: #f7f7f7;
 }
 .chat .message {
   display: flex;
-  margin: 10px 0 20px 10px;
+  margin: 10px 10px 20px 10px;
   min-height: 30px;
   height: auto;
   text-align: left;
@@ -18,7 +18,6 @@
 }
 .chat .message.me div {
   order: 1;
-  padding: 0 8px 0 0;
 }
 .chat .message.me div p {
   float: right;
@@ -58,8 +57,8 @@
   background: #fff;
   word-wrap: break-word;
   font-family: Monospace;
-  border-radius: 3px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.2)
 }
 .chat .message div:before {
   position: relative;

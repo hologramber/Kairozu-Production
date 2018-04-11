@@ -10,9 +10,10 @@
 .score, .streak, #questions, #kanjikana {
 	width: 100px;
 	height: auto;
-    border: 2px solid #2b2b2b;
+    border: 0;
     padding: 5px 10px 15px 10px;
-	border-radius: 5px; }
+	border-radius: 5px;
+	box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.2); }
 
 .score {
 	float: left;
@@ -49,21 +50,23 @@
 .objects_container {
 	padding: 5vmin 0; 
 	width: 100%;
-	background-color: #d5d5d5;
+	background-color: #f7f7f7;
 	margin: 15px auto;
 	border-radius: 5px;
 	text-align: center;
 	vertical-align: middle;
+    box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.2);
 	color: #2b2b2b; }
 
 .description_container {
 	padding: 4vmin 0;
-	background-color: #d5d5d5;
+	background-color: #f7f7f7;
 	margin: 0 auto;
 	border-radius: 5px;
 	font-size: 3vmin;
 	text-align: center;
 	vertical-align: middle;
+    box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.2);
 	color: #2b2b2b; }
 
 #degreesc, #coffee, #beer, #misosoup, #bento, #balloons, #burger, #ramen, #fries, #people, #pills, #tomatoes, #candies, #baseballs,
@@ -354,7 +357,7 @@
 .overlay {
 	position: absolute;
 	top: 0;
-	bottom: 0;
+    bottom: 0;
 	left: 0;
 	right: 0;
 	background: rgba(0,0,0,0.7);
@@ -377,6 +380,7 @@
 	position: relative;
 	font-size: 14px;
 	transition: all 200ms ease-in-out;
+    box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.2);
 	color: #404040;
 }
 
@@ -388,15 +392,15 @@
 	font-size: 30px;
 	font-weight: bold;
 	text-decoration: none;
-	color: #424242;
+	color: #d92425;
 }
 
 .popup .close:hover {
-	color: #bde52a;
+	color: #FF9729;
 }
 
 .popup .content {
-	max-height: 700px;
+	max-height: 400px;
 	overflow: scroll;
 }
 
