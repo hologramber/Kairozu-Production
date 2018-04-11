@@ -377,9 +377,9 @@ table.gpt > tbody > tr > td.blankline { line-height: 5px; }
 
 
 .groupdt { width: 100%; max-width: 350px; white-space:nowrap; margin: 0 auto; background: rgba(255,255,255,0.8); }
-.groupdt > thead th { padding: 5px; border-bottom: 2px solid #bcbcbc; }
+.groupdt > thead th { padding: 10px 5px; }
 .groupdt > tbody td { padding: 8px 10px 8px 10px; }
-.groupdt > tbody tr { border-bottom: 1px solid #bcbcbc; }
+.groupdt > tbody tr { border-bottom: 1px solid #bcbcbc66; }
 .groupdt > tbody tr:last-child { border-bottom: none; }
 
 .generaltable { white-space: nowrap; }
