@@ -210,18 +210,13 @@ table.kaitable > tbody > tr > td {
     font-family: 'Roboto', sans-serif;
 	text-align: left;
 	border: none; }
-
 table.kaitable { white-space:nowrap; width: initial; padding: 10px 0; }
 table.kaitable-left-30 { margin-left: 30px; }
-
-table.kaitable td,
-table.kaitable th {
+table.kaitable td, table.kaitable th {
 	padding: 5px 20px 5px 20px;
 	text-align: left;
 	border: none; }
-
-table.kaitable thead th,
-table.kaitable thead td {
+table.kaitable thead th, table.kaitable thead td {
     padding: 5px 20px 5px 20px;
     font-weight: bold;
     vertical-align: middle; }
@@ -243,8 +238,7 @@ div.table-container { display: inline-block; }
 	padding: 15px;
 	margin-top: 30px;
 	margin-bottom: 30px;
-	text-align: center;
-	font-family: 'Roboto', sans-serif; }
+	text-align: center; }
 
 .table-responsive { 
 	border-radius: 5px; 
@@ -296,9 +290,9 @@ table.gpt > tbody > tr > td.blankline { line-height: 5px; }
 	padding-bottom: 10px;
 	font-family: 'Raleway', sans-serif; }
 
-.chapterbox { background-image: url('../img/sunsplash.png'); color: #2b2b2b; }		/* active (red) chapters on dashboard page */
-.chapterbox:hover { background-image: url('../img/sunsplashr.png'); } 				  /* hover twist for selected chapters on dashboard page */			
-.chapterbox-dim { background-image: url('../img/sunsink.png'); color: #fff; } 		/* inactive (grey) chapters on dashboard page */
+.chapterbox { background-image: url('../img/sunsplash.png'); color: #2b2b2b; }		/* active (red) ch on dashboard */
+.chapterbox:hover { background-image: url('../img/sunsplashr.png'); } 				/* hover twist ch on dashboard */
+.chapterbox-dim { background-image: url('../img/sunsink.png'); color: #fff; } 		/* inactive (grey) ch on dashboard */
 .chapterbox, .chapterbox-dim {
 	background-repeat: no-repeat;
 	background-size: 90px;
@@ -330,6 +324,7 @@ table.gpt > tbody > tr > td.blankline { line-height: 5px; }
 .rlist > tbody td { padding: 5px; }
 .rlist > tbody td.resourceheader { padding: 5px 0; }
 .rlist > tbody tr { border-bottom: 1px solid #bcbcbc66; }
+.rlist > tbody tr:last-child { border-bottom: none; }
 
 .freq_arrow { width: 100%; }
 .freq_line {
@@ -381,10 +376,9 @@ table.gpt > tbody > tr > td.blankline { line-height: 5px; }
     text-align: left; }
 
 .promptc, .vocab-promptc {
-	font-size: 50px;
-	margin-bottom: 15px;
-    position: relative;
-	font-family: 'Roboto', sans-serif; }
+	font-size: 45px;
+	margin-bottom: 10px;
+    position: relative; }
 .promptc {	padding-left: 5px; } 	/* when missed ? on challenge/quizzes, the help text that pops up */
 
 #report-issue {
@@ -566,14 +560,12 @@ input[type=text]:disabled {
 .challenge-grammar, .practice-grammar {
 	padding-left: 5px;
 	font-size: 50px;
-	font-family: 'Roboto', sans-serif;
 	padding-top: 5px; }
 .vocab-challenge {
-	font-size: 80px;
-	line-height: 85px;
+	font-size: 70px;
+	line-height: 75px;
 	padding-top: 10px;
-	padding-bottom: 30px;
-	font-family: 'Roboto', sans-serif; }
+	padding-bottom: 30px; }
 
 .primarylinks {					/* sidebar links */
 	font-weight: 700;
@@ -726,14 +718,12 @@ div.social-links {
 .registration-text {
     font-size: 85%;
     color: #bcbcbc;
-    font-family: 'Roboto', sans-serif;
-}
+    font-family: 'Roboto', sans-serif; }
 
 .registration-text ul li {
     margin-top: 3px;
     color: #bcbcbc;
-    font-family: 'Roboto', sans-serif;
-}
+    font-family: 'Roboto', sans-serif; }
 
 .s-5 { width: 100%; height: 5px; }
 .s-10 { width: 100%; height: 10px; }
