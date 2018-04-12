@@ -1,6 +1,6 @@
 body, p, ol, ul, td { font-family: 'Roboto', sans-serif; color: #2B2B2B; word-break: keep-all; }
 h1, h2, h3, h4, h5, h6 { font-family: 'Raleway', '游ゴシック' , '游ゴシック体' , YuGothic , 'Yu Gothic' , 'メイリオ' , Meiryo, sans-serif; color: #2B2B2B; word-break: keep-all; }
-body { overflow-y: scroll !important; }
+body { overflow: scroll !important; }
 a, a:link, a:visited, li.highlightlinks a  { text-decoration: none; color: #d92425; }
 a, a:focus, a:hover, li.highlightlinks a:hover {
 	color: #ff9729;
