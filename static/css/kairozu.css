@@ -324,7 +324,6 @@ table.gpt > tbody > tr > td.blankline { line-height: 5px; }
 .rlist > tbody td { padding: 5px; }
 .rlist > tbody td.resourceheader { padding: 5px 0; }
 .rlist > tbody tr { border-bottom: 1px solid #bcbcbc66; }
-.rlist > tbody tr:last-child { border-bottom: none; }
 
 .freq_arrow { width: 100%; }
 .freq_line {
