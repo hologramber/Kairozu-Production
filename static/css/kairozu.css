@@ -1,6 +1,6 @@
 body, p, ol, ul, td { font-family: 'Roboto', sans-serif; color: #2B2B2B; word-break: keep-all; }
 h1, h2, h3, h4, h5, h6 { font-family: 'Raleway', '游ゴシック' , '游ゴシック体' , YuGothic , 'Yu Gothic' , 'メイリオ' , Meiryo, sans-serif; color: #2B2B2B; word-break: keep-all; }
-/* body { overflow: scroll !important; } */
+body { overflow-y: scroll !important; }
 a, a:link, a:visited, li.highlightlinks a  { text-decoration: none; color: #d92425; }
 a, a:focus, a:hover, li.highlightlinks a:hover {
 	color: #ff9729;
@@ -841,15 +841,11 @@ div.social-links {
 .bugform { margin: 0 15px; }
 .bugform-inner { margin-bottom: 10px; }
 
-::-webkit-scrollbar { -webkit-appearance: none; }
-::-webkit-scrollbar:vertical { width: 11px; }
-::-webkit-scrollbar:horizontal { height: 11px; }
-::-webkit-scrollbar-thumb {
-    border-radius: 5px;
-    border: 2px solid #bcbcbc; }
-::-webkit-scrollbar-track { border-radius: 5px; }
-::-webkit-scrollbar-track-piece:start { background: transparent url('../img/1x1.png') repeat-y !important; }
-::-webkit-scrollbar-track-piece:end { background: transparent url('../img/1x1.png') repeat-y !important; }
+pre, .table-responsive::-webkit-scrollbar { -webkit-appearance: none; }
+pre, .table-responsive::-webkit-scrollbar:vertical { width: 10px; }
+pre, .table-responsive::-webkit-scrollbar:horizontal { height: 10px; }
+pre, .table-responsive::-webkit-scrollbar-thumb { border-radius: 5px; background: #bcbcbc; }
+pre, .table-responsive::-webkit-scrollbar-track { border-radius: 5px; }
 
 #show-message {
 	position: fixed;
