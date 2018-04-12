@@ -1,6 +1,6 @@
 body, p, ol, ul, td { font-family: 'Roboto', sans-serif; color: #2B2B2B; word-break: keep-all; }
 h1, h2, h3, h4, h5, h6 { font-family: 'Raleway', '游ゴシック' , '游ゴシック体' , YuGothic , 'Yu Gothic' , 'メイリオ' , Meiryo, sans-serif; color: #2B2B2B; word-break: keep-all; }
-body { overflow: scroll !important; }
+/* body { overflow: scroll !important; } */
 a, a:link, a:visited, li.highlightlinks a  { text-decoration: none; color: #d92425; }
 a, a:focus, a:hover, li.highlightlinks a:hover {
 	color: #ff9729;
@@ -846,9 +846,10 @@ div.social-links {
 ::-webkit-scrollbar:horizontal { height: 11px; }
 ::-webkit-scrollbar-thumb {
     border-radius: 5px;
-    border: 2px solid white; /* should match background, can't be transparent */
-    background-color: #bcbcbc; }
-::-webkit-scrollbar-track { background-color: #fff; border-radius: 5px; }
+    border: 2px solid #bcbcbc; }
+::-webkit-scrollbar-track { border-radius: 5px; }
+::-webkit-scrollbar-track-piece:start { background: transparent url('../img/1x1.png') repeat-y !important; }
+::-webkit-scrollbar-track-piece:end { background: transparent url('../img/1x1.png') repeat-y !important; }
 
 #show-message {
 	position: fixed;

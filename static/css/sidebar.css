@@ -26,9 +26,9 @@
 #sidebar-wrapper::-webkit-scrollbar:horizontal { height: 11px; }
 #sidebar-wrapper::-webkit-scrollbar-thumb {
     border-radius: 5px;
-    border: 2px solid white; /* should match background, can't be transparent */
+    border: 2px solid #bcbcbc; /* should match background, can't be transparent */
     background-color: #bcbcbc; }
-#sidebar-wrapper::-webkit-scrollbar-track { background-color: #fff; }
+#sidebar-wrapper::-webkit-scrollbar-track { border-radius: 0; background-color: #1c1c1c; }
 
 #page-content-wrapper {
     width: 100%;
