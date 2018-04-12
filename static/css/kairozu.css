@@ -841,11 +841,11 @@ div.social-links {
 .bugform { margin: 0 15px; }
 .bugform-inner { margin-bottom: 10px; }
 
-::-webkit-scrollbar { -webkit-appearance: none; }
-::-webkit-scrollbar:vertical { width: 10px; }
-::-webkit-scrollbar:horizontal { height: 10px; }
-::-webkit-scrollbar-thumb { border-radius: 5px; background: #bcbcbc; }
-::-webkit-scrollbar-track { border-radius: 5px; }
+pre::-webkit-scrollbar { -webkit-appearance: none; }
+pre::-webkit-scrollbar:vertical { width: 10px; }
+pre::-webkit-scrollbar:horizontal { height: 10px; }
+pre::-webkit-scrollbar-thumb { border-radius: 5px; background: #bcbcbc; }
+pre::-webkit-scrollbar-track { border-radius: 5px; }
 
 #show-message {
 	position: fixed;
