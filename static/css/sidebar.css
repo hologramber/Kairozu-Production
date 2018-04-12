@@ -21,6 +21,15 @@
     transition: all 0.5s ease; }
 #wrapper.toggled #sidebar-wrapper { width: 275px; }
 
+#sidebar-wrapper::-webkit-scrollbar { -webkit-appearance: none; }
+#sidebar-wrapper::-webkit-scrollbar:vertical { width: 11px; }
+#sidebar-wrapper::-webkit-scrollbar:horizontal { height: 11px; }
+#sidebar-wrapper::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    border: 2px solid white; /* should match background, can't be transparent */
+    background-color: #bcbcbc; }
+#sidebar-wrapper::-webkit-scrollbar-track { background-color: #fff; }
+
 #page-content-wrapper {
     width: 100%;
     position: absolute;
