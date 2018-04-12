@@ -847,6 +847,12 @@ pre::-webkit-scrollbar:horizontal { height: 10px; }
 pre::-webkit-scrollbar-thumb { border-radius: 5px; background: #bcbcbc; }
 pre::-webkit-scrollbar-track { border-radius: 5px; }
 
+.table-responsive::-webkit-scrollbar { -webkit-appearance: none; }
+.table-responsive::-webkit-scrollbar:vertical { width: 10px; }
+.table-responsive::-webkit-scrollbar:horizontal { height: 10px; }
+.table-responsive::-webkit-scrollbar-thumb { border-radius: 5px; background: #bcbcbc; }
+.table-responsive::-webkit-scrollbar-track { border-radius: 5px; }
+
 #show-message {
 	position: fixed;
 	margin-top: 30px;
