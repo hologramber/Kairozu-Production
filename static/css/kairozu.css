@@ -60,7 +60,7 @@ textarea:focus, input:focus { outline: none; }
     text-align: center;
     border-radius: 5px;
     margin: 0 auto; }
-.chartable > tbody tr td { padding: 1px 12px; }
+.chartable > tbody tr td { padding: 2px 10px; }
 .chartable > tbody tr { border-bottom: 1px solid #bcbcbc66; }
 .chartable > tbody tr:last-child { border-bottom: none; }
 

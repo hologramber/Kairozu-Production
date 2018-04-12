@@ -31,7 +31,9 @@ class DemoSentence(models.Model):
 class DemoVocab(models.Model):
     english = models.CharField(max_length=250, unique=True, blank=False)
     kana = models.CharField(max_length=250, blank=False)
+    kanji = models.CharField(max_length=250, blank=True)
     kana_clean = models.CharField(max_length=250, blank=True)
+    note = models.CharField(max_length=250, blank=True)
     kana_all_blank = models.CharField(max_length=250, blank=True)
     kana_alt_blank = models.CharField(max_length=250, blank=True)
 
