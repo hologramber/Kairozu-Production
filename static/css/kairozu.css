@@ -247,7 +247,8 @@ div.table-container { display: inline-block; }
 
 .table-responsive { 
 	border-radius: 5px; 
-	margin-bottom: 15px; }
+	margin-bottom: 15px;
+    border: 0; }
 
 .center-table {
     margin: 0 auto;
