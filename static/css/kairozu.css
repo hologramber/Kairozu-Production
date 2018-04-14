@@ -791,6 +791,10 @@ div.social-links {
     font-size: 14px;
     font-weight: bold; }
 
+.blog-image {
+    width: 70%;
+    margin: 0 auto; }
+
 .border-bottom-grey-dashed { width: 50vw; border-bottom: 2px dashed #8a8a8a; margin: 0 auto; }
 
 .white-words { color: #ffffff; }
