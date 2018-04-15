@@ -6,7 +6,7 @@ from django.utils.html import strip_tags
 class RssSiteNewsFeed(Feed):
     title = "Kairozu Blog & Site Updates"
     link = "/news/"
-    description = "回路図 uses programmed learning to build an understanding of Japanese grammar using English-to-Japanese sentence construction. Site updates, random thoughts, and adventures in natural language processing with Japanese and Python."
+    description = "Adventures in understanding Japanese with programmed learning & natural language processing."
 
     def items(self):
         return Post.objects.all()[:5]
