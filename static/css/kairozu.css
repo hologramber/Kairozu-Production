@@ -135,35 +135,14 @@ textarea:focus, input:focus { outline: none; }
 	padding: 10px;
 	text-align: center; }
 
-.arrow-box, .no-arrow-box {		/* sequential arrow down boxes on index page */
-	position: relative;
-	background: #fff;
-	border: 2px solid #d92425;
-	border-radius: 5px;
-	padding: 30px;
-	font-family: 'Raleway', sans-serif;
-	margin-bottom: 80px;
-	text-align: center; }
-.arrow-box:after, .arrow-box:before {
-	top: 100%;
-	left: 50%;
-	border: solid transparent;
-	content: " ";
-	height: 0;
-	width: 0;
-	position: absolute;
-	pointer-events: none; }
-.arrow-box:after {
-	border-color: rgba(255, 255, 255, 0);
-	border-top-color: #fff;
-	border-width: 30px;
-	margin-left: -30px; }
-.arrow-box:before {
-	border-color: rgba(217, 36, 37, 0);
-	border-top-color: #d92425;
-	border-width: 33px;
-	margin-left: -33px; }
-
+.shadowbox {
+    margin: 0 auto;
+    border: 0;
+    border-radius: 5px;
+    background: #ffffff;
+    color: #2b2b2b;
+    padding: 5px 20px 20px 20px;
+    box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.2); }
 
 .right-arrow-surround { margin-bottom: 25px; }
 .right-arrow-box {
