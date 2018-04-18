@@ -53,7 +53,7 @@ textarea:focus, input:focus { outline: none; }
 #isl4 { background-image: url('../img/island4.png'); }
 #isl5 { background-image: url('../img/island5.png'); }
 
-#kairozufront {	margin-top: 15px; max-height: 85vmin; margin-bottom: 35px; } /* circle image on the main page */				
+#kairozufront {	margin-bottom: 35px; } /* circle image on the main page */
 #welcomekoi { margin-top: 15px; max-height: 45vmin; margin-bottom: 35px; } /* circle image on the main page */
 
 .chartable {
