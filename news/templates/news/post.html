@@ -4,14 +4,11 @@
 
 {% block content %}
 
-<!--#page-content-wrapper-->
-<div id="page-content-wrapper">
-	<div class="container container-kairozu">
-        <h1><a href="{% url 'news:main' %}">News</a>&nbsp;&nbsp;<i class="fa fa-caret-right" aria-hidden="true"></i>&nbsp;&nbsp;{{ post.title }}</h1>
-        <p class="smaller">Posted on <time datetime="{{ post.published_date|date:"c" }}"> {{ post.published_date|date }}</time></p>
-        <p>{{ post.text|safe }}</p>
-    </div>  <!--/.container .container-kairozu-->
-</div>  <!--/#page-content-wrapper-->
-
+<div class="container container-kairozu">
+<div class="headsquish"></div>
+    <h1><a href="{% url 'news:main' %}">News</a>&nbsp;&nbsp;<i class="fa fa-caret-right" aria-hidden="true"></i>&nbsp;&nbsp;{{ post.title }}</h1>
+    <p class="smaller">Posted on <time datetime="{{ post.published_date|date:"c" }}"> {{ post.published_date|date }}</time></p>
+    <p>{{ post.text|safe }}</p>
+</div>  <!--/.container .container-kairozu-->
 
 {% endblock %}

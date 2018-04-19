@@ -8,112 +8,110 @@
 <div id='isl'></div>
 
 <div id="allwrap">
-    <!-- page-content-wrapper -->
-    <div id="page-content-wrapper">
-	    <div class="container container-kairozu">
-            <div class='row faded-white-div'>
-                <div class='col-lg-12'>
-                {% if user.profile.pendingchapter > user.profile.currentchapter %}
-                    <h1>You've completed chapter {{ user.profile.currentchapter }}, congrats!</h1>
-                    <h3>Meet these goals to unlock the next chapter.</h3>
-                {% else %}
-                    <h1>You're currently working on chapter {{ user.profile.currentchapter }}.</h1>
-                    <h3>After completing the material from this chapter, you'll need to meet these goals to unlock the next one.</h3>
-                {% endif %}
-                    <div class="s-15"></div>
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-6 col-md-3">
-                            {% if user.profile.vrcount > 75 %}
-                                <div class="spot-image"><i class='fa fa-square-o fa-3x red-words' aria-hidden='true'></i></div>
-                            {% else %}
-                                <div class="spot-image"><i class='fa fa-check-square-o fa-3x green-words' aria-hidden='true'></i></div>
-                            {% endif %}
-                            <div class="spot-text">Fewer than 75 <a href="{% url 'main:reviewvocab' %}">vocabulary reviews</a>.<div class="is-small italics">You have {{ user.profile.vrcount }}.</div></div>
-                        </div>
-                        <div class="col-xs-12 col-sm-6 col-md-3">
-                            {% if user.profile.ercount > 25 %}
-                                <div class="spot-image"><i class='fa fa-square-o fa-3x red-words' aria-hidden='true'></i></div>
-                            {% else %}
-                                <div class="spot-image"><i class='fa fa-check-square-o fa-3x green-words' aria-hidden='true'></i></div>
-                            {% endif %}
-                            <div class="spot-text">Fewer than 25 <a href="{% url 'main:reviewexpression' %}">expression reviews</a>.<div class="is-small italics">You have {{ user.profile.ercount }}.</div></div>
-                        </div>
-                        <div class="col-xs-12 col-sm-6 col-md-3">
-                            {% if user.profile.srcount > 100 %}
-                                <div class="spot-image"><i class='fa fa-square-o fa-3x red-words' aria-hidden='true'></i></div>
-                            {% else %}
-                                <div class="spot-image"><i class='fa fa-check-square-o fa-3x green-words' aria-hidden='true'></i></div>
-                            {% endif %}
-                            <div class="spot-text">Fewer than 100 <a href="{% url 'main:reviewsentence' %}">sentence reviews</a>.<div class="is-small italics">You have {{ user.profile.srcount }}.</div></div>
-                        </div>
-                        <div class="col-xs-12 col-sm-6 col-md-3">
-                            {% if vmastery < 80 %}
-                                <div class="spot-image"><i class='fa fa-square-o fa-3x red-words' aria-hidden='true'></i></div>
-                            {% else %}
-                                <div class="spot-image"><i class='fa fa-check-square-o fa-3x green-words' aria-hidden='true'></i></div>
-                            {% endif %}
-                            <div class="spot-text">Achieve a mastery level of 80%.<div class="is-small italics">Your current mastery level is <span class="bold">{{ vmastery|floatformat:0 }}%</span> for the material you've covered so far.</div></div>
-                        </div>
+    <div class="container container-kairozu">
+    <div class="headsquish"></div>
+        <div class='row faded-white-div'>
+            <div class='col-lg-12'>
+            {% if user.profile.pendingchapter > user.profile.currentchapter %}
+                <h1>You've completed chapter {{ user.profile.currentchapter }}, congrats!</h1>
+                <h3>Meet these goals to unlock the next chapter.</h3>
+            {% else %}
+                <h1>You're currently working on chapter {{ user.profile.currentchapter }}.</h1>
+                <h3>After completing the material from this chapter, you'll need to meet these goals to unlock the next one.</h3>
+            {% endif %}
+                <div class="s-15"></div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6 col-md-3">
+                        {% if user.profile.vrcount > 75 %}
+                            <div class="spot-image"><i class='fa fa-square-o fa-3x red-words' aria-hidden='true'></i></div>
+                        {% else %}
+                            <div class="spot-image"><i class='fa fa-check-square-o fa-3x green-words' aria-hidden='true'></i></div>
+                        {% endif %}
+                        <div class="spot-text">Fewer than 75 <a href="{% url 'main:reviewvocab' %}">vocabulary reviews</a>.<div class="is-small italics">You have {{ user.profile.vrcount }}.</div></div>
                     </div>
+                    <div class="col-xs-12 col-sm-6 col-md-3">
+                        {% if user.profile.ercount > 25 %}
+                            <div class="spot-image"><i class='fa fa-square-o fa-3x red-words' aria-hidden='true'></i></div>
+                        {% else %}
+                            <div class="spot-image"><i class='fa fa-check-square-o fa-3x green-words' aria-hidden='true'></i></div>
+                        {% endif %}
+                        <div class="spot-text">Fewer than 25 <a href="{% url 'main:reviewexpression' %}">expression reviews</a>.<div class="is-small italics">You have {{ user.profile.ercount }}.</div></div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-3">
+                        {% if user.profile.srcount > 100 %}
+                            <div class="spot-image"><i class='fa fa-square-o fa-3x red-words' aria-hidden='true'></i></div>
+                        {% else %}
+                            <div class="spot-image"><i class='fa fa-check-square-o fa-3x green-words' aria-hidden='true'></i></div>
+                        {% endif %}
+                        <div class="spot-text">Fewer than 100 <a href="{% url 'main:reviewsentence' %}">sentence reviews</a>.<div class="is-small italics">You have {{ user.profile.srcount }}.</div></div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-3">
+                        {% if vmastery < 80 %}
+                            <div class="spot-image"><i class='fa fa-square-o fa-3x red-words' aria-hidden='true'></i></div>
+                        {% else %}
+                            <div class="spot-image"><i class='fa fa-check-square-o fa-3x green-words' aria-hidden='true'></i></div>
+                        {% endif %}
+                        <div class="spot-text">Achieve a mastery level of 80%.<div class="is-small italics">Your current mastery level is <span class="bold">{{ vmastery|floatformat:0 }}%</span> for the material you've covered so far.</div></div>
+                    </div>
+                </div>
 
-                <div class="s-30"></div>
-                    <h4>Below is a sampling of upcoming reviews for the vocabulary words, expressions, and sentences you're in the process of mastering. Answering reviews correctly will increase the level from beginner, to intermediate, to advanced. Incorrect answers will reset your level back to beginner. Material that you've already mastered isn't shown on this list, but will continue to appear in your reviews.</h4>
-                <div class="s-20"></div>
-                            <div class="table-responsive">
-                                <table class="vocablist">
-                                    <thead>
+            <div class="s-30"></div>
+                <h4>Below is a sampling of upcoming reviews for the vocabulary words, expressions, and sentences you're in the process of mastering. Answering reviews correctly will increase the level from beginner, to intermediate, to advanced. Incorrect answers will reset your level back to beginner. Material that you've already mastered isn't shown on this list, but will continue to appear in your reviews.</h4>
+            <div class="s-20"></div>
+                        <div class="table-responsive">
+                            <table class="vocablist">
+                                <thead>
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Chapter</th>
+                                        <th>English</th>
+                                        <th>Available for Review</th>
+                                        <th>Level</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for obj in object_list %}
                                         <tr>
-                                            <th>Type</th>
-                                            <th>Chapter</th>
-                                            <th>English</th>
-                                            <th>Available for Review</th>
-                                            <th>Level</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {% for obj in object_list %}
-                                            <tr>
-                                            {% if obj.vocab %}
-                                                <td>Vocab</td>
-                                                <td>{{ obj.vocab.chapter.id }}</td>
-                                                <td>{{ obj.vocab.english }}</td>
-                                            {% elif obj.sentence %}
-                                                <td>Sentence</td>
-                                                <td>{{ obj.sentence.lesson.chapter.id }}</td>
-                                                <td>{{ obj.sentence.english }}</td>
-                                            {% elif obj.express %}
-                                                <td>Expression</td>
-                                                <td>{{ obj.express.chapter.id }}</td>
-                                                <td>{{ obj.express.english }}</td>
+                                        {% if obj.vocab %}
+                                            <td>Vocab</td>
+                                            <td>{{ obj.vocab.chapter.id }}</td>
+                                            <td>{{ obj.vocab.english }}</td>
+                                        {% elif obj.sentence %}
+                                            <td>Sentence</td>
+                                            <td>{{ obj.sentence.lesson.chapter.id }}</td>
+                                            <td>{{ obj.sentence.english }}</td>
+                                        {% elif obj.express %}
+                                            <td>Expression</td>
+                                            <td>{{ obj.express.chapter.id }}</td>
+                                            <td>{{ obj.express.english }}</td>
+                                        {% else %}
+                                            <td>?</td>
+                                            <td>?</td>
+                                            <td>unknown</td>
+                                        {% endif %}
+                                            {% if 'ago' in obj.next_review|naturaltime %}
+                                                <td>Available now!</td>
                                             {% else %}
-                                                <td>?</td>
-                                                <td>?</td>
-                                                <td>unknown</td>
+                                                <td>{{ obj.next_review|naturaltime }}</td>
                                             {% endif %}
-                                                {% if 'ago' in obj.next_review|naturaltime %}
-                                                    <td>Available now!</td>
-                                                {% else %}
-                                                    <td>{{ obj.next_review|naturaltime }}</td>
-                                                {% endif %}
-                                                {% if obj.score == 0 %}
-                                                    <td>beginner</td>
-                                                {% elif obj.score == 1 %}
-                                                    <td>intermediate</td>
-                                                {% elif obj.score == 2 %}
-                                                    <td>advanced</td>
-                                                {% else %}
-                                                    <td></td>
-                                                {% endif %}
-                                            </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
-                            </div>
-                </div>  <!-- /.col-lg-12 -->
-            </div>  <!-- /.row -->
-        <div class="s-100"></div>
-        </div>  <!-- /.container-fluid -->
-    </div>  <!-- /#page-content-wrapper -->
+                                            {% if obj.score == 0 %}
+                                                <td>beginner</td>
+                                            {% elif obj.score == 1 %}
+                                                <td>intermediate</td>
+                                            {% elif obj.score == 2 %}
+                                                <td>advanced</td>
+                                            {% else %}
+                                                <td></td>
+                                            {% endif %}
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+            </div>  <!-- /.col-lg-12 -->
+        </div>  <!-- /.row -->
+    <div class="s-100"></div>
+    </div>  <!-- /.container-fluid -->
 </div>
 
 {% endblock %}

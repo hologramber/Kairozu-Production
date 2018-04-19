@@ -4,30 +4,27 @@
 
 {% block content %}
 
-<!--#page-content-wrapper-->
-<div id="page-content-wrapper">
-	<div class="container container-kairozu">
-        <h1>Contact</h1>
-        <p>If you have a question, please check the <a href="{% url 'news:faq' %}">FAQ</a> first to see if I've answered it there.</p>
+<div class="container container-kairozu">
+<div class="headsquish"></div>
+    <h1>Contact</h1>
+    <p>If you have a question, please check the <a href="{% url 'news:faq' %}">FAQ</a> first to see if I've answered it there.</p>
 
-        <p>If you run into a technical error, I'd love to know! <span class="bold">Please include your browser & OS version</span>, and what you were doing when the error occurred.</p>
+    <p>If you run into a technical error, I'd love to know! <span class="bold">Please include your browser & OS version</span>, and what you were doing when the error occurred.</p>
 
-        <p>Before you send me a grammar-related comment/fix/request, don't forget that many of the sentences are primarily built to assist with practicing specific grammar constructs. They might sound awkward, or you might never use them in a normal conversation, but if they're grammatically correct they're okay. That said, I'm happy to receive grammar fixes because I'll undoubtedly learn something at the same time -- if you wouldn't mind explaining why you believe something is wrong, I'd appreciate it. Thanks in advance!</p>
+    <p>Before you send me a grammar-related comment/fix/request, don't forget that many of the sentences are primarily built to assist with practicing specific grammar constructs. They might sound awkward, or you might never use them in a normal conversation, but if they're grammatically correct they're okay. That said, I'm happy to receive grammar fixes because I'll undoubtedly learn something at the same time -- if you wouldn't mind explaining why you believe something is wrong, I'd appreciate it. Thanks in advance!</p>
 
-        {% if user.is_authenticated %}
-            <p>Bug reports of all varieties can be submitted from the Kairozu dropdown menu on the navigation bar above. Most sections of the site which accept input (sentences, quizzes, etc), will include an "error?" link when an incorrect answer is attempted -- these can also be used to submit reports. To keep the site issues database from going up in flames, reports are limited to 15 per person/per day (I hope I haven't broken things _that_ badly).</p>
-            <p>If you're angry that I accidentally taught you to say that you like eating cats for breakfast, well, I tried to warn you. Suck it up and register for a real Japanese class from native speakers at your local community college or university. That is the best way to learn.</p>
-        {% endif %}
-        <p>Other comments/questions/so forth are welcome. :) The best ways to contact me are via e-mail: kairozu@kairozu.com, or on Twitter: <a href="http://twitter.com/kairozukigou">@kairozukigou</a> (DMs are okay too).</p>
-        <br />
-        <h2>Thanks for using Kairozu!</h2>
-        <br /><br /><br />
-        <div class="s-500"></div>
-        <div class="s-300 visible-xs"></div>
+    {% if user.is_authenticated %}
+        <p>Bug reports of all varieties can be submitted from the Kairozu dropdown menu on the navigation bar above. Most sections of the site which accept input (sentences, quizzes, etc), will include an "error?" link when an incorrect answer is attempted -- these can also be used to submit reports. To keep the site issues database from going up in flames, reports are limited to 15 per person/per day (I hope I haven't broken things _that_ badly).</p>
+        <p>If you're angry that I accidentally taught you to say that you like eating cats for breakfast, well, I tried to warn you. Suck it up and register for a real Japanese class from native speakers at your local community college or university. That is the best way to learn.</p>
+    {% endif %}
+    <p>Other comments/questions/so forth are welcome. :) The best ways to contact me are via e-mail: kairozu@kairozu.com, or on Twitter: <a href="http://twitter.com/kairozukigou">@kairozukigou</a> (DMs are okay too).</p>
+    <br />
+    <h2>Thanks for using Kairozu!</h2>
+    <br /><br /><br />
+    <div class="s-500"></div>
+    <div class="s-300 visible-xs"></div>
 
-    </div>  <!--/.container .kairozu-container-->  
-    {% include 'footer.html' %}
-
-</div>  <!--/#page-content-wrapper-->
+</div>  <!--/.container .kairozu-container-->
+{% include 'footer.html' %}
 
 {% endblock %}

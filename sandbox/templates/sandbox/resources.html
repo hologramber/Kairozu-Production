@@ -4,255 +4,252 @@
 
 {% block content %}
 
-<!--#page-content-wrapper-->
-<div id="page-content-wrapper">
-	<div class="container container-kairozu">
+<div class="container container-kairozu">
+<div class="headsquish"></div>
+        <div class="row">
+            <div class="col-lg-12">
 
-            <div class="row">
-                <div class="col-lg-12">
+                <h1>Resources for Learning Japanese</h1>
+                <p>These are resources (websites, apps, books) for learning and practicing Japanese. I use (or have used) and love most of the items on this list, but a few (e.g. Duolingo) are included simply because of how popular they are.</p>
+                <div class="table-responsive">
+                    <table class="rlist">
+                        <tbody>
 
-					<h1>Resources for Learning Japanese</h1>
-                    <p>These are resources (websites, apps, books) for learning and practicing Japanese. I use (or have used) and love most of the items on this list, but a few (e.g. Duolingo) are included simply because of how popular they are.</p>
-                    <div class="table-responsive">
-                        <table class="rlist">
-                            <tbody>
+                            <tr style="border-bottom: none;"><td class="resourceheader" colspan="3"><h2>General</h2></td></tr>
+                            {% for resource in general %}
+                                <tr>
+                                    <td width="18%"><a href="{{ resource.url_one }}">{{ resource.name }}</a></td>
+                                    <td class="smaller raleway">{{ resource.description }}</td>
+                                    <td width="10%" class="text-align-right">
+                                        {% if resource.medium_one != 'blank' %}
+                                            <a href="{{ resource.url_one }}"><i class="fa fa-fw fa-{{ resource.medium_one }}" aria-hidden="true"></i></a>
+                                        {% endif %}
+                                        {% if resource.medium_two != "blank" %}
+                                            <a href="{{ resource.url_two }}"><i class="fa fa-fw fa-{{ resource.medium_two }}" aria-hidden="true"></i></a>
+                                        {% endif %}
+                                        {% if resource.medium_three != 'blank' %}
+                                            <a href="{{ resource.url_three }}"><i class="fa fa-fw fa-{{ resource.medium_three }}" aria-hidden="true"></i></a>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
 
-                                <tr style="border-bottom: none;"><td class="resourceheader" colspan="3"><h2>General</h2></td></tr>
-                                {% for resource in general %}
-                                    <tr>
-                                        <td width="18%"><a href="{{ resource.url_one }}">{{ resource.name }}</a></td>
-                                        <td class="smaller raleway">{{ resource.description }}</td>
-                                        <td width="10%" class="text-align-right">
-                                            {% if resource.medium_one != 'blank' %}
-                                                <a href="{{ resource.url_one }}"><i class="fa fa-fw fa-{{ resource.medium_one }}" aria-hidden="true"></i></a>
-                                            {% endif %}
-                                            {% if resource.medium_two != "blank" %}
-                                                <a href="{{ resource.url_two }}"><i class="fa fa-fw fa-{{ resource.medium_two }}" aria-hidden="true"></i></a>
-                                            {% endif %}
-                                            {% if resource.medium_three != 'blank' %}
-                                                <a href="{{ resource.url_three }}"><i class="fa fa-fw fa-{{ resource.medium_three }}" aria-hidden="true"></i></a>
-                                            {% endif %}
-                                        </td>
-                                    </tr>
-                                {% endfor %}
+                            <tr style="border-bottom: none;"><td class="resourceheader" colspan="3"><br /><h2>Dictionaries</h2></td></tr>
+                            {% for resource in dictionary %}
+                                <tr>
+                                    <td width="18%"><a href="{{ resource.url_one }}">{{ resource.name }}</a></td>
+                                    <td class="smaller raleway">{{ resource.description }}</td>
+                                    <td width="10%" class="text-align-right">
+                                        {% if resource.medium_one != "blank" %}
+                                            <a href="{{ resource.url_one }}"><i class="fa fa-fw fa-{{ resource.medium_one }}" aria-hidden="true"></i></a>
+                                        {% endif %}
+                                        {% if resource.medium_two != "blank" %}
+                                            <a href="{{ resource.url_two }}"><i class="fa fa-fw fa-{{ resource.medium_two }}" aria-hidden="true"></i></a>
+                                        {% endif %}
+                                        {% if resource.medium_three != "blank" %}
+                                            <a href="{{ resource.url_three }}"><i class="fa fa-fw fa-{{ resource.medium_three }}" aria-hidden="true"></i></a>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
 
-                                <tr style="border-bottom: none;"><td class="resourceheader" colspan="3"><br /><h2>Dictionaries</h2></td></tr>
-                                {% for resource in dictionary %}
-                                    <tr>
-                                        <td width="18%"><a href="{{ resource.url_one }}">{{ resource.name }}</a></td>
-                                        <td class="smaller raleway">{{ resource.description }}</td>
-                                        <td width="10%" class="text-align-right">
-                                            {% if resource.medium_one != "blank" %}
-                                                <a href="{{ resource.url_one }}"><i class="fa fa-fw fa-{{ resource.medium_one }}" aria-hidden="true"></i></a>
-                                            {% endif %}
-                                            {% if resource.medium_two != "blank" %}
-                                                <a href="{{ resource.url_two }}"><i class="fa fa-fw fa-{{ resource.medium_two }}" aria-hidden="true"></i></a>
-                                            {% endif %}
-                                            {% if resource.medium_three != "blank" %}
-                                                <a href="{{ resource.url_three }}"><i class="fa fa-fw fa-{{ resource.medium_three }}" aria-hidden="true"></i></a>
-                                            {% endif %}
-                                        </td>
-                                    </tr>
-                                {% endfor %}
-
-                                <tr style="border-bottom: none;"><td class="resourceheader" colspan="3"><br /><h2>Utilities</h2></td></tr>
-                                {% for resource in edutility %}
-                                    <tr>
-                                        <td width="18%"><a href="{{ resource.url_one }}">{{ resource.name }}</a></td>
-                                        <td class="smaller raleway">{{ resource.description }}</td>
-                                        <td width="10%" class="text-align-right">
-                                            {% if resource.medium_one != "blank" %}
-                                                <a href="{{ resource.url_one }}"><i class="fa fa-fw fa-{{ resource.medium_one }}" aria-hidden="true"></i></a>
-                                            {% endif %}
-                                            {% if resource.medium_two != "blank" %}
-                                                <a href="{{ resource.url_two }}"><i class="fa fa-fw fa-{{ resource.medium_two }}" aria-hidden="true"></i></a>
-                                            {% endif %}
-                                            {% if resource.medium_three != "blank" %}
-                                                <a href="{{ resource.url_three }}"><i class="fa fa-fw fa-{{ resource.medium_three }}" aria-hidden="true"></i></a>
-                                            {% endif %}
-                                        </td>
-                                    </tr>
-                                {% endfor %}
+                            <tr style="border-bottom: none;"><td class="resourceheader" colspan="3"><br /><h2>Utilities</h2></td></tr>
+                            {% for resource in edutility %}
+                                <tr>
+                                    <td width="18%"><a href="{{ resource.url_one }}">{{ resource.name }}</a></td>
+                                    <td class="smaller raleway">{{ resource.description }}</td>
+                                    <td width="10%" class="text-align-right">
+                                        {% if resource.medium_one != "blank" %}
+                                            <a href="{{ resource.url_one }}"><i class="fa fa-fw fa-{{ resource.medium_one }}" aria-hidden="true"></i></a>
+                                        {% endif %}
+                                        {% if resource.medium_two != "blank" %}
+                                            <a href="{{ resource.url_two }}"><i class="fa fa-fw fa-{{ resource.medium_two }}" aria-hidden="true"></i></a>
+                                        {% endif %}
+                                        {% if resource.medium_three != "blank" %}
+                                            <a href="{{ resource.url_three }}"><i class="fa fa-fw fa-{{ resource.medium_three }}" aria-hidden="true"></i></a>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
 
 
-                                <tr style="border-bottom: none;"><td class="resourceheader" colspan="3"><br /><h2>Kanji</h2></td></tr>
-                                {% for resource in kanji %}
-                                    <tr>
-                                        <td width="18%"><a href="{{ resource.url_one }}">{{ resource.name }}</a></td>
-                                        <td class="smaller raleway">{{ resource.description }}</td>
-                                        <td width="10%" class="text-align-right">
-                                            {% if resource.medium_one != "blank" %}
-                                                <a href="{{ resource.url_one }}"><i class="fa fa-fw fa-{{ resource.medium_one }}" aria-hidden="true"></i></a>
-                                            {% endif %}
-                                            {% if resource.medium_two != "blank" %}
-                                                <a href="{{ resource.url_two }}"><i class="fa fa-fw fa-{{ resource.medium_two }}" aria-hidden="true"></i></a>
-                                            {% endif %}
-                                            {% if resource.medium_three != "blank" %}
-                                                <a href="{{ resource.url_three }}"><i class="fa fa-fw fa-{{ resource.medium_three }}" aria-hidden="true"></i></a>
-                                            {% endif %}
-                                        </td>
-                                    </tr>
-                                {% endfor %}
+                            <tr style="border-bottom: none;"><td class="resourceheader" colspan="3"><br /><h2>Kanji</h2></td></tr>
+                            {% for resource in kanji %}
+                                <tr>
+                                    <td width="18%"><a href="{{ resource.url_one }}">{{ resource.name }}</a></td>
+                                    <td class="smaller raleway">{{ resource.description }}</td>
+                                    <td width="10%" class="text-align-right">
+                                        {% if resource.medium_one != "blank" %}
+                                            <a href="{{ resource.url_one }}"><i class="fa fa-fw fa-{{ resource.medium_one }}" aria-hidden="true"></i></a>
+                                        {% endif %}
+                                        {% if resource.medium_two != "blank" %}
+                                            <a href="{{ resource.url_two }}"><i class="fa fa-fw fa-{{ resource.medium_two }}" aria-hidden="true"></i></a>
+                                        {% endif %}
+                                        {% if resource.medium_three != "blank" %}
+                                            <a href="{{ resource.url_three }}"><i class="fa fa-fw fa-{{ resource.medium_three }}" aria-hidden="true"></i></a>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
 
-                                <tr style="border-bottom: none;"><td class="resourceheader" colspan="3"><br /><h2>Hiragana & Katakana</h2></td></tr>
-                                {% for resource in kana %}
-                                    <tr>
-                                        <td width="18%"><a href="{{ resource.url_one }}">{{ resource.name }}</a></td>
-                                        <td class="smaller raleway">{{ resource.description }}</td>
-                                        <td width="10%" class="text-align-right">
-                                            {% if resource.medium_one != "blank" %}
-                                                <a href="{{ resource.url_one }}"><i class="fa fa-fw fa-{{ resource.medium_one }}" aria-hidden="true"></i></a>
-                                            {% endif %}
-                                            {% if resource.medium_two != "blank" %}
-                                                <a href="{{ resource.url_two }}"><i class="fa fa-fw fa-{{ resource.medium_two }}" aria-hidden="true"></i></a>
-                                            {% endif %}
-                                            {% if resource.medium_three != "blank" %}
-                                                <a href="{{ resource.url_three }}"><i class="fa fa-fw fa-{{ resource.medium_three }}" aria-hidden="true"></i></a>
-                                            {% endif %}
-                                        </td>
-                                    </tr>
-                                {% endfor %}
+                            <tr style="border-bottom: none;"><td class="resourceheader" colspan="3"><br /><h2>Hiragana & Katakana</h2></td></tr>
+                            {% for resource in kana %}
+                                <tr>
+                                    <td width="18%"><a href="{{ resource.url_one }}">{{ resource.name }}</a></td>
+                                    <td class="smaller raleway">{{ resource.description }}</td>
+                                    <td width="10%" class="text-align-right">
+                                        {% if resource.medium_one != "blank" %}
+                                            <a href="{{ resource.url_one }}"><i class="fa fa-fw fa-{{ resource.medium_one }}" aria-hidden="true"></i></a>
+                                        {% endif %}
+                                        {% if resource.medium_two != "blank" %}
+                                            <a href="{{ resource.url_two }}"><i class="fa fa-fw fa-{{ resource.medium_two }}" aria-hidden="true"></i></a>
+                                        {% endif %}
+                                        {% if resource.medium_three != "blank" %}
+                                            <a href="{{ resource.url_three }}"><i class="fa fa-fw fa-{{ resource.medium_three }}" aria-hidden="true"></i></a>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
 
-                                <tr style="border-bottom: none;"><td class="resourceheader" colspan="3"><br /><h2>Educational Reading</h2></td></tr>
-                                {% for resource in edureading %}
-                                    <tr>
-                                        <td width="18%"><a href="{{ resource.url_one }}">{{ resource.name }}</a></td>
-                                        <td class="smaller raleway">{{ resource.description }}</td>
-                                        <td width="10%" class="text-align-right">
-                                            {% if resource.medium_one != "blank" %}
-                                                <a href="{{ resource.url_one }}"><i class="fa fa-fw fa-{{ resource.medium_one }}" aria-hidden="true"></i></a>
-                                            {% endif %}
-                                            {% if resource.medium_two != "blank" %}
-                                                <a href="{{ resource.url_two }}"><i class="fa fa-fw fa-{{ resource.medium_two }}" aria-hidden="true"></i></a>
-                                            {% endif %}
-                                            {% if resource.medium_three != "blank" %}
-                                                <a href="{{ resource.url_three }}"><i class="fa fa-fw fa-{{ resource.medium_three }}" aria-hidden="true"></i></a>
-                                            {% endif %}
-                                        </td>
-                                    </tr>
-                                {% endfor %}
+                            <tr style="border-bottom: none;"><td class="resourceheader" colspan="3"><br /><h2>Educational Reading</h2></td></tr>
+                            {% for resource in edureading %}
+                                <tr>
+                                    <td width="18%"><a href="{{ resource.url_one }}">{{ resource.name }}</a></td>
+                                    <td class="smaller raleway">{{ resource.description }}</td>
+                                    <td width="10%" class="text-align-right">
+                                        {% if resource.medium_one != "blank" %}
+                                            <a href="{{ resource.url_one }}"><i class="fa fa-fw fa-{{ resource.medium_one }}" aria-hidden="true"></i></a>
+                                        {% endif %}
+                                        {% if resource.medium_two != "blank" %}
+                                            <a href="{{ resource.url_two }}"><i class="fa fa-fw fa-{{ resource.medium_two }}" aria-hidden="true"></i></a>
+                                        {% endif %}
+                                        {% if resource.medium_three != "blank" %}
+                                            <a href="{{ resource.url_three }}"><i class="fa fa-fw fa-{{ resource.medium_three }}" aria-hidden="true"></i></a>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
 
-                                <tr style="border-bottom: none;"><td class="resourceheader" colspan="3"><br /><h2>References</h2></td></tr>
-                                {% for resource in reference %}
-                                    <tr>
-                                        <td width="18%"><a href="{{ resource.url_one }}">{{ resource.name }}</a></td>
-                                        <td class="smaller raleway">{{ resource.description }}</td>
-                                        <td width="10%" class="text-align-right">
-                                            {% if resource.medium_one != "blank" %}
-                                                <a href="{{ resource.url_one }}"><i class="fa fa-fw fa-{{ resource.medium_one }}" aria-hidden="true"></i></a>
-                                            {% endif %}
-                                            {% if resource.medium_two != "blank" %}
-                                                <a href="{{ resource.url_two }}"><i class="fa fa-fw fa-{{ resource.medium_two }}" aria-hidden="true"></i></a>
-                                            {% endif %}
-                                            {% if resource.medium_three != "blank" %}
-                                                <a href="{{ resource.url_three }}"><i class="fa fa-fw fa-{{ resource.medium_three }}" aria-hidden="true"></i></a>
-                                            {% endif %}
-                                        </td>
-                                    </tr>
-                                {% endfor %}
+                            <tr style="border-bottom: none;"><td class="resourceheader" colspan="3"><br /><h2>References</h2></td></tr>
+                            {% for resource in reference %}
+                                <tr>
+                                    <td width="18%"><a href="{{ resource.url_one }}">{{ resource.name }}</a></td>
+                                    <td class="smaller raleway">{{ resource.description }}</td>
+                                    <td width="10%" class="text-align-right">
+                                        {% if resource.medium_one != "blank" %}
+                                            <a href="{{ resource.url_one }}"><i class="fa fa-fw fa-{{ resource.medium_one }}" aria-hidden="true"></i></a>
+                                        {% endif %}
+                                        {% if resource.medium_two != "blank" %}
+                                            <a href="{{ resource.url_two }}"><i class="fa fa-fw fa-{{ resource.medium_two }}" aria-hidden="true"></i></a>
+                                        {% endif %}
+                                        {% if resource.medium_three != "blank" %}
+                                            <a href="{{ resource.url_three }}"><i class="fa fa-fw fa-{{ resource.medium_three }}" aria-hidden="true"></i></a>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
 
-                                <tr style="border-bottom: none;"><td class="resourceheader" colspan="3"><br /><h2>Language Exchange & Practice</h2></td></tr>
-                                {% for resource in exchange %}
-                                    <tr>
-                                        <td width="18%"><a href="{{ resource.url_one }}">{{ resource.name }}</a></td>
-                                        <td class="smaller raleway">{{ resource.description }}</td>
-                                        <td width="10%" class="text-align-right">
-                                            {% if resource.medium_one != "blank" %}
-                                                <a href="{{ resource.url_one }}"><i class="fa fa-fw fa-{{ resource.medium_one }}" aria-hidden="true"></i></a>
-                                            {% endif %}
-                                            {% if resource.medium_two != "blank" %}
-                                                <a href="{{ resource.url_two }}"><i class="fa fa-fw fa-{{ resource.medium_two }}" aria-hidden="true"></i></a>
-                                            {% endif %}
-                                            {% if resource.medium_three != "blank" %}
-                                                <a href="{{ resource.url_three }}"><i class="fa fa-fw fa-{{ resource.medium_three }}" aria-hidden="true"></i></a>
-                                            {% endif %}
-                                        </td>
-                                    </tr>
-                                {% endfor %}
+                            <tr style="border-bottom: none;"><td class="resourceheader" colspan="3"><br /><h2>Language Exchange & Practice</h2></td></tr>
+                            {% for resource in exchange %}
+                                <tr>
+                                    <td width="18%"><a href="{{ resource.url_one }}">{{ resource.name }}</a></td>
+                                    <td class="smaller raleway">{{ resource.description }}</td>
+                                    <td width="10%" class="text-align-right">
+                                        {% if resource.medium_one != "blank" %}
+                                            <a href="{{ resource.url_one }}"><i class="fa fa-fw fa-{{ resource.medium_one }}" aria-hidden="true"></i></a>
+                                        {% endif %}
+                                        {% if resource.medium_two != "blank" %}
+                                            <a href="{{ resource.url_two }}"><i class="fa fa-fw fa-{{ resource.medium_two }}" aria-hidden="true"></i></a>
+                                        {% endif %}
+                                        {% if resource.medium_three != "blank" %}
+                                            <a href="{{ resource.url_three }}"><i class="fa fa-fw fa-{{ resource.medium_three }}" aria-hidden="true"></i></a>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
 
-                                <tr style="border-bottom: none;"><td class="resourceheader" colspan="3"><br /><h2>Audio & Video</h2></td></tr>
-                                {% for resource in video %}
-                                    <tr>
-                                        <td width="18%"><a href="{{ resource.url_one }}">{{ resource.name }}</a></td>
-                                        <td class="smaller raleway">{{ resource.description }}</td>
-                                        <td width="10%" class="text-align-right">
-                                            {% if resource.medium_one != "blank" %}
-                                                <a href="{{ resource.url_one }}"><i class="fa fa-fw fa-{{ resource.medium_one }}" aria-hidden="true"></i></a>
-                                            {% endif %}
-                                            {% if resource.medium_two != "blank" %}
-                                                <a href="{{ resource.url_two }}"><i class="fa fa-fw fa-{{ resource.medium_two }}" aria-hidden="true"></i></a>
-                                            {% endif %}
-                                            {% if resource.medium_three != "blank" %}
-                                                <a href="{{ resource.url_three }}"><i class="fa fa-fw fa-{{ resource.medium_three }}" aria-hidden="true"></i></a>
-                                            {% endif %}
-                                        </td>
-                                    </tr>
-                                {% endfor %}
+                            <tr style="border-bottom: none;"><td class="resourceheader" colspan="3"><br /><h2>Audio & Video</h2></td></tr>
+                            {% for resource in video %}
+                                <tr>
+                                    <td width="18%"><a href="{{ resource.url_one }}">{{ resource.name }}</a></td>
+                                    <td class="smaller raleway">{{ resource.description }}</td>
+                                    <td width="10%" class="text-align-right">
+                                        {% if resource.medium_one != "blank" %}
+                                            <a href="{{ resource.url_one }}"><i class="fa fa-fw fa-{{ resource.medium_one }}" aria-hidden="true"></i></a>
+                                        {% endif %}
+                                        {% if resource.medium_two != "blank" %}
+                                            <a href="{{ resource.url_two }}"><i class="fa fa-fw fa-{{ resource.medium_two }}" aria-hidden="true"></i></a>
+                                        {% endif %}
+                                        {% if resource.medium_three != "blank" %}
+                                            <a href="{{ resource.url_three }}"><i class="fa fa-fw fa-{{ resource.medium_three }}" aria-hidden="true"></i></a>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
 
-                                <tr style="border-bottom: none;"><td class="resourceheader" colspan="3"><br /><h2>Japan</h2></td></tr>
-                                {% for resource in japan %}
-                                    <tr>
-                                        <td width="18%"><a href="{{ resource.url_one }}">{{ resource.name }}</a></td>
-                                        <td class="smaller raleway">{{ resource.description }}</td>
-                                        <td width="10%" class="text-align-right">
-                                            {% if resource.medium_one != "blank" %}
-                                                <a href="{{ resource.url_one }}"><i class="fa fa-fw fa-{{ resource.medium_one }}" aria-hidden="true"></i></a>
-                                            {% endif %}
-                                            {% if resource.medium_two != "blank" %}
-                                                <a href="{{ resource.url_two }}"><i class="fa fa-fw fa-{{ resource.medium_two }}" aria-hidden="true"></i></a>
-                                            {% endif %}
-                                            {% if resource.medium_three != "blank" %}
-                                                <a href="{{ resource.url_three }}"><i class="fa fa-fw fa-{{ resource.medium_three }}" aria-hidden="true"></i></a>
-                                            {% endif %}
-                                        </td>
-                                    </tr>
-                                {% endfor %}
+                            <tr style="border-bottom: none;"><td class="resourceheader" colspan="3"><br /><h2>Japan</h2></td></tr>
+                            {% for resource in japan %}
+                                <tr>
+                                    <td width="18%"><a href="{{ resource.url_one }}">{{ resource.name }}</a></td>
+                                    <td class="smaller raleway">{{ resource.description }}</td>
+                                    <td width="10%" class="text-align-right">
+                                        {% if resource.medium_one != "blank" %}
+                                            <a href="{{ resource.url_one }}"><i class="fa fa-fw fa-{{ resource.medium_one }}" aria-hidden="true"></i></a>
+                                        {% endif %}
+                                        {% if resource.medium_two != "blank" %}
+                                            <a href="{{ resource.url_two }}"><i class="fa fa-fw fa-{{ resource.medium_two }}" aria-hidden="true"></i></a>
+                                        {% endif %}
+                                        {% if resource.medium_three != "blank" %}
+                                            <a href="{{ resource.url_three }}"><i class="fa fa-fw fa-{{ resource.medium_three }}" aria-hidden="true"></i></a>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
 
-                                <tr style="border-bottom: none;"><td class="resourceheader" colspan="3"><br /><h2>Other</h2></td></tr>
-                                {% for resource in other %}
-                                    <tr>
-                                        <td width="18%"><a href="{{ resource.url_one }}">{{ resource.name }}</a></td>
-                                        <td class="smaller raleway">{{ resource.description }}</td>
-                                        <td width="10%" class="text-align-right">
-                                            {% if resource.medium_one != "blank" %}
-                                                <a href="{{ resource.url_one }}"><i class="fa fa-fw fa-{{ resource.medium_one }}" aria-hidden="true"></i></a>
-                                            {% endif %}
-                                            {% if resource.medium_two != "blank" %}
-                                                <a href="{{ resource.url_two }}"><i class="fa fa-fw fa-{{ resource.medium_two }}" aria-hidden="true"></i></a>
-                                            {% endif %}
-                                            {% if resource.medium_three != "blank" %}
-                                                <a href="{{ resource.url_three }}"><i class="fa fa-fw fa-{{ resource.medium_three }}" aria-hidden="true"></i></a>
-                                            {% endif %}
-                                        </td>
-                                    </tr>
-                                {% endfor %}
+                            <tr style="border-bottom: none;"><td class="resourceheader" colspan="3"><br /><h2>Other</h2></td></tr>
+                            {% for resource in other %}
+                                <tr>
+                                    <td width="18%"><a href="{{ resource.url_one }}">{{ resource.name }}</a></td>
+                                    <td class="smaller raleway">{{ resource.description }}</td>
+                                    <td width="10%" class="text-align-right">
+                                        {% if resource.medium_one != "blank" %}
+                                            <a href="{{ resource.url_one }}"><i class="fa fa-fw fa-{{ resource.medium_one }}" aria-hidden="true"></i></a>
+                                        {% endif %}
+                                        {% if resource.medium_two != "blank" %}
+                                            <a href="{{ resource.url_two }}"><i class="fa fa-fw fa-{{ resource.medium_two }}" aria-hidden="true"></i></a>
+                                        {% endif %}
+                                        {% if resource.medium_three != "blank" %}
+                                            <a href="{{ resource.url_three }}"><i class="fa fa-fw fa-{{ resource.medium_three }}" aria-hidden="true"></i></a>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
 
-                                <tr style="border-bottom: none;"><td class="resourceheader" colspan="3"><br /><h2>Technical</h2></td></tr>
-                                {% for resource in technical %}
-                                    <tr>
-                                        <td width="18%"><a href="{{ resource.url_one }}">{{ resource.name }}</a></td>
-                                        <td class="smaller raleway">{{ resource.description }}</td>
-                                        <td width="10%" class="text-align-right">
-                                            {% if resource.medium_one != "blank" %}
-                                                <a href="{{ resource.url_one }}"><i class="fa fa-fw fa-{{ resource.medium_one }}" aria-hidden="true"></i></a>
-                                            {% endif %}
-                                            {% if resource.medium_two != "blank" %}
-                                                <a href="{{ resource.url_two }}"><i class="fa fa-fw fa-{{ resource.medium_two }}" aria-hidden="true"></i></a>
-                                            {% endif %}
-                                            {% if resource.medium_three != "blank" %}
-                                                <a href="{{ resource.url_three }}"><i class="fa fa-fw fa-{{ resource.medium_three }}" aria-hidden="true"></i></a>
-                                            {% endif %}
-                                        </td>
-                                    </tr>
-                                {% endfor %}
+                            <tr style="border-bottom: none;"><td class="resourceheader" colspan="3"><br /><h2>Technical</h2></td></tr>
+                            {% for resource in technical %}
+                                <tr>
+                                    <td width="18%"><a href="{{ resource.url_one }}">{{ resource.name }}</a></td>
+                                    <td class="smaller raleway">{{ resource.description }}</td>
+                                    <td width="10%" class="text-align-right">
+                                        {% if resource.medium_one != "blank" %}
+                                            <a href="{{ resource.url_one }}"><i class="fa fa-fw fa-{{ resource.medium_one }}" aria-hidden="true"></i></a>
+                                        {% endif %}
+                                        {% if resource.medium_two != "blank" %}
+                                            <a href="{{ resource.url_two }}"><i class="fa fa-fw fa-{{ resource.medium_two }}" aria-hidden="true"></i></a>
+                                        {% endif %}
+                                        {% if resource.medium_three != "blank" %}
+                                            <a href="{{ resource.url_three }}"><i class="fa fa-fw fa-{{ resource.medium_three }}" aria-hidden="true"></i></a>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
 
-                            </tbody>
-                        </table>
-                    </div>
-                </div>  <!-- /.col-lg-12 -->
-            </div>  <!-- /.row -->
-        <div class="s-100"></div>
-    </div>  <!--/.container .container-kairozu-->
-</div>  <!--/#page-content-wrapper-->
+                        </tbody>
+                    </table>
+                </div>
+            </div>  <!-- /.col-lg-12 -->
+        </div>  <!-- /.row -->
+    <div class="s-100"></div>
+</div>  <!--/.container .container-kairozu-->
 
 {% endblock %}

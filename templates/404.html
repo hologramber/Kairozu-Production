@@ -4,23 +4,21 @@
 {% load static %}
 {% block content %}
 
-<!--#page-content-wrapper-->
-<div id="page-content-wrapper">
-    <div class="container kairozu-container">
-        <div class="row">
-            <div class="col-md-6">
-                <img alt="かい" id="welcomekoi" src="{% static 'img/welcome_koi.png' %}" />
-            </div>
-            <div class="col-md-6">
-                <div class="s-10 hidden-xs"></div>
-                <h1 class="raleway">404</h1>
-                <h1 class="raleway">Oh no!</h1>
-                <h3 class="raleway">This page doesn't exist!</h3>
-                <div class="s-10">&nbsp;</div>
-                <h3 class="opensans">Please let kairozu@kairozu.com know if you've found something broken.</h3>
-            </div>
+<div class="container kairozu-container">
+<div class="headsquish"></div>
+    <div class="row">
+        <div class="col-md-6">
+            <img alt="かい" id="welcomekoi" src="{% static 'img/welcome_koi.png' %}" />
         </div>
-    </div>  <!--/.container .kairozu-container-->
-</div>  <!--/#page-content-wrapper-->
+        <div class="col-md-6">
+            <div class="s-10 hidden-xs"></div>
+            <h1 class="raleway">404</h1>
+            <h1 class="raleway">Oh no!</h1>
+            <h3 class="raleway">This page doesn't exist!</h3>
+            <div class="s-10">&nbsp;</div>
+            <h3 class="opensans">Please let kairozu@kairozu.com know if you've found something broken.</h3>
+        </div>
+    </div>
+</div>  <!--/.container .kairozu-container-->
 
 {% endblock %}

@@ -4,35 +4,32 @@
 
 {% block content %}
 
-<!--#page-content-wrapper-->
-<div id="page-content-wrapper">
-	<div class="container container-kairozu">
-            <h1>Frequently Asked Questions</h1>
-            <div class="s-20"></div>
-            <div class="table-responsive">
-                <div class="toc-summary">
-                    <table class="generaltable">
-                        {% for faq in object_list %}
-                            <tr><td><a href="#{{ forloop.counter }}">{{ faq.question }}</a></td></tr>
-                        {% endfor %}
-                    </table>
-                </div>
+<div class="container container-kairozu">
+<div class="headsquish"></div>
+        <h1>Frequently Asked Questions</h1>
+        <div class="s-20"></div>
+        <div class="table-responsive">
+            <div class="toc-summary">
+                <table class="generaltable">
+                    {% for faq in object_list %}
+                        <tr><td><a href="#{{ forloop.counter }}">{{ faq.question }}</a></td></tr>
+                    {% endfor %}
+                </table>
             </div>
+        </div>
 
-            <div class="s-30"></div>
-            {% for faq in object_list %}
-                <h3><div class="qa_question"><a name="{{ forloop.counter }}">{{ faq.question }}</a></div></h3>
-                <div class="qa_answer">{{ faq.answer|safe }}</div>
-                <div class="s-20"></div>
-            {% endfor %}
+        <div class="s-30"></div>
+        {% for faq in object_list %}
+            <h3><div class="qa_question"><a name="{{ forloop.counter }}">{{ faq.question }}</a></div></h3>
+            <div class="qa_answer">{{ faq.answer|safe }}</div>
+            <div class="s-20"></div>
+        {% endfor %}
 
-        <br /><br /><br />
-        <div class="s-500"></div>
-        <div class="s-300 visible-xs"></div>
+    <br /><br /><br />
+    <div class="s-500"></div>
+    <div class="s-300 visible-xs"></div>
 
-    </div>  <!--/.container .kairozu-container-->
-    {% include 'footer.html' %}
-
-</div>  <!--/#page-content-wrapper-->
+</div>  <!--/.container .kairozu-container-->
+{% include 'footer.html' %}
 
 {% endblock %}

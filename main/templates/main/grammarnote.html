@@ -4,22 +4,21 @@
 {% load static %}
 {% block content %}
 
-<div id="page-content-wrapper">
-    <div class="container container-kairozu">
-        <div class="row">
-            <div class="col-lg-12">
-                {% if grammarnote %}
-                    <h1 class="lessonhead">{{ grammarnote.title }}</h1>
-                    {{ grammarnote.notetext|safe }}
-                {% else %}
-                    <h3 class="raleway">There are no grammar notes associated with this lesson.</h3>
-                {% endif %}
-            <div class="s-20"></div>
-                <h4 class="raleway"><a href="{% url 'main:lesson' lesson.id %}"><i class="fa fa-long-arrow-left" aria-hidden="true"></i>&nbsp;&nbsp;Return to Lesson "{{ lesson.title }}"</a></h4>
-            </div>  <!-- /.col-lg-12 -->
-        </div>  <!-- /.row -->
-    </div>  <!-- /.container-fluid -->
-</div>  <!-- /#page-content-wrapper -->
+<div class="container container-kairozu">
+<div class="headsquish"></div>
+    <div class="row">
+        <div class="col-lg-12">
+            {% if grammarnote %}
+                <h1 class="lessonhead">{{ grammarnote.title }}</h1>
+                {{ grammarnote.notetext|safe }}
+            {% else %}
+                <h3 class="raleway">There are no grammar notes associated with this lesson.</h3>
+            {% endif %}
+        <div class="s-20"></div>
+            <h4 class="raleway"><a href="{% url 'main:lesson' lesson.id %}"><i class="fa fa-long-arrow-left" aria-hidden="true"></i>&nbsp;&nbsp;Return to Lesson "{{ lesson.title }}"</a></h4>
+        </div>  <!-- /.col-lg-12 -->
+    </div>  <!-- /.row -->
+</div>  <!-- /.container-fluid -->
 
 {% endblock %}
 </title>

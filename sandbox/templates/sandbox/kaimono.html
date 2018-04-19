@@ -11,48 +11,41 @@
 <script src="{% static 'sandbox/kaimono/kaimonoinput.js' %}"></script>
 <script src="{% static 'sandbox/kaimono/kaimonostart.js' %}"></script>
 
-<!--#page-content-wrapper-->
-<div id="page-content-wrapper">
-	<div class="container container-kairozu">
-        <div class="white-box">
+<div class="container container-kairozu">
+<div class="headsquish"></div>
+    <div class="white-box">
 
-			<div class="info-container">
-				<div class="score">
-					<div class="score_title">score</div>
-					<div class="score_update">0</div>
-				</div>
-				<div class="streak">
-					<div class="streak_title">streak</div>
-					<div class="score_streak">0</div>
-				</div>
-				<div id="questions">
-					<div class="questions_title">guide</div>
-					<a href="#popup1"><div class="questions_link">?</div></a>
-				</div>
-				<div id="kanjikana">
-					<div class="kanjikana_title">input</div>
-					<div class="kanji_or_kana">かな</div>
-				</div>
-        	</div>
-            <div class="s-15"></div>
+        <div class="info-container">
+            <div class="score">
+                <div class="score_title">score</div>
+                <div class="score_update">0</div>
+            </div>
+            <div class="streak">
+                <div class="streak_title">streak</div>
+                <div class="score_streak">0</div>
+            </div>
+            <div id="questions">
+                <div class="questions_title">guide</div>
+                <a href="#popup1"><div class="questions_link">?</div></a>
+            </div>
+            <div id="kanjikana">
+                <div class="kanjikana_title">input</div>
+                <div class="kanji_or_kana">かな</div>
+            </div>
+        </div>
+        <div class="s-15"></div>
+        <div class="objects_container"></div>
+        <div class="s-15"></div>
+        <div class="description_container"></div>
+        <div class="s-30"></div>
+        <div class="counter_container">
+            <form>
+            <input type="text" id="counter_entry" class="kbox1" autocapitalize='none' autocorrect='off' placeholder="助数詞" onfocus="this.placeholder = ''" onblur="this.placeholder = '助数詞'">
+            </form>
+        </div>
 
-			<div class="objects_container"></div>
-
-            <div class="s-15"></div>
-
-			<div class="description_container"></div>
-
-            <div class="s-30"></div>
-
-			<div class="counter_container">
-                <form>
-				<input type="text" id="counter_entry" class="kbox1" autocapitalize='none' autocorrect='off' placeholder="助数詞" onfocus="this.placeholder = ''" onblur="this.placeholder = '助数詞'">
-                </form>
-			</div>
-
-	    </div>  <!--/.white-box-->
-    </div>  <!--/.container .container-kairozu-->
-</div>  <!--/#page-content-wrapper-->
+    </div>  <!--/.white-box-->
+</div>  <!--/.container .container-kairozu-->
 
 <div id="popup1" class="overlay">
     <div class="popup">

@@ -13,71 +13,69 @@
 <script src="{% static 'sandbox/katakana/tenkogame.js' %}"></script>
 <script src="{% static 'sandbox/katakana/tenkostart.js' %}"></script>
 
-<!--#page-content-wrapper-->
-<div id="page-content-wrapper">
-	<div class="container container-kairozu">
-        <div class="white-box">
+<div class="container container-kairozu">
+<div class="headsquish"></div>
+    <div class="white-box">
 
-			<div class="info-container">
-				<div id="status_level">level
-					<div id="level">1</div>
-				</div>
-				<div class="status_display">score
-					<div id="score">0</div>
-				</div>
-				<div class="status_display">streak
-					<div id="streak">0</div>
-				</div>
-				<div id="mode_reset">reset
-					<div id="reset"><span class="glyphicon glyphicon-repeat"></span></div>
-				</div>
-				<div id="mode_display">mode
-					<div id="reversemode">ア</div>
-				</div>
-			</div>
+        <div class="info-container">
+            <div id="status_level">level
+                <div id="level">1</div>
+            </div>
+            <div class="status_display">score
+                <div id="score">0</div>
+            </div>
+            <div class="status_display">streak
+                <div id="streak">0</div>
+            </div>
+            <div id="mode_reset">reset
+                <div id="reset"><span class="glyphicon glyphicon-repeat"></span></div>
+            </div>
+            <div id="mode_display">mode
+                <div id="reversemode">ア</div>
+            </div>
+        </div>
 
-			<div class="game_container">
-				<div class="game_row">
-					<div class="blank_space"></div>
-					<div class="blank_space"></div>
-					<div class="answer_space0"></div>
-					<div class="blank_space"></div>
-					<div class="blank_space"></div>
-				</div>
-				<div class="game_row">
-					<div class="blank_space"></div>
-					<div class="blank_space"></div>
-					<div id="direction_space0"><div class="arrow_up"></div></div>
-					<div class="blank_space"></div>
-					<div class="blank_space"></div>
-				</div>
-				<div class="game_row">
-					<div class="answer_space3"></div>
-					<div id="direction_space3"><div class="arrow_left"></div></div>
-					<div id="question_space">
-					</div>
-					<div id="direction_space1"><div class="arrow_right"></div></div>
-					<div class="answer_space1"></div>
-				</div>
-				<div class="game_row">
-					<div class="blank_space"></div>
-					<div class="blank_space"></div>
-					<div id="direction_space2"><div class="arrow_down"></div></div>
-					<div class="blank_space"></div>
-					<div class="blank_space"></div>
-				</div>
-				<div class="game_row">
-					<div class="blank_space"></div>
-					<div class="blank_space"></div>
-					<div class="answer_space2"></div>
-					<div class="blank_space"></div>
-					<div class="blank_space"></div>
-				</div>
-			</div>
-			<div id="protip">Tip: Use arrow keys or click the orange arrows to move; click level/mode/reset for functionality.</div>
+        <div class="game_container">
+            <div class="game_row">
+                <div class="blank_space"></div>
+                <div class="blank_space"></div>
+                <div class="answer_space0"></div>
+                <div class="blank_space"></div>
+                <div class="blank_space"></div>
+            </div>
+            <div class="game_row">
+                <div class="blank_space"></div>
+                <div class="blank_space"></div>
+                <div id="direction_space0"><div class="arrow_up"></div></div>
+                <div class="blank_space"></div>
+                <div class="blank_space"></div>
+            </div>
+            <div class="game_row">
+                <div class="answer_space3"></div>
+                <div id="direction_space3"><div class="arrow_left"></div></div>
+                <div id="question_space">
+                </div>
+                <div id="direction_space1"><div class="arrow_right"></div></div>
+                <div class="answer_space1"></div>
+            </div>
+            <div class="game_row">
+                <div class="blank_space"></div>
+                <div class="blank_space"></div>
+                <div id="direction_space2"><div class="arrow_down"></div></div>
+                <div class="blank_space"></div>
+                <div class="blank_space"></div>
+            </div>
+            <div class="game_row">
+                <div class="blank_space"></div>
+                <div class="blank_space"></div>
+                <div class="answer_space2"></div>
+                <div class="blank_space"></div>
+                <div class="blank_space"></div>
+            </div>
+        </div>
+        <div id="protip">Tip: Use arrow keys or click the orange arrows to move; click level/mode/reset for functionality.</div>
 
-	    </div>  <!--/.white-box-->
-    </div>  <!--/.container .container-kairozu-->
-</div>  <!--/#page-content-wrapper-->
+    </div>  <!--/.white-box-->
+</div>  <!--/.container .container-kairozu-->
 
 {% endblock %}

@@ -4,51 +4,44 @@
 
 {% block content %}
 
-<!--#page-content-wrapper-->
-<div id="page-content-wrapper">
-    <div class="container container-kairozu">
+<div class="container container-kairozu">
+<div class="headsquish"></div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="s-20 hidden-xs"></div>
+            <h2>回路図へようこそ〜 {{ user.username|title }}</h2>
+            <h4>Hey! Welcome! Thanks for using Kairozu. :)</h4>
 
-        <div class="row">
-            <div class="col-md-12">
-                <div class="s-20 hidden-xs"></div>
-                <h2>回路図へようこそ〜 {{ user.username|title }}</h2>
-
-                <h4>Hey! Welcome! Thanks for using Kairozu. :)</h4>
-
-
-                <div class="spot-tablei">
-                    <div class="margin-bottom-20">
-                        <div class="spot-image"><i class='fa fa-star fa-2x red-words'></i></div>
-                        <div class="spot-texti">
-                            Start with <a href="{% url 'main:interface' 1 %}">第１章</a>. Access the <a href="{% url 'main:main' %}">main chapter index</a> from the navigation bar above.
-                        </div>
-                    </div>
-                    <div class="margin-bottom-20">
-                        <div class="spot-image"><i class='fa fa-star fa-2x red-words'></i></div>
-                        <div class="spot-texti">
-                            <a href="{% url 'sandbox:japanesekana' %}">Hiragana and Katakana</a> has resources for brushing up on your kana.
-                        </div>
-                    </div>
-                    <div class="margin-bottom-20">
-                        <div class="spot-image"><i class='fa fa-star fa-2x red-words'></i></div>
-                        <div class="spot-texti">
-                            Access your <a href="{% url 'account' %}">account info</a>, <a href="{% url 'main:progress' %}">current progress</a> between chapters, <a href="{% url 'news:main' %}">news and site updates</a>, and the bug report form from the Kairozu dropdown menu on the navigation bar above.
-                        </div>
-                    </div>
-                    <div class="margin-bottom-20">
-                        <div class="spot-image"><i class='fa fa-star fa-2x red-words'></i></div>
-                        <div class="spot-texti">
-                            Lost? Confused? Is everything broken? Email kairozu@kairozu.com and I'll try to get you sorted out.
-                        </div>
+            <div class="spot-tablei">
+                <div class="margin-bottom-20">
+                    <div class="spot-image"><i class='fa fa-star fa-2x red-words'></i></div>
+                    <div class="spot-texti">
+                        Start with <a href="{% url 'main:interface' 1 %}">第１章</a>. Access the <a href="{% url 'main:main' %}">main chapter index</a> from the navigation bar above.
                     </div>
                 </div>
-
-                <div class="s-30"></div>
-
+                <div class="margin-bottom-20">
+                    <div class="spot-image"><i class='fa fa-star fa-2x red-words'></i></div>
+                    <div class="spot-texti">
+                        <a href="{% url 'sandbox:japanesekana' %}">Hiragana and Katakana</a> has resources for brushing up on your kana.
+                    </div>
+                </div>
+                <div class="margin-bottom-20">
+                    <div class="spot-image"><i class='fa fa-star fa-2x red-words'></i></div>
+                    <div class="spot-texti">
+                        Access your <a href="{% url 'account' %}">account info</a>, <a href="{% url 'main:progress' %}">current progress</a> between chapters, <a href="{% url 'news:main' %}">news and site updates</a>, and the bug report form from the Kairozu dropdown menu on the navigation bar above.
+                    </div>
+                </div>
+                <div class="margin-bottom-20">
+                    <div class="spot-image"><i class='fa fa-star fa-2x red-words'></i></div>
+                    <div class="spot-texti">
+                        Lost? Confused? Is everything broken? Email kairozu@kairozu.com and I'll try to get you sorted out.
+                    </div>
+                </div>
             </div>
+            <div class="s-30"></div>
+        </div>
 
-        </div>  <!--/.row-->
-    </div>  <!--/.container .container-kairozu-->
-</div>  <!--/#page-content-wrapper-->
+    </div>  <!--/.row-->
+</div>  <!--/.container .container-kairozu-->
 
 {% endblock %}
