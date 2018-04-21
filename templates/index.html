@@ -4,96 +4,152 @@
 {% load static %}
 {% block content %}
 
-<div class="container kairozu-container">
-    <div class="s-20"></div>
-    <img alt="回路図" id="kairozufront" src="{% static 'img/kai-circle.svg' %}" />
+<div class="s-20"></div>
+<img alt="回路図" src="{% static 'img/kai-circle.svg' %}" />
+<div class="s-30"></div>
 
-    <div class="row">
-        <div class="col-md-12">
-            <div class="shadowbox">
-                <h3>Kairozu uses programmed learning to build an understanding of Japanese grammar using English-to-Japanese sentence construction.</h3>
+<div class="fc">
+
+    <div class="fc-text fc-flex-50 text-align-right">
+        <div class="front-text fs2-0">Kairozu uses programmed learning to build an understanding of Japanese grammar using English-to-Japanese sentence construction.</div>
+        <div class="s-20"></div>
+        <div class="front-text fs1-5">Learn grammar and relevant vocabulary in small, logical steps. Less focus on reading <span class="italics">about</span> grammar and more focus on using grammar in context.</div>
+
+        <div class="s-10"></div>
+        <h5 class="roboto"><a href="{% url 'demo:demointerface' %}">See the general structure of Kairozu <i class="fa fa-arrow-right"></i></a></h5>
+    </div>
+
+    <div class="fc-center fc-flex-50">
+        <a href="{% url 'demo:demointerface' %}">
+            <div class="fc-red-button trans">
+                <table>
+                    <tr><td class="white-words fs2-0">Kairozu Demo</td><td rowspan="2" class="pad-left-15"><i class="fa fa-3x white-words fa-arrow-circle-right"></i></td></tr>
+                    <tr><td><div class="fish-text-sm rc-red-b-tiny">see how kairozu works!</div></td></tr>
+                </table>
             </div>
+        </a>
+    </div>
+
+</div>
+
+
+<div class="fc">
+
+    <div class="fc-center text-align-center">
+        <div class="front-text">
+        Practice grammar recall by translating English sentences into Japanese. Sentence comprehension increases as new grammar patterns mix with those you already know.</div>
+        <div class="s-20"></div>
+        <div class="front-text">The <span class="orange-words">dog</span> is <span class="grey-words">black</span>.　<i class="fa fa-arrow-right"></i>　<span class="orange-words">犬</span> は <span class="grey-words">黒い</span> です。</div>
+    </div>
+
+</div>
+
+
+<div class="fc">
+
+    <div class="fc-center fc-flex-40">
+        <a href="{% url 'news:main' %}">
+            <div class="shadowfish trans">
+                <table class="width-100">
+                    <tr>
+                        <td>
+                            <img class='fishimg' alt="kai the koi" src="{% static 'img/fish1.svg' %}" />
+                        </td>
+                        <td class="text-align-right">
+                            <span class="fish-text-lg red-words-bold trans">kairozu news & blog</span>
+                            <div class="s-5"></div>
+                            <span class="fish-text-sm opensans grey-words">Adventures in natural language processing with Japanese and Python.</span><br />
+                            <i class="fa fa-3x red-words trans fa-arrow-circle-right"></i>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </a>
+    </div>
+
+    <div class="fc-center fc-flex-60">
+        <div class="front-text">Most sentences are computer-generated using common words and grammar patterns compiled from Japanese-language sources aimed at beginners.</div>
+        <div class="s-10"></div>
+        <ul><li><a href="https://www3.nhk.or.jp/news/easy/">NHK News Web Easy</a></li></ul>
+    </div>
+
+</div>
+
+
+<div class="fc">
+
+    <div class="fc-center text-align-center">
+        <div class="front-text width-60">Each chapter consists of four sections: vocabulary, colloquial expressions, grammar, and exercises.</div>
+        <div class="s-20"></div>
+        <div class="fc-general">
+            <div class="fronticons"><a href="{% url 'demo:demovocablist' %}"><i class="fa fa-fw fa-3x fa-font"></i></a></div>
+            <div class="fronticons"><a href="{% url 'demo:demoexpressionlist' %}"><i class="fa fa-fw fa-3x fa-commenting-o"></i></a></div>
+            <div class="fronticons"><a href="{% url 'demo:demolesson' %}"><i class="fa fa-fw fa-3x fa-book"></i></a></div>
+            <div class="fronticons"><a href="{% url 'demo:storydemo' %}"><i class="fa fa-fw fa-3x fa-edit"></i></a></div>
         </div>
     </div>
 
-    <div class="s-50"></div>
+</div>
 
-    <div class="row">
-        <div class="col-sm-6 col-sm-push-6">
-            <div class="shadowbox">
-                <h3>Most sentences are computer-generated using grammar patterns compiled from Japanese sources aimed at beginners.</h3>
-            </div>
-        </div>
-        <div class="col-sm-6 col-sm-pull-6 col-sm-offset-0 col-xs-10 col-xs-offset-1">
-            <div class="s-50 visible-xs"></div>
-            <a href="{% url 'demo:demointerface' %}"><img id='wthrough' alt="walkthrough" src="{% static 'img/walk.svg' %}" /></a>
-        </div>
+
+<div class="fc">
+
+    <div class="fc-center fc-flex-60 text-align-right">
+        <div class="front-text">Review vocabulary and grammar via spaced-repetition to practice recognition; avoid the visual memorization-recognition trap that usually occurs when using flashcards.</div>
     </div>
 
-    <div class="s-50"></div>
-
-    <div class="row">
-        <div class="col-md-12">
-            <div class="shadowbox">
-                <h3>Learn grammar and relevant vocab in small, logical steps. Sentence comprehension increases as new grammar patterns mix with those you already know.</h3>
-            </div>
-        </div>
+    <div class="fc-center fc-flex-40">
+        {% if user.is_authenticated %}
+            <a href="{% url 'main:progress' %}">
+                <div class="shadowfish trans">
+                    <table class="width-100">
+                        <tr><td>
+                                <img class='fishimg' alt="nikai the koi" src="{% static 'img/fish2.svg' %}" />
+                            </td>
+                            <td class="text-align-right">
+                                <span class="fish-text-lg red-words-bold trans">view account</span>
+                                <div class="s-5"></div>
+                                <span class="fish-text-sm opensans grey-words">Welcome back! View your pending reviews and current progress.</span><br />
+                                <i class="fa fa-3x red-words fa-arrow-circle-right trans"></i>
+                            </td></tr>
+                    </table>
+                </div>
+            </a>
+        {% else %}
+            <a href="{% url 'register' %}">
+                <div class="shadowfish trans">
+                    <table class="width-100">
+                        <tr><td>
+                                <img class='fishimg' alt="nikai the koi" src="{% static 'img/fish2.svg' %}" />
+                            </td>
+                            <td class="text-align-right">
+                                <span class="fish-text-lg red-words-bold trans">join kairozu</span>
+                                <div class="s-5"></div>
+                                <span class="fish-text-sm opensans grey-words">Create an account on Kairozu to access the rest of the site. やった！</span><br />
+                                <i class="fa fa-3x red-words fa-arrow-circle-right trans"></i>
+                            </td></tr>
+                    </table>
+                </div>
+            </a>
+            <div class="s-10"></div>
+            <a href="{% url 'login' %}">
+                <div class="shadowfish trans text-align-right">
+                    <table class="width-100">
+                        <tr>
+                            <td class="upper fs1-5 lh1-0">already have an account?</td><td rowspan="2"></td>
+                        </tr>
+                        <tr>
+                            <td><span class="red-words-bold fs1-5 lh1-0 trans">LOG IN</span></td>
+                        </tr>
+                    </table>
+                </div>
+            </a>
+        {% endif %}
     </div>
 
-    <div class="s-50"></div>
+</div>
 
-    <div class="row">
-        <div class="col-sm-6">
-            <div class="shadowbox">
-                <h3>Spaced-repetition review helps retain what you've learned; avoid the visual recognition trap that usually occurs when using flashcards.</h3>
-            </div>
-        </div>
-        <div class="col-sm-6 col-sm-offset-0 col-xs-10 col-xs-offset-1">
-            <div class="s-50 visible-xs"></div>
-            {% if user.is_authenticated %}
-                <a href="{% url 'profile' %}"><img id='yaccount' alt="your account" src="{% static 'img/account.svg' %}" /></a>
-            {% else %}
-                <a href="{% url 'register' %}"><img id='jkairozu' alt="join kairozu" src="{% static 'img/join.svg' %}" /></a>
-            {% endif %}
-        </div>
-    </div>  <!--/.row-->
+<div class="s-100"></div>
 
-    <div class="row">
-        <div class="col-md-4 col-md-offset-8">
-            {% if user.is_authenticated %}
-            {% else %}
-                <a href="{% url 'login' %}"><img id='lhere' alt="login here" src="{% static 'img/loginhere.png' %}" /></a>
-            {% endif %}
-        </div>
-    </div>  <!--/.row-->
-    <div class="s-100"></div>
-</div>  <!--/.container .kairozu-container-->
 {% include 'footer.html' %}
-
-
-<script type='text/javascript'>
-$(document).ready(function() {
-    $('#wthrough').hover(function() {
-        $(this).attr("src", "{% static 'img/walk-hover.svg' %}");
-    }, function() {
-        $(this).attr("src", "{% static 'img/walk.svg' %}");
-    });
-    $('#yaccount').hover(function() {
-        $(this).attr("src", "{% static 'img/account-hover.svg' %}");
-    }, function() {
-        $(this).attr("src", "{% static 'img/account.svg' %}");
-    });
-    $('#jkairozu').hover(function() {
-        $(this).attr("src", "{% static 'img/join-hover.svg' %}");
-    }, function() {
-        $(this).attr("src", "{% static 'img/join.svg' %}");
-    });
-    $('#lhere').hover(function() {
-        $(this).attr("src", "{% static 'img/loginhere-hover.png' %}");
-    }, function() {
-        $(this).attr("src", "{% static 'img/loginhere.png' %}");
-    });
-});
-</script>
-
 {% endblock %}

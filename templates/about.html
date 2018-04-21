@@ -4,9 +4,11 @@
 
 {% block content %}
 
-<div class="container container-kairozu">
-<div class="headsquish"></div>
+<div class="fc-basic">
+
+    <div class="headsquish"></div>
     <h1>初めまして、I'm Kairozu.</h1>
+
     <p>Kairozu uses <a href="https://en.wikipedia.org/wiki/Programmed_learning">programmed learning</a> to build an understanding of Japanese grammar using English-to-Japanese sentence construction. Grammatical constructs are introduced in small, logical steps, which are organized by chapter around groups of new vocabulary words.</p>
     <p>I find Socratic and programmed methods of inquiry to be particularly effective when it comes to retaining information -- my two favorite examples are <a href="https://www.amazon.com/Sidmans-Neuroanatomy-Programmed-Learning-Lippincott/dp/0781765684/">Sidman's Neuroanatomy: A Programmed Learning Tool</a> and <a href="https://www.amazon.com/Little-Schemer-Daniel-P-Friedman/dp/0262560992/">The Little Schemer</a>. Here I've tried to minimize wordy grammar explanations and maximize immediate application of small grammar templates, which are then built upon word by word (or particle by particle).</p>
     <p>I am not a teacher, a programmer, or a designer, nor do I speak Japanese natively. Let's be clear: learning a language from someone that is ALSO learning the language is <strike>perhaps not the brightest idea</strike> A TERRIBLE IDEA. I've <strike>probably</strike> DEFINITELY made mistakes and it would be unfortunate if you internalized my mistakes as grammar fact. Building things and trying to explain them to someone else helps me learn, which is to say <span class="bold">I made this for myself</span>.  <span class="bold">Use and learn incorrect things at your own risk</span>.</p>
@@ -16,124 +18,129 @@
     <div class="s-40"></div>
 
     <h1>Basic Introduction</h1>
-    <div class="important-abouttext hi-texts bolder">
-        A solid grasp on <a href="https://en.wikipedia.org/wiki/Hiragana">hiragana</a> and <a href="https://en.wikipedia.org/wiki/Katakana">katakana</a> is <span class="underline">necessary before attempting any of the material on this site</span>! There are many internet resources available for studying the Japanese syllabaries, but <a href="http://www.guidetojapanese.org/learn/grammar/hiragana">Tae Kim Hiragana</a> / <a href="http://www.guidetojapanese.org/learn/grammar/katakana">Tae Kim Katakana</a> are good places to start.
+
+    <div class="fc-center text-align-center">
+        <div class="width-75 fs1-2 raleway hi-texts">
+            A solid grasp on <a href="https://en.wikipedia.org/wiki/Hiragana">hiragana</a> and <a href="https://en.wikipedia.org/wiki/Katakana">katakana</a> is <span class="underline">necessary before attempting any of the material on this site</span>! There are many internet resources available for studying the Japanese syllabaries, a few of them are listed here: <a href="{% url 'demo:demokana' %}">Japanese Kana</a>.
+        </div>
     </div>
 
-    <div class="row">
-        <div class="col-xs-12 col-sm-6 col-md-3">
-            <div class="right-arrow-surround">
-            <div class="right-arrow-box">
-                <div class="is-main">Access new grammar via <a href="{% url 'main:main' %}">main</a> -- as chapters become available, they will turn red.</div>
-                <div class="is-small">Additional tools and reference material can be found in the <a href="{% url 'main:main' %}">sandbox</a>.</div>
-                <div class="is-small">Review material is presented via spaced-repetition; available reviews are indicated in the navigation bar.</div>
-            </div>
-            </div>
-        </div>  <!--/.col-xs-12 .col-sm-6 .col-md-3-->
-        <div class="col-xs-12 col-sm-6 col-md-3">
-            <div class="right-arrow-surround">
-            <div class="right-arrow-box">
-                <div class="is-main">Within a chapter, the left sidebar is a linear guide to the vocabulary, expression, grammar, and exercise sections.</div>
-                <div class="is-small">You can always review previous content from any chapter; completed sections have a green check.</div>
-            </div>
-            </div>
-        </div>  <!--/.col-xs-12 .col-sm-6 .col-md-3-->
-        <div class="clearfix visible-sm"></div>
-        <div class="col-xs-12 col-sm-6 col-md-3">
-            <div class="right-arrow-surround">
-            <div class="right-arrow-box">
-                <div class="is-main">Each chapter has 80-100 new vocabulary and 15-20 colloquial expressions that will be used throughout the grammar sections; it's important to learn these <span class="bold">first</span>.</div>
-            </div>
-            </div>
-        </div>  <!--/.col-xs-12 .col-sm-6 .col-md-3-->
-        <div class="col-xs-12 col-sm-6 col-md-3">
-            <div class="right-arrow-surround">
-            <div class="right-arrow-box">
-                <div class="is-main">Complete the vocabulary and expression quizzes to unlock the first grammar lesson for that chapter.</div>
-                <div class="is-small">Enter vocabulary words and phrases in Japanese without using hints to successfully complete these sections.</div>
-            </div>
-            </div>
-        </div>  <!--/.col-xs-12 .col-sm-6 .col-md-3-->
-    </div>  <!--/.row-->
+</div>
 
-    <div class="row">
-        <div class="col-xs-12 col-sm-6 col-md-3">
-            <div class="right-arrow-surround">
-            <div class="right-arrow-box">
-                <div class="is-main">Once you've read the grammar notes, start the practice exercises; these are pairs of computer-generated English sentences which you translate to Japanese.</div>
-                <div class="is-small">The practice exercises must be successfully completed in full (in a single session) to unlock the grammar quiz.</div>
-            </div>
-            </div>
-        </div>  <!--/.col-xs-12 .col-sm-6 .col-md-3-->
-        <div class="col-xs-12 col-sm-6 col-md-3">
-            <div class="right-arrow-surround">
-            <div class="right-arrow-box">
-                <div class="is-main">Complete the クイズ for each grammar section to unlock additional lessons. At the end of each chapter, a series of Exercises which help summarize everything you've learned thus far.</div>
-            </div>
-            </div>
-        </div>  <!--/.col-xs-12 .col-sm-6 .col-md-3-->
-        <div class="clearfix visible-sm"></div>
-        <div class="col-xs-12 col-sm-6 col-md-3">
-            <div class="right-arrow-surround">
-            <div class="right-arrow-box">
-                <div class="is-main">Following the successful completion of all practices, quizzes, and exercises within a chapter, the next chapter will be unlocked.</div>
-                <div class="is-small">If you've fallen behind on review material, new chapters will remain locked until you've caught up.</div>
-            </div>
-            </div>
-        </div>  <!--/.col-xs-12 .col-sm-6 .col-md-3-->
-        <div class="col-xs-12 col-sm-6 col-md-3">
-            <div class="right-arrow-surround">
-            <div class="right-arrow-box">
-                <div class="is-main">Vocabulary, Expressions, and Sentences follow a spaced-repetition review pattern. Pending reviews can be accessed through the navigation bar, with new material added to the review queue as you encounter it.</div>
-            </div>
-            </div>
-        </div>  <!--/.col-xs-12 .col-sm-6 .col-md-3-->
-    </div> <!--/.row-->
 
-    <div class="row">
-        <div class="col-sm-12 col-md-6 vcenter">
-            <a href="{% url 'demo:demointerface' %}"><img id='wthrough' alt="walkthrough" src="{% static 'img/walk.svg' %}" /></a>
-        </div>
-        <div class="col-sm-12 col-md-6 vcenter">
-            {% if user.is_authenticated %}
-                <a href="{% url 'profile' %}"><img id='yaccount' alt="your account" src="{% static 'img/account.svg' %}" /></a>
-            {% else %}
-                <a href="{% url 'register' %}"><img id='jkairozu' alt="join kairozu" src="{% static 'img/join.svg' %}" /></a>
-            {% endif %}
-        </div>
-    </div>  <!--/.row-->
+<div class="fc-about">
 
-    <div class="row">
-        <div class="col-md-4 col-md-offset-8">
-            {% if user.is_authenticated %}
-            {% else %}
-                <a href="{% url 'login' %}"><img id='lhere' alt="login here" src="{% static 'img/loginhere.png' %}" /></a>
-            {% endif %}
-        </div>
-    </div>  <!--/.row-->
-    <div class="s-100"></div>
-</div>  <!--/.container .kairozu-container-->
+    <div>
+        <table>
+            <tr><td><span class="step">1</span>Access new grammar via <a href="{% url 'main:main' %}">main</a> -- as chapters become available, they will turn red.</td></tr>
+            <tr><td><div>Additional tools and reference material can be found in the <a href="{% url 'main:main' %}">sandbox</a>.</div></td></tr>
+            <tr><td><div>Review material is presented via spaced-repetition; available reviews are indicated in the navigation bar.</div></td></tr>
+        </table>
+    </div>
+
+    <div>
+        <table>
+            <tr><td><span class="step">2</span>Within a chapter, the left sidebar is a linear guide to the vocabulary, expression, grammar, and exercise sections.</td></tr>
+            <tr><td><div>You can always review previous content from any chapter; completed sections have a green check.</div></td></tr>
+        </table>
+    </div>
+
+    <div>
+        <table>
+            <tr><td><span class="step">3</span>Each chapter has 80-100 new vocabulary and 15-20 colloquial expressions that will be used throughout the grammar sections; it's important to learn these <span class="bold">first</span>.</td></tr>
+        </table>
+    </div>
+
+    <div>
+        <table>
+            <tr><td><span class="step">4</span>Complete the vocabulary and expression quizzes to unlock the first grammar lesson for that chapter.</td></tr>
+            <tr><td><div>Enter vocabulary words and phrases in Japanese without using hints to successfully complete these sections.</div></td></tr>
+        </table>
+    </div>
+
+    <div>
+        <table>
+            <tr><td><span class="step">5</span>Once you've read the grammar notes, start the practice exercises; these are pairs of computer-generated English sentences which you translate to Japanese.</td></tr>
+            <tr><td><div>The practice exercises must be successfully completed in full (in a single session) to unlock the grammar quiz.</div></td></tr>
+        </table>
+    </div>
+
+    <div>
+        <table>
+            <tr><td><span class="step">6</span>Complete the クイズ for each grammar section to unlock additional lessons. At the end of each chapter, a series of Exercises which help summarize everything you've learned thus far.</td></tr>
+        </table>
+    </div>
+
+    <div>
+        <table>
+            <tr><td><span class="step">7</span>Following the successful completion of all practices, quizzes, and exercises within a chapter, the next chapter will be unlocked.</td></tr>
+            <tr><td><div>If you've fallen behind on review material, new chapters will remain locked until you've caught up.</div></td></tr>
+        </table>
+    </div>
+
+    <div>
+        <table>
+            <tr><td><span class="step">8</span>Vocabulary, Expressions, and Sentences follow a spaced-repetition review pattern. Pending reviews can be accessed through the navigation bar, with new material added to the review queue as you encounter it.</td></tr>
+        </table>
+    </div>
+</div>
+
+
+<div class="fc">
+
+    <div class="fc-center fc-flex-50">
+        {% if user.is_authenticated %}
+            <a href="{% url 'main:progress' %}">
+                <div class="shadowfish trans">
+                    <table class="width-100">
+                        <tr><td>
+                                <img class='fishimg' alt="nikai the koi" src="{% static 'img/fish2.svg' %}" />
+                            </td>
+                            <td class="text-align-right">
+                                <span class="fish-text-lg red-words-bold trans">view account</span>
+                                <div class="s-5"></div>
+                                <span class="fish-text-sm opensans grey-words">Welcome back! View your pending reviews and current progress.</span><br />
+                                <i class="fa fa-3x red-words fa-arrow-circle-right trans"></i>
+                            </td></tr>
+                    </table>
+                </div>
+            </a>
+        {% else %}
+            <a href="{% url 'register' %}">
+                <div class="shadowfish trans">
+                    <table class="width-100">
+                        <tr><td>
+                                <img class='fishimg' alt="nikai the koi" src="{% static 'img/fish2.svg' %}" />
+                            </td>
+                            <td class="text-align-right">
+                                <span class="fish-text-lg red-words-bold trans">join kairozu</span>
+                                <div class="s-5"></div>
+                                <span class="fish-text-sm opensans grey-words">Create an account on Kairozu to access the rest of the site. やった！</span><br />
+                                <i class="fa fa-3x red-words fa-arrow-circle-right trans"></i>
+                            </td></tr>
+                    </table>
+                </div>
+            </a>
+            <div class="s-10"></div>
+            <a href="{% url 'login' %}">
+                <div class="shadowfish trans text-align-right">
+                    <table class="width-100">
+                        <tr>
+                            <td class="upper fs1-5 lh1-0">already have an account?</td><td rowspan="2"></td>
+                        </tr>
+                        <tr>
+                            <td><span class="red-words-bold fs1-5 lh1-0 trans">LOG IN</span></td>
+                        </tr>
+                    </table>
+                </div>
+            </a>
+        {% endif %}
+    </div>
+
+</div>
+
+<div class="s-100"></div>
+
 {% include 'footer.html' %}
-
-
-<script type='text/javascript'>
-$(document).ready(function() {
-    $('#wthrough').hover(function() {
-        $(this).attr("src", "{% static 'img/walk-hover.svg' %}");
-    }, function() {
-        $(this).attr("src", "{% static 'img/walk.svg' %}");
-    });
-    $('#yaccount').hover(function() {
-        $(this).attr("src", "{% static 'img/account-hover.svg' %}");
-    }, function() {
-        $(this).attr("src", "{% static 'img/account.svg' %}");
-    });
-    $('#jkairozu').hover(function() {
-        $(this).attr("src", "{% static 'img/join-hover.svg' %}");
-    }, function() {
-        $(this).attr("src", "{% static 'img/join.svg' %}");
-    });
-});
-</script>
 
 {% endblock %}
