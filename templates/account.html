@@ -4,151 +4,146 @@
 
 {% block content %}
 
-<div class="container container-kairozu">
 <div class="headsquish"></div>
-    <div class="row">
-        <div class="col-md-12">
-            <h1>回路図へようこそ〜 {{ user.username|title }}</h1>
+<div class="fc-basic">
 
-            <h4>Hey! Thanks for using Kairozu. :)</h4>
-            <h4>You've been a member for {{ user.date_joined|timesince }}; your last sign-in was on {{ user.last_login }}</h4>
+    <h1>回路図へようこそ〜 {{ user.username|title }}</h1>
 
-            <div class="spot-tablei">
-                <div class="margin-bottom-20">
-                    {% if user.profile.pendingchapter > user.profile.currentchapter %}
-                        <div class="spot-image"><i class='fa fa-star fa-2x red-words'></i></div>
-                        <div class="spot-texti">
-                            You've finished the material for <a href="{% url 'main:interface' user.profile.currentchapter %}">{{ currentchapter.title }}</a>. Check your <a href="{% url 'main:progress' %}">current progress</a> toward unlocking the next chapter.
-                        </div>
-                    {% else %}
-                        <div class="spot-image"><i class='fa fa-star fa-2x red-words'></i></div>
-                        <div class="spot-texti">
-                            You're currently working on <a href="{% url 'main:interface' user.profile.currentchapter %}">{{ currentchapter.title }}</a>.
-                        </div>
-                    {% endif %}
+    <h4>Hey! Thanks for using Kairozu. :)</h4>
+    <h4>You've been a member for {{ user.date_joined|timesince }}; your last sign-in was on {{ user.last_login }}</h4>
+
+    <div class="spot-tablei">
+        <div class="margin-bottom-20">
+            {% if user.profile.pendingchapter > user.profile.currentchapter %}
+                <div class="spot-image"><i class='fa fa-star fa-2x red-words'></i></div>
+                <div class="spot-texti">
+                    You've finished the material for <a href="{% url 'main:interface' user.profile.currentchapter %}">{{ currentchapter.title }}</a>. Check your <a href="{% url 'main:progress' %}">current progress</a> toward unlocking the next chapter.
                 </div>
-                <div class="margin-bottom-20">
-                    {% if user.profile.vrcount == 0 and user.profile.srcount == 0 %}
-                        <div class="spot-image"><i class='fa fa-star-o fa-2x grey-words'></i></div>
-                        <div class="spot-texti">
-                            You have no pending reviews.
-                        </div>
-                    {% else %}
-                        <div class="spot-image"><i class='fa fa-star fa-2x red-words'></i></div>
-                        <div class="spot-texti">
-                            You have <a href="{% url 'main:reviewvocab' %}">{{ user.profile.vrcount }} vocabulary words</a>, <a href="{% url 'main:reviewexpression' %}">{{ user.profile.ercount }} expressions</a>, and <a href="{% url 'main:reviewsentence' %}">{{ user.profile.srcount }} sentences</a> to review.
-                        </div>
-                    {% endif %}
+            {% else %}
+                <div class="spot-image"><i class='fa fa-star fa-2x red-words'></i></div>
+                <div class="spot-texti">
+                    You're currently working on <a href="{% url 'main:interface' user.profile.currentchapter %}">{{ currentchapter.title }}</a>.
                 </div>
-            </div>
-
-            <div class="s-30"></div>
-
-            <h2>Kairozu Account</h2>
-            <h4 class="ltgrey-words">Change administrative settings and basic account info.</h4>
-            <div class="s-10"></div>
-            <div class="panel-group" id="accordion">
-                <div class="panel panel-default kai-panel">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
-                        <div class="panel-heading kai-panel-header">
-                            <h3 class="panel-title larger raleway">
-                                <i class='fa fa-user-circle-o fa-fw'></i>&nbsp;&nbsp;Basic Account Info
-                            </h3>
-                        </div>
-                    </a>
-                    <div id="collapse1" class="panel-collapse collapse">
-                        <div class="panel-body kai-panel-body">
-                            <table>
-                                <tr>
-                                    <td><span class="bolder">Username:</span></td><td><span class="pad-left-15">{{ user.username|title }}</span></td>
-                                </tr>
-                                <tr>
-                                    <td><span class="bolder">Email:</span></td><td><span class="pad-left-15">{{ user.email }}</span></td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2"><div class="s-5"></div><span class="change-text"><ul><li>Please email kairozu@kairozu.com for assistance with changing your email address.</li><li>Usernames cannot currently be changed (sorry!).</li></ul></span></td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                <div class="s-10"></div>
-                <div class="panel panel-default kai-panel">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
-                        <div class="panel-heading kai-panel-header">
-                            <h3 class="panel-title larger raleway">
-                                <i class='fa fa-gear fa-fw'></i>&nbsp;&nbsp;Kairozu Settings
-                            </h3>
-                        </div>
-                    </a>
-                    <div id="collapse2" class="panel-collapse collapse">
-                        <div class="panel-body kai-panel-body">
-                            <div class="authform">
-                                <div class="s-5"></div>
-                                <form method="post">{% csrf_token %}
-                                    {% for field in strictform %}
-                                        <div class="form-group">
-                                            <span class="normal">{{ field.label_tag }}</span>&nbsp;&nbsp;&nbsp;{{ field }}
-
-                                            {% if field.help_text %}
-                                                <span class="change-text">{{ field.help_text|safe }}</span>
-                                            {% endif %}
-
-                                            {% for error in field.errors %}
-                                                <p style="color: red">{{ error }}</p>
-                                            {% endfor %}
-                                        </div>
-                                    {% endfor %}
-                                    <input name="strictchange" type="submit" value="SAVE" class="btn btn-success"/>
-                                    <!-- <button name="strictchange" class="button kairozu-update" type="submit">Save</button> -->
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="s-10"></div>
-                <div class="panel panel-default kai-panel">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">
-                        <div class="panel-heading kai-panel-header">
-                            <h3 class="panel-title larger raleway">
-                                <i class='fa fa-lock fa-fw'></i>&nbsp;&nbsp;Change Password
-                            </h3>
-                        </div>
-                    </a>
-                    <div id="collapse3" class="panel-collapse collapse">
-                        <div class="panel-body kai-panel-body">
-                            <div class="authform">
-                                <div class="s-5"></div>
-                                <form method="post">{% csrf_token %}
-                                    {% for field in form %}
-                                        <div class="form-group">
-                                            <span class="normal">{{ field.label_tag }}</span><br>
-                                            {{ field }}<br />
-
-                                            {% if field.help_text %}
-                                                <div class="s-10"></div>
-                                                <span class="change-text">{{ field.help_text|safe }}</span>
-                                            {% endif %}
-
-                                            {% for error in field.errors %}
-                                                <p style="color: red">{{ error }}</p>
-                                            {% endfor %}
-                                        </div>
-                                    {% endfor %}
-                                    <input name="passchange" type="submit" value="CHANGE" class="btn btn-success"/>
-                                    <!-- <button name="passchange" class="button kairozu-update" type="submit">Change</button> -->
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
+            {% endif %}
         </div>
+        <div class="margin-bottom-20">
+            {% if user.profile.vrcount == 0 and user.profile.srcount == 0 %}
+                <div class="spot-image"><i class='fa fa-star-o fa-2x grey-words'></i></div>
+                <div class="spot-texti">
+                    You have no pending reviews.
+                </div>
+            {% else %}
+                <div class="spot-image"><i class='fa fa-star fa-2x red-words'></i></div>
+                <div class="spot-texti">
+                    You have <a href="{% url 'main:reviewvocab' %}">{{ user.profile.vrcount }} vocabulary words</a>, <a href="{% url 'main:reviewexpression' %}">{{ user.profile.ercount }} expressions</a>, and <a href="{% url 'main:reviewsentence' %}">{{ user.profile.srcount }} sentences</a> to review.
+                </div>
+            {% endif %}
+        </div>
+    </div>
 
-    </div>  <!--/.row-->
-</div>  <!--/.container .container-kairozu-->
+    <div class="s-30"></div>
+
+    <h2>Kairozu Account</h2>
+    <h4 class="ltgrey-words">Change administrative settings and basic account info.</h4>
+    <div class="s-10"></div>
+    <div class="panel-group" id="accordion">
+        <div class="panel panel-default kai-panel">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+                <div class="panel-heading kai-panel-header">
+                    <h3 class="panel-title larger raleway">
+                        <i class='fa fa-user-circle-o fa-fw'></i>&nbsp;&nbsp;Basic Account Info
+                    </h3>
+                </div>
+            </a>
+            <div id="collapse1" class="panel-collapse collapse">
+                <div class="panel-body kai-panel-body">
+                    <table>
+                        <tr>
+                            <td><span class="bolder">Username:</span></td><td><span class="pad-left-15">{{ user.username|title }}</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="bolder">Email:</span></td><td><span class="pad-left-15">{{ user.email }}</span></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><div class="s-5"></div><span class="change-text"><ul><li>Please email kairozu@kairozu.com for assistance with changing your email address.</li><li>Usernames cannot currently be changed (sorry!).</li></ul></span></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="s-10"></div>
+        <div class="panel panel-default kai-panel">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
+                <div class="panel-heading kai-panel-header">
+                    <h3 class="panel-title larger raleway">
+                        <i class='fa fa-gear fa-fw'></i>&nbsp;&nbsp;Kairozu Settings
+                    </h3>
+                </div>
+            </a>
+            <div id="collapse2" class="panel-collapse collapse">
+                <div class="panel-body kai-panel-body">
+                    <div class="authform">
+                        <div class="s-5"></div>
+                        <form method="post">{% csrf_token %}
+                            {% for field in strictform %}
+                                <div class="form-group">
+                                    <span class="normal">{{ field.label_tag }}</span>&nbsp;&nbsp;&nbsp;{{ field }}
+
+                                    {% if field.help_text %}
+                                        <span class="change-text">{{ field.help_text|safe }}</span>
+                                    {% endif %}
+
+                                    {% for error in field.errors %}
+                                        <p style="color: red">{{ error }}</p>
+                                    {% endfor %}
+                                </div>
+                            {% endfor %}
+                            <input name="strictchange" type="submit" value="SAVE" class="btn btn-success"/>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="s-10"></div>
+        <div class="panel panel-default kai-panel">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">
+                <div class="panel-heading kai-panel-header">
+                    <h3 class="panel-title larger raleway">
+                        <i class='fa fa-lock fa-fw'></i>&nbsp;&nbsp;Change Password
+                    </h3>
+                </div>
+            </a>
+            <div id="collapse3" class="panel-collapse collapse">
+                <div class="panel-body kai-panel-body">
+                    <div class="authform">
+                        <div class="s-5"></div>
+                        <form method="post">{% csrf_token %}
+                            {% for field in form %}
+                                <div class="form-group">
+                                    <span class="normal">{{ field.label_tag }}</span><br>
+                                    {{ field }}<br />
+
+                                    {% if field.help_text %}
+                                        <div class="s-10"></div>
+                                        <span class="change-text">{{ field.help_text|safe }}</span>
+                                    {% endif %}
+
+                                    {% for error in field.errors %}
+                                        <p style="color: red">{{ error }}</p>
+                                    {% endfor %}
+                                </div>
+                            {% endfor %}
+                            <input name="passchange" type="submit" value="CHANGE" class="btn btn-success"/>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="s-100"></div>
 
 {% endblock %}
 

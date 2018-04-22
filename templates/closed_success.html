@@ -4,20 +4,19 @@
 {% load static %}
 {% block content %}
 
-<div class="container kairozu-container">
 <div class="headsquish"></div>
-    <div class="row">
-        <div class="col-md-6">
-            <img alt="かい" id="welcomekoi" src="{% static 'img/welcome_koi.png' %}" />
-        </div>
-        <div class="col-md-6">
-            <div class="s-10 hidden-xs"></div>
-            <h1>〜ゆらゆら〜</h1>
-            <h2>ありがとうございます〜</h2>
-            <div class="s-10"></div>
-            <h3 class="raleway">Thanks! I'll send you an email if we open registration to the public.</h3>
-        </div>
+
+<div class="fc">
+    <div class="fc-flex-50">
+        <img alt="かい" id="welcomekoi" src="{% static 'img/welcome_koi.png' %}" />
     </div>
-</div>  <!--/.container .kairozu-container-->
+    <div class="fc-flex-50">
+        <div class="s-10"></div>
+        <h1>〜ゆらゆら〜</h1>
+        <h2>ありがとう ございます〜</h2>
+        <div class="s-10"></div>
+        <h3 class="raleway">Thanks! I'll send you an email if we open registration to the public.</h3>
+    </div>
+</div>
 
 {% endblock %}

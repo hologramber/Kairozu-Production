@@ -4,24 +4,23 @@
 {% load static %}
 {% block content %}
 
-<div class="container kairozu-container">
 <div class="headsquish"></div>
-    <div class="row">
-        <div class="col-md-6">
-            <img alt="かい" id="welcomekoi" src="{% static 'img/welcome_koi.png' %}" />
-        </div>
-        <div class="col-md-6">
-            <div class="s-10 hidden-xs"></div>
-            <h1>初めまして！</h1>
-            <h4 class="raleway">Nice to meet you!</h4>
-            <h2>かい　です。 回路図　の　魚　です。</h2>
-            <h4 class="raleway">I'm Kai. I'm Kairozu's fish.</h4>
-            <div class="s-10">&nbsp;</div>
-            <h2 class="opensans">Please check your email for the confirmation link to complete your registration.</h2>
-            <div class="s-10">&nbsp;</div>
-            <h3 class="raleway">Having trouble with registration? Oh dear. Fish emergency! Please let kairozu@kairozu.com know.</h3>
-        </div>
+
+<div class="fc">
+    <div class="fc-flex-50">
+        <img alt="かい" id="welcomekoi" src="{% static 'img/welcome_koi.png' %}" />
     </div>
-</div>  <!--/.container .kairozu-container-->
+    <div class="fc-flex-50">
+        <div class="s-10"></div>
+        <h1>初めまして！</h1>
+        <h4>Nice to meet you!</h4>
+        <h2>かい　です。 回路図　の　魚　です。</h2>
+        <h4>I'm Kai. I'm Kairozu's fish.</h4>
+        <div class="s-10"></div>
+        <h2 class="opensans">Please check your email for the confirmation link to complete your registration.</h2>
+        <div class="s-10"></div>
+        <h3>Having trouble with registration? Oh dear. Fish emergency! Please let kairozu@kairozu.com know.</h3>
+    </div>
+</div>
 
 {% endblock %}
