@@ -1,41 +1,37 @@
 {% load humanize %}
 
-<div class='container-fluid'>
+<div class="fc-basic">
+    <div id='vocabholder'>
+        <div id='vfield'>
 
-    <div class='row faded-white-div'>
-        <div class='col-lg-12'>
-            <div id='vocabholder'>
-                <div id='vfield'>
+            <h1>おめでとう～！　You're caught up with Vocabulary Reviews!</h1>
+            {% include 'main/reviewcurrent.html' %}
 
-                    <h1>おめでとう～！　You're caught up with Vocabulary Reviews!</h1>
-                    {% include 'main/reviewcurrent.html' %}
+            <h3>Preview your upcoming vocabulary reviews～</h3>
+            <div class="table-responsive">
+                <table class="vocablist">
+                    <thead>
+                        <tr>
+                            <th>English ・英語</th>
+                            <th>Kana ・仮名</th>
+                            <th>Next Review</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for word in object_list %}
+                            <tr>
+                                <td>{{ word.vocab.english }}</td>
+                                <td>{{ word.vocab.kana }}</td>
+                                <td>{{ word.next_review|naturaltime }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
 
-                    <h3>Preview your upcoming vocabulary reviews～</h3>
-                    <div class="table-responsive">
-                        <table class="vocablist">
-                            <thead>
-                                <tr>
-                                    <th>English ・英語</th>
-                                    <th>Kana ・仮名</th>
-                                    <th>Next Review</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for word in object_list %}
-                                    <tr>
-                                        <td>{{ word.vocab.english }}</td>
-                                        <td>{{ word.vocab.kana }}</td>
-                                        <td>{{ word.next_review|naturaltime }}</td>
-                                    </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
+        </div>  <!-- /#vfield -->
+    </div>  <!-- /#vocabholder -->
 
-                </div>  <!-- /#vfield -->
+    <div class="s-100"></div>
 
-            </div>  <!-- /#vocabholder -->
-        </div>  <!-- /.col-lg-12 -->
-    </div>  <!-- /.row -->
-<div class="s-100"></div>
-</div>  <!-- /.container-fluid -->
+</div>

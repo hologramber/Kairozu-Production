@@ -30,7 +30,6 @@
 
 #page-content-wrapper {
     width: 100%;
-    padding: 15px;
     position: absolute; }
 
 #wrapper.toggled #page-content-wrapper {
@@ -80,7 +79,7 @@
     #wrapper.toggled { padding-left: 0; }
     #sidebar-wrapper { width: 275px; }
     #wrapper.toggled #sidebar-wrapper { width: 0; }
-    #page-content-wrapper { padding: 20px; position: relative; }
+    #page-content-wrapper { position: relative; }
     #wrapper.toggled #page-content-wrapper {
         position: relative;
         margin-right: 0; }

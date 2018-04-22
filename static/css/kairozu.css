@@ -60,39 +60,55 @@ textarea:focus, input:focus { outline: none; }
 	/*margin-top: -52px;*/
     /*background-image: url('../img/island1.png'); }*/
 
-.fc, .fc-spaceb, .fc-basic, .fc-basic-center, .fc-wrap, .fc-about, .fc-footer {
-    max-width: 1170px;
-    display: flex; }
-
 .fc-general { display: flex; }
+.fc-general-col {
+    display: flex;
+    flex-direction: column; }
+.fc-general-row {
+    display: flex;
+    justify-content: space-evenly;
+    flex-flow: row wrap; }
+.fc-general-row-fs {
+    display: flex;
+    justify-content: flex-start;
+    flex-flow: row wrap; }
 
 .fc {
+    display: flex;
+    max-width: 1170px;
     margin: 0 auto;
     justify-content: center; }
 
 .fc-spaceb {
+    display: flex;
+    max-width: 1170px;
     margin: 0 auto;
     justify-content: space-between; }
 
 .fc-basic {
+    display: flex;
+    max-width: 1170px;
     margin: 0 auto;
     flex-direction: column; }
 
 .fc-basic-center {
+    display: flex;
+    max-width: 1170px;
     margin: 0 auto;
     flex-direction: column;
     justify-content: center;
     align-items: center; }
 
 .fc-wrap {
+    display: flex;
+    max-width: 1170px;
     margin: 0 auto;
     justify-content: center;
     flex-flow: row wrap; }
 
-.fc-text, .fc-center { margin: 20px; }
-
 .fc-center {
     display: flex;
+    margin: 20px;
     flex-direction: column;
     justify-content: center;
     align-items: center; }
@@ -128,6 +144,8 @@ textarea:focus, input:focus { outline: none; }
 .fc-flex-70 { flex: 0 1 70%; }
 
 .fc-about {
+    display: flex;
+    max-width: 1170px;
     margin: 0 auto;
     justify-content: space-evenly;
     flex-flow: row wrap; }
@@ -254,7 +272,10 @@ span.new-line-span {
 	margin-right: 5px;
 	margin-bottom: 5px; }
 
-.fc-footer { margin: 0 auto; }
+.fc-footer {
+    display: flex;
+    max-width: 1170px;
+    margin: 0 auto; }
 .fc-footer-1 {
     display: flex;
     flex-wrap: nowrap;

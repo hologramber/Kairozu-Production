@@ -4,8 +4,6 @@
 
 {% block content %}
 
-
-
 <div class="fc-wrap">
     {% for castle in object_list %}
         <a href="{% url 'sandbox:'|add:castle.location %}">
