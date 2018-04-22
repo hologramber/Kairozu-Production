@@ -9,162 +9,117 @@
 <div id="wrapper">
 {% include 'demo/sidebar.html' %}
 
-    <!-- Page Content -->
     <div id="page-content-wrapper">
-        <div class="container-fluid">
-            <div class="row faded-white-div">
-                <div class="col-lg-12">
+        <div class="fc-general-col">
 
-                    <div class="dashed-grey-2 jp-resources">
-                        <div class="s-15"></div>
-                        This is an example of the Exercise interface for Dialogues; it is best viewed on a large screen. Each dialogue begins with a prompt -- in the case below, the green chat bubble from やまださん. Your response is given in English, which you will enter in Japanese. As responses are entered correctly, they're added to your orange chat bubbles. The first few dialogues feel, at best, like talking to a chatbot from the 90s. As more grammar is acquired the dialogues become more fluid and relevant to everyday life.
-                    </div>
-                    <div class="s-10"></div>
+            <div class="dashed-grey-2 jp-resources">
+                <div class="s-15"></div>
+                This is an example of the Exercise interface for Dialogues; it is best viewed on a large screen. Each dialogue begins with a prompt -- in the case below, the green chat bubble from やまださん. Your response is given in English, which you will enter in Japanese. As responses are entered correctly, they're added to your orange chat bubbles. The first few dialogues feel, at best, like talking to a chatbot from the 90s. As more grammar is acquired the dialogues become more fluid and relevant to everyday life.
+            </div>
+            <div class="s-10"></div>
 
+            <h2 class="grey-words italics raleway">You're meeting Yamada-san for the first time. Your name is Sam.</h2>
+            <div class="s-10"></div>
 
-                    <h2 class="grey-words italics raleway">You're meeting Yamada-san for the first time. Your name is Sam.</h2>
-                    <div class="s-10"></div>
-
-                    <div class="dialogue-holder">
-
-                        <table id="dialogue-table" class="chat">
-
-                            <tr>
-                                <td class="dialogue-green">
-                                    <i class="fa fa-user fa-lg green-words" aria-hidden="true"></i>
-                                    <span id="dialoguename0" class="green-words bigbold">やまだ</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="message">
-                                        <div>
-                                            <p>
-                                                <span id="dialogueprompt0">はじめまして。　わたし　は　やまだ　です。　よろしく　おねがい　します。</span>
-                                            </p>
-                                        </div>
-                                        <p></p>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr style="text-align:right;">
-                                <td class="dialogue-orange">
-                                    <i class="fa fa-user fa-lg orange-words" aria-hidden="true"></i>
-                                    <span class="orange-words bigbold">You</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="message me">
-                                        <div>
-                                            <p>
-                                                <span id="responsekana0-0" class="bold">はじめまして。</span>
-                                            </p>
-                                        </div>
-                                        <p></p>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="message me">
-                                        <div>
-                                            <p>
-                                                <span id="responsekana0-1" class="bold">わたし　は　サム　です。</span>
-                                            </p>
-                                        </div>
-                                        <p></p>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="message me">
-                                        <div>
-                                            <p>
-                                                <span id="responsekana0-2" class="bold">よろしく　おねがい　します。</span>
-                                            </p>
-                                        </div>
-                                        <p></p>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="dialogue-green">
-                                    <i class="fa fa-user fa-lg green-words" aria-hidden="true"></i>
-                                    <span id="dialoguename1" class="green-words bigbold">やまだ</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="message">
-                                        <div>
-                                            <p>
-                                                <span id="dialogueprompt1">おしごと　は　なん　です　か。　べんごし　です　か。</span>
-                                            </p>
-                                        </div>
-                                        <p></p>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr style="text-align:right;">
-                                <td class="dialogue-orange">
-                                    <i class="fa fa-user fa-lg orange-words" aria-hidden="true"></i>
-                                    <span class="orange-words bigbold">You</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="message me">
-                                        <div>
-                                            <p>
-                                                <span id="responsekana1-0" class="bold">いいえ、　べんごし　じゃありません。</span>
-                                            </p>
-                                        </div>
-                                        <p></p>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="message me">
-                                        <div>
-                                            <p>
-                                                <span id="responsekana1-1" class="bold">  </span>
-                                            </p>
-                                        </div>
-                                        <p></p>
-                                    </div>
-                                </td>
-                            </tr>
-
-                        </table>
-
-                    </div>
-
-
-                    <div id="dialogue-input">
-                        <div id="grammarholder">
-                            <div id="dialogue_english" class="challenge-grammar">(I) am a student.</div>
-                            <div class="promptc">
-                                <span id="dialogue_hint" class="ls5r">&nbsp;</span>
+            <div class="dialogue-holder">
+                <table id="dialogue-table" class="chat">
+                    <tr>
+                        <td class="dialogue-green">
+                            <i class="fa fa-user fa-lg green-words" aria-hidden="true"></i>
+                            <span id="dialoguename0" class="green-words bigbold">やまだ</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="message">
+                                <div><p><span id="dialogueprompt0">はじめまして。　わたし　は　やまだ　です。　よろしく　おねがい　します。</span></p></div><p></p>
                             </div>
-                        </div>  <!-- /#grammarholder -->
+                        </td>
+                    </tr>
+                    <tr style="text-align:right;">
+                        <td class="dialogue-orange">
+                            <i class="fa fa-user fa-lg orange-words" aria-hidden="true"></i>
+                            <span class="orange-words bigbold">You</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="message me">
+                                <div><p><span id="responsekana0-0" class="bold">はじめまして。</span></p></div><p></p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="message me">
+                                <div><p><span id="responsekana0-1" class="bold">わたし　は　サム　です。</span></p></div><p></p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="message me">
+                                <div><p><span id="responsekana0-2" class="bold">よろしく　おねがい　します。</span></p></div><p></p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="dialogue-green">
+                            <i class="fa fa-user fa-lg green-words" aria-hidden="true"></i>
+                            <span id="dialoguename1" class="green-words bigbold">やまだ</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="message">
+                                <div><p><span id="dialogueprompt1">おしごと　は　なん　です　か。　べんごし　です　か。</span></p></div><p></p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr style="text-align:right;">
+                        <td class="dialogue-orange">
+                            <i class="fa fa-user fa-lg orange-words" aria-hidden="true"></i>
+                            <span class="orange-words bigbold">You</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="message me">
+                                <div><p><span id="responsekana1-0" class="bold">いいえ、　べんごし　じゃありません。</span></p></div><p></p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="message me">
+                                <div><p><span id="responsekana1-1" class="bold">  </span></p></div><p></p>
+                            </div>
+                        </td>
+                    </tr>
 
-                        <form id="dialogue_form" class="abox">
-                            <input id="id_dialogue_attempt" type="text" disabled="True">
-                            <input type='submit' value='→' disabled=True />
-                        </form>
+                </table>
+
+            </div>
+
+            <div id="dialogue-input">
+                <div id="grammarholder">
+                    <div id="dialogue_english" class="challenge-grammar">(I) am a student.</div>
+                    <div class="promptc">
+                        <span id="dialogue_hint" class="ls5r">&nbsp;</span>
                     </div>
-                </div>  <!-- /.col-lg-12 -->
-            </div>  <!-- /.row -->
-            <div class="row faded-white-div">
-                <div class="col-lg-12">
-                    <div class="s-30"></div>
-                </div>  <!-- /.col-lg-12 -->
-            </div>  <!-- /.row -->
-            <div class="s-100"></div>
-        </div>  <!-- /.container-fluid -->
+                </div>  <!-- /#grammarholder -->
+
+                <form id="dialogue_form" class="abox">
+                    <input id="id_dialogue_attempt" type="text" disabled="True">
+                    <input type='submit' value='→' disabled=True />
+                </form>
+            </div>
+
+        </div>
+        <div class="fc-general-col">
+            <div class="s-30"></div>
+        </div>
+        <div class="s-100"></div>
     </div>  <!-- /#page-content-wrapper -->
 </div>  <!-- /#wrapper -->
 

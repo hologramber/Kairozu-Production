@@ -5,37 +5,24 @@
 {% load static %}
 {% block content %}
 
-<!-- wrapper -->
 <div id='wrapper'>
 {% include 'main/sidebar.html' %}
-
-    <!-- page-content-wrapper -->
     <div id='page-content-wrapper'>
-        <div class='container-fluid'>
-            <div class='row faded-white-div'>
-                <div class='col-lg-12'>
-
-                    {% include 'main/vocab_base.html' %}
-
-                </div>  <!-- /.col-lg-12 -->
-            </div>  <!-- /.row -->
-            <div class='row faded-white-div'>
-                <div class='col-lg-12'>
-                    {% if user.profile.currentvocab > chapter.id %}
-                        <div id="finished-quiz">
-                            <i class="fa fa-star green-words" aria-hidden="true"></i><span class="grey-words smaller"> You've successfully completed this quiz; words will loop for as long as you'd like to practice.</span>
-                        </div>
-                    {% endif %}
-                    <div id="katakana-tips" style="display: none;">
-                        <i class="fa fa-star red-words" aria-hidden="true"></i><span class="grey-words smaller"> This vocabulary uses katakana characters (press shift when typing).</span>
-                    </div>
-                <div class="s-30"></div>
+        <div class="fc-basic">
+            {% include 'main/vocab_base.html' %}
+        </div>
+        <div class="fc-basic">
+            {% if user.profile.currentvocab > chapter.id %}
+                <div id="finished-quiz">
+                    <i class="fa fa-star green-words" aria-hidden="true"></i><span class="grey-words smaller"> You've successfully completed this quiz; words will loop for as long as you'd like to practice.</span>
                 </div>
+            {% endif %}
+            <div id="katakana-tips" style="display: none;">
+                <i class="fa fa-star red-words" aria-hidden="true"></i><span class="grey-words smaller"> This vocabulary uses katakana characters (press shift when typing).</span>
             </div>
+        </div>
         <div class="s-100"></div>
-        </div>  <!-- /.container-fluid -->
     </div>  <!-- /#page-content-wrapper -->
-
 </div>  <!-- /#wrapper -->
 
 <!-- wanakana, menu toggle, and get/post mechanics -->
