@@ -32,8 +32,7 @@ li.highlightlinks:hover {
     text-decoration: none;
     background: rgba(255,255,255,0.05); }
 
-main { padding-bottom: 0; margin-top: 50px; }
-.headsquish { width: 100%; height: 20px; }
+main { padding-bottom: 0; margin-top: 70px; }
 pre {
     margin: 2em 0em;
     border: 0;
@@ -1066,7 +1065,7 @@ pre::-webkit-scrollbar-track { border-radius: 5px; }
 @media all and (max-width: 768px) {
     .fc, .fc-spaceb { flex-wrap: wrap; }
     .fc div, .fc-spaceb div { flex: 0 1 100%; }
-    .headsquish { height: 15px; }
+    main { margin-top: 50px; }
 	.vocab-challenge {
 		font-size: 40px;
 		padding-top: 5px;
