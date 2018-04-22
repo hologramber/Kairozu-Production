@@ -37,9 +37,9 @@
                         {% kairozu_point lesson %}
                     {% endif %}
 
-                    <div class="row">
+                    <div class="fc-general-row">
                         {% for example in lesson.examples.all %}
-                            <div class="col-md-4">
+                            <div class="fc-flex-30">
                                 <div class="gexample dashed-grey-2">
                                     {{ example.f_english|safe }}<br />
                                     {{ example.f_hiragana|safe }}
@@ -50,8 +50,8 @@
 
                     <div class="s-20"></div>
 
-                    <div class="row">
-                        <div class="col-md-6">
+                    <div class="fc">
+                        <div class="fc-flex-50">
                             <div id="more-info">
                                 <ul>
                                     {% for moreinfo in lesson.moreinfos.all %}
@@ -61,7 +61,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-3">
+                        <div class="fc-flex-20">
                             {% if user.profile.currentpractice > lesson.id %}
                                 <div class="practicebutton">
                                     <a href="{% url 'main:sentencequiz' lesson.id %}"><img class="img-responsive" id="lessonquiz" alt="クイズ" src="{% static 'img/quiz_button.png' %}" /></a>
@@ -77,7 +77,7 @@
                                 </script>
                             {% endif %}
                         </div>
-                        <div class="col-md-3">
+                        <div class="fc-flex-20">
                             {% if user.profile.currentlesson >= lesson.id or lesson.id == 1 %}
                                 <div class="practicebutton">
                                     <a href="{% url 'main:practicequiz' lesson.id %}"><img class="img-responsive" id="lessonpractice" alt="Practice" src="{% static 'img/practice_button.png' %}" /></a>

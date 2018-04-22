@@ -60,6 +60,8 @@ textarea:focus, input:focus { outline: none; }
 	/*margin-top: -52px;*/
     /*background-image: url('../img/island1.png'); }*/
 
+.align-stretch { align-items: stretch; }
+
 .fc-general { display: flex; }
 .fc-general-col {
     display: flex;
