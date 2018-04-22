@@ -4,14 +4,6 @@
 {% load static %}
 {% block content %}
 
-<div id='isl'></div>
+{% include 'news/siteissue_form_inner.html' %}
 
-<div id="allwrap">
-<!-- page-content-wrapper -->
-    <div id='page-content-wrapper'>
-        <div class="container container-kairozu">
-            {% include 'news/siteissue_form_inner.html' %}
-        </div>
-    </div>
-</div>
 {% endblock %}

@@ -3,15 +3,14 @@
 {% load static %}
 
 {% block content %}
-<div class="container container-kairozu">
-    <div class="s-50 hidden-xs"></div>
-    <div class="s-30 visible-xs"></div>
-    <div class="row pad-left-80">
+
+<div class="headsquish"></div>
+<div class="fc-wrap pad-left-40">
         {% for chapter in object_list %}
             {% if chapter.status == 'H' %}
             {% elif user.profile.currentchapter >= chapter.id and chapter.status != 'A' %}
                 <a href="{% url 'main:interface' chapter.id %}">
-                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 chapterbox">
+                    <div class="chapterbox">
                         <h1 class="dashtitle">{{ chapter.title }}
                         {% if chapter.status == 'B' %}<span class="betatag red-words bold">[BETA]</span>{% endif %}</h1>
                         <h4 class="dashsubtitle">{{ chapter.subtitle }}</h4>
@@ -28,26 +27,30 @@
                     </div>
                 </a>
             {% elif user.profile.pendingchapter >= chapter.id and user.profile.pendingchapter > user.profile.currentchapter and chapter.status != 'A' %}
-                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 chapterbox-dim">
-                    <h1 class="dashtitle-dim">{{ chapter.title }}
-                    {% if chapter.status == 'B' %}<span class="betatag ltgrey-words bold">[BETA]</span>{% endif %}</h1>
-                    <h4 class="dashsubtitle-dim">{{ chapter.subtitle }}</h4>
-                    <div class="width-60 text-align-center raleway"><a href="{% url "main:progress" %}">Unlock this chapter<br />by mastering<br />what you've learned<br />so far!</a></div>
-                </div>
-            {% else %}
-                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 chapterbox-dim">
-                    <h1 class="dashtitle-dim">{{ chapter.title }}
-                    {% if chapter.status == 'B' %}<span class="betatag ltgrey-words bold">[BETA]</span>{% endif %}</h1>
-                    <h4 class="dashsubtitle-dim">{{ chapter.subtitle }}</h4>
-                    <div class="dashprogress">
-                        <span class="smaller ltgrey-words">
-                            {% if chapter.status == 'A' %}In Development!{% endif %}</span>
-                        <br /><br /><br /><br />
+                <span>
+                    <div class="chapterbox-dim">
+                        <h1 class="dashtitle-dim">{{ chapter.title }}
+                        {% if chapter.status == 'B' %}<span class="betatag ltgrey-words bold">[BETA]</span>{% endif %}</h1>
+                        <h4 class="dashsubtitle-dim">{{ chapter.subtitle }}</h4>
+                        <div class="width-60 text-align-center raleway">
+                            <a href="{% url "main:progress" %}">Unlock this chapter<br />by mastering<br />what you've learned<br />so far!</a>
+                        </div>
                     </div>
-                </div>
+                </span>
+            {% else %}
+                <span>
+                    <div class="chapterbox-dim">
+                        <h1 class="dashtitle-dim">{{ chapter.title }}
+                        {% if chapter.status == 'B' %}<span class="betatag ltgrey-words bold">[BETA]</span>{% endif %}</h1>
+                        <h4 class="dashsubtitle-dim">{{ chapter.subtitle }}</h4>
+                        <div class="dashprogress">
+                            <span class="smaller ltgrey-words">
+                                {% if chapter.status == 'A' %}In Development!{% endif %}</span>
+                            <br /><br /><br /><br />
+                        </div>
+                    </div>
+                </span>
             {% endif %}
         {% endfor %}
-    </div>  <!-- /.row -->
-</div>  <!--/.container .container-kairozu-->
-
+</div>
 {% endblock %}

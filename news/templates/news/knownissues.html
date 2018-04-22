@@ -4,55 +4,54 @@
 
 {% block content %}
 
-<div class="container container-kairozu">
 <div class="headsquish"></div>
-    <div class="row">
-        <div class="col-lg-12">
+<div class="fc-basic">
 
-            <h1>Known Kairozu Issues</h1>
-            <p>A list of known issues, bugs, glitches, errors, woes, design troubles, and other unfortunate events. Planned features and reminders are also included.</p>
+    <h1>Known Kairozu Issues</h1>
+    <p>A list of known issues, bugs, glitches, errors, woes, design troubles, and other unfortunate events. Planned features and reminders are also included.</p>
 
-            <div class="s-5"></div>
-            <div class="table-responsive">
-                <table class="vocablist">
-                    <thead>
-                        <tr>
-                            <th width="5%">Priority</th>
-                            <th width="8%">Status</th>
-                            <th width="14%">Category</th>
-                            <th width="10%">Last Update</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for issue in object_list %}
-                            <tr>
-                                {% if issue.issue_status == "FIXED" %}
-                                    <td class="ltgrey-words">{{ issue.get_issue_priority_display }}</td>
-                                    <td class="ltgrey-words">{{ issue.get_issue_status_display }}</td>
-                                    <td class="ltgrey-words">{{ issue.get_issue_type_display }}</td>
-                                    <td class="ltgrey-words">{{ issue.issue_date|date:"d M Y" }}</td>
-                                    <td class="ltgrey-words">{{ issue.issue_description }}</td>
-                                {% elif issue.issue_priority == "HIGH" %}
-                                    <td class="purple-words">{{ issue.get_issue_priority_display }}</td>
-                                    <td class="purple-words">{{ issue.get_issue_status_display }}</td>
-                                    <td class="purple-words">{{ issue.get_issue_type_display }}</td>
-                                    <td class="purple-words">{{ issue.issue_date|date:"d M Y" }}</td>
-                                    <td class="purple-words">{{ issue.issue_description }}</td>
-                                {% else %}
-                                    <td>{{ issue.get_issue_priority_display }}</td>
-                                    <td>{{ issue.get_issue_status_display }}</td>
-                                    <td>{{ issue.get_issue_type_display }}</td>
-                                    <td>{{ issue.issue_date|date:"d M Y" }}</td>
-                                    <td>{{ issue.issue_description }}</td>
-                                {% endif %}
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </div>  <!-- /.col-lg-12 -->
-    </div>  <!-- /.row -->
-</div>  <!--/.container .container-kairozu-->
+    <div class="s-5"></div>
+    <div class="table-responsive">
+        <table class="vocablist">
+            <thead>
+                <tr>
+                    <th width="5%">Priority</th>
+                    <th width="8%">Status</th>
+                    <th width="14%">Category</th>
+                    <th width="10%">Last Update</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for issue in object_list %}
+                    <tr>
+                        {% if issue.issue_status == "FIXED" %}
+                            <td class="ltgrey-words">{{ issue.get_issue_priority_display }}</td>
+                            <td class="ltgrey-words">{{ issue.get_issue_status_display }}</td>
+                            <td class="ltgrey-words">{{ issue.get_issue_type_display }}</td>
+                            <td class="ltgrey-words">{{ issue.issue_date|date:"d M Y" }}</td>
+                            <td class="ltgrey-words">{{ issue.issue_description }}</td>
+                        {% elif issue.issue_priority == "HIGH" %}
+                            <td class="purple-words">{{ issue.get_issue_priority_display }}</td>
+                            <td class="purple-words">{{ issue.get_issue_status_display }}</td>
+                            <td class="purple-words">{{ issue.get_issue_type_display }}</td>
+                            <td class="purple-words">{{ issue.issue_date|date:"d M Y" }}</td>
+                            <td class="purple-words">{{ issue.issue_description }}</td>
+                        {% else %}
+                            <td>{{ issue.get_issue_priority_display }}</td>
+                            <td>{{ issue.get_issue_status_display }}</td>
+                            <td>{{ issue.get_issue_type_display }}</td>
+                            <td>{{ issue.issue_date|date:"d M Y" }}</td>
+                            <td>{{ issue.issue_description }}</td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<div class="s-100"></div>
 
 {% endblock %}

@@ -4,69 +4,66 @@
 
 {% block content %}
 
-<div class="container container-kairozu">
 <div class="headsquish"></div>
-    <div class="row">
-        <div class="col-sm-8">
-            <h1>Kairozu Blog & Site Updates</h1>
-            {% for post in posts %}
-                <h3 class="raleway"><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
-                <span class="smaller">Posted on <time datetime="{{ post.published_date|date:"c" }}"> {{ post.published_date|date }}</time></span>
-                {% if post.indextext %}
-                    <p>{{ post.indextext|safe }}</p>
-                {% else %}
-                    <p>{{ post.text|safe|truncatewords_html:100 }}</p>
-                {% endif %}
-                <p><a class="read-more" href="{{ post.get_absolute_url }}">View Full Post &raquo;</a></p>
-                <div class="s-5"></div>
-            {% endfor %}
-        </div>
-        <div class="col-sm-4">
-            <div class="s-20"></div>
-            <div class=" bolder lineheight-20 opensans smaller dashed-grey-2 text-align-center">
-                <div class="s-10"></div>
-                Next Maintenance Downtime<br />
-                Apr 30 02:00-04:00 UTC
-                <div class="s-10"></div>
-                <a href="{% url 'news:knownissues' %}">&nbsp;Known Issues & Bug Updates&nbsp;</a>
-                <div class="s-10"></div>
-            </div>
-
-            <div class="s-50"></div>
-
-            <i class="fa fa-github fa-fw fa-lg"></i>&nbsp;&nbsp;<a class="raleway" href="https://github.com/kairozu">kairozu</a>
-            <div class="s-10"></div>
-            <i class="fa fa-twitter fa-fw fa-lg"></i>&nbsp;&nbsp;<a class="raleway" href="https://twitter.com/kairozukigou">kairozukigou</a>
-            <div class="s-10"></div>
-            <i class="fa fa-instagram fa-fw fa-lg"></i>&nbsp;&nbsp;<a class="raleway" href="https://instagram.com/kairozu">kairozu</a>
-            <div class="s-10"></div>
-            <i class="fa fa-envelope-square fa-fw fa-lg"></i>&nbsp;&nbsp;<a class="raleway" href="{% url 'contact' %}">kairozu@kairozu.com</a>
-            <div class="s-10"></div>
-            <i class="fa fa-rss-square fa-fw fa-lg"></i>&nbsp;&nbsp;<a class="raleway" href="https://kairozu.com/news/rss/">RSS</a> & <a class="raleway" href="https://kairozu.com/news/atom/">Atom</a>
-
-            <div class="s-40"></div>
-
-            <span class="opensans bolder larger">Kairozu Updates</span>
+<div class="fc-spaceb">
+    <div class="fc-flex-60">
+        <h1>Kairozu Blog & Site Updates</h1>
+        {% for post in posts %}
+            <h3><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
+            <span class="smaller">Posted on <time datetime="{{ post.published_date|date:"c" }}"> {{ post.published_date|date }}</time></span>
+            {% if post.indextext %}
+                <p>{{ post.indextext|safe }}</p>
+            {% else %}
+                <p>{{ post.text|safe|truncatewords_html:100 }}</p>
+            {% endif %}
+            <p><a class="read-more" href="{{ post.get_absolute_url }}">View Full Post &raquo;</a></p>
             <div class="s-5"></div>
-            <ul>
-                {% for kai in kaiposts %}
-                    <li><a class="raleway" href="{{ kai.get_absolute_url }}">{{ kai.title }}</a></li>
-                {% endfor %}
-            </ul>
-
-            <div class="s-15"></div>
-
-            <span class="opensans bolder larger">Fun with NLP</span>
-            <div class="s-5"></div>
-            <ul>
-                {% for nlp in nlpposts %}
-                    <li><a class="raleway" href="{{ nlp.get_absolute_url }}">{{ nlp.title }}</a></li>
-                {% endfor %}
-            </ul>
-
-        </div>
+        {% endfor %}
     </div>
-</div>  <!--/.container .container-kairozu-->
 
+    <div class="fc-flex-30">
+        <div class="s-20"></div>
+        <div class="bolder lineheight-20 opensans smaller dashed-grey-2 text-align-center">
+            <div class="s-10"></div>
+            Next Maintenance Downtime<br />
+            Apr 30 02:00-04:00 UTC
+            <div class="s-10"></div>
+            <a href="{% url 'news:knownissues' %}">&nbsp;Known Issues & Bug Updates&nbsp;</a>
+            <div class="s-10"></div>
+        </div>
+
+        <div class="s-50"></div>
+
+        <i class="fa fa-github fa-fw fa-lg"></i>&nbsp;&nbsp;<a class="raleway" href="https://github.com/kairozu">kairozu</a>
+        <div class="s-10"></div>
+        <i class="fa fa-twitter fa-fw fa-lg"></i>&nbsp;&nbsp;<a class="raleway" href="https://twitter.com/kairozukigou">kairozukigou</a>
+        <div class="s-10"></div>
+        <i class="fa fa-instagram fa-fw fa-lg"></i>&nbsp;&nbsp;<a class="raleway" href="https://instagram.com/kairozu">kairozu</a>
+        <div class="s-10"></div>
+        <i class="fa fa-envelope-square fa-fw fa-lg"></i>&nbsp;&nbsp;<a class="raleway" href="{% url 'contact' %}">kai@kairozu.com</a>
+        <div class="s-10"></div>
+        <i class="fa fa-rss-square fa-fw fa-lg"></i>&nbsp;&nbsp;<a class="raleway" href="https://kairozu.com/news/rss/">RSS</a> & <a class="raleway" href="https://kairozu.com/news/atom/">Atom</a>
+
+        <div class="s-40"></div>
+
+        <span class="opensans bolder larger">Kairozu Updates</span>
+        <div class="s-5"></div>
+        <ul>
+            {% for kai in kaiposts %}
+                <li><a class="raleway" href="{{ kai.get_absolute_url }}">{{ kai.title }}</a></li>
+            {% endfor %}
+        </ul>
+
+        <div class="s-15"></div>
+
+        <span class="opensans bolder larger">Fun with NLP</span>
+        <div class="s-5"></div>
+        <ul>
+            {% for nlp in nlpposts %}
+                <li><a class="raleway" href="{{ nlp.get_absolute_url }}">{{ nlp.title }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
 {% endblock %}
 

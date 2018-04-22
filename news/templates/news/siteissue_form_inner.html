@@ -1,15 +1,11 @@
-<div class="row">
-    <div class="col-sm-12">
-        <form class="bugform" action="{% url 'news:issue' %}" method="post">
-            {% csrf_token %}
-            <div class="bugform-inner">
-                <span class="raleway">Please select the option which best describes the problem:</span>
-                {{ form.report_type }}
-                <div class="s-15"></div>
-                <span class="raleway">Any additional information you can give is appreciated:</span>
-                {{ form.report_comment }}
-            </div>
-            <input type="submit" value="Submit" class="btn btn-default">
-        </form>
+<form class="bugform" action="{% url 'news:issue' %}" method="post">
+    {% csrf_token %}
+    <div class="bugform-inner">
+        <span class="raleway">Please select the option which best describes the problem:</span>
+        {{ form.report_type }}
+        <div class="s-15"></div>
+        <span class="raleway">Any additional information you can give is appreciated:</span>
+        {{ form.report_comment }}
     </div>
-</div>
+    <button class="btn btn-default trans" type="submit">SUBMIT</button>
+</form>
