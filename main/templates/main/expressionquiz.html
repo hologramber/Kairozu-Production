@@ -7,53 +7,49 @@
 
 <div id='wrapper'>
 {% include 'main/sidebar.html' %}
-    <div id='page-content-wrapper'>
+    <div class="fc-basic">
+        <div id='vocabholder'>
 
-        <div class="fc-basic">
-            <div id='vocabholder'>
+            <div id='vfield'>
+                <div id='literal_note' class='vocab-note text-align-center'></div>
+                <div id='expression_english' class='vocab-challenge text-align-center'></div>
 
-                <div id='vfield'>
-                    <div id='literal_note' class='vocab-note text-align-center'></div>
-                    <div id='expression_english' class='vocab-challenge text-align-center'></div>
-
-                    <div class='vocab-promptc text-align-center'>
-                        <span id='hint_block' class='ls5'>&nbsp;</span>
-                        <a id="bug-button" href="#" tabindex="-1" style="display: none;">
-                            <i id="report-issue" class="fa fa-bug red-words" aria-hidden="true"><span class="raleway">&nbsp;Error?</span></i>
-                        </a>
-                    </div>
-
-                    <form id='expressionquizform' action='' method='post' class='abox'>{% csrf_token %}
-                        <input id='id_expressionattempt' type='text' name='expression_attempt' autocapitalize='none' autocorrect='off' autofocus />
-                        <input id='eactual' type='hidden' name='expression_actual' value='' />
-                        <input id='ecode' type='hidden' name='expression_code' value='A' />
-                        <input id='eid' type='hidden' name='expressionrecord_id' value='' />
-                        <input type='submit' value='&#8680;' />
-                    </form>
-                    <div id='literal_one' class='lit-c'></div>
-
-                </div>  <!-- /#vfield -->
-            </div>  <!-- /#vocabholder -->
-        </div>
-        <div class="fc-basic">
-            <div id="expression-example" style="display: none;">
-                <i class="fa fa-info-circle green-words" aria-hidden="true"></i>&nbsp;&nbsp;<span id="prompt-text" class="grey-words smaller"></span>
-            </div>
-
-            <div id="katakana-tips" style="display: none;">
-                <i class="fa fa-star red-words" aria-hidden="true"></i>&nbsp;&nbsp;<span class="grey-words smaller">This expression uses katakana characters (press shift when typing).</span>
-            </div>
-
-            {% if user.profile.currentexpression > chapter.id %}
-                <div id="finished-quiz">
-                    <i class="fa fa-star green-words" aria-hidden="true"></i><span class="grey-words smaller"> You've successfully completed this quiz; expressions will loop for as long as you'd like to practice.</span>
+                <div class='vocab-promptc text-align-center'>
+                    <span id='hint_block' class='ls5'>&nbsp;</span>
+                    <a id="bug-button" href="#" tabindex="-1" style="display: none;">
+                        <i id="report-issue" class="fa fa-bug red-words" aria-hidden="true"><span class="raleway">&nbsp;Error?</span></i>
+                    </a>
                 </div>
-            {% endif %}
 
+                <form id='expressionquizform' action='' method='post' class='abox'>{% csrf_token %}
+                    <input id='id_expressionattempt' type='text' name='expression_attempt' autocapitalize='none' autocorrect='off' autofocus />
+                    <input id='eactual' type='hidden' name='expression_actual' value='' />
+                    <input id='ecode' type='hidden' name='expression_code' value='A' />
+                    <input id='eid' type='hidden' name='expressionrecord_id' value='' />
+                    <input type='submit' value='&#8680;' />
+                </form>
+                <div id='literal_one' class='lit-c'></div>
+
+            </div>  <!-- /#vfield -->
+        </div>  <!-- /#vocabholder -->
+    </div>
+    <div class="fc-basic">
+        <div id="expression-example" style="display: none;">
+            <i class="fa fa-info-circle green-words" aria-hidden="true"></i>&nbsp;&nbsp;<span id="prompt-text" class="grey-words smaller"></span>
         </div>
-        <div class="s-100"></div>
 
-    </div>  <!-- /#page-content-wrapper -->
+        <div id="katakana-tips" style="display: none;">
+            <i class="fa fa-star red-words" aria-hidden="true"></i>&nbsp;&nbsp;<span class="grey-words smaller">This expression uses katakana characters (press shift when typing).</span>
+        </div>
+
+        {% if user.profile.currentexpression > chapter.id %}
+            <div id="finished-quiz">
+                <i class="fa fa-star green-words" aria-hidden="true"></i><span class="grey-words smaller"> You've successfully completed this quiz; expressions will loop for as long as you'd like to practice.</span>
+            </div>
+        {% endif %}
+
+    </div>
+    <div class="s-100"></div>
 </div>  <!-- /#wrapper -->
 
 <!-- wanakana, menu toggle, and get/post mechanics -->

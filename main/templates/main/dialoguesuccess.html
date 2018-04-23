@@ -1,29 +1,24 @@
 {% include 'main/sidebar.html' %}
+<div class="fc-general-col">
 
-<!-- page-content-wrapper -->
-<div id='page-content-wrapper'>
-    <div class="fc-general-col">
-
-        <div class="dialogue-holder">
-            <table id="dialogue-table" class="chat">
-            </table>
-        </div>
-
-        <div class="visible-block">
-            <h1>おわり！　That's the end of this dialogue!</h1>
-            {% include 'main/exercise_score.html' %}
-
-            {% if erecord.rating < 2 %}
-                {% if user.profile.currentexercise > erecord.exercise.exercise_order %}
-                    You've already completed this dialogue, but <a href="{% url 'main:exercisedialogue' chapter.id erecord.exercise.id %}">perhaps you want to give it another try and raise your score</a>?
-                {% else %}
-                    To unlock more content, you need to answer at least 70% of the lines correctly on the first attempt. <a href="{% url 'main:exercisedialogue' chapter.id erecord.exercise.id %}">Give it another try</a>?
-                {% endif %}
-            {% endif %}
-
-            {% include 'main/successnext.html' %}
-        </div>
+    <div class="dialogue-holder">
+        <table id="dialogue-table" class="chat">
+        </table>
     </div>
-    <div class="s-100"></div>
 
-</div>  <!-- /#page-content-wrapper -->
+    <div class="visible-block">
+        <h1>おわり！　That's the end of this dialogue!</h1>
+        {% include 'main/exercise_score.html' %}
+
+        {% if erecord.rating < 2 %}
+            {% if user.profile.currentexercise > erecord.exercise.exercise_order %}
+                You've already completed this dialogue, but <a href="{% url 'main:exercisedialogue' chapter.id erecord.exercise.id %}">perhaps you want to give it another try and raise your score</a>?
+            {% else %}
+                To unlock more content, you need to answer at least 70% of the lines correctly on the first attempt. <a href="{% url 'main:exercisedialogue' chapter.id erecord.exercise.id %}">Give it another try</a>?
+            {% endif %}
+        {% endif %}
+
+        {% include 'main/successnext.html' %}
+    </div>
+</div>
+<div class="s-100"></div>

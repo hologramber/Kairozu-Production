@@ -4,7 +4,6 @@
     -moz-transition: all 0.5s ease;
     -o-transition: all 0.5s ease;
     transition: all 0.5s ease; }
-#wrapper.toggled { padding-left: 275px; }
 
 #sidebar-wrapper {
     z-index: 1000;
@@ -21,21 +20,6 @@
     -o-transition: all 0.5s ease;
     transition: all 0.5s ease; }
 #wrapper.toggled #sidebar-wrapper { width: 275px; }
-
-/*
-#sidebar-wrapper::-webkit-scrollbar { -webkit-appearance: none; }
-#sidebar-wrapper::-webkit-scrollbar:vertical { width: 10px; }
-#sidebar-wrapper::-webkit-scrollbar:horizontal { height: 10px; }
-#sidebar-wrapper::-webkit-scrollbar-thumb { border-radius: 5px; background-color: #bcbcbc; }
-#sidebar-wrapper::-webkit-scrollbar-track { border-radius: 0; background-color: #1c1c1c; } */
-
-#page-content-wrapper {
-    width: 100%;
-    position: absolute; }
-
-#wrapper.toggled #page-content-wrapper {
-    position: absolute;
-    margin-right: -275px; }
 
 .sidebar-nav {
     position: absolute;
@@ -80,8 +64,4 @@
     #wrapper.toggled { padding-left: 0; }
     #sidebar-wrapper { width: 275px; }
     #wrapper.toggled #sidebar-wrapper { width: 0; }
-    #page-content-wrapper { position: relative; }
-    #wrapper.toggled #page-content-wrapper {
-        position: relative;
-        margin-right: 0; }
 }

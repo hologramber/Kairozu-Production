@@ -1,24 +1,20 @@
 <div id='wrapper'>
 {% include 'main/sidebar.html' %}
-    <div id='page-content-wrapper'>
+    <div class="fc-general-col">
+        <div id='practiceholder'>
+            <div id='pfield'>
+                <div id='context_one' class='context-container'></div>
+                <div id='practice_eng_one' class='practice-grammar'></div>
 
-        <div class="fc-general-col">
+                <div class='promptc'>
+                    <span id='hint_one' class='ls5'></span>
+                </div>
 
-            <div id='practiceholder'>
-                <div id='pfield'>
-                    <div id='context_one' class='context-container'></div>
-                    <div id='practice_eng_one' class='practice-grammar'></div>
-
-                    <div class='promptc'>
-                        <span id='hint_one' class='ls5'></span>
-                    </div>
-
-                    <form id='practicequizform' action='' method='post'>{% csrf_token %}
-                        <input id='id_pone_attempt' type='text' name='pone_attempt' class='kbox1' autocapitalize='none' autocorrect='off' />
+                <form id='practicequizform' action='' method='post'>{% csrf_token %}
+                    <input id='id_pone_attempt' type='text' name='pone_attempt' class='kbox1' autocapitalize='none' autocorrect='off' />
                     <div id='literal_one' class='lit-c'></div>
 
                     <div class="s-40"></div>
-
                     <div id='context_two' class='context-container'></div>
                     <div id='practice_eng_two' class='practice-grammar'></div>
 
@@ -29,18 +25,16 @@
                         </a>
                     </div>
 
-                        <input id='id_ptwo_attempt' type='text' name='ptwo_attempt' class='kbox2' autocapitalize='none' autocorrect='off' />
-                        <input id='poneact' type='hidden' name='pone_actual' value='' />
-                        <input id='ptwoact' type='hidden' name='ptwo_actual' value='' />
-                        <input id='pstrict' type='hidden' name='practice_strict' value='0' />
-                        <input id='pindex' type='hidden' name='pindex' value='' />
-                        <input id='ksubmit' type='submit' class='ksub' value='&#8680;' />
-                    </form>
-                    <div id='literal_two' class='lit-c'></div>
-                </div>  <!-- /#pfield -->
-            </div>  <!-- /#practiceholder -->
-
-        </div>
-        <div class="s-100"></div>
-    </div>  <!-- /#page-content-wrapper -->
+                    <input id='id_ptwo_attempt' type='text' name='ptwo_attempt' class='kbox2' autocapitalize='none' autocorrect='off' />
+                    <input id='poneact' type='hidden' name='pone_actual' value='' />
+                    <input id='ptwoact' type='hidden' name='ptwo_actual' value='' />
+                    <input id='pstrict' type='hidden' name='practice_strict' value='0' />
+                    <input id='pindex' type='hidden' name='pindex' value='' />
+                    <input id='ksubmit' type='submit' class='ksub' value='&#8680;' />
+                </form>
+                <div id='literal_two' class='lit-c'></div>
+            </div>  <!-- /#pfield -->
+        </div>  <!-- /#practiceholder -->
+    </div>
+    <div class="s-100"></div>
 </div>  <!-- /#wrapper -->

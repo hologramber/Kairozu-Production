@@ -7,74 +7,70 @@
 
 <div id="wrapper">
 {% include 'main/sidebar.html' %}
-    <div id="page-content-wrapper">
-        <div class="fc-general-col">
+    <div class="fc-general-col">
 
-            <h1>{{ chapter.title }} Vocabulary</h1>
-            {% if user.profile.currentvocab > chapter.id %}
-                <p class="raleway">Congrats! You've finished the vocabulary for this chapter, but the <a href="{% url 'main:vocabquiz' chapter.id %}">Vocabulary Quiz</a> interface is always available if you want more practice.</p>
-            {% else %}
-                <p class="raleway">This is a list of the vocabulary used in the {{ chapter.title }} sentences. Complete the <a href="{% url 'main:vocabquiz' chapter.id %}">Vocabulary Quiz</a> to unlock the expressions for this chapter.</p>
-            {% endif %}
-            <span class="smaller bold raleway">Guide to Vocabulary List Symbols</span>
-                <ul class="thin-list raleway">
-                    <li class="smaller"><i class="fa fa-star red-words" aria-hidden="true"></i> words use the <a href="{% url 'sandbox:japanesekana' %}">katakana character set</a>; these words are often foreign in origin or onomatopoeic. Hold shift when entering text to switch to katakana.</li>
-                    <li class="smaller"><span class="green-words partofspeech">い</span>, <span class="partofspeech blue-words">な</span>, and <span class="partofspeech orange-words">の</span> indicate adjective type: い-adjectives, な-adjectives, and の-adjectives respectively.</li>
-                    <li class="smaller">Verbs labeled with <span class="partofspeech purple-words">V1</span> are ichidan, class 1, or る-verbs. Most verbs that end in 〜いる and 〜える are ichidan verbs.</li>
-                    <li class="smaller">Verbs labeled with <span class="partofspeech orange-words">V5</span> are godan, class 5, or う-verbs. Verbs that do not end in 〜いる and 〜える (as well as a few that do) are godan verbs.</li>
-                    <li class="smaller"><i class="fa fa-exclamation-triangle ltgrey-words" aria-hidden="true"></i> indicates an irregular verb: くる, する, and verbs that end in 〜する.</li>
-                </ul>
-            <div class="s-5"></div>
-            <div class="table-responsive">
-                <table class="vocablist">
-                    <thead>
+        <h1>{{ chapter.title }} Vocabulary</h1>
+        {% if user.profile.currentvocab > chapter.id %}
+            <p class="raleway">Congrats! You've finished the vocabulary for this chapter, but the <a href="{% url 'main:vocabquiz' chapter.id %}">Vocabulary Quiz</a> interface is always available if you want more practice.</p>
+        {% else %}
+            <p class="raleway">This is a list of the vocabulary used in the {{ chapter.title }} sentences. Complete the <a href="{% url 'main:vocabquiz' chapter.id %}">Vocabulary Quiz</a> to unlock the expressions for this chapter.</p>
+        {% endif %}
+        <span class="smaller bold raleway">Guide to Vocabulary List Symbols</span>
+            <ul class="thin-list raleway">
+                <li class="smaller"><i class="fa fa-star red-words" aria-hidden="true"></i> words use the <a href="{% url 'sandbox:japanesekana' %}">katakana character set</a>; these words are often foreign in origin or onomatopoeic. Hold shift when entering text to switch to katakana.</li>
+                <li class="smaller"><span class="green-words partofspeech">い</span>, <span class="partofspeech blue-words">な</span>, and <span class="partofspeech orange-words">の</span> indicate adjective type: い-adjectives, な-adjectives, and の-adjectives respectively.</li>
+                <li class="smaller">Verbs labeled with <span class="partofspeech purple-words">V1</span> are ichidan, class 1, or る-verbs. Most verbs that end in 〜いる and 〜える are ichidan verbs.</li>
+                <li class="smaller">Verbs labeled with <span class="partofspeech orange-words">V5</span> are godan, class 5, or う-verbs. Verbs that do not end in 〜いる and 〜える (as well as a few that do) are godan verbs.</li>
+                <li class="smaller"><i class="fa fa-exclamation-triangle ltgrey-words" aria-hidden="true"></i> indicates an irregular verb: くる, する, and verbs that end in 〜する.</li>
+            </ul>
+        <div class="s-5"></div>
+        <div class="table-responsive">
+            <table class="vocablist">
+                <thead>
+                    <tr>
+                        <th>English・英語</th>
+                        <th>Kana・仮名</th>
+                        <th>Kanji・漢字</th>
+                        <th><i class="fa fa-info-circle fa-fw" aria-hidden="true"></i></th>
+                        <th>カ</th>
+                        <th>Note</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for word in object_list %}
                         <tr>
-                            <th>English・英語</th>
-                            <th>Kana・仮名</th>
-                            <th>Kanji・漢字</th>
-                            <th><i class="fa fa-info-circle fa-fw" aria-hidden="true"></i></th>
-                            <th>カ</th>
-                            <th>Note</th>
+                            <td>{{ word.english }}</td>
+                            <td>{{ word.kana }}</td>
+                            <td>{{ word.kanji }}</td>
+                            {# 17=iadj, 18=naadj, 19=noadj, 20=ruverb, 21=uverb, 22=irregverb #}
+                            <td>
+                                {% if word.partofspeech == 17 %}
+                                    <span class="green-words partofspeech" title="い-adjective">い</span>
+                                {% elif word.partofspeech == 18 %}
+                                    <span class="partofspeech blue-words" title="な-adjective">な</span>
+                                {% elif word.partofspeech == 19 %}
+                                    <span class="partofspeech orange-words" title="の-adjective">の</span>
+                                {% elif word.partofspeech == 20 %}
+                                    <span class="partofspeech purple-words" title="ichidan/る-verb">V1</span>
+                                {% elif word.partofspeech == 21 %}
+                                    <span class="partofspeech orange-words" title="godan/う-verb">V5</span>
+                                {% elif word.partofspeech == 22 %}
+                                    <i class="fa fa-exclamation-triangle ltgrey-words" aria-hidden="true" title="irregular verb"></i>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if word.katakana %}
+                                    <i class="fa fa-star red-words" aria-hidden="true" title="katakana word"></i>
+                                {% endif %}
+                            </td>
+                            <td>{{ word.note }}</td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        {% for word in object_list %}
-                            <tr>
-                                <td>{{ word.english }}</td>
-                                <td>{{ word.kana }}</td>
-                                <td>{{ word.kanji }}</td>
-                                {# 17=iadj, 18=naadj, 19=noadj, 20=ruverb, 21=uverb, 22=irregverb #}
-                                <td>
-                                    {% if word.partofspeech == 17 %}
-                                        <span class="green-words partofspeech" title="い-adjective">い</span>
-                                    {% elif word.partofspeech == 18 %}
-                                        <span class="partofspeech blue-words" title="な-adjective">な</span>
-                                    {% elif word.partofspeech == 19 %}
-                                        <span class="partofspeech orange-words" title="の-adjective">の</span>
-                                    {% elif word.partofspeech == 20 %}
-                                        <span class="partofspeech purple-words" title="ichidan/る-verb">V1</span>
-                                    {% elif word.partofspeech == 21 %}
-                                        <span class="partofspeech orange-words" title="godan/う-verb">V5</span>
-                                    {% elif word.partofspeech == 22 %}
-                                        <i class="fa fa-exclamation-triangle ltgrey-words" aria-hidden="true" title="irregular verb"></i>
-                                    {% endif %}
-                                </td>
-                                <td>
-                                    {% if word.katakana %}
-                                        <i class="fa fa-star red-words" aria-hidden="true" title="katakana word"></i>
-                                    {% endif %}
-                                </td>
-                                <td>{{ word.note }}</td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="s-100"></div>
-
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
-    </div>  <!-- /#page-content-wrapper -->
+    </div>
+    <div class="s-100"></div>
 </div>  <!-- /#wrapper -->
 
 {% endblock %}

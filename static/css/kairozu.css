@@ -34,7 +34,7 @@ li.highlightlinks:hover {
 
 main { padding-bottom: 0; margin-top: 70px; }
 pre {
-    margin: 2em 0em;
+    margin: 2em 0;
     border: 0;
     border-radius: 5px;
     box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.2); }
@@ -45,9 +45,6 @@ pre {
   height: auto;
   margin: 0 auto; }
 img { image-rendering: -webkit-optimize-contrast; }
-
-@media (min-width: 1600px) { .kairozu-container { width: 1570px; } }
-@media (min-width: 1400px) { .kairozu-container { width: 1370px; } }
 
 textarea:focus, input:focus { outline: none; }
 

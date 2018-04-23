@@ -7,22 +7,20 @@
 
 <div id='wrapper'>
 {% include 'main/sidebar.html' %}
-    <div id='page-content-wrapper'>
-        <div class="fc-basic">
-            {% include 'main/vocab_base.html' %}
-        </div>
-        <div class="fc-basic">
-            {% if user.profile.currentvocab > chapter.id %}
-                <div id="finished-quiz">
-                    <i class="fa fa-star green-words" aria-hidden="true"></i><span class="grey-words smaller"> You've successfully completed this quiz; words will loop for as long as you'd like to practice.</span>
-                </div>
-            {% endif %}
-            <div id="katakana-tips" style="display: none;">
-                <i class="fa fa-star red-words" aria-hidden="true"></i><span class="grey-words smaller"> This vocabulary uses katakana characters (press shift when typing).</span>
+    <div class="fc-basic">
+        {% include 'main/vocab_base.html' %}
+    </div>
+    <div class="fc-basic">
+        {% if user.profile.currentvocab > chapter.id %}
+            <div id="finished-quiz">
+                <i class="fa fa-star green-words" aria-hidden="true"></i><span class="grey-words smaller"> You've successfully completed this quiz; words will loop for as long as you'd like to practice.</span>
             </div>
+        {% endif %}
+        <div id="katakana-tips" style="display: none;">
+            <i class="fa fa-star red-words" aria-hidden="true"></i><span class="grey-words smaller"> This vocabulary uses katakana characters (press shift when typing).</span>
         </div>
-        <div class="s-100"></div>
-    </div>  <!-- /#page-content-wrapper -->
+    </div>
+    <div class="s-100"></div>
 </div>  <!-- /#wrapper -->
 
 <!-- wanakana, menu toggle, and get/post mechanics -->

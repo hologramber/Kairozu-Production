@@ -1,20 +1,16 @@
 <div id='wrapper'>
 {% include 'main/sidebar.html' %}
-    <div id='page-content-wrapper'>
+    <div class="fc-general-col">
+        {% include 'main/sentence_base.html' %}
+        <div class="s-30"></div>
+    </div>
 
+    {% if user.profile.currentlesson > lesson.id %}
         <div class="fc-general-col">
-            {% include 'main/sentence_base.html' %}
-            <div class="s-30"></div>
-        </div>
-
-        {% if user.profile.currentlesson > lesson.id %}
-            <div class="fc-general-col">
-                <div id="finished-quiz">
-                    <i class="fa fa-star green-words" aria-hidden="true"></i><span class="grey-words smaller"> You've successfully completed this quiz; sentences will loop for as long as you'd like to practice.</span>
-                </div>
+            <div id="finished-quiz">
+                <i class="fa fa-star green-words" aria-hidden="true"></i><span class="grey-words smaller"> You've successfully completed this quiz; sentences will loop for as long as you'd like to practice.</span>
             </div>
-        {% endif %}
-        <div class="s-100"></div>
-
-    </div>  <!-- /#page-content-wrapper -->
+        </div>
+    {% endif %}
+    <div class="s-100"></div>
 </div>  <!-- /#wrapper -->
