@@ -1,5 +1,6 @@
 .info-container { 
-	margin: 0 auto;
+	margin: 20px auto;
+	padding-top: 20px;
 	width: 60vmin; }
 .info-container:after {
 	content: "";

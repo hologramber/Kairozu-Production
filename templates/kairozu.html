@@ -8,15 +8,12 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
       gtag('config', 'UA-116288496-1');
     </script>
 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
 	<link href="https://fonts.googleapis.com/css?family=Raleway:400,600|Roboto:400,600|Open+Sans:400,600" rel="stylesheet" />
-
     <script src="{% static 'js/jquery.min.js' %}"></script>
-    <script async src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 	<link rel="icon" type="image/png" sizes="192x192" href="{% static 'favicon/favicon-192x192.png' %}" />
 	<link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon/favicon-32x32.png' %}" />
@@ -24,87 +21,74 @@
 	<link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon/favicon-16x16.png' %}" />
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 	<link rel="stylesheet" href="{% static 'css/sidebar.css' %}" />
 	<link rel="stylesheet" href="{% static 'css/kairozu.css' %}" />
-
 	<title>{% block title %}{% endblock %}</title>
 </head>
+
 <body>
+
 	<header>
-		<nav class="navbar navbar-inverse navbar-fixed-top">
-			{% block sidecollapse %}{% endblock %}
-			<div class="container">
-
-				<div class="navbar-header">
-					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#rightnav">
-						<span class="sr-only">Toggle navigation</span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-					</button>
-				
-					<div class="navbar-brand">
-						<a href="{% url 'index' %}">回路図</a>
-					</div>
-				</div>
-
-				<div class="collapse navbar-collapse" id='rightnav'>
-					<ul class="nav navbar-nav navbar-right">
-						{% if user.is_authenticated %}
-							<li><a href="{% url 'main:main' %}">MAIN</a></li>
-                            <li class="dropdown">
-                            {% if user.profile.vrcount == 0 and user.profile.srcount == 0 and user.profile.ercount == 0 %}
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="grey-words">REVIEWS <span class="caret"></span></span></a>
-                            {% else %}
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">REVIEWS <span class="red-words"><span class="caret"></span></span></a>
-                            {% endif %}
-                                <ul class="dropdown-menu">
+        <div id="kaihead">
+            {% block sidecollapse %}{% endblock %}
+        <div class="margin-lr-20">
+            <div id="kaihead-contain">
+                <div class="topnav" id="myTopnav">
+                    <div id="sitename"><a href="{% url 'index' %}">回路図</a></div>
+                    <div id="header-links">
+                        {% if user.is_authenticated %}
+                            <div><a class="headlink" href="{% url 'main:main' %}">MAIN</a></div>
+                            <div id="dropdown1" class="dropdown">
+                                {% if user.profile.vrcount == 0 and user.profile.srcount == 0 and user.profile.ercount == 0 %}
+                                    <div class="dropbtn">REVIEWS <i class="fa fa-caret-down"></i></div>
+                                {% else %}
+                                    <div class="dropbtn">REVIEWS <i class="fa red-words fa-caret-down"></i></div>
+                                {% endif %}
+                                <div class="dropdown-content">
                                     {% if user.profile.vrcount == 0 %}
-                                        <li>0 VOCABULARY</li>
+                                        <span>0 VOCABULARY</span>
                                     {% else %}
-                                        <li><a href="{% url 'main:reviewvocab' %}">{{ user.profile.vrcount }} VOCABULARY</a></li>
+                                        <a href="{% url 'main:reviewvocab' %}">{{ user.profile.vrcount }} VOCABULARY</a>
                                     {% endif %}
                                     {% if user.profile.ercount == 0 %}
-                                        <li>0 EXPRESSIONS</li>
+                                        <span>0 EXPRESSIONS</span>
                                     {% else %}
-                                        <li><a href="{% url 'main:reviewexpression' %}">{{ user.profile.ercount }} EXPRESSIONS</a></li>
+                                        <a href="{% url 'main:reviewexpression' %}">{{ user.profile.ercount }} EXPRESSIONS</a>
                                     {% endif %}
                                     {% if user.profile.srcount == 0 %}
-                                        <li>0 SENTENCES</li>
+                                        <span>0 SENTENCES</span>
                                     {% else %}
-                                        <li><a href="{% url 'main:reviewsentence' %}">{{ user.profile.srcount }} SENTENCES</a></li>
+                                        <a href="{% url 'main:reviewsentence' %}">{{ user.profile.srcount }} SENTENCES</a>
                                     {% endif %}
-                                </ul>
-                            </li>
-
-                            <li><a href="{% url 'sandbox:main' %}">SANDBOX</a></li>
-
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">KAIROZU <span class="red-words"><span class="caret"></span></span></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="{% url 'about' %}">ABOUT</a></li>
-                                    <li><a href="{% url 'news:main' %}">KAIROZU BLOG</a></li>
-                                    <li><a href="{% url 'news:faq' %}">FAQ</a></li>
-                                    <li><a href="{% url 'account' %}">YOUR ACCOUNT</a></li>
-                                    <li><a href="{% url 'main:progress' %}">YOUR PROGRESS</a></li>
-
-                                    <li><a id="comment-button" href="#">REPORT BUG　<i class="fa fa-bug red-words" aria-hidden="true"></i></a></li>
-                                    <li><a href="{% url 'logout' %}">SIGN OUT</a></li>
-                                </ul>
-                            </li>
-						{% else %}
-							<li><a href="{% url 'demo:demointerface' %}">DEMO</a></li>
-							<li><a href="{% url 'about' %}">ABOUT</a></li>
-                            <li><a href="{% url 'news:main' %}">BLOG</a></li>
-                            <li><a href="{% url 'news:faq' %}">FAQ</a></li>
-							<li><a href="{% url 'login' %}">SIGN IN</a></li>
-							<li><a href="{% url 'register' %}">SIGN UP</a></li>
-						{% endif %}
-					</ul>
-				</div>
-			</div>
-		</nav>
+                                </div>
+                            </div>
+                            <div><a class="headlink" href="{% url 'sandbox:main' %}">SANDBOX</a></div>
+                            <div id="dropdown2" class="dropdown">
+                                <div class="dropbtn">KAIROZU <i class="fa red-words fa-caret-down"></i></div>
+                                <div class="dropdown-content">
+                                    <a href="{% url 'about' %}">ABOUT</a>
+                                    <a href="{% url 'news:main' %}">KAIROZU BLOG</a>
+                                    <a href="{% url 'news:faq' %}">FAQ</a>
+                                    <a href="{% url 'account' %}">YOUR ACCOUNT</a>
+                                    <a href="{% url 'main:progress' %}">YOUR PROGRESS</a>
+                                    <a id="comment-button" href="#">REPORT BUG　<i class="fa fa-bug red-words" aria-hidden="true"></i></a>
+                                    <a href="{% url 'logout' %}">LOG OUT</a>
+                                </div>
+                            </div>
+                        {% else %}
+                        	<div><a class="headlink" href="{% url 'demo:demointerface' %}">DEMO</a></div>
+							<div><a class="headlink" href="{% url 'about' %}">ABOUT</a></div>
+                            <div><a class="headlink" href="{% url 'news:main' %}">BLOG</a></div>
+                            <div><a class="headlink" href="{% url 'news:faq' %}">FAQ</a></div>
+							<div><a class="headlink" href="{% url 'login' %}">SIGN IN</a></div>
+							<div><a class="headlink" href="{% url 'register' %}">SIGN UP</a></div>
+                        {% endif %}
+                    </div>
+                <a href="javascript:void(0);" id="nav-toggle" onclick="myFunction()"><span></span></a>
+                </div>
+            </div>
+        </div>
+        </div>
 	</header>
 
 	<main role="main">
@@ -121,20 +105,20 @@
         {% endblock %}
 
         {% if user.is_authenticated %}
+
             <div class="modal fade" id="form-modal" tabindex="-1">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <span class="modal-title">Report Problems with Kairozu</span>
-                        </div>
-                        <div id="form-modal-body" class="modal-body"></div>
-                    </div><!-- /.modal-content -->
-                </div><!-- /.modal-dialog -->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button id="byemodal" type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <span class="modal-title">Report Problems with Kairozu</span>
+                    </div>
+                    <div id="form-modal-body" class="modal-body"></div>
+                </div><!-- /.modal-content -->
             </div><!-- /.modal -->
 
             <script>
-                var formAjaxSubmit = function(form, modal) {
+                var modal = document.getElementById('form-modal');
+                var formAjaxSubmit = function(form) {
                     $(form).submit(function (bugevent) {
                         bugevent.preventDefault();
                         $.ajax({
@@ -142,7 +126,7 @@
                             url: $(this).attr('action'),
                             data: $(this).serialize(),
                             success: function (xhr) {
-                                $(modal).modal('toggle');
+                                modal.style.display = "none";
                                 $('#show-message').html(xhr);
                             }
                         });
@@ -150,10 +134,14 @@
                 };
                 $('#comment-button').click(function() {
                     $('#form-modal-body').load('/news/newissue/', function () {
-                        $('#form-modal').modal('toggle');
-                        formAjaxSubmit('#form-modal-body form', '#form-modal');
+                        modal.style.display = "block";
+                        formAjaxSubmit('#form-modal-body form');
                     });
                 });
+                $('#byemodal').click(function() { modal.style.display = "none"; });
+                window.onclick = function(event) {
+                    if (event.target == modal) { modal.style.display = "none"; }
+                }
             </script>
         {% endif %}
 
@@ -162,7 +150,25 @@
 				e.preventDefault();
 				$("#wrapper").toggleClass("toggled");
 			});
-		</script>
+
+            function myFunction() {
+                var x = document.getElementById("myTopnav");
+                if (x.className === "topnav") { x.className += " responsive"; } else { x.className = "topnav"; }
+            }
+
+            $('#nav-toggle').on('click', function() { this.classList.toggle('active'); });
+            $('.dropdown').click(function(e) {
+                $(this).children('.dropdown-content').slideToggle();
+                this.classList.toggle('active');
+                $('.dropdown-content').not($(this).children()).hide();
+                $('.dropdown').not($(this)).removeClass('active');
+                e.stopPropagation();
+            });
+            $('html').click(function() {
+                $('.dropdown-content').hide();
+                $('.dropdown').removeClass('active');
+            });
+        </script>
 
 	</main>
 </body>
