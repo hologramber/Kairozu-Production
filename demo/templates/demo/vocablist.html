@@ -7,36 +7,29 @@
 
 <div id="wrapper">
 {% include 'demo/sidebar.html' %}
-    <div id="page-content-wrapper">
-        <div class="fc-general-col">
-            <h1>回路図 Demo Vocabulary</h1>
-            <p class="raleway">This is a list of the vocabulary used in the Kairozu Demo. Try the <a href="{% url 'demo:demovocabquiz' %}">vocabulary quiz demo</a> once you've learned these words -- in the regular interface, individual chapter quizzes remain accessible post-completion for review purposes, and a cumulative quiz becomes available to review content across chapters.</p>
-            <div class="s-5"></div>
-            <div class="table-responsive">
-                <table class="vocablist">
-                    <thead>
+    <div class="fc-general-col">
+        <h1>回路図 Demo Vocabulary</h1>
+        <p class="raleway">This is a list of the vocabulary used in the Kairozu Demo. Try the <a href="{% url 'demo:demovocabquiz' %}">vocabulary quiz demo</a> once you've learned these words -- in the regular interface, individual chapter quizzes remain accessible post-completion for review purposes, and a cumulative quiz becomes available to review content across chapters.</p>
+        <div class="s-5"></div>
+        <div class="table-responsive">
+            <table class="vocablist">
+                <thead>
+                    <tr><th>English・英語</th><th>Kana・仮名</th><th>Kanji・漢字</th><th>Note</th></tr>
+                </thead>
+                <tbody>
+                    {% for demovocab in object_list %}
                         <tr>
-                            <th>English・英語</th>
-                            <th>Kana・仮名</th>
-                            <th>Kanji・漢字</th>
-                            <th>Note</th>
+                            <td>{{ demovocab.english }}</td>
+                            <td>{{ demovocab.kana }}</td>
+                            <td>{{ demovocab.kanji }}</td>
+                            <td>{{ demovocab.note }}</td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        {% for demovocab in object_list %}
-                            <tr>
-                                <td>{{ demovocab.english }}</td>
-                                <td>{{ demovocab.kana }}</td>
-                                <td>{{ demovocab.kanji }}</td>
-                                <td>{{ demovocab.note }}</td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
-        <div class="s-100"></div>
-    </div>  <!-- /#page-content-wrapper -->
+    </div>
+    <div class="s-100"></div>
 </div>  <!-- /#wrapper -->
 
 {% endblock %}

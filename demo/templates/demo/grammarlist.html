@@ -7,25 +7,22 @@
 
 <div id="wrapper">
 {% include 'demo/sidebar.html' %}
-    <div id="page-content-wrapper">
-        <div class="fc-general-col">
+    <div class="fc-general-col">
+        <h1>Kairozu Grammar Chapters 1-5</h1>
+        <div class="s-15"></div>
 
-            <h1>Kairozu Grammar Chapters 1-5</h1>
-            <div class="s-15"></div>
-
-            <div class="table-responsive">
-                <table class="vocablist">
-                    {% for grammar in grammar_list %}
-                        <tr>
-                            <td>{{ grammar.title }}</td>
-                            <td>{{ grammar.overview }}</td>
-                        </tr>
-                    {% endfor %}
-                </table>
-            </div>
+        <div class="table-responsive">
+            <table class="vocablist">
+                {% for grammar in grammar_list %}
+                    <tr>
+                        <td>{{ grammar.title }}</td>
+                        <td>{{ grammar.overview }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
         </div>
-        <div class="s-100"></div>
-    </div>  <!-- /#page-content-wrapper -->
+    </div>
+    <div class="s-100"></div>
 </div>  <!-- /#wrapper -->
 
 {% endblock %}

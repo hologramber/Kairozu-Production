@@ -1,31 +1,26 @@
 {% include 'demo/sidebar.html' %}
 
-<div id='page-content-wrapper'>
-    <div class="fc-general-col">
-        <div id='practiceholder'>
+<div class="fc-general-col">
+    <div id='practiceholder'>
+        <div id='pfield'>
+            <h1>おめでとう～！　You've finished the practice sentences!</h1>
+            <br />
+            <h1>つぎ　は？</h1>
+            <h1>Try the <a href="{% url 'demo:demosentencequiz' %}">sentence クイズ</a>。</h1>
+            <div class="s-30"></div>
+            <h3>Not quite ready?</h3>
 
-            <div id='pfield'>
-                <h1>おめでとう～！　You've finished the practice sentences!</h1>
-                <br />
-                <h1>つぎ　は？</h1>
-                <h1>Try the <a href="{% url 'demo:demosentencequiz' %}">sentence クイズ</a>。</h1>
-
-                <div class="s-30"></div>
-                <h3>Not quite ready?</h3>
-
-                <ul>
-                    <li>Review the sentences in this practice quiz by retaking it as many times as you'd like: <a href="{% url 'demo:demopracticequiz' %}">demo practice sentences</a>.</li>
-                    <li>Revisit the <a href="{% url 'demo:demovocablist' %}">vocabulary list</a> or the <a href="{% url 'demo:demovocabquiz' %}">vocabulary quiz</a> to review vocabulary specific to this demo.</li>
-                    <li>See an overview of the <a href="{% url 'demo:grammarlist' %}">grammar taught in Kairozu chapters 1-6</a>.</li>
-                    <li>View the example interface for an end-of-chapter <a href="{% url 'demo:storydemo' %}">story</a>.</li>
-                    <li>Review grammar from the example lesson: "<a href="{% url 'demo:demolesson' %}">The dog is cute</a>."</li>
-                    <li>The <a href="{% url 'demo:demokana' %}">hiragana and katakana</a> section has resources for refreshing your Japanese kana knowledge.</li>
-                </ul>
-
-                <div class="s-30"></div>
-                <h2>To access more Japanese grammar and keep track of your progress: <a href="{% url 'register' %}">Register for a Kairozu Account</a>!</h2>
-            </div>  <!-- /#pfield -->
-        </div>  <!-- /#practiceholder -->
-    </div>
-    <div class="s-100"></div>
-</div>  <!-- /#page-content-wrapper -->
+            <ul>
+                <li>Review the sentences in this practice quiz by retaking it as many times as you'd like: <a href="{% url 'demo:demopracticequiz' %}">demo practice sentences</a>.</li>
+                <li>Revisit the <a href="{% url 'demo:demovocablist' %}">vocabulary list</a> or the <a href="{% url 'demo:demovocabquiz' %}">vocabulary quiz</a> to review vocabulary specific to this demo.</li>
+                <li>See an overview of the <a href="{% url 'demo:grammarlist' %}">grammar taught in Kairozu chapters 1-5</a>.</li>
+                <li>View the example interface for an end-of-chapter <a href="{% url 'demo:storydemo' %}">passage exercise</a>.</li>
+                <li>Review grammar from the example lesson: "<a href="{% url 'demo:demolesson' %}">The dog is cute</a>."</li>
+                <li>The <a href="{% url 'demo:demokana' %}">hiragana and katakana</a> section has resources for refreshing your Japanese kana knowledge.</li>
+            </ul>
+            <div class="s-30"></div>
+            <h2>To access more Japanese grammar and keep track of your progress: <a href="{% url 'register' %}">Register for a Kairozu Account</a>!</h2>
+        </div>  <!-- /#pfield -->
+    </div>  <!-- /#practiceholder -->
+</div>
+<div class="s-100"></div>

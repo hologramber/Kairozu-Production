@@ -8,7 +8,6 @@
 <div id="wrapper">
 {% include 'main/sidebar.html' %}
     <div class="fc-general-col">
-
         <h1>{{ chapter.title }} Vocabulary</h1>
         {% if user.profile.currentvocab > chapter.id %}
             <p class="raleway">Congrats! You've finished the vocabulary for this chapter, but the <a href="{% url 'main:vocabquiz' chapter.id %}">Vocabulary Quiz</a> interface is always available if you want more practice.</p>
@@ -27,14 +26,8 @@
         <div class="table-responsive">
             <table class="vocablist">
                 <thead>
-                    <tr>
-                        <th>English・英語</th>
-                        <th>Kana・仮名</th>
-                        <th>Kanji・漢字</th>
-                        <th><i class="fa fa-info-circle fa-fw" aria-hidden="true"></i></th>
-                        <th>カ</th>
-                        <th>Note</th>
-                    </tr>
+                    <tr><th>English・英語</th><th>Kana・仮名</th><th>Kanji・漢字</th>
+                        <th><i class="fa fa-info-circle fa-fw" aria-hidden="true"></i></th><th>カ</th><th>Note</th></tr>
                 </thead>
                 <tbody>
                     {% for word in object_list %}

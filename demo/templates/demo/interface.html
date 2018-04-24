@@ -7,58 +7,56 @@
 
 <div id="wrapper">
 {% include 'demo/sidebar.html' %}
-    <div id="page-content-wrapper">
-        <div class="fc-general-col">
+    <div class="fc-general-col">
 
-            <h1>回路図・Kairozu Demo ようこそ！</h1>
-            <div class="spot-table">
-                <div class="margin-bottom-20">
-                    <div class="spot-image"><i class='fa fa-star fa-3x red-words' aria-hidden='true'></i></div>
-                    <div class="spot-text">
-                        Start by reading through the <a href="{% url 'demo:demointro' %}">Introduction</a>. Prior knowledge of <a href="{% url 'demo:demokana' %}">Japanese Kana</a> is necessary for this demo.
-                    </div>
+        <h1>回路図・Kairozu Demo ようこそ！</h1>
+        <div class="spot-table">
+            <div class="margin-bottom-20">
+                <div class="spot-image"><i class='fa fa-star fa-3x red-words' aria-hidden='true'></i></div>
+                <div class="spot-text">
+                    Start by reading through the <a href="{% url 'demo:demointro' %}">Introduction</a>. Prior knowledge of <a href="{% url 'demo:demokana' %}">Japanese Kana</a> is necessary for this demo.
                 </div>
+            </div>
 
-                <div class="margin-bottom-20">
-                    <div class="spot-image"><i class='fa fa-star fa-3x red-words' aria-hidden='true'></i></div>
-                    <div class="spot-text">
-                        Each chapter begins with new <a href="{% url 'demo:demovocablist' %}">Vocabulary</a> and <a href="{% url 'demo:demoexpressionlist' %}">Expressions</a>. Try the <a href="{% url 'demo:demovocabquiz' %}">Vocabulary</a> and <a href="{% url 'demo:demoexpressionquiz' %}">Expression</a> quizzes when you're ready.
-                    </div>
+            <div class="margin-bottom-20">
+                <div class="spot-image"><i class='fa fa-star fa-3x red-words' aria-hidden='true'></i></div>
+                <div class="spot-text">
+                    Each chapter begins with new <a href="{% url 'demo:demovocablist' %}">Vocabulary</a> and <a href="{% url 'demo:demoexpressionlist' %}">Expressions</a>. Try the <a href="{% url 'demo:demovocabquiz' %}">Vocabulary</a> and <a href="{% url 'demo:demoexpressionquiz' %}">Expression</a> quizzes when you're ready.
                 </div>
+            </div>
 
-                <div class="margin-bottom-20">
-                    <div class="spot-image"><i class='fa fa-star fa-3x red-words' aria-hidden='true'></i></div>
-                    <div class="spot-text">
-                        See an overview of the grammar covered in <a href="{% url 'demo:grammarlist' %}">Chapters 1-5</a>.
-                    </div>
+            <div class="margin-bottom-20">
+                <div class="spot-image"><i class='fa fa-star fa-3x red-words' aria-hidden='true'></i></div>
+                <div class="spot-text">
+                    See an overview of the grammar covered in <a href="{% url 'demo:grammarlist' %}">Chapters 1-5</a>.
                 </div>
+            </div>
 
-                <div class="margin-bottom-20">
-                    <div class="spot-image"><i class='fa fa-star fa-3x red-words' aria-hidden='true'></i></div>
-                    <div class="spot-text">
-                        The eight <a href="{% url 'demo:demolesson' %}">Lessons</a> in each chapter introduce new grammar. Each lesson ends with <a href="{% url 'demo:demopracticequiz' %}">Practice Sentences</a> and a <a href="{% url 'demo:demosentencequiz' %}">クイズ</a>.
-                    </div>
+            <div class="margin-bottom-20">
+                <div class="spot-image"><i class='fa fa-star fa-3x red-words' aria-hidden='true'></i></div>
+                <div class="spot-text">
+                    The eight <a href="{% url 'demo:demolesson' %}">Lessons</a> in each chapter introduce new grammar. Each lesson ends with <a href="{% url 'demo:demopracticequiz' %}">Practice Sentences</a> and a <a href="{% url 'demo:demosentencequiz' %}">クイズ</a>.
                 </div>
+            </div>
 
-                <div class="margin-bottom-20">
-                    <div class="spot-image"><i class='fa fa-star fa-3x red-words' aria-hidden='true'></i></div>
-                    <div class="spot-text">
-                        <a href="{% url 'demo:storydemo' %}"><i class="fa fa-edit" aria-hidden="true"></i> Passages</a> and <a href="{% url 'demo:dialoguedemo' %}"><i class="fa fa-comment-o" aria-hidden="true"></i> Dialogues</a> summarize the grammar you've learned from each chapter into more cohesive paragraphs and interactions.
-                    </div>
+            <div class="margin-bottom-20">
+                <div class="spot-image"><i class='fa fa-star fa-3x red-words' aria-hidden='true'></i></div>
+                <div class="spot-text">
+                    <a href="{% url 'demo:storydemo' %}"><i class="fa fa-edit" aria-hidden="true"></i> Passages</a> and <a href="{% url 'demo:dialoguedemo' %}"><i class="fa fa-comment-o" aria-hidden="true"></i> Dialogues</a> summarize the grammar you've learned from each chapter into more cohesive paragraphs and interactions.
                 </div>
+            </div>
 
-                <div class="s-30"></div>
+            <div class="s-30"></div>
 
-                <div class="margin-bottom-20">
-                    <div class="spot-image"><i class='fa fa-star-o fa-3x red-words' aria-hidden='true'></i></div>
-                    <div class="spot-text">
-                        Register for a <a href="{% url 'register' %}">Kairozu Account</a>!
-                    </div>
+            <div class="margin-bottom-20">
+                <div class="spot-image"><i class='fa fa-star-o fa-3x red-words' aria-hidden='true'></i></div>
+                <div class="spot-text">
+                    Register for a <a href="{% url 'register' %}">Kairozu Account</a>!
                 </div>
             </div>
         </div>
-        <div class="s-100"></div>
-    </div>  <!-- /#page-content-wrapper -->
+    </div>
+    <div class="s-100"></div>
 </div>  <!-- /#wrapper -->
 
 {% endblock %}
