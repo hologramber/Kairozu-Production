@@ -361,6 +361,13 @@ span.footer-sm-text {
     padding-bottom: 4px;
 }
 
+.sb-icon span {
+    color: #d5d5d5;
+    font-size: 20px;
+    padding-top: 6px;
+}
+.sb-icon span:hover { color: white; }
+
 .topnav {
     display: flex;
     align-items: center;
@@ -414,30 +421,8 @@ span.footer-sm-text {
 .dropdown-content a:hover { background: #2b2b2b; color: white; }
 .dropdown.active { background-color: #080808; }
 .dropdown.active .dropdown-content { display: block; }
-
-#nav-toggle { padding: 0 25px 5px 0; }
-#nav-toggle span,
-#nav-toggle span:before,
-#nav-toggle span:after {
-    cursor: pointer;
-    border-radius: 1px;
-    height: 3px;
-    width: 25px;
-    background: #d5d5d5;
-    position: absolute;
-    display: block;
-    content: '';
-    transition: all 200ms ease-in-out; }
-#nav-toggle span:hover { background: white; }
-#nav-toggle span:before { top: -8px; }
-#nav-toggle span:after { bottom: -8px; }
 #nav-toggle.active {
-    padding-right: 25px;
-    padding-top: 25px; }
-#nav-toggle.active span { background-color: transparent; }
-#nav-toggle.active span:before, #nav-toggle.active span:after { top: 0; }
-#nav-toggle.active span:before { transform: rotate(45deg); }
-#nav-toggle.active span:after { transform: rotate(-45deg); }
+    padding-top: 13px; }
 
 #sidecollapse {				/* collapse-sidebar button in upper left corner on pages w/sidebar */
 	color: #d5d5d5;

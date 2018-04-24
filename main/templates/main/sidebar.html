@@ -76,7 +76,6 @@
 			</li>
 		{% endfor %}
 
-
         <li class="primarylinks">
 			{% if user.profile.currentstory > chapter.id %}
 				<a href="{% url 'main:exercises' chapter.id %}">{{ chapter.title }} Exercises</a>
