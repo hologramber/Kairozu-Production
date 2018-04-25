@@ -2,11 +2,11 @@
 	<ul class="sidebar-nav">
 		<li class="sidebar-brand"><a href="{% url 'main:interface' chapter.id %}">{{ chapter.title }}</a></li>
 
-        <li class="primarylinks">
+        <li class="bold">
             {% if user.profile.currentchapter >= chapter.id %}
-                <a href="{% url 'main:vocablist' chapter.id %}">{{ chapter.title }} Vocabulary</a>
+                <a href="{% url 'main:vocablist' chapter.id %}">{{ chapter.title }} VOCABULARY</a>
             {% else %}
-                {{ chapter.title }} Vocabulary
+                {{ chapter.title }} VOCABULARY
             {% endif %}
         </li>
 
@@ -25,11 +25,11 @@
             {% endif %}
 		</li>
 
-        <li class="primarylinks">
+        <li class="bold">
 			{% if user.profile.currentvocab > chapter.id %}
-				<a href="{% url 'main:expressionlist' chapter.id %}">{{ chapter.title }} Expressions</a>
+				<a href="{% url 'main:expressionlist' chapter.id %}">{{ chapter.title }} EXPRESSIONS</a>
 			{% else %}
-				{{ chapter.title }} Expressions
+				{{ chapter.title }} EXPRESSIONS
 			{% endif %}
         </li>
 
@@ -48,11 +48,11 @@
 			{% endif %}
         </li>
 
-		<li class="primarylinks">
+		<li class="bold">
 			{% if user.profile.currentexpression > chapter.id %}
-				<a href="{% url 'main:summary' chapter.id %}">{{ chapter.title }} Grammar</a>
+				<a href="{% url 'main:summary' chapter.id %}">{{ chapter.title }} GRAMMAR</a>
 			{% else %}
-				{{ chapter.title }} Grammar
+				{{ chapter.title }} GRAMMAR
 			{% endif %}
 		</li>
 	
@@ -73,11 +73,11 @@
 			</li>
 		{% endfor %}
 
-        <li class="primarylinks">
+        <li class="bold">
 			{% if user.profile.currentstory > chapter.id %}
-				<a href="{% url 'main:exercises' chapter.id %}">{{ chapter.title }} Exercises</a>
+				<a href="{% url 'main:exercises' chapter.id %}">{{ chapter.title }} EXERCISES</a>
 			{% else %}
-				{{ chapter.title }} Exercises
+				{{ chapter.title }} EXERCISES
 			{% endif %}
 		</li>
 
@@ -110,7 +110,7 @@
 
         {% if user.profile.currentchapter > chapter.id %}
             <li><br /></li>
-            <li class="primarylinks">
+            <li class="bold">
                 <span class="green-words">{{ chapter.title }}　は　おわりました！</span>
                 <a href="{% url 'main:interface' user.profile.currentchapter %}">第 {{ user.profile.currentchapter }} 章　に　いきましょう〜</a>
             </li>
