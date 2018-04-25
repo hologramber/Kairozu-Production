@@ -1,9 +1,6 @@
 <div id="sidebar-wrapper">
 	<ul class="sidebar-nav">
-		<li class="sidebar-brand">
-			<a href="{% url 'main:interface' chapter.id %}">{{ chapter.title }}</a>
-		</li>
-
+		<li class="sidebar-brand"><a href="{% url 'main:interface' chapter.id %}">{{ chapter.title }}</a></li>
 
         <li class="primarylinks">
             {% if user.profile.currentchapter >= chapter.id %}
@@ -13,7 +10,7 @@
             {% endif %}
         </li>
 
-		<li class="chapterlinks">
+		<li>
 			<div class="progress-status">
 				{% if user.profile.currentvocab > chapter.id %}
 					<span class="green-words normal"><i class="fa fa-check" aria-hidden="true"></i></span>
@@ -36,7 +33,7 @@
 			{% endif %}
         </li>
 
-        <li class="chapterlinks">
+        <li>
             <div class="progress-status">
 				{% if user.profile.currentexpression > chapter.id %}
 					<span class="green-words normal"><i class="fa fa-check" aria-hidden="true"></i></span>
@@ -60,7 +57,7 @@
 		</li>
 	
         {% for lesson in chapter.lesson_set.all %}
-			<li class="chapterlinks">
+			<li>
 				<div class="progress-status">
 					{% if user.profile.currentlesson > lesson.id %}
 						<span class="green-words normal"><i class="fa fa-check" aria-hidden="true"></i></span>
@@ -85,7 +82,7 @@
 		</li>
 
         {% for exercisesb in chapter.exercise_set.all %}
-			<li class="chapterlinks">
+			<li>
 				<div class="progress-status">
                     {% if user.profile.currentexercise > exercisesb.exercise_order %}
                         <span class="green-words normal"><i class="fa fa-check" aria-hidden="true"></i></span>

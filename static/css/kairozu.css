@@ -37,16 +37,16 @@ h1, .h1, h2, .h2, h3, .h3 { margin-top: 20px; margin-bottom: 10px; line-height: 
 h4, .h4, h5, .h5, h6, .h6 { margin-top: 10px; margin-bottom: 10px; line-height: 1.1em; }
 p { margin: 0 0 10px; }
 
-a, a:link, a:visited, li.highlightlinks a  {
+a, a:link, a:visited  {
     text-decoration: none;
     color: #d92425;
     -webkit-transition: 200ms color ease-in-out;
     -moz-transition: 200ms color ease-in-out;
     -o-transition: 200ms color ease-in-out;
     transition: 200ms color ease-in-out; }
-a, a:focus, a:hover, li.highlightlinks a:hover { color: #ff9729; }
+a, a:focus, a:hover { color: #ff9729; }
 
-.trans {
+.trans {                                            /* fade in/out animation for hovers, etc */
     -webkit-transition: all 200ms ease-in-out;
     -moz-transition: all 200ms ease-in-out;
     -o-transition: all 200ms ease-in-out;
@@ -54,10 +54,6 @@ a, a:focus, a:hover, li.highlightlinks a:hover { color: #ff9729; }
 
 b, strong { font-weight: 600; }
 h1.lessonhead { white-space: pre-wrap; }
-li.highlightlinks { border-top: 1px #2b2b2b solid; }
-li.highlightlinks:hover {
-    text-decoration: none;
-    background: rgba(255,255,255,0.05); }
 
 pre {
     display: block;
@@ -71,6 +67,11 @@ pre {
     border: 0;
     border-radius: 5px;
     box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.2); }
+pre::-webkit-scrollbar { -webkit-appearance: none; }
+pre::-webkit-scrollbar:vertical { width: 10px; }
+pre::-webkit-scrollbar:horizontal { height: 10px; }
+pre::-webkit-scrollbar-thumb { border-radius: 5px; background: #bcbcbc; }
+pre::-webkit-scrollbar-track { border-radius: 5px; }
 
 .img-responsive, img {
   display: block;
@@ -79,22 +80,18 @@ pre {
   margin: 0 auto; }
 img { image-rendering: -webkit-optimize-contrast; }
 
-textarea:focus, input:focus { outline: none; }
+.trans {
+    -webkit-transition: all 200ms ease-in-out;
+    -moz-transition: all 200ms ease-in-out;
+    -o-transition: all 200ms ease-in-out;
+    transition: all 200ms ease-in-out; }
 
 button, input, select, textarea {
     line-height: inherit;
     margin: 0;
+    outline: none;
     font: inherit;
-    color: inherit;
-}
-/*#isl {*/
-	/*background: no-repeat bottom right;*/
-	/*height: 100%;*/
-	/*width: 100%;*/
-	/*position: fixed;*/
-	/*margin-left: -15px;*/
-	/*margin-top: -52px;*/
-    /*background-image: url('../img/island1.png'); }*/
+    color: inherit; }
 
 .fc-general { display: flex; }
 .fc-general-col {
@@ -160,12 +157,6 @@ button, input, select, textarea {
     border-radius: 5px;
     box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.2); }
 .fc-red-button:hover { background-color: #FF9729; }
-
-.trans {
-    -webkit-transition: all 200ms ease-in-out;
-    -moz-transition: all 200ms ease-in-out;
-    -o-transition: all 200ms ease-in-out;
-    transition: all 200ms ease-in-out; }
 
 .fishimg {
     height: 200px;
@@ -300,7 +291,7 @@ span.footer-sm-text {
     flex: 0 1 40%;
     min-width: 280px; }
 
-#welcomekoi { margin-top: 15px; max-height: 45vmin; margin-bottom: 35px; } /* circle image on the main page */
+#welcomekoi { margin-top: 15px; max-height: 45vmin; margin-bottom: 35px; } /* kai koi on error and info pages */
 
 .chartable {
     text-align: center;
@@ -352,20 +343,17 @@ span.footer-sm-text {
     padding-bottom: 4px;
     float: left;
     padding-left: 15px;
-    padding-right: 15px;
-}
+    padding-right: 15px; }
 
 #sitename {
     padding: 0;
     font-size: 1.5em;
-    padding-bottom: 4px;
-}
+    padding-bottom: 4px; }
 
 .sb-icon span {
     color: #d5d5d5;
     font-size: 20px;
-    padding-top: 6px;
-}
+    padding-top: 6px; }
 .sb-icon span:hover { color: white; }
 
 .topnav {
@@ -421,8 +409,7 @@ span.footer-sm-text {
 .dropdown-content a:hover { background: #2b2b2b; color: white; }
 .dropdown.active { background-color: #080808; }
 .dropdown.active .dropdown-content { display: block; }
-#nav-toggle.active {
-    padding-top: 13px; }
+#nav-toggle.active { padding-top: 13px; }
 
 #sidecollapse {				/* collapse-sidebar button in upper left corner on pages w/sidebar */
 	color: #d5d5d5;
@@ -443,7 +430,7 @@ span.footer-sm-text {
 	font-size: 12px;
 	line-height: 18px; }
 
-.jp-resources {
+.jp-resources {                             /* used in demodialog/demostory for info box */
 	padding: 0 15px 15px 20px;
 	margin-top: 15px;
 	margin-bottom: 15px; }					/* containers for resource lists on about page */
@@ -502,7 +489,7 @@ div.table-container { display: inline-block; }
 	font-size: 50px;
 	padding-top: 60px; }
 
-.gpt { margin: 0 auto; white-space: nowrap; }
+.gpt { margin: 0 auto; white-space: nowrap; }       /* grammar point table at end of lessons */
 .gpt > tbody > tr > td, .gpt th {
 	padding-bottom: 10px;
 	text-align: left; 
@@ -571,7 +558,7 @@ table.gpt > tbody > tr > td.blankline { line-height: 5px; }
 .vocablist > tbody tr { border-bottom: 1px solid #bcbcbc66; }
 .vocablist > tbody tr:last-child { border-bottom: none; }
 
-.rlist { width: 100%; }
+.rlist { width: 100%; }                         /* resources for learning Japanese sandbox */
 .rlist > tbody td { padding: 5px; }
 .rlist > tbody td.resourceheader { padding: 5px 0; }
 .rlist > tbody tr { border-bottom: 1px solid #bcbcbc66; }
@@ -597,20 +584,6 @@ table.gpt > tbody > tr > td.blankline { line-height: 5px; }
 	border-radius: 5px;
 	margin-left: -15px;
     float: right; }
-
-.grt, .grt_o, .grt_c { width: 100%; white-space:nowrap; }
-.grt > thead > tr > th, .grt_o > thead > tr > th, .grt_c > thead > tr > th {
-	background-color: #efebea;
-	color: #2b2b2b;
-	padding: 8px 20px 8px 20px;
-	font-size: 16px; }
-.grt > tbody > tr > td, .grt_o > tbody > tr > td, .grt_c > tbody > tr > td {
-	padding: 8px 20px 8px 20px;
-	font-size: 16px; }
-.grt > tbody tr:nth-child(even) { background-color: #FFF; }
-.grt > tbody tr:nth-child(odd) { background-color: #efebea; }
-.grt_o > tbody tr:nth-child(odd) { background-color: #FFF; }
-.grt_o > tbody tr:nth-child(even) { background-color: #efebea; }
 
 .groupdt { width: 100%; max-width: 350px; white-space:nowrap; margin: 0 auto; }
 .groupdt > thead th { padding: 10px 5px; }
@@ -825,7 +798,6 @@ input[type=text]:disabled {
 	padding-right: 30px;
 	font-size: 16px; }
 
-.chapterlinks { font-size: 14px; } 		/* lesson links indent */
 .practicebutton { float: right; padding-right: 30px; margin-bottom: 25px; } 	/* practice & quiz buttons in lesson view */
 
 span.step {
@@ -852,15 +824,13 @@ span.step {
 	margin-bottom: 30px; 
 	border: 0;
 	box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.2); }
-.sbox:hover { background: #f7f7f7; }
-.sbox .icon { color: #d92425; }
-.sbox:hover .icon { color: #ff9729; }
-
 .sbox .icon {
+    color: #d92425;
 	font-size: 60px;
 	margin-top: 20px;
 	margin-bottom: 35px; }
-
+.sbox:hover { background: #f7f7f7; }
+.sbox:hover .icon { color: #ff9729; }
 .sbox .name { margin-bottom: 8px; margin-top: 0; }
 .sbox .description { margin-top: 15px; margin-bottom: 20px; }
 
@@ -879,8 +849,7 @@ span.step {
     color: #bcbcbc;
     font-family: 'Roboto', sans-serif; }
 
-/* modal background (bug report form) */
-.modal {
+.modal {                        /* modal background (bug report form) */
     display: none;
     position: fixed;
     z-index: 1;
@@ -891,15 +860,12 @@ span.step {
     overflow: auto;
     background-color: rgb(0,0,0);
     background-color: rgba(0,0,0,0.4); }
-
-/* modal itself (bug report form) */
-.modal-content {
+.modal-content {                            /* modal itself (bug report form) */
     background-color: #fefefe;
     margin: 15% auto;
     border-radius: 5px;
     border: 0;
     width: 600px; }
-
 .modal-header { border-bottom: none; padding: 20px; }
 .modal-header .close { margin-top: -10px; margin-right: -3px; }
 .modal-body { padding: 0 20px 20px 20px; }
@@ -950,6 +916,7 @@ span.step {
 .reg-user-input input[type=email] { width: 100%; }
 
 .btn {
+    outline: none;
     display: inline-block;
     padding: 6px 12px;
     margin-bottom: 0;
@@ -997,7 +964,7 @@ button.close {
     opacity: 0.5; }
 
 .lineheight-n { line-height: normal; }
-.lineheight-20 { line-height: 20px; }
+.lineheight-20, .thin-list { line-height: 20px; }
 .spottext-line { font-size: 20px; line-height: 24px; }
 
 .raleway { font-family: 'Raleway', sans-serif; }
@@ -1013,8 +980,6 @@ button.close {
 .xsmall { font-size: x-small; }
 .italics { font-style: italic; }
 .upper { font-variant: all-small-caps; }
-
-.thin-list { line-height: 20px; }
 
 .variabletext {
     font-variant: small-caps;
@@ -1070,12 +1035,6 @@ button.close {
 .ora_c_short { background-color: #FF9729; color: #fff; padding: 4px 3px 3px 3px; }
 
 .user-hello > li { padding: 5px 0; }
-
-pre::-webkit-scrollbar { -webkit-appearance: none; }
-pre::-webkit-scrollbar:vertical { width: 10px; }
-pre::-webkit-scrollbar:horizontal { height: 10px; }
-pre::-webkit-scrollbar-thumb { border-radius: 5px; background: #bcbcbc; }
-pre::-webkit-scrollbar-track { border-radius: 5px; }
 
 .table-responsive::-webkit-scrollbar { -webkit-appearance: none; }
 .table-responsive::-webkit-scrollbar:vertical { width: 10px; }
@@ -1251,7 +1210,6 @@ pre::-webkit-scrollbar-track { border-radius: 5px; }
 @media screen and (max-width: 600px) {
     .topnav a.headlink, .dropdown .dropbtn { display: none; }
     .topnav a#nav-toggle { display: block; }
-
     .topnav.responsive {
         display: flex;
         flex-direction: column;
@@ -1305,4 +1263,3 @@ pre::-webkit-scrollbar-track { border-radius: 5px; }
     .fc-red-button { width: 260px; }
     .fronticons { padding: 0 5px; }
 }
-/*@media only screen and (max-width: 1300px) { #isl, #isl2, #isl3, #isl4, #isl5 { background-image: none !important; } }*/
