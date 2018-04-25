@@ -38,11 +38,11 @@
                     <div id="header-links">
                         {% if user.is_authenticated %}
                             <div><a class="headlink" href="{% url 'main:main' %}">MAIN</a></div>
-                            <div id="dropdown1" class="dropdown">
+                            <div id="dropdown1" class="dropdown trans">
                                 {% if user.profile.vrcount == 0 and user.profile.srcount == 0 and user.profile.ercount == 0 %}
-                                    <div class="dropbtn">REVIEWS <i class="fa fa-caret-down"></i></div>
+                                    <div class="dropbtn trans">REVIEWS <i class="fa fa-caret-down"></i></div>
                                 {% else %}
-                                    <div class="dropbtn">REVIEWS <i class="fa red-words fa-caret-down"></i></div>
+                                    <div class="dropbtn trans">REVIEWS <i class="fa red-words fa-caret-down"></i></div>
                                 {% endif %}
                                 <div class="dropdown-content">
                                     {% if user.profile.vrcount == 0 %}
@@ -63,8 +63,8 @@
                                 </div>
                             </div>
                             <div><a class="headlink" href="{% url 'sandbox:main' %}">SANDBOX</a></div>
-                            <div id="dropdown2" class="dropdown">
-                                <div class="dropbtn">KAIROZU <i class="fa red-words fa-caret-down"></i></div>
+                            <div id="dropdown2" class="dropdown trans">
+                                <div class="dropbtn trans">KAIROZU <i class="fa red-words fa-caret-down"></i></div>
                                 <div class="dropdown-content">
                                     <a href="{% url 'about' %}">ABOUT</a>
                                     <a href="{% url 'news:main' %}">KAIROZU BLOG</a>

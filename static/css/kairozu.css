@@ -46,7 +46,8 @@ a, a:link, a:visited  {
     transition: 200ms color ease-in-out; }
 a, a:focus, a:hover { color: #ff9729; }
 
-.trans {                                            /* fade in/out animation for hovers, etc */
+/* fade in/out animation for hovers, etc */
+.trans {
     -webkit-transition: all 200ms ease-in-out;
     -moz-transition: all 200ms ease-in-out;
     -o-transition: all 200ms ease-in-out;
@@ -350,27 +351,18 @@ span.footer-sm-text {
     font-size: 1.5em;
     padding-bottom: 4px; }
 
-.sb-icon span {
-    color: #d5d5d5;
-    font-size: 20px;
-    padding-top: 6px; }
-.sb-icon span:hover { color: white; }
-
 .topnav {
     display: flex;
     align-items: center;
     justify-content: space-between;
     background-color: #2b2b2b; }
-
 .topnav a {
     display: block;
     color: #d5d5d5;
     text-decoration: none;
     font-variant: all-small-caps;
     font-size: 1.3em; }
-
 .topnav #nav-toggle { display: none; }
-
 .dropdown { position: relative; }
 .dropdown .dropbtn {
     font-size: 1.3em;
@@ -380,7 +372,6 @@ span.footer-sm-text {
     color: #d5d5d5;
     background-color: inherit;
     font-family: inherit; }
-
 .dropdown-content {
     display: none;
     position: absolute;
@@ -392,10 +383,9 @@ span.footer-sm-text {
     border-top-left-radius: 0px;
     border-top-right-radius: 0px;
     background-color: #2b2b2b;
-    min-width: 160px;
+    min-width: 180px;
     box-shadow: 0px 2px 6px 0px hsla(0, 0%, 0%, 0.2);
     z-index: 1; }
-
 .dropdown-content a {
     float: none;
     color: #d5d5d5;
@@ -404,13 +394,16 @@ span.footer-sm-text {
     text-decoration: none;
     display: block;
     text-align: left; }
-
-.topnav a:hover, .dropdown:hover .dropbtn { color: white; }
-.dropdown-content a:hover { background: #2b2b2b; color: white; }
+.topnav a:hover, .dropdown:hover .dropbtn, .dropdown-content a:hover { color: white; }
 .dropdown.active { background-color: #080808; }
 .dropdown.active .dropdown-content { display: block; }
 #nav-toggle.active { padding-top: 13px; }
 
+.sb-icon span {
+    color: #d5d5d5;
+    font-size: 20px;
+    padding-top: 6px; }
+.sb-icon span:hover { color: white; }
 #sidecollapse {				/* collapse-sidebar button in upper left corner on pages w/sidebar */
 	color: #d5d5d5;
 	float: left;
