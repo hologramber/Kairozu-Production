@@ -51,7 +51,7 @@ class NewIssueView(LoginRequiredMixin, AjaxTemplateMixin, CreateView):
             form.instance.report_by_user = self.request.user.id
             form.instance.report_from_url = self.request.META.get("HTTP_REFERER")
             form.save()
-            messages.add_message(self.request, messages.SUCCESS, 'Bug submitted! Apologies for the trouble, but thank you for letting us know.')
+            messages.add_message(self.request, messages.SUCCESS, 'Bug submitted! Apologies for the trouble, but thank you for letting me know!')
         if self.request.is_ajax():
             return render(self.request, 'news/siteissue_done.html')
         else:

@@ -69,7 +69,7 @@ def account(request):
             messages.add_message(request, messages.SUCCESS, 'Your password was successfully updated!')
             return redirect('account')
         else:
-            messages.error(request, 'Please correct the error below.')
+            messages.add_message(request, messages.ERROR, 'Please correct the error below.')
     elif 'strictchange' in request.POST:
         userprofile = Profile.objects.get(user_id__exact=request.user.id)
         strictform = ChangeStrictModeForm(request.POST, instance=userprofile)
@@ -84,22 +84,3 @@ def account(request):
         strictdata = {'strictmode': request.user.profile.strictmode}
         strictform = ChangeStrictModeForm(strictdata)
     return render(request, 'account.html', {'form': form, 'strictform': strictform, 'currentchapter': currentchapter, 'currentlesson': currentlesson})
-
-# def error_400(request):
-#     data = {}
-#     return render(request, '400.html', data)
-#
-#
-# def error_403(request):
-#     data = {}
-#     return render(request, '403.html', data)
-#
-#
-# def error_404(request):
-#     data = {}
-#     return render(request, '404.html', data)
-#
-#
-# def error_500(request):
-#     data = {}
-#     return render(request, '500.html', data)

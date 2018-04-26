@@ -113,7 +113,7 @@ STATICFILES_DIRS = [
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 ACCOUNT_ACTIVATION_DAYS = 3
-MESSAGE_LEVEL = messages.DEBUG
+MESSAGE_LEVEL = messages.INFO
 MESSAGE_TAGS = {
     messages.DEBUG: 'alert-info',
     messages.INFO: 'alert-info',
