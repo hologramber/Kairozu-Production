@@ -350,18 +350,6 @@ span.footer-sm-text {
 #kaihead-contain {
     max-width: 1170px;
     margin: 0 auto; }
-#header-links > div, #sitename {
-    min-height: 50px;
-    display: inline-flex;
-    align-items: center;
-    padding-bottom: 4px;
-    float: left;
-    padding-left: 15px;
-    padding-right: 15px; }
-#sitename {
-    padding: 0;
-    font-size: 1.5em;
-    padding-bottom: 6px; }
 .topnav {
     display: flex;
     align-items: center;
@@ -373,6 +361,21 @@ span.footer-sm-text {
     text-decoration: none;
     font-variant: all-small-caps;
     font-size: 1.3em; }
+#sitename {
+    min-height: 50px;
+    display: inline-flex;
+    align-items: center;
+    font-size: 1.5em;
+    padding-bottom: 6px; }
+
+#header-links > div {
+    min-height: 50px;
+    display: inline-flex;
+    align-items: center;
+    padding-bottom: 4px;
+    float: left;
+    padding-left: 15px;
+    padding-right: 15px; }
 .topnav #nav-toggle { display: none; }
 .dropdown { position: relative; }
 .dropdown .dropbtn {

@@ -1,6 +1,8 @@
 {% extends 'kairozu.html' %}
 {% block title %}Kairozu Demo Practice{% endblock %}
-{% block sidecollapse %}<div id="sidecollapse"><a id="menu-toggle" href="#" class="toggle sb-icon"><span class="fa-stack">                <i class="fa dkgrey-words fa-square fa-stack-2x"></i><i class="fa fa-list fa-stack-1x fa-inverse"></i></span></a></div>{% endblock %}
+{% block sidecollapse %}
+    {% include 'main/sidecollapse.html' %}
+{% endblock %}
 
 {% load static %}
 {% block content %}
