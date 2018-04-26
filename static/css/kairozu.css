@@ -361,7 +361,7 @@ span.footer-sm-text {
 #sitename {
     padding: 0;
     font-size: 1.5em;
-    padding-bottom: 4px; }
+    padding-bottom: 6px; }
 .topnav {
     display: flex;
     align-items: center;
@@ -381,7 +381,6 @@ span.footer-sm-text {
     border: none;
     cursor: pointer;
     color: #d5d5d5;
-    background-color: inherit;
     font-family: inherit; }
 .dropdown-content {
     display: none;
@@ -408,17 +407,17 @@ span.footer-sm-text {
 .topnav a:hover, .dropdown:hover .dropbtn, .dropdown-content a:hover { color: white; }
 .dropdown.active { background-color: #080808; }
 .dropdown.active .dropdown-content { display: block; }
-#nav-toggle.active { padding-top: 13px; }
 
 .sb-icon span {
     color: #d5d5d5;
-    font-size: 20px;
-    padding-top: 6px; }
+    font-size: 20px; }
 .sb-icon span:hover { color: white; }
 #sidecollapse {				/* collapse-sidebar button in upper left corner on pages w/sidebar */
+    top: 5px;
+    position: relative;
 	color: #d5d5d5;
 	float: left;
-    padding: 10px; }
+    margin-right: 35px; }
 
 .shadowbox {
     margin: 0 auto;
@@ -881,7 +880,7 @@ span.step {
     background-color: rgba(0,0,0,0.4); }
 .modal-content {                            /* modal itself (bug report form) */
     background-color: #fefefe;
-    margin: 15% auto;
+    margin: 10% auto;
     border-radius: 5px;
     border: 0;
     width: 600px; }
@@ -1300,29 +1299,35 @@ button.close {
 }
 
 @media screen and (max-width: 600px) {      /* only show up to 600px */
+    .topnav #sitename {
+        position: fixed;
+        left: 50%;
+        transform: translateX(-50%); }
     .topnav a.headlink, .dropdown .dropbtn { display: none; }
-    .topnav a#nav-toggle { display: block; }
+    .topnav a#nav-toggle {
+        display: block;
+        font-size: 20px;
+        right: -20px;
+        position: relative; }
     .topnav.responsive {
-        display: flex;
         flex-direction: column;
-        align-items: flex-start; }
-    .topnav.responsive { position: relative; }
+        align-items: flex-start;
+        position: relative; }
     .topnav.responsive #nav-toggle {
+        font-size: 20px;
+        right: -20px;
         position: absolute;
-        right: 0;
-        top: 0; }
+        top: 5px; }
     .topnav.responsive #header-links {
         float: left;
         display: flex;
         flex-direction: column;
-        align-items: flex-start; }
+        align-items: flex-start;
+        margin-top: 50px; }
     .topnav.responsive #header-links > div {
         display: flex;
         flex-direction: column;
-        align-items: center;
-        padding-bottom: 4px;
-        float: left;
-        padding-left: 1px; }
+        padding-left: 0; }
     .topnav.responsive a {
         float: none;
         display: block;
