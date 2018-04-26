@@ -48,10 +48,10 @@ a, a:focus, a:hover { color: #ff9729; }
 
 /* fade in/out animation for hovers, etc */
 .trans, .close {
-    -webkit-transition: all 200ms ease-in-out;
-    -moz-transition: all 200ms ease-in-out;
-    -o-transition: all 200ms ease-in-out;
-    transition: all 200ms ease-in-out; }
+    -webkit-transition: color 200ms ease-in-out;
+    -moz-transition: color 200ms ease-in-out;
+    -o-transition: color 200ms ease-in-out;
+    transition: color 200ms ease-in-out; }
 
 b, strong { font-weight: 600; }
 h1.lessonhead { white-space: pre-wrap; }
