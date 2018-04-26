@@ -1133,10 +1133,10 @@ button.close {
     display: block;
     text-decoration: none;
     color: #bcbcbc;
-    -webkit-transition: all 200ms ease-in-out;
-    -moz-transition: all 200ms ease-in-out;
-    -o-transition: all 200ms ease-in-out;
-    transition: all 200ms ease-in-out; }
+    -webkit-transition: color 200ms ease-in-out;
+    -moz-transition: color 200ms ease-in-out;
+    -o-transition: color 200ms ease-in-out;
+    transition: color 200ms ease-in-out; }
 .sidebar-nav li a:hover {
     text-decoration: none;
     color: white;
