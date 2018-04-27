@@ -51,8 +51,8 @@
 
                 <div class="s-20"></div>
 
-                <div class="fc-general-row">
-                    <div class="fc-flex-50">
+                <div class="fc-general-row-rev">
+                    <div class="fc-flex-50 order2">
                         <div id="more-info">
                             <ul>
                                 {% for moreinfo in lesson.moreinfos.all %}
@@ -62,7 +62,7 @@
                         </div>
                     </div>
 
-                    <div class="fc-flex-20">
+                    <div class="fc-flex-50 order1">
                         {% if user.profile.currentpractice > lesson.id %}
                             <div class="practicebutton">
                                 <a href="{% url 'main:sentencequiz' lesson.id %}"><img class="img-responsive" id="lessonquiz" alt="クイズ" src="{% static 'img/quiz_button.png' %}" /></a>
@@ -77,8 +77,6 @@
                                 });
                             </script>
                         {% endif %}
-                    </div>
-                    <div class="fc-flex-20">
                         {% if user.profile.currentlesson >= lesson.id or lesson.id == 1 %}
                             <div class="practicebutton">
                                 <a href="{% url 'main:practicequiz' lesson.id %}"><img class="img-responsive" id="lessonpractice" alt="Practice" src="{% static 'img/practice_button.png' %}" /></a>
