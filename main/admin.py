@@ -29,7 +29,7 @@ class TwoTableInline(nested_admin.NestedTabularInline):
 
 class ExampleInline(nested_admin.NestedTabularInline):
     model = Example
-    exclude = ('f_english', 'f_hiragana', 'f_kanji',)
+    exclude = ('f_english', 'f_kanji',)
     extra = 1
 
 
