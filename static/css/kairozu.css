@@ -1121,7 +1121,11 @@ span.step {
     width: 275px;
     margin: 0;
     padding: 0;
-    list-style: none; }
+    list-style: none;
+    -webkit-transition: none;
+    -moz-transition: none;
+    -o-transition: none;
+    transition: none; }
 .sidebar-nav li {
     color: #585858;
     border-bottom: 1px #2b2b2b solid;
