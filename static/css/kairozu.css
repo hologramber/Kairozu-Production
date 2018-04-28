@@ -104,7 +104,9 @@ button, input, select, textarea {
     margin: 0;
     outline: none;
     font: inherit;
-    color: inherit; }
+    color: inherit;
+    border-radius: 0;
+    -webkit-appearance: none; }
 
 table {
     border-spacing: 0;
