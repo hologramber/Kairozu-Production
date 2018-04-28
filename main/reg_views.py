@@ -61,6 +61,9 @@ def newuser(request):
 def account(request):
     currentchapter = get_object_or_404(Chapter, pk=request.user.profile.currentchapter)
     currentlesson = get_object_or_404(Lesson, pk=request.user.profile.currentlesson)
+    form = PasswordChangeForm(request.user)
+    strictdata = {'strictmode': request.user.profile.strictmode}
+    strictform = ChangeStrictModeForm(strictdata)
     if 'passchange' in request.POST:
         form = PasswordChangeForm(request.user, request.POST)
         if form.is_valid():
@@ -79,8 +82,4 @@ def account(request):
             return redirect('account')
         else:
             messages.add_message(request, messages.ERROR, 'Settings have not been updated. Contact kairozu@kairozu.com for help.')
-    else:
-        form = PasswordChangeForm(request.user)
-        strictdata = {'strictmode': request.user.profile.strictmode}
-        strictform = ChangeStrictModeForm(strictdata)
     return render(request, 'account.html', {'form': form, 'strictform': strictform, 'currentchapter': currentchapter, 'currentlesson': currentlesson})

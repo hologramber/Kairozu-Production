@@ -28,7 +28,7 @@
                     {{ field }}<br />
 
                     {% if field.help_text %}
-                        <span class="registration-text">{{ field.help_text|safe }}</span>
+                        <span class="grey-help-text">{{ field.help_text|safe }}</span>
                     {% endif %}
 
                     {% for error in field.errors %}

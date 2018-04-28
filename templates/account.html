@@ -108,15 +108,15 @@
 
                             {% if field.help_text %}
                                 <div class="s-10"></div>
-                                <span class="change-text">{{ field.help_text|safe }}</span>
+                                <span class="grey-help-text">{{ field.help_text|safe }}</span>
                             {% endif %}
 
                             {% for error in field.errors %}
-                                <p class="red-words">{{ error }}</p>
+                                <p class="red-words smaller">{{ error }}</p>
                             {% endfor %}
                         </div>
+                        <div class="s-20"></div>
                     {% endfor %}
-                    <div class="s-20"></div>
                     <input name="passchange" type="submit" value="CHANGE" class="btn btn-success"/>
                 </form>
             </div>
