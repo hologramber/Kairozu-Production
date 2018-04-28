@@ -1,6 +1,6 @@
 from django.contrib import admin
 import nested_admin
-from .models import Profile, Chapter, Lesson, PointTable, Block, Exercise, ExerciseResponse, ExerciseSentence, ExerciseRecord, ExercisePrompt, DivBlock, TwoTable, TwoTableData, FourTable, FourTableData, Example, MoreInfo, Practice, Sentence, Vocabulary, VocabRecord, SentenceRecord, Expression, ExpressionRecord, GrammarNote
+from .models import Profile, Chapter, Lesson, PointTable, Block, Exercise, ExerciseResponse, ExerciseSentence, ExerciseRecord, ExercisePrompt, DivBlock, TwoTable, TwoTableData, FourTable, FourTableData, Example, MoreInfo, Practice, Sentence, Vocabulary, VocabRecord, SentenceRecord, Expression, ExpressionRecord, GrammarNote, InfoLink
 
 
 class FourTableDataInline(nested_admin.NestedTabularInline):
@@ -38,6 +38,11 @@ class MoreInfoInline(nested_admin.NestedTabularInline):
     extra = 1
 
 
+class InfoLinkInline(nested_admin.NestedTabularInline):
+    model = InfoLink
+    extra = 1
+
+
 class DivBlockInline(nested_admin.NestedTabularInline):
     model = DivBlock
     exclude = ('f_text',)
@@ -59,7 +64,7 @@ class PointTableInline(nested_admin.NestedTabularInline):
 class LessonAdmin(nested_admin.NestedModelAdmin):
     list_display = ('title', 'overview', 'chapter')
     exclude = ('f_english', 'f_hiragana', 'f_kanji',)
-    inlines = [PointTableInline, BlockInline, DivBlockInline, TwoTableInline, FourTableInline, ExampleInline, MoreInfoInline]
+    inlines = [PointTableInline, BlockInline, DivBlockInline, TwoTableInline, FourTableInline, ExampleInline, MoreInfoInline, InfoLinkInline]
     search_fields = ['title', 'english', 'hiragana']
 
 
