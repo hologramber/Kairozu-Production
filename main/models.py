@@ -75,6 +75,11 @@ def disamb_all_blanks(kana, disamb_location):        # position 0 = disamb_loc 1
     return disamb
 
 
+def jp_sp_to_double_sp(jptext):
+    newspaced = re.sub(r'　', "&#32;&#32;", jptext)
+    return newspaced
+
+
 def create_blanks(kana, disamb_location, altindex):
     sentence_split = kana.split('　')
     sep = '　'
@@ -556,6 +561,7 @@ class Lesson(models.Model):
         self.f_english = highlight(self.english, KairozuLexer(ensurenl=False), KairozuFormatter(style='kairozu'))
         self.f_hiragana = highlight(self.hiragana, KairozuLexer(ensurenl=False), KairozuFormatter(style='kairozu'))
         self.f_hiragana = re.sub(r'。', '｡', self.f_hiragana)
+        self.f_hiragana = jp_sp_to_double_sp(self.f_hiragana)
         super(Lesson, self).save(*args, **kwargs)
 
     def __str__(self):
@@ -691,12 +697,20 @@ class Example(models.Model):
         self.f_english = highlight(self.english, KairozuLexer(ensurenl=False), KairozuFormatter(style='kairozu'))
         self.f_hiragana = highlight(self.hiragana, KairozuLexer(ensurenl=False), KairozuFormatter(style='kairozu'))
         self.f_hiragana = re.sub(r'。', '｡', self.f_hiragana)
+        self.f_hiragana = jp_sp_to_double_sp(self.f_hiragana)
         super(Example, self).save(*args, **kwargs)
 
 
 class MoreInfo(models.Model):
     lesson = models.ForeignKey(Lesson, related_name='moreinfos', on_delete=models.CASCADE)
     text = models.TextField(blank=True)
+
+
+class InfoLink(models.Model):
+    lesson = models.ForeignKey(Lesson, related_name='infolinks', on_delete=models.CASCADE)
+    linkname = models.CharField(max_length=50, unique=False, blank=True)
+    linkurl = models.URLField(max_length=256, unique=False, blank=True)
+    linkdesc = models.CharField(max_length=256, unique=False, blank=True)
 
 
 class Practice(models.Model):
