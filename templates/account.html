@@ -75,25 +75,23 @@
                 <i class='fa fa-gear fa-fw'></i>&nbsp;&nbsp;Kairozu Settings
             </h4>
             <div class="accordion-content">
-                <div class="authform">
-                    <form method="post">{% csrf_token %}
-                        {% for field in strictform %}
-                            <div class="form-group">
-                                <span class="normal">{{ field.label_tag }}</span>&nbsp;&nbsp;&nbsp;{{ field }}
+                <form method="post">{% csrf_token %}
+                    {% for field in strictform %}
+                        <div class="form-group">
+                            <span class="normal">{{ field.label_tag }}</span>&nbsp;&nbsp;&nbsp;{{ field }}
 
-                                {% if field.help_text %}
-                                    <span class="change-text">{{ field.help_text|safe }}</span>
-                                {% endif %}
+                            {% if field.help_text %}
+                                <span class="change-text">{{ field.help_text|safe }}</span>
+                            {% endif %}
 
-                                {% for error in field.errors %}
-                                    <p style="color: red">{{ error }}</p>
-                                {% endfor %}
-                            </div>
-                        {% endfor %}
-                        <div class="s-20"></div>
-                        <input name="strictchange" type="submit" value="SAVE" class="btn btn-success"/>
-                    </form>
-                </div>
+                            {% for error in field.errors %}
+                                <p class="red-words">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                    <div class="s-20"></div>
+                    <input name="strictchange" type="submit" value="SAVE" class="btn btn-success"/>
+                </form>
             </div>
         </div>
 
@@ -102,27 +100,25 @@
                 <i class='fa fa-lock fa-fw'></i>&nbsp;&nbsp;Change Password
             </h4>
             <div class="accordion-content">
-                <div class="authform">
-                    <form method="post">{% csrf_token %}
-                        {% for field in form %}
-                            <div class="form-group">
-                                <span class="normal">{{ field.label_tag }}</span><br>
-                                {{ field }}<br />
+                <form method="post">{% csrf_token %}
+                    {% for field in form %}
+                        <div class="form-group">
+                            <span class="normal">{{ field.label_tag }}</span><br>
+                            {{ field }}<br />
 
-                                {% if field.help_text %}
-                                    <div class="s-10"></div>
-                                    <span class="change-text">{{ field.help_text|safe }}</span>
-                                {% endif %}
+                            {% if field.help_text %}
+                                <div class="s-10"></div>
+                                <span class="change-text">{{ field.help_text|safe }}</span>
+                            {% endif %}
 
-                                {% for error in field.errors %}
-                                    <p style="color: red">{{ error }}</p>
-                                {% endfor %}
-                            </div>
-                        {% endfor %}
-                        <div class="s-20"></div>
-                        <input name="passchange" type="submit" value="CHANGE" class="btn btn-success"/>
-                    </form>
-                </div>
+                            {% for error in field.errors %}
+                                <p class="red-words">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                    <div class="s-20"></div>
+                    <input name="passchange" type="submit" value="CHANGE" class="btn btn-success"/>
+                </form>
             </div>
         </div>
     </div>

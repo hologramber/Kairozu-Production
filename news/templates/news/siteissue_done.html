@@ -1,6 +1,6 @@
 {% for message in messages %}
     <div class="alert {{ message.tags }} alert-dismissible" role="alert">
-        <button id="byealert" type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <input id="byealert" type="button" class="close" data-dismiss="alert" aria-hidden="true" value="&times;" />
         {{ message }}
         <script>$("#byealert").click(function() { $(this).parent().remove(); });</script>
     </div>

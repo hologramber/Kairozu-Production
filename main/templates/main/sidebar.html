@@ -11,17 +11,22 @@
         </li>
 
 		<li>
-			<div class="progress-status">
-				{% if user.profile.currentvocab > chapter.id %}
-					<span class="green-words normal"><i class="fa fa-check" aria-hidden="true"></i></span>
-				{% else %}
-					<span class="normal"><i class="fa fa-check" aria-hidden="true"></i></span>
-				{% endif %}
-			</div>
             {% if user.profile.currentchapter >= chapter.id %}
-                <a href="{% url 'main:vocabquiz' chapter.id %}"><span class="pad-left-15">Vocabulary Quiz</span></a>
+                <a href="{% url 'main:vocabquiz' chapter.id %}">
+                    <span class="pad-left-15">Vocabulary Quiz</span>
+                    <div class="progress-status">
+                        {% if user.profile.currentvocab > chapter.id %}
+                            <span class="green-words normal"><i class="fa fa-check" aria-hidden="true"></i></span>
+                        {% else %}
+                            <span class="normal"><i class="fa fa-check" aria-hidden="true"></i></span>
+                        {% endif %}
+                    </div>
+                </a>
             {% else %}
                 <span class="pad-left-15">Vocabulary Quiz</span>
+                <div class="progress-status">
+                    <span class="normal"><i class="fa fa-check" aria-hidden="true"></i></span>
+                </div>
             {% endif %}
 		</li>
 
@@ -34,17 +39,22 @@
         </li>
 
         <li>
-            <div class="progress-status">
-				{% if user.profile.currentexpression > chapter.id %}
-					<span class="green-words normal"><i class="fa fa-check" aria-hidden="true"></i></span>
-				{% else %}
-					<span class="normal"><i class="fa fa-check" aria-hidden="true"></i></span>
-				{% endif %}
-			</div>
 			{% if user.profile.currentvocab > chapter.id %}
-                <a href="{% url 'main:expressionquiz' chapter.id %}"><span class="pad-left-15">Expression Quiz</span></a>
+                <a href="{% url 'main:expressionquiz' chapter.id %}">
+                    <span class="pad-left-15">Expression Quiz</span>
+                    <div class="progress-status">
+                        {% if user.profile.currentexpression > chapter.id %}
+                            <span class="green-words normal"><i class="fa fa-check" aria-hidden="true"></i></span>
+                        {% else %}
+                            <span class="normal"><i class="fa fa-check" aria-hidden="true"></i></span>
+                        {% endif %}
+                    </div>
+                </a>
 			{% else %}
                 <span class="pad-left-15">Expression Quiz</span>
+                <div class="progress-status">
+                    <span class="normal"><i class="fa fa-check" aria-hidden="true"></i></span>
+                </div>
 			{% endif %}
         </li>
 
@@ -58,17 +68,21 @@
 	
         {% for lesson in chapter.lesson_set.all %}
 			<li>
-				<div class="progress-status">
-					{% if user.profile.currentlesson > lesson.id %}
-						<span class="green-words normal"><i class="fa fa-check" aria-hidden="true"></i></span>
-					{% else %}
-						<span class="normal"><i class="fa fa-check" aria-hidden="true"></i></span>
-					{% endif %}
-				</div>
 				{% if user.profile.currentlesson >= lesson.id and user.profile.currentexpression > chapter.id %}
-                    <a href="{% url 'main:lesson' lesson.id %}"><span class="pad-left-15">{{ lesson.title }}</span></a>
+                    <a href="{% url 'main:lesson' lesson.id %}"><span class="pad-left-15">{{ lesson.title }}</span>
+                        <div class="progress-status">
+                            {% if user.profile.currentlesson > lesson.id %}
+                                <span class="green-words normal"><i class="fa fa-check" aria-hidden="true"></i></span>
+                            {% else %}
+                                <span class="normal"><i class="fa fa-check" aria-hidden="true"></i></span>
+                            {% endif %}
+                        </div>
+                    </a>
 				{% else %}
                     <span class="pad-left-15">{{ lesson.title }}</span>
+                    <div class="progress-status">
+                        <span class="normal"><i class="fa fa-check" aria-hidden="true"></i></span>
+                    </div>
 				{% endif %}
 			</li>
 		{% endfor %}
@@ -83,26 +97,55 @@
 
         {% for exercisesb in chapter.exercise_set.all %}
 			<li>
-				<div class="progress-status">
-                    {% if user.profile.currentexercise > exercisesb.exercise_order %}
-                        <span class="green-words normal"><i class="fa fa-check" aria-hidden="true"></i></span>
-                    {% elif user.profile.attemptexercise == exercisesb.exercise_order %}
-                        <span class="red-words normal"><i class="fa fa-refresh" aria-hidden="true"></i></span>
-                    {% else %}
-                        <span class="normal"><i class="fa fa-check" aria-hidden="true"></i></span>
-                    {% endif %}
-				</div>
                 {% if user.profile.currentstory > chapter.id and user.profile.currentexercise >= exercisesb.exercise_order %}
                     {% if exercisesb.exercise_type == 'passage' %}
-                        <a href="{% url 'main:exercisepassage' chapter.id exercisesb.id %}"><span class="pad-left-15"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>　{{ exercisesb.exercise_word }}</span></a>
+                        <a href="{% url 'main:exercisepassage' chapter.id exercisesb.id %}"><span class="pad-left-15"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>　{{ exercisesb.exercise_word }}</span>
+                            <div class="progress-status">
+                                {% if user.profile.currentexercise > exercisesb.exercise_order %}
+                                    <span class="green-words normal"><i class="fa fa-check" aria-hidden="true"></i></span>
+                                {% elif user.profile.attemptexercise == exercisesb.exercise_order %}
+                                    <span class="red-words normal"><i class="fa fa-refresh" aria-hidden="true"></i></span>
+                                {% else %}
+                                    <span class="normal"><i class="fa fa-check" aria-hidden="true"></i></span>
+                                {% endif %}
+                            </div>
+                        </a>
                     {% else %}
-                        <a href="{% url 'main:exercisedialogue' chapter.id exercisesb.id %}"><span class="pad-left-15"><i class="fa fa-comment-o fa-fw" aria-hidden="true"></i>　{{ exercisesb.exercise_word }}</span></a>
+                        <a href="{% url 'main:exercisedialogue' chapter.id exercisesb.id %}"><span class="pad-left-15"><i class="fa fa-comment-o fa-fw" aria-hidden="true"></i>　{{ exercisesb.exercise_word }}</span>
+                            <div class="progress-status">
+                                {% if user.profile.currentexercise > exercisesb.exercise_order %}
+                                    <span class="green-words normal"><i class="fa fa-check" aria-hidden="true"></i></span>
+                                {% elif user.profile.attemptexercise == exercisesb.exercise_order %}
+                                    <span class="red-words normal"><i class="fa fa-refresh" aria-hidden="true"></i></span>
+                                {% else %}
+                                    <span class="normal"><i class="fa fa-check" aria-hidden="true"></i></span>
+                                {% endif %}
+                            </div>
+                        </a>
                     {% endif %}
                 {% else %}
                     {% if exercisesb.exercise_type == 'passage' %}
                         <span class="pad-left-15"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>　{{ exercisesb.exercise_word }}</span>
+                        <div class="progress-status">
+                            {% if user.profile.currentexercise > exercisesb.exercise_order %}
+                                <span class="green-words normal"><i class="fa fa-check" aria-hidden="true"></i></span>
+                            {% elif user.profile.attemptexercise == exercisesb.exercise_order %}
+                                <span class="red-words normal"><i class="fa fa-refresh" aria-hidden="true"></i></span>
+                            {% else %}
+                                <span class="normal"><i class="fa fa-check" aria-hidden="true"></i></span>
+                            {% endif %}
+                        </div>
                     {% else %}
                         <span class="pad-left-15"><i class="fa fa-comment-o fa-fw" aria-hidden="true"></i>　{{ exercisesb.exercise_word }}</span>
+                        <div class="progress-status">
+                            {% if user.profile.currentexercise > exercisesb.exercise_order %}
+                                <span class="green-words normal"><i class="fa fa-check" aria-hidden="true"></i></span>
+                            {% elif user.profile.attemptexercise == exercisesb.exercise_order %}
+                                <span class="red-words normal"><i class="fa fa-refresh" aria-hidden="true"></i></span>
+                            {% else %}
+                                <span class="normal"><i class="fa fa-check" aria-hidden="true"></i></span>
+                            {% endif %}
+                        </div>
                     {% endif %}
                 {% endif %}
 			</li>

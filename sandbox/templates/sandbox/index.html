@@ -7,8 +7,8 @@
 <div class="fc-wrap">
     {% for castle in object_list %}
         <a href="{% url 'sandbox:'|add:castle.location %}">
-        <div class="sbox trans">
-            <i class="fa {{ castle.iconname }} icon trans" aria-hidden="true"></i>
+        <div class="sbox">
+            <i class="fa {{ castle.iconname }} icon" aria-hidden="true"></i>
             <h3 class="name bold">{{ castle.title }}</h3>
             <p class="grey-words description">{{ castle.description }}</p>
         </div></a>
