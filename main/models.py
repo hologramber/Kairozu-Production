@@ -76,7 +76,7 @@ def disamb_all_blanks(kana, disamb_location):        # position 0 = disamb_loc 1
 
 
 def jp_sp_to_double_sp(jptext):
-    newspaced = re.sub(r'　', "&#32;&#32;", jptext)
+    newspaced = re.sub(r'　', "&#32;&nbsp;", jptext)
     return newspaced
 
 
