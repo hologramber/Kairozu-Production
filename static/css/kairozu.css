@@ -59,13 +59,6 @@ a, a:focus, a:hover { color: #ff9729; }
     -o-transition: background 200ms ease-in-out;
     transition: background 200ms ease-in-out; }
 
-.sidebar-nav li a {
-    -webkit-transition: color 200ms ease-in-out, background 200ms ease-in-out;
-    -moz-transition: color 200ms ease-in-out, background 200ms ease-in-out;
-    -o-transition: color 200ms ease-in-out, background 200ms ease-in-out;
-    transition: color 200ms ease-in-out, background 200ms ease-in-out;
-}
-
 b, strong { font-weight: 600; }
 h1.lessonhead { white-space: pre-wrap; }
 
@@ -1138,7 +1131,11 @@ span.step {
 .sidebar-nav li a {
     display: block;
     text-decoration: none;
-    color: #bcbcbc; }
+    color: #bcbcbc;
+    -webkit-transition: color 200ms ease-in-out, background 200ms ease-in-out;
+    -moz-transition: color 200ms ease-in-out, background 200ms ease-in-out;
+    -o-transition: color 200ms ease-in-out, background 200ms ease-in-out;
+    transition: color 200ms ease-in-out, background 200ms ease-in-out; }
 .sidebar-nav li a:hover {
     color: white;
     background: rgba(255, 255, 255, 0.05); }
