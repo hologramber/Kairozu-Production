@@ -99,8 +99,9 @@ button, input, select, textarea {
     font: inherit;
     color: inherit; }
 input.btn { -webkit-appearance: none; }
-input[type=email], input[type=password], input[type=text] {
-    font-size: inherit;
+input[type=email],
+input[type=password],
+input[type=text] {
     border: 1px solid #bcbcbc;
     font-size: 16px;
     border-radius: 5px;
@@ -109,7 +110,9 @@ input[type=email], input[type=password], input[type=text] {
     -moz-transition: border 200ms ease-in-out;
     -o-transition: border 200ms ease-in-out;
     transition: border 200ms ease-in-out; }
-input[type=email]:focus, input[type=password]:focus { border: 1px solid #2b2b2b; }
+input[type=email]:focus,
+input[type=password]:focus,
+input[type=text]:focus { border: 1px solid #2b2b2b; }
 
 table {
     border-spacing: 0;
@@ -120,12 +123,12 @@ ul, ol {
   margin-bottom: 10px; }
 
 .chartable > tbody tr,
- .vocablist > tbody tr,
- .rlist > tbody tr,
- .groupdt > tbody tr { border-bottom: 1px solid #bcbcbc66; }
+.vocablist > tbody tr,
+.rlist > tbody tr,
+.groupdt > tbody tr { border-bottom: 1px solid #bcbcbc66; }
 .chartable > tbody tr:last-child,
- .vocablist > tbody tr:last-child,
- .groupdt > tbody tr:last-child { border-bottom: none; }
+.vocablist > tbody tr:last-child,
+.groupdt > tbody tr:last-child { border-bottom: none; }
 
 .fc-general { display: flex; }
 .fc-general-col {
@@ -495,8 +498,8 @@ div.table-container { display: inline-block; }
 .gexample {
     min-width: 280px;
 	padding: 15px;
-	margin-top: 30px;
-	margin-bottom: 30px;
+	margin-top: 20px;
+	margin-bottom: 20px;
 	text-align: center; }
 
 .table-responsive {
@@ -693,18 +696,37 @@ table.gpt > tbody > tr > td.blankline { line-height: 5px; }
 @-moz-keyframes incorrectA { from { background:#d92425; } to { background:#FFF; } }
 @keyframes incorrectA { from { background:#d92425; } to { background:#FFF; } }
 
-.abox_g input[type=text], .abox_g > input[type=submit], .kbox1_g, .kbox2_g, .ksub_g {
+/* kbox1 and kbox2 are the practice quiz boxes */
+/* abox is vocab, expression, sentence, dialogue, passage, all reviews */
+.abox_g > input[type=text],
+.abox_g > input[type=submit],
+input[type=text].kbox1_g,
+input[type=text].kbox2_g,
+input[type=submit].ksub_g {
 	-webkit-animation:correctA;				/* call keyframe correctA, ease-in and repeat it only 1 time */
 	-moz-animation:correctA;
 	animation:correctA; }
-.abox_r input[type=text], .abox_r > input[type=submit], .kbox1_r, .kbox2_r, .ksub_r {
+
+.abox_r > input[type=text],
+.abox_r > input[type=submit],
+input[type=text].kbox1_r,
+input[type=text].kbox2_r,
+input[type=submit].ksub_r {
 	-webkit-animation:incorrectA;  			/* call keyframe correctA, ease-in and repeat it only 1 time */
 	-moz-animation:incorrectA;
 	animation:incorrectA; }
 
-.abox_g input[type=text], .abox_g > input[type=submit],
-.abox_r input[type=text], .abox_r > input[type=submit],
-.kbox1_g, .kbox2_g, .kbox1_r, .kbox2_r, .kbox2_red, .ksub_g, .ksub_r {
+.abox_g > input[type=text],
+.abox_g > input[type=submit],
+.abox_r > input[type=text],
+.abox_r > input[type=submit],
+input[type=text].kbox1_g,
+input[type=text].kbox2_g,
+input[type=text].kbox1_r,
+input[type=text].kbox2_r,
+input[type=text].kbox2_red,
+input[type=submit].ksub_g,
+input[type=submit].ksub_r {
 	-webkit-animation-fill-mode:forwards;	/* makes sure that after animation is done we remain @ last keyframe value (white bg) */
 	-moz-animation-fill-mode:forwards;
 	animation-fill-mode:forwards;
@@ -712,7 +734,10 @@ table.gpt > tbody > tr > td.blankline { line-height: 5px; }
 	-moz-animation-duration:0.2s;
 	animation-duration:0.2s; }
 
-.kbox1, .kbox1_g, .kbox1_r, .kbox1_red {
+input[type=text].kbox1,
+input[type=text].kbox1_g,
+input[type=text].kbox1_r,
+input[type=text].kbox1_red {
 	background: #FFF;
 	border-radius: 5px;
 	text-align: left;
@@ -724,12 +749,19 @@ table.gpt > tbody > tr > td.blankline { line-height: 5px; }
 	float: left; 
 	width: 100%; }
 
-.kbox1, .kbox1_g { border: 2px solid #242424; }
-.kbox1_r, .kbox1_red { border: 2px solid #d92425; }
+input[type=text].kbox1,
+input[type=text].kbox1_g { border: 2px solid #242424; }
+input[type=text].kbox1_r,
+input[type=text].kbox1_red { border: 2px solid #d92425; }
 
 .abox_red > input[type=text],
-.abox > input[type=text], .abox_g > input[type=text], .abox_r > input[type=text],
-.kbox2, .kbox2_g, .kbox2_r, .kbox2_red {
+.abox > input[type=text],
+.abox_g > input[type=text],
+.abox_r > input[type=text],
+input[type=text].kbox2,
+input[type=text].kbox2_g,
+input[type=text].kbox2_r,
+input[type=text].kbox2_red {
 	background: #FFF;
     border-radius: 0;
     border-top-left-radius: 5px;
@@ -744,20 +776,30 @@ table.gpt > tbody > tr > td.blankline { line-height: 5px; }
 	float: left; 
 	border-right: 0; }
 
-.abox > input[type=text], .abox_g > input[type=text], .kbox2, .kbox2_g {
+.abox > input[type=text],
+.abox_g > input[type=text],
+input[type=text].kbox2,
+input[type=text].kbox2_g {
 	border-top: 2px solid #242424;
 	border-left: 2px solid #242424;
 	border-bottom: 2px solid #242424; }
 
 .abox_red > input[type=text],
-.abox_r > input[type=text], .kbox2_r, .kbox2_red {
+.abox_r > input[type=text],
+input[type=text].kbox2_r,
+input[type=text].kbox2_red {
 	border-top: 2px solid #d92425;
 	border-left: 2px solid #d92425;
 	border-bottom: 2px solid #d92425; }
 
 .abox_red > input[type=submit],
-.abox > input[type=submit], .abox_g > input[type=submit], .abox_r > input[type=submit],
-.ksub, .ksub_r, .ksub_g, .ksub_red {
+.abox > input[type=submit],
+.abox_g > input[type=submit],
+.abox_r > input[type=submit],
+input[type=submit].ksub,
+input[type=submit].ksub_r,
+input[type=submit].ksub_g,
+input[type=submit].ksub_red {
 	background: #FFF;
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -773,18 +815,25 @@ table.gpt > tbody > tr > td.blankline { line-height: 5px; }
 	float: right;
 	border-left: 0 !important; }
 
-.abox > input[type=submit], .abox_g > input[type=submit], .ksub, .ksub_g {
+.abox > input[type=submit],
+.abox_g > input[type=submit],
+input[type=submit].ksub,
+input[type=submit].ksub_g {
 	border-top: 2px solid #242424;
 	border-right: 2px solid #242424;
 	border-bottom: 2px solid #242424; }
 
 .abox_red > input[type=submit],
-.abox_r > input[type=submit], .ksub_r , .ksub_red {
+.abox_r > input[type=submit],
+input[type=submit].ksub_r ,
+input[type=submit].ksub_red {
 	border-top: 2px solid #d92425;
 	border-right: 2px solid #d92425;
 	border-bottom: 2px solid #d92425; }
 
-input[type=text]:disabled {
+.abox > input[type=text]:disabled,
+input[type=text].kbox1:disabled,
+input[type=text].kbox2:disabled {
     color: #89AE13;
 	background: #fff;
     opacity: 1;
@@ -987,10 +1036,9 @@ span.step {
 	box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.2); }
 .btn-default:hover { background: #8a8a8a; }
 .btn-success {
-    background: #89AE13;
+    background: #C3E457;
 	box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.2); }
-.btn-success:hover {
-    background: #6A870E; }
+.btn-success:hover { background: #AAD12E; }
 
 .close {
     -webkit-appearance: none;
@@ -1196,19 +1244,32 @@ span.step {
 		font-size: 35px;
 		padding-bottom: 5px; }
 
-	.kbox1, .kbox1_g, .kbox1_r, .kbox1_red {
+	input[type=text].kbox1,
+    input[type=text].kbox1_g,
+    input[type=text].kbox1_r,
+    input[type=text].kbox1_red {
 		padding: 5px 10px;
 		font-size: 30px; }
 
 	.abox_red > input[type=text],
-	.abox > input[type=text], .abox_g > input[type=text], .abox_r > input[type=text],
-	.kbox2, .kbox2_g, .kbox2_r, .kbox2_red {
+	.abox > input[type=text],
+    .abox_g > input[type=text],
+    .abox_r > input[type=text],
+	input[type=text].kbox2,
+    input[type=text].kbox2_g,
+    input[type=text].kbox2_r,
+    input[type=text].kbox2_red {
 		padding: 5px 10px;
 		font-size: 30px; }
 
 	.abox_red > input[type=submit],
-	.abox > input[type=submit], .abox_g > input[type=submit], .abox_r > input[type=submit],
-	.ksub, .ksub_r, .ksub_g, .ksub_red {
+	.abox > input[type=submit],
+    .abox_g > input[type=submit],
+    .abox_r > input[type=submit],
+	input[type=submit].ksub,
+    input[type=submit].ksub_r,
+    input[type=submit].ksub_g,
+    input[type=submit].ksub_red {
 		font-size: 30px;
 		margin-left: -20px;
 		min-width: 30px; }
@@ -1253,19 +1314,32 @@ span.step {
 		font-size: 20px;
 		padding-bottom: 5px; }
 
-	.kbox1, .kbox1_g, .kbox1_r, .kbox1_red {
+	input[type=text].kbox1,
+    input[type=text].kbox1_g,
+    input[type=text].kbox1_r,
+    input[type=text].kbox1_red {
 		padding: 5px 10px;
 		font-size: 20px; }
 
 	.abox_red > input[type=text],
-	.abox > input[type=text], .abox_g > input[type=text], .abox_r > input[type=text],
-	.kbox2, .kbox2_g, .kbox2_r, .kbox2_red {
+	.abox > input[type=text],
+    .abox_g > input[type=text],
+    .abox_r > input[type=text],
+	input[type=text].kbox2,
+    input[type=text].kbox2_g,
+    input[type=text].kbox2_r,
+    input[type=text].kbox2_red {
 		padding: 5px 10px;
 		font-size: 20px; }
 
 	.abox_red > input[type=submit],
-	.abox > input[type=submit], .abox_g > input[type=submit], .abox_r > input[type=submit],
-	.ksub, .ksub_r, .ksub_g, .ksub_red {
+	.abox > input[type=submit],
+    .abox_g > input[type=submit],
+    .abox_r > input[type=submit],
+	input[type=submit].ksub,
+    input[type=submit].ksub_r,
+    input[type=submit].ksub_g,
+    input[type=submit].ksub_red {
 		font-size: 20px;
 		margin-left: -20px;
 		min-width: 30px; }
