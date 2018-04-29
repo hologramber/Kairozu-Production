@@ -15,20 +15,20 @@
 
             <input type="hidden" name="next" value="{{ next }}" />
             {% for field in form %}
-            <div class="form-group">
-                {{ field.label_tag }}<br />
-                {{ field }}<br />
+                <div class="form-group">
+                    {{ field.label_tag }}<br />
+                    {{ field }}<br />
 
-                {% for error in field.errors %}
-                    <p style="color: red">{{ error }}</p>
-                {% endfor %}
+                    {% for error in field.errors %}
+                        <p style="color: red">{{ error }}</p>
+                    {% endfor %}
 
-                {% if field.help_text %}
-                    <p><small class="grey-words">{{ field.help_text }}</small></p>
-                {% endif %}
-            </div>
+                    {% if field.help_text %}
+                        <p><small class="grey-words">{{ field.help_text }}</small></p>
+                    {% endif %}
+                </div>
+                <div class="s-20"></div>
             {% endfor %}
-            <div class="s-20"></div>
             <input class="btn btn-success" type="submit" value="LOG IN" />
         <div class="s-20"></div>
         </form>
