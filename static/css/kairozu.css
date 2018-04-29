@@ -47,13 +47,13 @@ a, a:link, a:visited  {
 a, a:focus, a:hover { color: #ff9729; }
 
 /* fade in/out animation for hovers, etc */
-.trans, .close, .sbox .icon, .dropbtn {
+.trans, .close {
     -webkit-transition: color 200ms ease-in-out;
     -moz-transition: color 200ms ease-in-out;
     -o-transition: color 200ms ease-in-out;
     transition: color 200ms ease-in-out; }
 
-.transbg, .btn, .sbox, .shadowfish, .dropdown  {
+.transbg, .shadowfish  {
     -webkit-transition: background 200ms ease-in-out;
     -moz-transition: background 200ms ease-in-out;
     -o-transition: background 200ms ease-in-out;
@@ -390,14 +390,25 @@ span.footer-sm-text {
     float: left;
     padding-left: 15px;
     padding-right: 15px; }
-a.headlink, .dropdown .dropbtn {
+a.headlink {
     font-variant: all-small-caps;
     font-size: 1.3em; }
-.dropdown { position: relative; }
+.dropdown {
+    position: relative;
+    -webkit-transition: background 200ms ease-in-out;
+    -moz-transition: background 200ms ease-in-out;
+    -o-transition: background 200ms ease-in-out;
+    transition: background 200ms ease-in-out; }
 .dropdown .dropbtn {
     border: none;
     cursor: pointer;
-    font-family: inherit; }
+    font-family: inherit;
+    font-variant: all-small-caps;
+    font-size: 1.3em;
+    -webkit-transition: color 200ms ease-in-out;
+    -moz-transition: color 200ms ease-in-out;
+    -o-transition: color 200ms ease-in-out;
+    transition: color 200ms ease-in-out; }
 .dropdown-content {
     display: none;
     position: absolute;
@@ -821,12 +832,20 @@ span.step {
     border-radius: 5px;
 	margin-bottom: 30px; 
 	border: 0;
-	box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.2); }
+	box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.2);
+    -webkit-transition: background 200ms ease-in-out;
+    -moz-transition: background 200ms ease-in-out;
+    -o-transition: background 200ms ease-in-out;
+    transition: background 200ms ease-in-out; }
 .sbox .icon {
     color: #d92425;
 	font-size: 60px;
 	margin-top: 20px;
-	margin-bottom: 35px; }
+	margin-bottom: 35px;
+    -webkit-transition: color 200ms ease-in-out;
+    -moz-transition: color 200ms ease-in-out;
+    -o-transition: color 200ms ease-in-out;
+    transition: color 200ms ease-in-out; }
 .sbox:hover { background: #f7f7f7; }
 .sbox:hover .icon { color: #ff9729; }
 .sbox .name { margin-bottom: 8px; margin-top: 0; }
@@ -958,7 +977,11 @@ span.step {
     -moz-user-select: none;
     -ms-user-select: none;
     border: 1px solid transparent;
-    border-radius: 5px; }
+    border-radius: 5px;
+    -webkit-transition: background 200ms ease-in-out;
+    -moz-transition: background 200ms ease-in-out;
+    -o-transition: background 200ms ease-in-out;
+    transition: background 200ms ease-in-out; }
 .btn-default {
     background: #bcbcbc;
 	box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.2); }
