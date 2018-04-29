@@ -186,6 +186,13 @@ ul, ol {
     justify-content: center;
     flex-flow: row wrap; }
 
+.fc-wrap-space {
+    display: flex;
+    max-width: 1170px;
+    margin: 0 auto;
+    justify-content: space-evenly;
+    flex-flow: row wrap; }
+
 .fc-center {
     display: flex;
     margin: 20px;
@@ -598,7 +605,12 @@ table.gpt > tbody > tr > td.blankline { line-height: 5px; }
 	margin-left: -15px;
     float: right; }
 
-.groupdt { width: 100%; max-width: 350px; white-space:nowrap; margin: 0 auto; }
+.groupdt {
+    width: 100%;
+    max-width: 350px;
+    min-width: 200px;
+    white-space:nowrap;
+    margin: 0 auto; }
 .groupdt > thead th { padding: 10px 5px; }
 .groupdt > tbody td { padding: 8px 10px 8px 10px; }
 
