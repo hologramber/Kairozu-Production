@@ -1,7 +1,7 @@
 function JoshiInput() {
 	this.events = {};
 	this.listen();
-};
+}
 
 JoshiInput.prototype.on = function(event, callback) {
   if (!this.events[event]) {
@@ -46,22 +46,22 @@ JoshiInput.prototype.listen = function() {
 	this.bindOption("#answer4", this.answerFour);
 };
 
-JoshiInput.prototype.answerOne = function() {
+JoshiInput.prototype.answerOne = function(event) {
 	event.preventDefault();
 	this.emit("answerSelected", 0);
 };
 
-JoshiInput.prototype.answerTwo = function() {
+JoshiInput.prototype.answerTwo = function(event) {
 	event.preventDefault();
 	this.emit("answerSelected", 1);
 };
 
-JoshiInput.prototype.answerThree = function() {
+JoshiInput.prototype.answerThree = function(event) {
 	event.preventDefault();
 	this.emit("answerSelected", 2);
 };
 
-JoshiInput.prototype.answerFour = function() {
+JoshiInput.prototype.answerFour = function(event) {
 	event.preventDefault();
 	this.emit("answerSelected", 3);
 };
