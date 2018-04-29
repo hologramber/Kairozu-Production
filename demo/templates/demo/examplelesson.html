@@ -176,8 +176,8 @@
                 </div>
             </div>
 
-            <div class="fc">
-                <div class="fc-flex-50">
+            <div class="fc-general-row-rev">
+                <div class="fc-flex-50 order2">
                     <div id="more-info">
                         <ul>
                             <li>The topic denoted by は, usually coming at the beginning of the sentence, establishes what the sentence is about. It must be someone or something that both the speaker and the listener can see or hear, or identify from previous conversation or shared knowledge.</li>
@@ -186,20 +186,17 @@
                     </div>
                 </div>
 
-                <div class="fc-flex-20">
-                    <div class="practicebutton">
-                        <a href="{% url 'demo:demosentencequiz' %}"><img id="lessonquiz" alt="クイズ" src="{% static 'img/quiz_button.png' %}" /></a>
-                    </div>
+                <div class="fc-flex-20 practicebutton order1">
+                    <a href="{% url 'demo:demosentencequiz' %}"><img id="lessonquiz" alt="クイズ" src="{% static 'img/quiz_button.png' %}" /></a>
                 </div>
 
-                <div class="fc-flex-20">
-                    <div class="practicebutton">
-                        <a href="{% url 'demo:demopracticequiz' %}"><img id="lessonpractice" alt="Practice" src="{% static 'img/practice_button.png' %}" /></a>
-                    </div>
+                <div class="fc-flex-20 practicebutton order1">
+                    <a href="{% url 'demo:demopracticequiz' %}"><img id="lessonpractice" alt="Practice" src="{% static 'img/practice_button.png' %}" /></a>
                 </div>
             </div>
         </div>
     </div>
+    <div class="s-100"></div>
 </div>  <!-- /#wrapper -->
 
 <script type='text/javascript'>
