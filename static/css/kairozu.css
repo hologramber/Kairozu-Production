@@ -138,27 +138,27 @@ ul, ol {
 .fc-general-col {
     display: flex;
     flex-direction: column; }
+
 .fc-general-row {
     display: flex;
-    justify-content: space-evenly;
-    flex-flow: row wrap; }
-.fc-general-row-rev {
-    display: flex;
-    justify-content: space-evenly;
-    flex-wrap: wrap;
-    flex-direction: row-reverse;
-}
+    flex-flow: row wrap;
+    justify-content: space-evenly; }
 .fc-general-row-fs {
     display: flex;
-    justify-content: flex-start;
-    flex-flow: row wrap; }
+    flex-flow: row wrap;
+    justify-content: flex-start; }
+
+.fc-general-row-rev {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row-reverse;
+    justify-content: space-evenly; }
 
 .fc {
     display: flex;
     max-width: 1170px;
     margin: 0 auto;
     justify-content: center; }
-
 .fc-spaceb {
     display: flex;
     max-width: 1170px;
@@ -170,7 +170,6 @@ ul, ol {
     max-width: 1170px;
     margin: 0 auto;
     flex-direction: column; }
-
 .fc-basic-center {
     display: flex;
     max-width: 1170px;
@@ -183,15 +182,14 @@ ul, ol {
     display: flex;
     max-width: 1170px;
     margin: 0 auto;
-    justify-content: center;
-    flex-flow: row wrap; }
-
+    flex-flow: row wrap;
+    justify-content: center; }
 .fc-wrap-space {
     display: flex;
     max-width: 1170px;
     margin: 0 auto;
-    justify-content: space-evenly;
-    flex-flow: row wrap; }
+    flex-flow: row wrap;
+    justify-content: space-evenly; }
 
 .fc-center {
     display: flex;
@@ -232,15 +230,12 @@ ul, ol {
     margin: 0 auto;
     justify-content: space-evenly;
     flex-flow: row wrap; }
-
 .fc-about > div {
     width: 200px;
     margin: 20px; }
-
 .fc-about > div > table tr td {
     font-size: 1.2em;
     font-family: 'Open Sans', sans-serif; }
-
 .fc-about > div > table tr td div {
     padding-top: 10px;
     font-size: 0.8em;
@@ -251,25 +246,21 @@ ul, ol {
     font-size: x-large;
     font-family: 'Raleway', sans-serif;
     line-height: 1.1em; }
-
 .fish-text-sm {
     display: block;
     line-height: 1.3em;
     padding-bottom: 10px;
     font-size: small; }
-
 .fish-text-lg {
     display: block;
     font-variant: all-small-caps;
     line-height: 1.1em;
     font-size: x-large; }
-
 .rc-red-b-tiny {
     font-family: 'Open Sans', sans-serif;
     font-variant: all-small-caps;
     color: white;
     line-height: 0.6em; }
-
 .shadowfish {
     margin: 0 auto;
     border: 0;
@@ -348,7 +339,6 @@ span.footer-sm-text {
     min-width: 400px;
     margin: 0 auto; }
 .chartable > tbody tr td { padding: 2px 14px; }
-
 .blogtable > tbody tr td { padding: 0 5px; }
 
 .interface-fg, .quiz-tips {						/* tips on the interface page */
@@ -511,7 +501,7 @@ div.table-container { display: inline-block; }
 	border-radius: 5px; 
 	margin-bottom: 15px;
     border: 0; }
-.center-table {
+.center-table {                         /* freq arrow lesson18 */
     margin: 0 auto;
     display: table; }
 
@@ -545,32 +535,34 @@ table.gpt > tbody > tr > td.blankline { line-height: 5px; }
 	line-height: 50%;
 	text-align: right; }
 
-#more-info { min-width: 280px; }
+#more-info {
+    margin: 20px;
+    min-width: 280px; }                /* more info blocks at end of lessons */
 #more-info li {
 	font-size: 16px;
 	line-height: 20px;
 	padding-bottom: 10px;
 	font-family: 'Raleway', sans-serif; }
 
-.chapterbox { background-image: url('../img/sunsplash.png'); color: #2b2b2b; }		/* active (red) ch on dashboard */
-.chapterbox:hover { background-image: url('../img/sunsplashr.png'); } 				/* hover twist ch on dashboard */
-.chapterbox-dim { background-image: url('../img/sunsink.png'); color: #fff; } 		/* inactive (grey) ch on dashboard */
+.chapterbox { background-image: url('../img/sunsplash.png'); color: #2b2b2b; }		/* active (red) ch on MAIN */
+.chapterbox:hover { background-image: url('../img/sunsplashr.png'); } 				/* hover twist ch on MAIN */
+.chapterbox-dim { background-image: url('../img/sunsink.png'); color: #fff; } 		/* inactive (grey) ch on MAIN */
 .chapterbox, .chapterbox-dim {
 	background-repeat: no-repeat;
 	background-size: 90px;
 	margin-bottom: 50px;
     width: 250px; }
 
-.dashtitle, .dashtitle-dim { margin: 45px 0 0 30px; }					/* chapter title (kanji+#) */
+.dashtitle, .dashtitle-dim { margin: 45px 0 0 30px; }					/* MAIN PAGE chapter title (kanji+#) */
 .dashtitle, .dashsubtitle { color: #2b2b2b; }
 .dashtitle-dim, .dashsubtitle-dim { color: #8a8a8a; }
 .dashtitle span.betatag, .dashtitle-dim span.betatag {
     font-size: x-small;
     line-height: 5px; }
-.dashsubtitle, .dashsubtitle-dim {				/* chapter name (english) */
+.dashsubtitle, .dashsubtitle-dim {				/* MAIN PAGE chapter name (english) */
 	margin: 5px 0 5px 45px;
 	font-weight: bold; }
-.dashprogress {									/* list of completed elements per active chapter */
+.dashprogress {									/* MAIN PAGE list of completed elements per active chapter */
 	margin-left: 80px;
 	text-align: left; }
 
@@ -605,7 +597,7 @@ table.gpt > tbody > tr > td.blankline { line-height: 5px; }
 	margin-left: -15px;
     float: right; }
 
-.groupdt {
+.groupdt {                              /* data tables in lessons, e.g. ch2,lesson10 */
     width: 100%;
     max-width: 350px;
     min-width: 200px;
@@ -614,7 +606,7 @@ table.gpt > tbody > tr > td.blankline { line-height: 5px; }
 .groupdt > thead th { padding: 10px 5px; }
 .groupdt > tbody td { padding: 8px 10px 8px 10px; }
 
-.generaltable { white-space: nowrap; }
+.generaltable { white-space: nowrap; }      /* freq arrow lesson18 */
 .generaltable > tbody > tr > td {
 	padding: 5px 20px 5px 20px;
 	border: none; 
@@ -632,7 +624,7 @@ table.gpt > tbody > tr > td.blankline { line-height: 5px; }
     right: 5px;
     font-size: 12px; }
 
-.litcontextbox {                                    /* literal tag on quiz */
+.litcontextbox {                                        /* literal content grey tag on quizzes */
     font-family: 'Ubuntu Condensed', sans-serif;
     background: #bcbcbc;
     padding: 0 0 1px 0;
@@ -810,9 +802,7 @@ input[type=text]:disabled {
 	font-size: 16px; }
 
 .practicebutton {
-    float: right;
-    padding-right: 30px;
-    margin-bottom: 25px;
+    margin: 20px;
     min-width: 200px; } 	/* practice & quiz buttons in lesson view */
 
 span.step {
