@@ -38,7 +38,7 @@
             </div>  <!-- /#grammarholder -->
 
             <form id='passageform' action='' class='abox' method='post'>{% csrf_token %}
-                <input id='id_passageattempt' type='text' name='passageattempt' autocapitalize='none' autocorrect='off' autofocus />
+                <input id='id_passageattempt' type='text' name='passageattempt' autocomplete='off' autocorrect='off' autocapitalize='off' spellcheck='false' autofocus />
                 <input id='passageactual' type='hidden' name='passageactual' value='' />
                 <input id='passage_index' type='hidden' name='passage_index' value='' />
                 <input id='passagekana' type='hidden' name='passagekana' value='' />

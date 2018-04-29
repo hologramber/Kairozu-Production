@@ -10,7 +10,7 @@
         </div>
 
         <form id='sentencequizform' action='' class='abox' method='post'>{% csrf_token %}
-            <input id='id_sentenceattempt' type='text' name='sentence_attempt' autocapitalize='none' autocorrect='off' autofocus />
+            <input id='id_sentenceattempt' type='text' name='sentence_attempt' autocomplete='off' autocorrect='off' autocapitalize='off' spellcheck='false' autofocus />
             <input id='sactual' type='hidden' name='sentence_actual' value='' />
             <input id='sstrict' type='hidden' name='sentence_strict' value='0' />
             <input id='scode' type='hidden' name='sentence_code' value='A' />

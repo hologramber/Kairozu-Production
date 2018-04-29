@@ -19,7 +19,7 @@
 
     <div class="fc-flex-50">
         <div class="kairozu-authform">
-            <form method="post">{% csrf_token %}
+            <form method="post" autocomplete='off' autocorrect='off' autocapitalize='off' spellcheck='false'>{% csrf_token %}
                 <h3>Create New Kairozu Account</h3>
 
                 {% for field in form %}

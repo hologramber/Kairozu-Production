@@ -44,7 +44,7 @@
                 </div>
 
                 <form id='sentencequizform' action='' class='abox' method='post'>{% csrf_token %}
-                    <input id='id_sentenceattempt' type='text' name='sentence_attempt' autocapitalize='none' autocorrect='off' autofocus />
+                    <input id='id_sentenceattempt' type='text' name='sentence_attempt' autocomplete='off' autocorrect='off' autocapitalize='off' spellcheck='false' autofocus />
                     <input id='sactual' type='hidden' name='sentence_actual' value='' />
                     <input id='sindex' type='hidden' name='sindex' value='' />
                     <input type='submit' value='&#8680;' />

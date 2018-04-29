@@ -18,7 +18,7 @@
                 </div>
 
             <form id='vocabquizform' action='' method='post' class='abox'>{% csrf_token %}
-                <input id='id_vocabattempt' type='text' name='vocab_attempt' autocapitalize='none' autocorrect='off' autofocus />
+                <input id='id_vocabattempt' type='text' name='vocab_attempt' autocomplete='off' autocorrect='off' autocapitalize='off' spellcheck='false' autofocus />
                 <input id='vactual' type='hidden' name='vocab_actual' value='' />
                 <input id='max_number' type='hidden' name='max_number' value='' />
                 <input type='submit' value='&#8680;' />

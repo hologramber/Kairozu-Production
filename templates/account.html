@@ -100,7 +100,7 @@
                 <i class='fa fa-lock fa-fw'></i>&nbsp;&nbsp;Change Password
             </h4>
             <div class="accordion-content">
-                <form method="post">{% csrf_token %}
+                <form method="post" autocomplete='off' autocorrect='off' autocapitalize='off' spellcheck='false'>{% csrf_token %}
                     {% for field in form %}
                         <div class="form-group">
                             <span class="normal">{{ field.label_tag }}</span><br>
