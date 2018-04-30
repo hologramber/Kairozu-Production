@@ -1396,6 +1396,7 @@ span.step {
     a.headlink, .dropdown .dropbtn { display: none; }
     #nav-toggle {
         display: block;
+        cursor: pointer;
         font-size: 20px;
         right: -10px;
         position: relative; }
@@ -1410,10 +1411,13 @@ span.step {
         display: flex;
         flex-direction: column;
         align-items: flex-start;
+        width: 100%;
         margin-top: 50px; }
     .topnav.responsive #header-links > div {
         flex-direction: column;
-        padding-left: 0; }
+        padding-left: 0;
+        width: 100%;
+        align-items: flex-start; }
     .topnav.responsive a {
         float: none;
         display: block;
