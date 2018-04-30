@@ -1397,7 +1397,6 @@ span.step {
     a.headlink, .dropdown .dropbtn { display: none; }
     #nav-toggle {
         display: block;
-        cursor: pointer;
         font-size: 20px;
         right: -10px;
         position: relative; }
