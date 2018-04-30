@@ -43,19 +43,19 @@
                                 {% endif %}
                                 <div class="dropdown-content">
                                     {% if user.profile.vrcount == 0 %}
-                                        <span>0 VOCABULARY</span>
+                                        <span>0&nbsp;VOCABULARY</span>
                                     {% else %}
-                                        <a href="{% url 'main:reviewvocab' %}">{{ user.profile.vrcount }} VOCABULARY</a>
+                                        <a href="{% url 'main:reviewvocab' %}">{{ user.profile.vrcount }}&nbsp;VOCABULARY</a>
                                     {% endif %}
                                     {% if user.profile.ercount == 0 %}
-                                        <span>0 EXPRESSIONS</span>
+                                        <span>0&nbsp;EXPRESSIONS</span>
                                     {% else %}
-                                        <a href="{% url 'main:reviewexpression' %}">{{ user.profile.ercount }} EXPRESSIONS</a>
+                                        <a href="{% url 'main:reviewexpression' %}">{{ user.profile.ercount }}&nbsp;EXPRESSIONS</a>
                                     {% endif %}
                                     {% if user.profile.srcount == 0 %}
-                                        <span>0 SENTENCES</span>
+                                        <span>0&nbsp;SENTENCES</span>
                                     {% else %}
-                                        <a href="{% url 'main:reviewsentence' %}">{{ user.profile.srcount }} SENTENCES</a>
+                                        <a href="{% url 'main:reviewsentence' %}">{{ user.profile.srcount }}&nbsp;SENTENCES</a>
                                     {% endif %}
                                 </div>
                             </div>
@@ -64,12 +64,12 @@
                                 <div class="dropbtn">KAIROZU <i class="fa red-words fa-caret-down"></i></div>
                                 <div class="dropdown-content">
                                     <a href="{% url 'about' %}">ABOUT</a>
-                                    <a href="{% url 'news:main' %}">KAIROZU BLOG</a>
+                                    <a href="{% url 'news:main' %}">KAIROZU&nbsp;BLOG</a>
                                     <a href="{% url 'news:faq' %}">FAQ</a>
-                                    <a href="{% url 'account' %}">YOUR ACCOUNT</a>
-                                    <a href="{% url 'main:progress' %}">YOUR PROGRESS</a>
-                                    <a id="comment-button" href="#"><i class="fa fa-bug red-words" aria-hidden="true"></i>&nbsp;&nbsp;REPORT BUG</a>
-                                    <a href="{% url 'logout' %}">LOG OUT</a>
+                                    <a href="{% url 'account' %}">YOUR&nbsp;ACCOUNT</a>
+                                    <a href="{% url 'main:progress' %}">YOUR&nbsp;PROGRESS</a>
+                                    <a id="comment-button" href="#"><i class="fa fa-bug red-words" aria-hidden="true"></i>&nbsp;&nbsp;REPORT&nbsp;BUG</a>
+                                    <a href="{% url 'logout' %}">LOG&nbsp;OUT</a>
                                 </div>
                             </div>
                         {% else %}
@@ -77,11 +77,11 @@
 							<div><a class="headlink" href="{% url 'about' %}">ABOUT</a></div>
                             <div><a class="headlink" href="{% url 'news:main' %}">BLOG</a></div>
                             <div><a class="headlink" href="{% url 'news:faq' %}">FAQ</a></div>
-							<div><a class="headlink" href="{% url 'login' %}">SIGN IN</a></div>
-							<div><a class="headlink" href="{% url 'register' %}">SIGN UP</a></div>
+							<div><a class="headlink" href="{% url 'login' %}">SIGN&nbsp;IN</a></div>
+							<div><a class="headlink" href="{% url 'register' %}">SIGN&nbsp;UP</a></div>
                         {% endif %}
                     </div>
-                    <a href="#" id="nav-toggle" style="cursor: pointer;">
+                    <a href="#" id="nav-toggle">
                         <span class="fa-stack">
                           <i class="fa dkgrey-words fa-square fa-stack-2x"></i>
                           <i class="fa fa-align-justify fa-stack-1x"></i>
@@ -134,6 +134,8 @@
                     });
                 };
                 $('#comment-button').click(function() {
+                    $('.dropdown-content').hide();
+                    $('.dropdown').removeClass('active');
                     $('#form-modal-body').load('/news/newissue/', function () {
                         modal.style.display = "block";
                         formAjaxSubmit('#form-modal-body form');

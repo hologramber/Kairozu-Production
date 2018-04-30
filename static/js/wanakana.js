@@ -2,37 +2,20 @@ var wanakana,
   __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
 wanakana = wanakana || {};
-
 wanakana.version = "1.3.7";
-
-if (typeof define === "function" && define.amd) {
-  define("wanakana", [], function() {
-    return wanakana;
-  });
-}
+if (typeof define === "function" && define.amd) { define("wanakana", [], function() { return wanakana; }); }
 
 wanakana.LOWERCASE_START = 0x61;
-
 wanakana.LOWERCASE_END = 0x7A;
-
 wanakana.UPPERCASE_START = 0x41;
-
 wanakana.UPPERCASE_END = 0x5A;
-
 wanakana.HIRAGANA_START = 0x3041;
-
 wanakana.HIRAGANA_END = 0x3096;
-
 wanakana.KATAKANA_START = 0x30A1;
-
 wanakana.KATAKANA_END = 0x30FA;
-
 wanakana.LOWERCASE_FULLWIDTH_START = 0xFF41;
-
 wanakana.LOWERCASE_FULLWIDTH_END = 0xFF5A;
-
 wanakana.UPPERCASE_FULLWIDTH_START = 0xFF21;
-
 wanakana.UPPERCASE_FULLWIDTH_END = 0xFF3A;
 
 wanakana.defaultOptions = {
@@ -40,21 +23,10 @@ wanakana.defaultOptions = {
   IMEMode: false
 };
 
-/**
- * Automatically sets up an input field to be an IME.
-*/
-
-wanakana.compare = function(arr1, arr2) {
-    return $(arr1).not(arr2).length == 0 && $(arr2).not(arr1).length == 0
-};
-
-wanakana.bind = function(input) {
-  return input.addEventListener('input', wanakana._onInput);
-};
-
-wanakana.unbind = function(input) {
-  return input.removeEventListener('input', wanakana._onInput);
-};
+// Automatically sets up an input field to be an IME.
+wanakana.compare = function(arr1, arr2) { return $(arr1).not(arr2).length == 0 && $(arr2).not(arr1).length == 0 };
+wanakana.bind = function(input) { return input.addEventListener('input', wanakana._onInput); };
+wanakana.unbind = function(input) { return input.removeEventListener('input', wanakana._onInput); };
 
 wanakana._onInput = function(event) {
   var input, newText, normalizedInputString, range, startingCursor, startingLength;
@@ -62,9 +34,7 @@ wanakana._onInput = function(event) {
   startingCursor = input.selectionStart;
   startingLength = input.value.length;
   normalizedInputString = wanakana._convertFullwidthCharsToASCII(input.value);
-  newText = wanakana.toKana(normalizedInputString, {
-    IMEMode: true
-  });
+  newText = wanakana.toKana(normalizedInputString, { IMEMode: true });
   if (normalizedInputString !== newText) {
     input.value = newText;
     if (typeof input.selectionStart === "number") {
@@ -80,9 +50,7 @@ wanakana._onInput = function(event) {
 
 wanakana._extend = function(target, source) {
   var prop;
-  if (target == null) {
-    return source;
-  }
+  if (target == null) { return source; }
   for (prop in source) {
     if ((target[prop] == null) && (source[prop] != null)) {
       target[prop] = source[prop];
@@ -91,11 +59,7 @@ wanakana._extend = function(target, source) {
   return target;
 };
 
-/**
- * Takes a character and a unicode range. Returns true if the char is in the range.
-*/
-
-
+// Takes a character and a unicode range. Returns true if the char is in the range.
 wanakana._isCharInRange = function(char, start, end) {
   var code;
   code = char.charCodeAt(0);
@@ -104,38 +68,22 @@ wanakana._isCharInRange = function(char, start, end) {
 
 wanakana._isCharVowel = function(char, includeY) {
   var regexp;
-  if (includeY == null) {
-    includeY = true;
-  }
+  if (includeY == null) { includeY = true; }
   regexp = includeY ? /[aeiouy]/ : /[aeiou]/;
   return char.toLowerCase().charAt(0).search(regexp) !== -1;
 };
 
 wanakana._isCharConsonant = function(char, includeY) {
   var regexp;
-  if (includeY == null) {
-    includeY = true;
-  }
+  if (includeY == null) { includeY = true; }
   regexp = includeY ? /[bcdfghjklmnpqrstvwxyz]/ : /[bcdfghjklmnpqrstvwxz]/;
   return char.toLowerCase().charAt(0).search(regexp) !== -1;
 };
 
-wanakana._isCharKatakana = function(char) {
-  return wanakana._isCharInRange(char, wanakana.KATAKANA_START, wanakana.KATAKANA_END);
-};
-
-wanakana._isCharHiragana = function(char) {
-  return wanakana._isCharInRange(char, wanakana.HIRAGANA_START, wanakana.HIRAGANA_END);
-};
-
-wanakana._isCharKana = function(char) {
-  return wanakana._isCharHiragana(char) || wanakana._isCharKatakana(char);
-};
-
-wanakana._isCharNotKana = function(char) {
-  return !wanakana._isCharHiragana(char) && !wanakana._isCharKatakana(char);
-};
-
+wanakana._isCharKatakana = function(char) { return wanakana._isCharInRange(char, wanakana.KATAKANA_START, wanakana.KATAKANA_END); };
+wanakana._isCharHiragana = function(char) { return wanakana._isCharInRange(char, wanakana.HIRAGANA_START, wanakana.HIRAGANA_END); };
+wanakana._isCharKana = function(char) { return wanakana._isCharHiragana(char) || wanakana._isCharKatakana(char); };
+wanakana._isCharNotKana = function(char) { return !wanakana._isCharHiragana(char) && !wanakana._isCharKatakana(char); };
 wanakana._convertFullwidthCharsToASCII = function(string) {
   var char, chars, code, i, _i, _len;
   chars = string.split("");
@@ -163,9 +111,7 @@ wanakana._katakanaToHiragana = function(kata) {
       code += wanakana.HIRAGANA_START - wanakana.KATAKANA_START;
       hiraChar = String.fromCharCode(code);
       hira.push(hiraChar);
-    } else {
-      hira.push(kataChar);
-    }
+    } else { hira.push(kataChar); }
   }
   return hira.join("");
 };
@@ -181,9 +127,7 @@ wanakana._hiraganaToKatakana = function(hira) {
       code += wanakana.KATAKANA_START - wanakana.HIRAGANA_START;
       kataChar = String.fromCharCode(code);
       kata.push(kataChar);
-    } else {
-      kata.push(hiraChar);
-    }
+    } else { kata.push(hiraChar); }
   }
   return kata.join("");
 };
@@ -196,19 +140,13 @@ wanakana._hiraganaToRomaji = function(hira, options) {
   cursor = 0;
   chunkSize = 0;
   maxChunk = 2;
-  getChunk = function() {
-    return hira.substr(cursor, chunkSize);
-  };
-  resetChunkSize = function() {
-    return chunkSize = Math.min(maxChunk, len - cursor);
-  };
+  getChunk = function() { return hira.substr(cursor, chunkSize); };
+  resetChunkSize = function() { return chunkSize = Math.min(maxChunk, len - cursor); };
   while (cursor < len) {
     resetChunkSize();
     while (chunkSize > 0) {
       chunk = getChunk();
-      if (wanakana.isKatakana(chunk)) {
-        chunk = wanakana._katakanaToHiragana(chunk);
-      }
+      if (wanakana.isKatakana(chunk)) { chunk = wanakana._katakanaToHiragana(chunk); }
       if (chunk.charAt(0) === "っ" && chunkSize === 1 && cursor < (len - 1)) {
         nextCharIsDoubleConsonant = true;
         romaChar = "";
@@ -219,40 +157,27 @@ wanakana._hiraganaToRomaji = function(hira, options) {
         romaChar = romaChar.charAt(0).concat(romaChar);
         nextCharIsDoubleConsonant = false;
       }
-      if (romaChar != null) {
-        break;
-      }
+      if (romaChar != null) { break; }
       chunkSize--;
     }
-    if (romaChar == null) {
-      romaChar = chunk;
-    }
+    if (romaChar == null) { romaChar = chunk; }
     roma.push(romaChar);
     cursor += chunkSize || 1;
   }
   return roma.join("");
 };
 
-wanakana._romajiToHiragana = function(roma, options) {
-  return wanakana._romajiToKana(roma, options, true);
-};
-
+wanakana._romajiToHiragana = function(roma, options) { return wanakana._romajiToKana(roma, options, true); };
 wanakana._romajiToKana = function(roma, options, ignoreCase) {
   var chunk, chunkLC, chunkSize, cursor, getChunk, isCharUpperCase, kana, kanaChar, len, maxChunk;
-  if (ignoreCase == null) {
-    ignoreCase = false;
-  }
+  if (ignoreCase == null) { ignoreCase = false; }
   options = wanakana._extend(options, wanakana.defaultOptions);
   len = roma.length;
   kana = [];
   cursor = 0;
   maxChunk = 3;
-  getChunk = function() {
-    return roma.substr(cursor, chunkSize);
-  };
-  isCharUpperCase = function(char) {
-    return wanakana._isCharInRange(char, wanakana.UPPERCASE_START, wanakana.UPPERCASE_END);
-  };
+  getChunk = function() { return roma.substr(cursor, chunkSize); };
+  isCharUpperCase = function(char) { return wanakana._isCharInRange(char, wanakana.UPPERCASE_START, wanakana.UPPERCASE_END); };
   while (cursor < len) {
     chunkSize = Math.min(maxChunk, len - cursor);
     while (chunkSize > 0) {
@@ -278,43 +203,27 @@ wanakana._romajiToKana = function(roma, options, ignoreCase) {
           chunkSize = 1;
           if (wanakana._isCharInRange(chunk.charAt(0), wanakana.UPPERCASE_START, wanakana.UPPERCASE_END)) {
             chunkLC = chunk = "ッ";
-          } else {
-            chunkLC = chunk = "っ";
-          }
+          } else { chunkLC = chunk = "っ"; }
         }
       }
       kanaChar = wanakana.R_to_J[chunkLC];
-      if (kanaChar != null) {
-        break;
-      }
-      if (chunkSize === 4) {
-        chunkSize -= 2;
-      } else {
-        chunkSize--;
-      }
+      if (kanaChar != null) { break; }
+      if (chunkSize === 4) { chunkSize -= 2; } else { chunkSize--; }
     }
     if (kanaChar == null) {
       chunk = wanakana._convertPunctuation(chunk);
       kanaChar = chunk;
     }
     if (options != null ? options.useObseleteKana : void 0) {
-      if (chunkLC === "wi") {
-        kanaChar = "ゐ";
-      }
-      if (chunkLC === "we") {
-        kanaChar = "ゑ";
-      }
+      if (chunkLC === "wi") { kanaChar = "ゐ"; }
+      if (chunkLC === "we") { kanaChar = "ゑ"; }
     }
     if (options.IMEMode && chunkLC.charAt(0) === "n") {
       if (roma.charAt(cursor + 1).toLowerCase() === "y" && wanakana._isCharVowel(roma.charAt(cursor + 2)) === false || cursor === (len - 1) || wanakana.isKana(roma.charAt(cursor + 1))) {
         kanaChar = chunk.charAt(0);
       }
     }
-    if (!ignoreCase) {
-      if (isCharUpperCase(chunk.charAt(0))) {
-        kanaChar = wanakana._hiraganaToKatakana(kanaChar);
-      }
-    }
+    if (!ignoreCase) { if (isCharUpperCase(chunk.charAt(0))) { kanaChar = wanakana._hiraganaToKatakana(kanaChar); } }
     kana.push(kanaChar);
     cursor += chunkSize || 1;
   }
@@ -322,26 +231,14 @@ wanakana._romajiToKana = function(roma, options, ignoreCase) {
 };
 
 wanakana._convertPunctuation = function(input, options) {
-  if (input === '　') {
-    return ' ';
-  }
-  if (input === '-') {
-    return 'ー';
-  }
-  if (input === '_') {
-    return 'ー';
-  }
-  if (input === ".") {
-	return '。';
-  }
+  if (input === '　') { return ' '; }
+  if (input === '-') { return 'ー'; }
+  if (input === '_') { return 'ー'; }
+  if (input === ".") { return '。'; }
   return input;
 };
 
-/**
-* Returns true if input is entirely hiragana.
-*/
-
-
+// Returns true if input is entirely hiragana.
 wanakana.isHiragana = function(input) {
   var chars;
   chars = input.split("");
@@ -371,19 +268,13 @@ wanakana.isRomaji = function(input) {
 };
 
 wanakana.toHiragana = function(input, options) {
-  if (wanakana.isRomaji(input)) {
-    return input = wanakana._romajiToHiragana(input, options);
-  }
-  if (wanakana.isKatakana(input)) {
-    return input = wanakana._katakanaToHiragana(input, options);
-  }
+  if (wanakana.isRomaji(input)) { return input = wanakana._romajiToHiragana(input, options); }
+  if (wanakana.isKatakana(input)) { return input = wanakana._katakanaToHiragana(input, options); }
   return input;
 };
 
 wanakana.toKatakana = function(input, options) {
-  if (wanakana.isHiragana(input)) {
-    return input = wanakana._hiraganaToKatakana(input, options);
-  }
+  if (wanakana.isHiragana(input)) { return input = wanakana._hiraganaToKatakana(input, options); }
   if (wanakana.isRomaji(input)) {
     input = wanakana._romajiToHiragana(input, options);
     return input = wanakana._hiraganaToKatakana(input, options);
@@ -391,13 +282,8 @@ wanakana.toKatakana = function(input, options) {
   return input;
 };
 
-wanakana.toKana = function(input, options) {
-  return input = wanakana._romajiToKana(input, options);
-};
-
-wanakana.toRomaji = function(input, options) {
-  return input = wanakana._hiraganaToRomaji(input);
-};
+wanakana.toKana = function(input, options) { return input = wanakana._romajiToKana(input, options); };
+wanakana.toRomaji = function(input, options) { return input = wanakana._hiraganaToRomaji(input); };
 
 wanakana.R_to_J = {
   a: 'あ',

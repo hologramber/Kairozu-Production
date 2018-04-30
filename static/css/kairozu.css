@@ -142,7 +142,7 @@ ul, ol {
 .fc-general-row {
     display: flex;
     flex-flow: row wrap;
-    justify-content: space-evenly; }
+    justify-content: space-around; }
 .fc-general-row-fs {
     display: flex;
     flex-flow: row wrap;
@@ -152,7 +152,7 @@ ul, ol {
     display: flex;
     flex-wrap: wrap;
     flex-direction: row-reverse;
-    justify-content: space-evenly; }
+    justify-content: space-around; }
 
 .fc {
     display: flex;
@@ -189,7 +189,7 @@ ul, ol {
     max-width: 1170px;
     margin: 0 auto;
     flex-flow: row wrap;
-    justify-content: space-evenly; }
+    justify-content: space-around; }
 
 .fc-center {
     display: flex;
@@ -228,7 +228,7 @@ ul, ol {
     display: flex;
     max-width: 1170px;
     margin: 0 auto;
-    justify-content: space-evenly;
+    justify-content: space-around;
     flex-flow: row wrap; }
 .fc-about > div {
     width: 200px;
