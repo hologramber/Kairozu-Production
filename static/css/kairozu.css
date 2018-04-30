@@ -442,6 +442,7 @@ a.headlink {
     position: relative;
     left: 10px;
     margin-right: 35px;
+    cursor: pointer;
 	float: left;
     z-index: 1050; }
 
@@ -1411,13 +1412,10 @@ span.step {
         display: flex;
         flex-direction: column;
         align-items: flex-start;
-        width: 100%;
         margin-top: 50px; }
     .topnav.responsive #header-links > div {
         flex-direction: column;
-        padding-left: 0;
-        width: 100%;
-        align-items: flex-start; }
+        padding-left: 0; }
     .topnav.responsive a {
         float: none;
         display: block;
