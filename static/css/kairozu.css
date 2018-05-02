@@ -416,6 +416,7 @@ a.headlink {
     -moz-transition: color 200ms ease-in-out;
     -o-transition: color 200ms ease-in-out;
     transition: color 200ms ease-in-out; }
+.dropdown .dropbtn:hover > i { color: #FF9729; }
 .dropdown-content {
     display: none;
     position: absolute;
@@ -434,7 +435,9 @@ a.headlink {
 .dropdown-content a, .dropdown-content span {
     padding: 10px 20px;
     display: block; }
+.dropdown-content span { color: #585858; }
 .dropdown.active { background: #080808; }
+.dropdown.active .dropbtn > i { color: #FF9729; }
 .dropdown.active .dropdown-content { display: block; }
 #sidecollapse {				/* collapse-sidebar button in upper left corner on pages w/sidebar */
     top: 5px;
