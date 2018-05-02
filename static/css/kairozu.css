@@ -416,6 +416,11 @@ a.headlink {
     -moz-transition: color 200ms ease-in-out;
     -o-transition: color 200ms ease-in-out;
     transition: color 200ms ease-in-out; }
+.dropdown .dropbtn > i {
+    -webkit-transition: color 200ms ease-in-out;
+    -moz-transition: color 200ms ease-in-out;
+    -o-transition: color 200ms ease-in-out;
+    transition: color 200ms ease-in-out; }
 .dropdown .dropbtn:hover > i { color: #FF9729; }
 .dropdown-content {
     display: none;
