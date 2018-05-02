@@ -63,45 +63,29 @@
                     {% if user.profile.currentpractice > lesson.id %}
                         <div class="fc-flex-20 order1">
                             <div class="center-table">
-                                <a href="{% url 'main:sentencequiz' lesson.id %}">
-                                    <div class="quiz-bg">
-                                        <div class="bottom-text">クイズ</div>
+                                <a id="qlink" href="{% url 'main:sentencequiz' lesson.id %}">
+                                    <div id="quizbg">
+                                        <img class="bottom" src="{% static 'img/branch-orangefish.svg' %}" />
+                                        <img class="top" src="{% static 'img/branch-redfish.svg' %}" />
+                                        <span class="bottom-text">クイズ</span>
                                     </div>
                                 </a>
                             </div>
                         </div>
-                        <script type='text/javascript'>
-                            $(document).ready(function() {
-                                $('.quiz-bg').hover(function() {
-                                    $(this).css("background-image", "url({% static 'img/branch-orangefish.svg' %})");
-                                }, function() {
-                                    $(this).css("background-image", "url({% static 'img/branch-redfish.svg' %})");
-                                });
-                            });
-                        </script>
                     {% endif %}
 
                     {% if user.profile.currentlesson >= lesson.id or lesson.id == 1 %}
                         <div class="fc-flex-20 order1">
                             <div class="center-table">
-                                <a href="{% url 'main:practicequiz' lesson.id %}">
-                                    <div class="pract-bg">
-                                        <div class="bottom-text upper">
-                                            practice
-                                        </div>
+                                <a id="qlink" href="{% url 'main:practicequiz' lesson.id %}">
+                                    <div id="practbg">
+                                        <img class="bottom" src="{% static 'img/torii-fish-orange.svg' %}" />
+                                        <img class="top" src="{% static 'img/torii-fish-red.svg' %}" />
+                                        <div class="bottom-text upper">practice</div>
                                     </div>
                                 </a>
                             </div>
                         </div>
-                        <script type='text/javascript'>
-                            $(document).ready(function() {
-                                $('.pract-bg').hover(function() {
-                                    $(this).css("background-image", "url({% static 'img/torii-fish-orange.svg' %})");
-                                }, function() {
-                                    $(this).css("background-image", "url({% static 'img/torii-fish-red.svg' %})");
-                                });
-                            });
-                        </script>
                     {% endif %}
                 </div>
             </div>

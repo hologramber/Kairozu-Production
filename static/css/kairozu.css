@@ -556,39 +556,46 @@ table.gpt > tbody > tr > td.blankline { line-height: 5px; }
 	padding-bottom: 10px;
 	font-family: 'Raleway', sans-serif; }
 
-.pract-bg {
-    background-image: url('../img/torii-fish-red.svg');
-    width: 160px;
-    min-height: 220px;
-    font-size: 48px; }
-.quiz-bg {
-    background-image: url('../img/branch-redfish.svg');
+#quizbg {
+    position:relative;
+    margin: 20px;
     width: 280px;
     min-height: 210px;
     font-size: 36px; }
-.pract-bg, .quiz-bg {
-    background-repeat: no-repeat;
-    background-size: 100%;
+#practbg {
+    position:relative;
     margin: 20px;
-    position: relative;
-    transition: background-image 200ms ease-in-out; }
+    width: 160px;
+    min-height: 220px;
+    font-size: 48px; }
+#quizbg img, #practbg img {
+  position:absolute;
+  left: 0;
+  -webkit-transition: opacity 200ms ease-in-out;
+  -moz-transition: opacity 200ms ease-in-out;
+  -o-transition: opacity 200ms ease-in-out;
+  transition: opacity 200ms ease-in-out; }
+#qlink:hover div img.top { opacity: 0; }
 .bottom-text {
     position: absolute;
     bottom: 0;
     right: 0; }
 
-.chapterbox {
-    background-image: url('../img/blossom-red.svg');
-    transition: background-image 200ms ease-in-out;
-    color: #2b2b2b; }		/* active (red) ch on MAIN */
-.chapterbox:hover { background-image: url('../img/blossom-orange.svg'); } 				/* hover twist ch on MAIN */
-.chapterbox-dim { background-image: url('../img/blossom-grey.svg'); color: #fff; } 		/* inactive (grey) ch on MAIN */
 .chapterbox, .chapterbox-dim {
-	background-repeat: no-repeat;
-	background-size: 90px;
-	margin-bottom: 50px;
-    width: 250px; }
-
+    position: relative;
+    margin-bottom: 30px;
+    width: 250px;
+    color: #2b2b2b; }		/* active (red) ch on MAIN */
+.chapterbox img, .chapterbox-dim img {
+    position:absolute;
+    left: 0;
+    width: 90px;
+    z-index: -1;
+    -webkit-transition: opacity 200ms ease-in-out;
+    -moz-transition: opacity 200ms ease-in-out;
+    -o-transition: opacity 200ms ease-in-out;
+    transition: opacity 200ms ease-in-out; }
+.chlink:hover div img.top { opacity: 0; }
 .dashtitle, .dashtitle-dim { margin: 45px 0 0 30px; }					/* MAIN PAGE chapter title (kanji+#) */
 .dashtitle-dim, .dashsubtitle-dim { color: #8a8a8a; }
 .dashtitle span.betatag, .dashtitle-dim span.betatag {

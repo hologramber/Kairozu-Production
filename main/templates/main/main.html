@@ -8,8 +8,10 @@
     {% for chapter in object_list %}
         {% if chapter.status == 'H' %}
         {% elif user.profile.currentchapter >= chapter.id and chapter.status != 'A' %}
-            <a href="{% url 'main:interface' chapter.id %}">
+            <a class="chlink" href="{% url 'main:interface' chapter.id %}">
                 <div class="chapterbox">
+                    <img class="bottom" src="{% static 'img/blossom-orange.svg' %}" />
+                    <img class="top" src="{% static 'img/blossom-red.svg' %}" />
                     <h1 class="dashtitle">{{ chapter.title }}
                     {% if chapter.status == 'B' %}<span class="betatag red-words bold">[BETA]</span>{% endif %}</h1>
                     <h4 class="dashsubtitle">{{ chapter.subtitle }}</h4>
@@ -28,6 +30,7 @@
         {% elif user.profile.pendingchapter >= chapter.id and user.profile.pendingchapter > user.profile.currentchapter and chapter.status != 'A' %}
             <span>
                 <div class="chapterbox-dim">
+                    <img src="{% static 'img/blossom-grey.svg' %}" />
                     <h1 class="dashtitle-dim">{{ chapter.title }}
                     {% if chapter.status == 'B' %}<span class="betatag ltgrey-words bold">[BETA]</span>{% endif %}</h1>
                     <h4 class="dashsubtitle-dim">{{ chapter.subtitle }}</h4>
@@ -39,6 +42,7 @@
         {% else %}
             <span>
                 <div class="chapterbox-dim">
+                    <img src="{% static 'img/blossom-grey.svg' %}" />
                     <h1 class="dashtitle-dim">{{ chapter.title }}
                     {% if chapter.status == 'B' %}<span class="betatag ltgrey-words bold">[BETA]</span>{% endif %}</h1>
                     <h4 class="dashsubtitle-dim">{{ chapter.subtitle }}</h4>
