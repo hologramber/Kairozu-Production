@@ -177,7 +177,7 @@
             </div>
 
             <div class="fc-general-row-rev">
-                <div class="fc-flex-50 order2">
+                <div class="fc-flex-40 order2">
                     <div id="more-info">
                         <ul>
                             <li>The topic denoted by は, usually coming at the beginning of the sentence, establishes what the sentence is about. It must be someone or something that both the speaker and the listener can see or hear, or identify from previous conversation or shared knowledge.</li>
@@ -186,32 +186,32 @@
                     </div>
                 </div>
 
-                <div class="fc-flex-20 practicebutton order1">
-                    <a href="{% url 'demo:demosentencequiz' %}"><img id="lessonquiz" alt="クイズ" src="{% static 'img/quiz_button.png' %}" /></a>
+                <div class="fc-flex-20 order1">
+                    <div class="center-table">
+                        <a id="qlink" href="{% url 'demo:demosentencequiz' %}">
+                            <div id="quizbg">
+                                <img class="bottom" src="{% static 'img/quiz-orange.svg' %}" />
+                                <img class="top" src="{% static 'img/quiz-red.svg' %}" />
+                            </div>
+                        </a>
+                    </div>
                 </div>
 
-                <div class="fc-flex-20 practicebutton order1">
-                    <a href="{% url 'demo:demopracticequiz' %}"><img id="lessonpractice" alt="Practice" src="{% static 'img/practice_button.png' %}" /></a>
+                <div class="fc-flex-20 order1">
+                    <div class="center-table">
+                        <a id="qlink" href="{% url 'demo:demopracticequiz' %}">
+                            <div id="practbg">
+                                <img class="bottom" src="{% static 'img/practice-orange.svg' %}" />
+                                <img class="top" src="{% static 'img/practice-red.svg' %}" />
+                            </div>
+                        </a>
+                    </div>
                 </div>
+
             </div>
         </div>
     </div>
     <div class="s-100"></div>
 </div>  <!-- /#wrapper -->
-
-<script type='text/javascript'>
-    $(document).ready(function() {
-        $('#lessonquiz').hover(function() {
-            $(this).attr("src", "{% static 'img/quiz_button-hover.png' %}");
-        }, function() {
-            $(this).attr("src", "{% static 'img/quiz_button.png' %}");
-        });
-        $('#lessonpractice').hover(function() {
-            $(this).attr("src", "{% static 'img/practice_button-hover.png' %}");
-        }, function() {
-            $(this).attr("src", "{% static 'img/practice_button.png' %}");
-        });
-    });
-</script>
 
 {% endblock %}
