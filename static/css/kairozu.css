@@ -568,14 +568,12 @@ table.gpt > tbody > tr > td.blankline { line-height: 5px; }
     position:relative;
     margin: 20px;
     width: 280px;
-    min-height: 210px;
-    font-size: 36px; }
+    min-height: 200px; }
 #practbg {
     position:relative;
     margin: 20px;
-    width: 160px;
-    min-height: 220px;
-    font-size: 48px; }
+    width: 190px;
+    min-height: 200px; }
 #quizbg img, #practbg img {
   position:absolute;
   left: 0;
@@ -584,10 +582,6 @@ table.gpt > tbody > tr > td.blankline { line-height: 5px; }
   -o-transition: opacity 200ms ease-in-out;
   transition: opacity 200ms ease-in-out; }
 #qlink:hover div img.top { opacity: 0; }
-.bottom-text {
-    position: absolute;
-    bottom: 0;
-    right: 0; }
 
 .chapterbox, .chapterbox-dim {
     position: relative;
