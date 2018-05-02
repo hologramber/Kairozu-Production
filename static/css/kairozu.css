@@ -556,9 +556,33 @@ table.gpt > tbody > tr > td.blankline { line-height: 5px; }
 	padding-bottom: 10px;
 	font-family: 'Raleway', sans-serif; }
 
-.chapterbox { background-image: url('../img/sunsplash.png'); color: #2b2b2b; }		/* active (red) ch on MAIN */
-.chapterbox:hover { background-image: url('../img/sunsplashr.png'); } 				/* hover twist ch on MAIN */
-.chapterbox-dim { background-image: url('../img/sunsink.png'); color: #fff; } 		/* inactive (grey) ch on MAIN */
+.pract-bg {
+    background-image: url('../img/torii-fish-red.svg');
+    width: 160px;
+    min-height: 220px;
+    font-size: 48px; }
+.quiz-bg {
+    background-image: url('../img/branch-redfish.svg');
+    width: 280px;
+    min-height: 210px;
+    font-size: 36px; }
+.pract-bg, .quiz-bg {
+    background-repeat: no-repeat;
+    background-size: 100%;
+    margin: 20px;
+    position: relative;
+    transition: background-image 200ms ease-in-out; }
+.bottom-text {
+    position: absolute;
+    bottom: 0;
+    right: 0; }
+
+.chapterbox {
+    background-image: url('../img/blossom-red.svg');
+    transition: background-image 200ms ease-in-out;
+    color: #2b2b2b; }		/* active (red) ch on MAIN */
+.chapterbox:hover { background-image: url('../img/blossom-orange.svg'); } 				/* hover twist ch on MAIN */
+.chapterbox-dim { background-image: url('../img/blossom-grey.svg'); color: #fff; } 		/* inactive (grey) ch on MAIN */
 .chapterbox, .chapterbox-dim {
 	background-repeat: no-repeat;
 	background-size: 90px;
@@ -566,7 +590,6 @@ table.gpt > tbody > tr > td.blankline { line-height: 5px; }
     width: 250px; }
 
 .dashtitle, .dashtitle-dim { margin: 45px 0 0 30px; }					/* MAIN PAGE chapter title (kanji+#) */
-.dashtitle, .dashsubtitle { color: #2b2b2b; }
 .dashtitle-dim, .dashsubtitle-dim { color: #8a8a8a; }
 .dashtitle span.betatag, .dashtitle-dim span.betatag {
     font-size: x-small;
@@ -1080,7 +1103,9 @@ span.step {
 .smaller { font-size: smaller; }
 .xsmall { font-size: x-small; }
 .italics { font-style: italic; }
-.upper { font-variant: all-small-caps; }
+.upper {
+    font-variant: small-caps;
+    font-variant: all-small-caps; }
 
 .variabletext {
     font-variant: small-caps;
