@@ -332,7 +332,7 @@ span.footer-sm-text {
     flex: 0 1 40%;
     min-width: 280px; }
 
-#welcomekoi { margin-top: 15px; max-height: 45vmin; margin-bottom: 35px; } /* kai koi on error and info pages */
+#welcomekoi { margin-top: 30px; max-height: 45vmin; margin-bottom: 35px; } /* kai koi on error and info pages */
 
 .chartable {
     text-align: center;
@@ -416,12 +416,12 @@ a.headlink {
     -moz-transition: color 200ms ease-in-out;
     -o-transition: color 200ms ease-in-out;
     transition: color 200ms ease-in-out; }
-.dropdown .dropbtn > i {
+.dropdown .dropbtn > i, .dropdown-content a > i {
     -webkit-transition: color 200ms ease-in-out;
     -moz-transition: color 200ms ease-in-out;
     -o-transition: color 200ms ease-in-out;
     transition: color 200ms ease-in-out; }
-.dropdown .dropbtn:hover > i { color: #FF9729; }
+.dropdown .dropbtn:hover > i, .dropdown-content a:hover > i { color: #FF9729; }
 .dropdown-content {
     display: none;
     position: absolute;
@@ -1040,6 +1040,7 @@ span.step {
 .pad-left-80 { padding-left: 80px; }
 .text-align-center { text-align: center; }
 .text-align-right { text-align: right; }
+.text-align-left { text-align: left; }
 .max-width-1400 { max-width: 1400px; }
 .inline-block { display: inline-block; }
 .width-60 { width: 60%; }

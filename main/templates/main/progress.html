@@ -7,10 +7,10 @@
 
 <div class="fc-basic">
     {% if user.profile.pendingchapter > user.profile.currentchapter %}
-        <h1>You've completed chapter {{ user.profile.currentchapter }}, congrats!</h1>
+        <h1>You've completed Chapter {{ user.profile.currentchapter }}, congrats!</h1>
         <h3>Meet these goals to unlock the next chapter.</h3>
     {% else %}
-        <h1>You're currently working on chapter {{ user.profile.currentchapter }}.</h1>
+        <h1>You're currently working on Chapter {{ user.profile.currentchapter }}.</h1>
         <h3>After completing the material from this chapter, you'll need to meet these goals to unlock the next one.</h3>
     {% endif %}
 </div>
@@ -50,33 +50,29 @@
     </div>
 </div>
 <div class="fc-basic">
-    <h4>Below is a sampling of upcoming reviews for the vocabulary words, expressions, and sentences you're in the process of mastering. Answering reviews correctly will increase the level from beginner, to intermediate, to advanced. Incorrect answers will reset your level back to beginner. Material that you've already mastered isn't shown on this list, but will continue to appear in your reviews.</h4>
+    <h4>Below is a sampling of upcoming reviews for the vocabulary words, expressions, and sentences you're in the process of mastering. Each correct answer will increase the level of that review by 1 star; incorrect answers will reset the level to 0 stars. Material that you've already mastered (3+ stars) isn't shown on this list, but will continue to appear in your reviews.</h4>
     <div class="s-20"></div>
     <div class="table-responsive">
         <table class="vocablist">
             <thead>
-                <tr>
-                    <th>Type</th><th>Chapter</th><th>English</th><th>Available for Review</th><th>Level</th>
+                <tr class="text-align-left">
+                    <th>Chapter</th><th>English</th><th>Available for Review</th><th>Level</th>
                 </tr>
             </thead>
             <tbody>
                 {% for obj in object_list %}
                     <tr>
                     {% if obj.vocab %}
-                        <td>Vocab</td>
-                        <td>{{ obj.vocab.chapter.id }}</td>
+                        <td><a href="">第 {{ obj.vocab.chapter.id }} 章</a></td>
                         <td>{{ obj.vocab.english }}</td>
                     {% elif obj.sentence %}
-                        <td>Sentence</td>
-                        <td>{{ obj.sentence.lesson.chapter.id }}</td>
+                        <td><a href="">第 {{ obj.sentence.lesson.chapter.id }} 章</a></td>
                         <td>{{ obj.sentence.english }}</td>
                     {% elif obj.express %}
-                        <td>Expression</td>
-                        <td>{{ obj.express.chapter.id }}</td>
+                        <td><a href="">第 {{ obj.express.chapter.id }} 章</a></td>
                         <td>{{ obj.express.english }}</td>
                     {% else %}
-                        <td>?</td>
-                        <td>?</td>
+                        <td>? - ?</td>
                         <td>unknown</td>
                     {% endif %}
                         {% if 'ago' in obj.next_review|naturaltime %}
@@ -84,12 +80,13 @@
                         {% else %}
                             <td>{{ obj.next_review|naturaltime }}</td>
                         {% endif %}
+
                         {% if obj.score == 0 %}
-                            <td>beginner</td>
+                            <td class="green-words"><i class="fa fa-star-o" aria-hidden="true"></i>&nbsp;<i class="fa fa-star-o" aria-hidden="true"></i>&nbsp;<i class="fa fa-star-o" aria-hidden="true"></i></td>
                         {% elif obj.score == 1 %}
-                            <td>intermediate</td>
+                            <td class="green-words"><i class="fa fa-star" aria-hidden="true"></i>&nbsp;<i class="fa fa-star-o" aria-hidden="true"></i>&nbsp;<i class="fa fa-star-o" aria-hidden="true"></i></td>
                         {% elif obj.score == 2 %}
-                            <td>advanced</td>
+                            <td class="green-words"><i class="fa fa-star" aria-hidden="true"></i>&nbsp;<i class="fa fa-star" aria-hidden="true"></i>&nbsp;<i class="fa fa-star-o" aria-hidden="true"></i></td>
                         {% else %}
                             <td></td>
                         {% endif %}
