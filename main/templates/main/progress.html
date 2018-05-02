@@ -63,13 +63,13 @@
                 {% for obj in object_list %}
                     <tr>
                     {% if obj.vocab %}
-                        <td><a href="">第 {{ obj.vocab.chapter.id }} 章</a></td>
+                        <td><a href="{% url 'main:vocablist' obj.vocab.chapter.id %}">第 {{ obj.vocab.chapter.id }} 章</a></td>
                         <td>{{ obj.vocab.english }}</td>
                     {% elif obj.sentence %}
-                        <td><a href="">第 {{ obj.sentence.lesson.chapter.id }} 章</a></td>
+                        <td><a href="{% url 'main:lesson' obj.sentence.lesson.id %}">第 {{ obj.sentence.lesson.chapter.id }} 章</a></td>
                         <td>{{ obj.sentence.english }}</td>
                     {% elif obj.express %}
-                        <td><a href="">第 {{ obj.express.chapter.id }} 章</a></td>
+                        <td><a href="{% url 'main:expressionlist' obj.express.chapter.id %}">第 {{ obj.express.chapter.id }} 章</a></td>
                         <td>{{ obj.express.english }}</td>
                     {% else %}
                         <td>? - ?</td>
