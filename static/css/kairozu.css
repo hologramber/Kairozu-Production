@@ -431,7 +431,7 @@ a.headlink {
     width: max-content;
     box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.2);
     z-index: 1; }
-.dropdown-content a {
+.dropdown-content a, .dropdown-content span {
     padding: 10px 20px;
     display: block; }
 .dropdown.active { background: #080808; }
