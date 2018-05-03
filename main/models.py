@@ -830,6 +830,7 @@ class ExercisePrompt(ExercisePiece):
 
     def save(self, *args, **kwargs):
         self.prompt_kana = re.sub(r'。', '｡&#32;', self.prompt_kana)
+        self.prompt_kana = re.sub(r'、', '､&#32;', self.prompt_kana)
         self.prompt_kana = jp_sp_to_single_sp(self.prompt_kana)
         super(ExercisePrompt, self).save(*args, **kwargs)
 
