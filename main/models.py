@@ -79,10 +79,6 @@ def jp_sp_to_double_sp(jptext):
     newspaced = re.sub(r'　', "&#32;&nbsp;", jptext)
     return newspaced
 
-def jp_sp_to_single_sp(jptext):
-    newspaced = re.sub(r'　', "&#32;", jptext)
-    return newspaced
-
 
 def create_blanks(kana, disamb_location, altindex):
     sentence_split = kana.split('　')
@@ -827,12 +823,6 @@ class ExercisePrompt(ExercisePiece):
     prompt_name = models.CharField(max_length=250, default='', blank=True)
     prompt_order = models.PositiveSmallIntegerField(default=1)
     prompt_kana = models.CharField(max_length=250, default='')
-
-    def save(self, *args, **kwargs):
-        self.prompt_kana = re.sub(r'。', '｡&#32;', self.prompt_kana)
-        self.prompt_kana = re.sub(r'、', '､&#32;', self.prompt_kana)
-        self.prompt_kana = jp_sp_to_single_sp(self.prompt_kana)
-        super(ExercisePrompt, self).save(*args, **kwargs)
 
     class Meta:
         ordering = ['prompt_order']
