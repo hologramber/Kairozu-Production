@@ -4,28 +4,28 @@ function Joshi(JoshiInput) {
 	this.correctPosition = 0;
 
 	this.sentences = ['明日＿日曜日です。',
-										'鯨＿魚ではありません。',
-										'あそこに郵便局＿あります。',
-										'雨＿降っている。',
-										'これは桜です。これ＿桜です。',
-										'私はすし＿てんぷら＿好きです。',
-										'ポールさん＿リーさんはフランス人です。',
-										'りんご＿みかん＿どちらが好きですか。',
-										'これはだれの傘です＿。',
-										'明日のパーティに行きます＿。'];
+						'鯨＿魚ではありません。',
+						'あそこに郵便局＿あります。',
+						'雨＿降っている。',
+						'これは桜です。それ＿桜です。',
+						'私はすし＿てんぷら＿好きです。',
+						'ポールさん＿リーさんはフランス人です。',
+						'りんご＿みかん＿どちらが好きですか。',
+						'これはだれの傘です＿。',
+						'明日のパーティに行きます＿。'];
 	this.sentenceAnswer = [0,0,1,1,2,2,5,5,10,10];
-	this.sentencesTranslation = ['Tomorrow is Sunday.',
-															 'The whale is not a fish.',
-															 'There\'s a post office over there.',
-															 'It\'s raining.',
-															 'This is a cherry tree. This is also a cherry tree.',
-															 'I like both sushi and tempura.',
-															 'Paul and Lee are French.',
-															 'Which do you like better, apples or mandarin oranges?',
-															 'Whose umbrella is this?',
-															 'Are you going to the party tomorrow?'];
+	this.sentencesTranslation = ['As for tomorrow, (it) is Sunday.',
+									'As for the whale, (it) is not a fish.',
+									'There is a post office over there.',
+									'It is raining.',
+									'As for this, (it) is a cherry tree. As for that, (it) is also a cherry tree.',
+									'As for me, (I) like both sushi and tempura.',
+									'As for Paul and Lee, (they) are French.',
+									'Which do (you) like better, apples or mandarin oranges?',
+									'As for this, whose umbrella is (it)?',
+									'Are (you) going to the party tomorrow?'];
 	this.particleBox = ['は','が','も','ても','でも','と','とは','や','とか','など','か','で','に','へ','から','まで','の','を',
-											'ね','よ','わ','かな','かしら','な','さ','こと'];
+						'ね','よ','わ','かな','かしら','な','さ','こと'];
 	this.otherAnswers = [];
 
 	this.currentScore = 0;

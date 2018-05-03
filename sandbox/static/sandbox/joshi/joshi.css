@@ -49,3 +49,9 @@
   content: '';
   width: 100%; /* Ensures there are at least 2 lines of text, so justification works */
   display: inline-block; }
+
+@media (hover: none) {
+    #answer1:hover, #answer2:hover, #answer3:hover, #answer4:hover {
+        background: #bcbcbc;
+    }
+}
