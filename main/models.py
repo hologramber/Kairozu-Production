@@ -52,37 +52,38 @@ def create_context(sentence):
         context = ''
     return context
 
-
 def clean_sentence(kana):
-    cleaned = re.sub(r'[　｡。、？！「」\s]', "", kana)
+    cleaned = re.sub(r'[　｡。、､？?！!「」｢｣\s]', "", kana)
     return cleaned
 
 
 def all_blanks(kana):
-    all_blank = re.sub(r'[^　｡。、？！]', "＿", kana)
+    all_blank = re.sub(r'[^　｡。、､？?！!「」｢｣\s]', "＿", kana)
     return all_blank
 
 
+def hw_punctuation(hwtext):
+    hwtext = re.sub('。', '｡', hwtext)
+    hwtext = re.sub('、[ 　]*', '､ ', hwtext)
+    hwtext = re.sub(r'　', ' ', hwtext)
+    return hwtext
+
+
 def disamb_all_blanks(kana, disamb_location):        # position 0 = disamb_loc 1
-    disamb_split = kana.split('　')
-    sep = '　'
+    disamb_split = kana.split(' ')
+    sep = ' '
     for index, segment in enumerate(disamb_split):
         if index == disamb_location - 1:
             disamb_split[index] = segment
         else:
-            disamb_split[index] = re.sub(r'[^　｡。、？！]', "＿", segment)
+            disamb_split[index] = all_blanks(segment)
     disamb = sep.join(disamb_split)
     return disamb
 
 
-def jp_sp_to_double_sp(jptext):
-    newspaced = re.sub(r'　', "&#32;&nbsp;", jptext)
-    return newspaced
-
-
 def create_blanks(kana, disamb_location, altindex):
-    sentence_split = kana.split('　')
-    sep = '　'
+    sentence_split = kana.split(' ')
+    sep = ' '
 
     if disamb_location > 0:
         kana_all_blank = disamb_all_blanks(kana, disamb_location)
@@ -92,10 +93,10 @@ def create_blanks(kana, disamb_location, altindex):
     for index, segment in enumerate(sentence_split):
         if altindex is True:
             if index % 2 == 0 and index != disamb_location - 1:
-                sentence_split[index] = re.sub(r'[^　｡。、？！]', "＿", segment)
+                sentence_split[index] = all_blanks(segment)
         else:
             if index % 2 != 0 and index != disamb_location - 1:
-                sentence_split[index] = re.sub(r'[^　｡。、？！]', "＿", segment)
+                sentence_split[index] = all_blanks(segment)
 
     kana_alt_blank = sep.join(sentence_split)
     kana_clean = clean_sentence(kana)
@@ -278,9 +279,9 @@ class Expression(models.Model):
     note = models.CharField(max_length=250, blank=True)
 
     def save(self, *args, **kwargs):
+        self.kana = hw_punctuation(self.kana)
+        self.kanji = hw_punctuation(self.kanji)
         self.kana_all_blank, self.kana_alt_blank, self.kana_clean = create_blanks(self.kana, 0, False)
-        self.kana = re.sub(r'。', '｡', self.kana)
-        self.kanji = re.sub(r'。', '｡', self.kanji)
         super(Expression, self).save(*args, **kwargs)
 
 
@@ -436,7 +437,9 @@ class Vocabulary(models.Model):
     partofspeech = models.PositiveSmallIntegerField(choices=PARTOFSPEECH_CHOICES, default=UNCLASSIFIED, blank=False, null=False)
 
     def save(self, *args, **kwargs):
-        self.kana_all_blank = re.sub(r'[^　｡。、？！]', "＿", self.kana)
+        self.kana = hw_punctuation(self.kana)
+        self.kanji = hw_punctuation(self.kanji)
+        self.kana_all_blank = all_blanks(self.kana)
         alt_blank = ''
         count = 0
         for k in self.kana:
@@ -446,7 +449,7 @@ class Vocabulary(models.Model):
                 alt_blank += '＿'
             count += 1
         self.kana_alt_blank = alt_blank
-        self.kana_clean = re.sub(r'[　｡。、？！「」\s]', "", self.kana)
+        self.kana_clean = clean_sentence(self.kana)
         super(Vocabulary, self).save(*args, **kwargs)
 
     class Meta:
@@ -560,8 +563,7 @@ class Lesson(models.Model):
     def save(self, *args, **kwargs):
         self.f_english = highlight(self.english, KairozuLexer(ensurenl=False), KairozuFormatter(style='kairozu'))
         self.f_hiragana = highlight(self.hiragana, KairozuLexer(ensurenl=False), KairozuFormatter(style='kairozu'))
-        self.f_hiragana = re.sub(r'。', '｡', self.f_hiragana)
-        self.f_hiragana = jp_sp_to_double_sp(self.f_hiragana)
+        self.f_hiragana = hw_punctuation(self.f_hiragana)
         super(Lesson, self).save(*args, **kwargs)
 
     def __str__(self):
@@ -581,8 +583,8 @@ class PointTable(models.Model):
     def save(self, *args, **kwargs):
         self.f_pointa = highlight(self.pointa, KairozuLexer(ensurenl=False), KairozuFormatter(style='kairozu'))
         self.f_pointb = highlight(self.pointb, KairozuLexer(ensurenl=False), KairozuFormatter(style='kairozu'))
-        self.f_pointa = re.sub(r'。', '｡', self.f_pointa)
-        self.f_pointb = re.sub(r'。', '｡', self.f_pointb)
+        self.f_pointa = hw_punctuation(self.f_pointa)
+        self.f_pointb = hw_punctuation(self.f_pointb)
         super(PointTable, self).save(*args, **kwargs)
 
     class Meta:
@@ -696,8 +698,7 @@ class Example(models.Model):
     def save(self, *args, **kwargs):
         self.f_english = highlight(self.english, KairozuLexer(ensurenl=False), KairozuFormatter(style='kairozu'))
         self.f_hiragana = highlight(self.hiragana, KairozuLexer(ensurenl=False), KairozuFormatter(style='kairozu'))
-        self.f_hiragana = re.sub(r'。', '｡', self.f_hiragana)
-        self.f_hiragana = jp_sp_to_double_sp(self.f_hiragana)
+        self.f_hiragana = hw_punctuation(self.f_hiragana)
         super(Example, self).save(*args, **kwargs)
 
 
@@ -742,6 +743,10 @@ class Practice(models.Model):
         if '(' in self.ptwo_english:
             self.ptwo_context = create_context(self.ptwo_english)
 
+        self.pone_kana = hw_punctuation(self.pone_kana)
+        self.ptwo_kana = hw_punctuation(self.ptwo_kana)
+        self.pone_kanji = hw_punctuation(self.pone_kanji)
+        self.ptwo_kanji = hw_punctuation(self.ptwo_kanji)
         self.pone_kana_all, self.pone_kana_alt, self.pone_kana_clean = create_blanks(self.pone_kana, self.pone_disamb_location, True)
         self.ptwo_kana_all, self.ptwo_kana_alt, self.ptwo_kana_clean = create_blanks(self.ptwo_kana, self.ptwo_disamb_location, False)
         super(Practice, self).save(*args, **kwargs)
@@ -812,6 +817,8 @@ class ExerciseSentence(ExercisePiece):
         if '(' in self.english:
             self.context = create_context(self.english)
 
+        self.kana = hw_punctuation(self.kana)
+        self.kanji = hw_punctuation(self.kanji)
         self.kana_all_blank, self.kana_alt_blank, self.kana_clean = create_blanks(self.kana, self.disamb_location, False)
         super(ExerciseSentence, self).save(*args, **kwargs)
 
@@ -823,6 +830,10 @@ class ExercisePrompt(ExercisePiece):
     prompt_name = models.CharField(max_length=250, default='', blank=True)
     prompt_order = models.PositiveSmallIntegerField(default=1)
     prompt_kana = models.CharField(max_length=250, default='')
+
+    def save(self, *args, **kwargs):
+        self.prompt_kana = hw_punctuation(self.prompt_kana)
+        super(ExercisePrompt, self).save(*args, **kwargs)
 
     class Meta:
         ordering = ['prompt_order']
@@ -848,6 +859,8 @@ class ExerciseResponse(models.Model):
         if '(' in self.response_english:
             self.response_context = create_context(self.response_english)
 
+        self.response_kana = hw_punctuation(self.response_kana)
+        self.response_kanji = hw_punctuation(self.response_kanji)
         self.response_kana_all_blank, self.response_kana_alt_blank, self.response_kana_clean = create_blanks(self.response_kana, self.response_disamb_location, False)
         super(ExerciseResponse, self).save(*args, **kwargs)
 
@@ -924,6 +937,8 @@ class Sentence(models.Model):
         if '(' in self.english:
             self.context = create_context(self.english)
 
+        self.kana = hw_punctuation(self.kana)
+        self.kanji = hw_punctuation(self.kanji)
         self.kana_all_blank, self.kana_alt_blank, self.kana_clean = create_blanks(self.kana, self.disamb_location, False)
         super(Sentence, self).save(*args, **kwargs)
 
