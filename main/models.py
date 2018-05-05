@@ -561,7 +561,7 @@ class Lesson(models.Model):
         return pieces_by_displayorder
 
     def save(self, *args, **kwargs):
-        self.f_hiragana = hw_punctuation(self.f_hiragana)
+        self.hiragana = hw_punctuation(self.hiragana)
         self.overview = hw_punctuation(self.overview)
         self.f_english = highlight(self.english, KairozuLexer(ensurenl=False), KairozuFormatter(style='kairozu'))
         self.f_hiragana = highlight(self.hiragana, KairozuLexer(ensurenl=False), KairozuFormatter(style='kairozu'))
@@ -584,8 +584,10 @@ class PointTable(models.Model):
     def save(self, *args, **kwargs):
         self.f_pointa = highlight(self.pointa, KairozuLexer(ensurenl=False), KairozuFormatter(style='kairozu'))
         self.f_pointb = highlight(self.pointb, KairozuLexer(ensurenl=False), KairozuFormatter(style='kairozu'))
-        self.f_pointa = hw_punctuation(self.f_pointa)
-        self.f_pointb = hw_punctuation(self.f_pointb)
+        self.f_pointa = re.sub('。', '｡', self.f_pointa)
+        self.f_pointa = re.sub('、[ 　]*', '､ ', self.f_pointa)
+        self.f_pointb = re.sub('。', '｡', self.f_pointb)
+        self.f_pointb = re.sub('、[ 　]*', '､ ', self.f_pointb)
         super(PointTable, self).save(*args, **kwargs)
 
     class Meta:
@@ -698,7 +700,7 @@ class Example(models.Model):
 
     def save(self, *args, **kwargs):
         self.f_english = highlight(self.english, KairozuLexer(ensurenl=False), KairozuFormatter(style='kairozu'))
-        self.f_hiragana = hw_punctuation(self.f_hiragana)
+        self.hiragana = hw_punctuation(self.hiragana)
         self.f_hiragana = highlight(self.hiragana, KairozuLexer(ensurenl=False), KairozuFormatter(style='kairozu'))
         super(Example, self).save(*args, **kwargs)
 
