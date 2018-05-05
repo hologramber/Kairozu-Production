@@ -561,9 +561,10 @@ class Lesson(models.Model):
         return pieces_by_displayorder
 
     def save(self, *args, **kwargs):
+        self.f_hiragana = hw_punctuation(self.f_hiragana)
+        self.overview = hw_punctuation(self.overview)
         self.f_english = highlight(self.english, KairozuLexer(ensurenl=False), KairozuFormatter(style='kairozu'))
         self.f_hiragana = highlight(self.hiragana, KairozuLexer(ensurenl=False), KairozuFormatter(style='kairozu'))
-        self.f_hiragana = hw_punctuation(self.f_hiragana)
         super(Lesson, self).save(*args, **kwargs)
 
     def __str__(self):
@@ -697,8 +698,8 @@ class Example(models.Model):
 
     def save(self, *args, **kwargs):
         self.f_english = highlight(self.english, KairozuLexer(ensurenl=False), KairozuFormatter(style='kairozu'))
-        self.f_hiragana = highlight(self.hiragana, KairozuLexer(ensurenl=False), KairozuFormatter(style='kairozu'))
         self.f_hiragana = hw_punctuation(self.f_hiragana)
+        self.f_hiragana = highlight(self.hiragana, KairozuLexer(ensurenl=False), KairozuFormatter(style='kairozu'))
         super(Example, self).save(*args, **kwargs)
 
 
