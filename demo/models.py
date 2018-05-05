@@ -1,5 +1,6 @@
 import re
 from django.db import models
+from main.models import clean_sentence, all_blanks, hw_punctuation, disamb_all_blanks, create_blanks
 
 
 class BetaEmail(models.Model):
@@ -16,15 +17,8 @@ class DemoSentence(models.Model):
     kana_clean = models.CharField(max_length=250, blank=True)
 
     def save(self, *args, **kwargs):
-        self.kana_all_blank = re.sub(r'[^　。、？！]', "＿", self.kana)
-        sentence_split = self.kana.split('　')
-        sep = '　'
-        for index, segment in enumerate(sentence_split):
-            if index % 2 == 0:
-                sentence_split[index] = re.sub(r'[^　。、？！]', "＿", segment)
-        sentence_alt = sep.join(sentence_split)
-        self.kana_alt_blank = sentence_alt
-        self.kana_clean = re.sub(r'[　。、？！「」]', "", self.kana)
+        self.kana = hw_punctuation(self.kana)
+        self.kana_all_blank, self.kana_alt_blank, self.kana_clean = create_blanks(self.kana, 0, False)
         super(DemoSentence, self).save(*args, **kwargs)
 
 
@@ -38,7 +32,9 @@ class DemoVocab(models.Model):
     kana_alt_blank = models.CharField(max_length=250, blank=True)
 
     def save(self, *args, **kwargs):
-        self.kana_all_blank = re.sub(r'[^　。、？！]', "＿", self.kana)
+        self.kana = hw_punctuation(self.kana)
+        self.kanji = hw_punctuation(self.kanji)
+        self.kana_all_blank = all_blanks(self.kana)
         alt_blank = ''
         count = 0
         for k in self.kana:
@@ -48,7 +44,7 @@ class DemoVocab(models.Model):
                 alt_blank += '＿'
             count += 1
         self.kana_alt_blank = alt_blank
-        self.kana_clean = re.sub(r'[　。、？！「」\s]', "", self.kana)
+        self.kana_clean = clean_sentence(self.kana)
         super(DemoVocab, self).save(*args, **kwargs)
 
 
@@ -62,17 +58,8 @@ class DemoExpression(models.Model):
     note = models.CharField(max_length=250, blank=True)
 
     def save(self, *args, **kwargs):
-        self.kana_all_blank = re.sub(r'[^　。、？！]', "＿", self.kana)
-        alt_blank = ''
-        count = 0
-        for k in self.kana:
-            if count % 2 == 0:
-                alt_blank += k
-            else:
-                alt_blank += '＿'
-            count += 1
-        self.kana_alt_blank = alt_blank
-        self.kana_clean = re.sub(r'[　。、？！「」\s]', "", self.kana)
+        self.kana = hw_punctuation(self.kana)
+        self.kana_all_blank, self.kana_alt_blank, self.kana_clean = create_blanks(self.kana, 0, False)
         super(DemoExpression, self).save(*args, **kwargs)
 
 
@@ -91,25 +78,9 @@ class DemoPractice(models.Model):
     pone_kana_alt = models.CharField(max_length=250, blank=True)
     ptwo_kana_alt = models.CharField(max_length=250, blank=True)
 
-    @staticmethod
-    def alt_practice_blanks(practice_kana, indexalt):
-        practice_split = practice_kana.split('　')
-        sep = '　'
-        for index, segment in enumerate(practice_split):
-            if indexalt is True:
-                if index % 2 == 0:
-                    practice_split[index] = re.sub(r'[^　。、？！]', "＿", segment)
-            else:
-                if index % 2 != 0:
-                    practice_split[index] = re.sub(r'[^　。、？！]', "＿", segment)
-        practice_hint = sep.join(practice_split)
-        return practice_hint
-
     def save(self, *args, **kwargs):
-        self.pone_kana_clean = re.sub(r'[　。、？！「」]', "", self.pone_kana)
-        self.ptwo_kana_clean = re.sub(r'[　。、？！「」]', "", self.ptwo_kana)
-        self.pone_kana_all = re.sub(r'[^　。、？！]', "＿", self.pone_kana)
-        self.ptwo_kana_all = re.sub(r'[^　。、？！]', "＿", self.ptwo_kana)
-        self.pone_kana_alt = DemoPractice.alt_practice_blanks(self.pone_kana, True)
-        self.ptwo_kana_alt = DemoPractice.alt_practice_blanks(self.ptwo_kana, False)
+        self.pone_kana = hw_punctuation(self.pone_kana)
+        self.ptwo_kana = hw_punctuation(self.ptwo_kana)
+        self.pone_kana_all, self.pone_kana_alt, self.pone_kana_clean = create_blanks(self.pone_kana, 0, True)
+        self.ptwo_kana_all, self.ptwo_kana_alt, self.ptwo_kana_clean = create_blanks(self.ptwo_kana, 0, False)
         super(DemoPractice, self).save(*args, **kwargs)
