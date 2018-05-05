@@ -2,8 +2,8 @@ html {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    font-family: sans-serif;
     -ms-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
     -webkit-text-size-adjust: 100%; }
 
 *, *:before, *:after {
@@ -1103,6 +1103,8 @@ span.step {
 .opensans { font-family: 'Open Sans', sans-serif; }
 .roboto { font-family: 'Roboto', sans-serif; }
 
+.wordsp0-5 { word-spacing: 0.5em; }
+.wordsp1-0 { word-spacing: 1.0em; }
 .underline { text-decoration: underline; }
 .bold { font-weight: bold; }
 .bolder { font-weight: bolder; }
