@@ -12,4 +12,5 @@ urlpatterns = [
     url(r'^numbers/grab/$', views.numquiz_grab, name='numbergrab'),
     url(r'^hiragana/$', views.hiragana, name='hiragana'),
     url(r'^resources/$', views.ResourcesView.as_view(), name='resources'),
+    url(r'^spacetest/$', views.SpaceTestView.as_view()),
 ]
