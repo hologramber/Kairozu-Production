@@ -64,7 +64,10 @@ a, a:focus, a:hover { color: #ff9729; }
     transition: background 200ms ease-in-out; }
 
 b, strong { font-weight: 600; }
-h1.lessonhead { white-space: pre-wrap; }
+h1.lessonhead {
+    margin-left: 5px;
+    margin-right: 5px;
+    white-space: pre-wrap; }
 
 pre {
     display: block;

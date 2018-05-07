@@ -124,7 +124,7 @@
                 newlywrong = 0;
                 passage_index++;
                 $(currentline).removeClass('green-words-bold');
-                current_passage += $('#passagekana').val();
+                current_passage = current_passage + ' ' + $('#passagekana').val();
             } else {
                 if (newlywrong == 0) { incorrectinputs++; }
                 newlywrong = 1;

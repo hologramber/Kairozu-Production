@@ -8,10 +8,6 @@ from .num2jp_kana import num2jp_kana
 import json
 
 
-
-class SpaceTestView(LoginRequiredMixin, TemplateView):
-    template_name = 'sandbox/spacetest.html'
-
 class SandboxView(LoginRequiredMixin, ListView):
     model = Sandcastle
     template_name = 'sandbox/index.html'
