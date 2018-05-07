@@ -65,8 +65,7 @@ a, a:focus, a:hover { color: #ff9729; }
 
 b, strong { font-weight: 600; }
 h1.lessonhead {
-    margin-left: 5px;
-    margin-right: 5px;
+    max-width: 95%;
     white-space: pre-line; }
 
 pre {
