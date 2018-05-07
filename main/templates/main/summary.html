@@ -8,7 +8,7 @@
 
 {% load static %}
 {% block content %}
-
+<link href="https://fonts.googleapis.com/css?family=Ubuntu+Condensed" rel="stylesheet">
 <div id="wrapper">
 {% include 'main/sidebar.html' %}
     <div class="fc-general-col">
@@ -34,31 +34,22 @@
 
         {% for lesson in object_list %}
             {% if lesson.point_active %}
-                <div class="row">
-                    <div class="col-md-4 col-sm-12">
-                        <div class="ht-no-border">
-                            <h2 style="margin-top: 0;">{{ lesson.f_english|safe }}</h2>
-                            <h2>{{ lesson.f_hiragana|safe }}</h2>
-                            <div class="s-5"></div>
-                            <h4 class="raleway">{{ lesson.overview }}</h4>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-12">
-                        <div class="ht-no-border">
-                            {% for example in lesson.examples.all %}
-                                <p>{{ example.f_english|safe }}<br />{{ example.f_hiragana|safe }}</p>
-                            {% endfor %}
-                        </div>
-                    </div>
-                    <div class="col-md-5 col-sm-12">
-                        {% kairozu_summary lesson %}
-                    </div>
+                <div class="fc-general-col">
+                    <h2 style="margin-top: 0;">{{ lesson.f_english|safe }}</h2>
+                    <h2>{{ lesson.f_hiragana|safe }}</h2>
+                    <h4 class="raleway">{{ lesson.overview }}</h4>
+
+                    {% for example in lesson.examples.all %}
+                        <p>{{ example.f_english|safe }}<br />{{ example.f_hiragana|safe }}</p>
+                    {% endfor %}
+
+                    {% kairozu_summary lesson %}
+                    {% if not forloop.last %}
+                        <div class="s-30"></div>
+                        <div class="border-bottom-grey-dashed"></div>
+                        <div class="s-40"></div>
+                    {% endif %}
                 </div>
-                {% if not forloop.last %}
-                    <div class="s-30"></div>
-                    <div class="border-bottom-grey-dashed"></div>
-                    <div class="s-40"></div>
-                {% endif %}
             {% endif %}
         {% endfor %}
     </div>

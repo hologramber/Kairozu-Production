@@ -64,12 +64,7 @@ a, a:focus, a:hover { color: #ff9729; }
     transition: background 200ms ease-in-out; }
 
 b, strong { font-weight: 600; }
-h1.lessonhead {
-    max-width: 95%;
-    margin: 0 auto;
-    margin-top: 20px;
-    margin-bottom: 10px;
-    white-space: pre-line; }
+h1.lessonhead { white-space: pre-line; }
 
 pre {
     display: block;
@@ -537,9 +532,6 @@ div.table-container { display: inline-block; }
 .gpt > tbody > tr > td { padding: 0 10px 10px 10px; }
 table.gpt > tbody > tr > td.blankline { line-height: 5px; }
 
-.ht-no-border {
-	border-radius: 5px;
-	padding: 20px 15px 10px 15px; }
 .ht, .ht-summary {
 	border: 2px solid #242424;
 	border-radius: 5px;
@@ -1427,6 +1419,11 @@ span.step {
 }
 
 @media screen and (max-width: 600px) {      /* only show up to 600px */
+    #wrapper, #sidebar-wrapper {
+        -webkit-transition: none;
+        -moz-transition: none;
+        -o-transition: none;
+        transition: none; }
     #sidecollapse {
         position: fixed;
         margin: 0; }
@@ -1438,8 +1435,11 @@ span.step {
     #nav-toggle {
         display: block;
         font-size: 20px;
-        right: -10px;
-        position: relative; }
+        right: -20px;
+        position: relative;
+        width: 100px;
+        text-align: right;
+        padding-right: 10px; }
     .topnav.responsive {
         flex-direction: column;
         align-items: flex-start;
