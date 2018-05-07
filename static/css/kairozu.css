@@ -28,8 +28,7 @@ body, p, ol, ul, td, h1, h2, h3, h4, h5, h6 {
 main { margin-top: 50px; }
 body, p, ol, ul, td { font-family: 'Roboto', sans-serif; }
 h1, h2, h3, h4, h5, h6, .ls5, .ls5g, .ls5r, .ls5y {
-    font-family: 'Raleway', '游ゴシック' , '游ゴシック体' , YuGothic , 'Yu Gothic' , 'メイリオ' , Meiryo, sans-serif;
-    font-weight: 500; }
+    font-family: 'Raleway', '游ゴシック' , '游ゴシック体' , YuGothic , 'Yu Gothic' , 'メイリオ' , Meiryo, sans-serif; }
 
 h1, .h1 { font-size: 36px; }
 h2, .h2 { font-size: 30px; }
@@ -63,7 +62,6 @@ a, a:focus, a:hover { color: #ff9729; }
     -o-transition: background 200ms ease-in-out;
     transition: background 200ms ease-in-out; }
 
-b, strong { font-weight: 600; }
 h1.lessonhead { white-space: pre-line; }
 
 pre {
@@ -1057,7 +1055,7 @@ span.step {
     padding: 6px 12px;
     margin-bottom: 0;
     font-size: 13px;
-    font-weight: 400;
+    font-weight: normal;
     text-align: center;
     white-space: nowrap;
     vertical-align: middle;
@@ -1089,7 +1087,7 @@ span.step {
     border: 0;
     float: right;
     font-size: 21px;
-    font-weight: 700;
+    font-weight: bold;
     line-height: 1;
     color: black;
     text-shadow: 0 1px 0 white;
@@ -1113,7 +1111,6 @@ span.step {
 .wordsp1-0 { word-spacing: 1.0em; }
 .underline { text-decoration: underline; }
 .bold { font-weight: bold; }
-.bolder { font-weight: bolder; }
 .normal { font-weight: normal; }
 .larger { font-size: larger; }
 .smaller { font-size: smaller; }
