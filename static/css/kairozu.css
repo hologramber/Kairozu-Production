@@ -363,6 +363,15 @@ span.footer-sm-text {
 	padding-left: 10px; }
 
 #nav-toggle { display: none; }
+#menu-toggle {
+    display: inline-block;
+    width: 100%;
+    line-height: 50px; }
+#navmenu-toggle {
+    display: inline-block;
+    width: 100%;
+    line-height: 50px;
+    text-align: right; }
 #kaihead {
     position: fixed;
     top: 0;
@@ -443,13 +452,13 @@ a.headlink {
 .dropdown.active .dropbtn > i { color: #FF9729; }
 .dropdown.active .dropdown-content { display: block; }
 #sidecollapse {				/* collapse-sidebar button in upper left corner on pages w/sidebar */
-    top: 5px;
     font-size: 20px;
     position: relative;
-    left: 10px;
     margin-right: 35px;
     cursor: pointer;
 	float: left;
+    width: 80px;
+    height: 50px;
     z-index: 1050; }
 
 .shadowbox {
@@ -1437,16 +1446,14 @@ span.step {
         font-size: 20px;
         right: -20px;
         position: relative;
-        width: 100px;
-        text-align: right;
-        padding-right: 10px; }
+        width: 80px;
+        height: 50px;
+        text-align: right; }
     .topnav.responsive {
         flex-direction: column;
         align-items: flex-start;
         position: relative; }
-    .topnav.responsive #nav-toggle {
-        position: absolute;
-        top: 5px; }
+    .topnav.responsive #nav-toggle { position: absolute; }
     .topnav.responsive #header-links {
         display: flex;
         flex-direction: column;
