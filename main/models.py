@@ -63,7 +63,7 @@ def all_blanks(kana):
 
 
 def hw_punctuation(hwtext):
-    hwtext = re.sub('。', '｡', hwtext)
+    # hwtext = re.sub('。', '｡', hwtext)
     hwtext = re.sub('、[ 　]*', '､ ', hwtext)
     hwtext = re.sub(r'[ 　]+', ' ', hwtext)
     return hwtext
