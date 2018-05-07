@@ -67,7 +67,7 @@ b, strong { font-weight: 600; }
 h1.lessonhead {
     margin-left: 5px;
     margin-right: 5px;
-    white-space: pre-wrap; }
+    white-space: pre-line; }
 
 pre {
     display: block;
