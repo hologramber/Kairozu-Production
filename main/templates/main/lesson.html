@@ -16,8 +16,8 @@
     <div class="fc-general-col">
         {% if lesson %}
             <div class="text-align-center">
-                <h1 class="lessonhead">{{ lesson.f_english|safe }}</h1>
-                <h1 class="lessonhead mono">{{ lesson.f_hiragana|safe }}</h1>
+                {% if lesson.f_english %}<h1 class="lessonhead">{{ lesson.f_english|safe }}</h1>{% endif %}
+                {% if lesson.f_hiragana %}<h1 class="lessonhead mono">{{ lesson.f_hiragana|safe }}</h1>{% endif %}
             </div>
 
             <div id="gex">
