@@ -29,7 +29,7 @@ main { margin-top: 50px; }
 body, p, ol, ul, td { font-family: 'Roboto', sans-serif; }
 h1, h2, h3, h4, h5, h6, .ls5, .ls5g, .ls5r, .ls5y {
     font-weight: normal;
-    font-family: 'Raleway', '游ゴシック' , '游ゴシック体' , YuGothic , 'Yu Gothic' , 'メイリオ' , Meiryo, sans-serif; }
+    font-family: 'Raleway', sans-serif; }
 
 h1, .h1 { font-size: 36px; }
 h2, .h2 { font-size: 30px; }
