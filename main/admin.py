@@ -29,7 +29,7 @@ class TwoTableInline(nested_admin.NestedTabularInline):
 
 class ExampleInline(nested_admin.NestedTabularInline):
     model = Example
-    exclude = ('f_english', 'f_hiragana', 'f_kanji',)
+    # exclude = ('f_english', 'f_hiragana', 'f_kanji',)
     extra = 1
 
 
@@ -63,7 +63,7 @@ class PointTableInline(nested_admin.NestedTabularInline):
 
 class LessonAdmin(nested_admin.NestedModelAdmin):
     list_display = ('title', 'overview', 'chapter')
-    exclude = ('f_english', 'f_hiragana', 'f_kanji',)
+    # exclude = ('f_english', 'f_hiragana', 'f_kanji',)
     inlines = [PointTableInline, BlockInline, DivBlockInline, TwoTableInline, FourTableInline, ExampleInline, MoreInfoInline, InfoLinkInline]
     search_fields = ['title', 'english', 'hiragana']
 

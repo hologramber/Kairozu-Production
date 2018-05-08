@@ -63,10 +63,18 @@ def all_blanks(kana):
 
 
 def hw_punctuation(hwtext):
-    hwtext = re.sub('。', '｡', hwtext)
-    hwtext = re.sub('、[ 　]*', '､ ', hwtext)
+    hwtext = re.sub(r'。', '｡ ', hwtext)
+    hwtext = re.sub(r'、[ 　]*', '､ ', hwtext)
     hwtext = re.sub(r'[ 　]+', ' ', hwtext)
+    hwtext = hwtext.rstrip()
     return hwtext
+
+
+def quadspace(sptext):
+    sptext = re.sub(r'。', '｡', sptext)
+    sptext = re.sub(r'、[ 　]*', '､&nbsp;&#32;&nbsp;&#32;', sptext)
+    sptext = re.sub(r'[ 　]+', '&nbsp;&#32;&nbsp;&#32;', sptext)
+    return sptext
 
 
 def disamb_all_blanks(kana, disamb_location):        # position 0 = disamb_loc 1
@@ -561,7 +569,7 @@ class Lesson(models.Model):
         return pieces_by_displayorder
 
     def save(self, *args, **kwargs):
-        self.hiragana = hw_punctuation(self.hiragana)
+        self.hiragana = quadspace(self.hiragana)
         self.overview = hw_punctuation(self.overview)
         self.f_english = highlight(self.english, KairozuLexer(ensurenl=False), KairozuFormatter(style='kairozu'))
         self.f_hiragana = highlight(self.hiragana, KairozuLexer(ensurenl=False), KairozuFormatter(style='kairozu'))
@@ -700,7 +708,7 @@ class Example(models.Model):
 
     def save(self, *args, **kwargs):
         self.f_english = highlight(self.english, KairozuLexer(ensurenl=False), KairozuFormatter(style='kairozu'))
-        self.hiragana = hw_punctuation(self.hiragana)
+        self.hiragana = quadspace(self.hiragana)
         self.f_hiragana = highlight(self.hiragana, KairozuLexer(ensurenl=False), KairozuFormatter(style='kairozu'))
         super(Example, self).save(*args, **kwargs)
 
