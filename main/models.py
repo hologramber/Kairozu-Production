@@ -70,13 +70,6 @@ def hw_punctuation(hwtext):
     return hwtext
 
 
-def quadspace(sptext):
-    sptext = re.sub(r'。', '｡', sptext)
-    sptext = re.sub(r'、[ 　]*', '､&emsp;', sptext)
-    sptext = re.sub(r'[ 　]+', '&emsp;', sptext)
-    return sptext
-
-
 def disamb_all_blanks(kana, disamb_location):        # position 0 = disamb_loc 1
     disamb_split = kana.split(' ')
     sep = ' '
@@ -569,10 +562,10 @@ class Lesson(models.Model):
         return pieces_by_displayorder
 
     def save(self, *args, **kwargs):
-        self.f_hiragana = quadspace(self.hiragana)
+        self.hiragana = hw_punctuation(self.hiragana)
         self.overview = hw_punctuation(self.overview)
         self.f_english = highlight(self.english, KairozuLexer(ensurenl=False), KairozuFormatter(style='kairozu'))
-        self.f_hiragana = highlight(self.f_hiragana, KairozuLexer(ensurenl=False), KairozuFormatter(style='kairozu'))
+        self.f_hiragana = highlight(self.hiragana, KairozuLexer(ensurenl=False), KairozuFormatter(style='kairozu'))
         super(Lesson, self).save(*args, **kwargs)
 
     def __str__(self):
@@ -708,8 +701,8 @@ class Example(models.Model):
 
     def save(self, *args, **kwargs):
         self.f_english = highlight(self.english, KairozuLexer(ensurenl=False), KairozuFormatter(style='kairozu'))
-        self.f_hiragana = quadspace(self.hiragana)
-        self.f_hiragana = highlight(self.f_hiragana, KairozuLexer(ensurenl=False), KairozuFormatter(style='kairozu'))
+        self.hiragana = hw_punctuation(self.hiragana)
+        self.f_hiragana = highlight(self.hiragana, KairozuLexer(ensurenl=False), KairozuFormatter(style='kairozu'))
         super(Example, self).save(*args, **kwargs)
 
 

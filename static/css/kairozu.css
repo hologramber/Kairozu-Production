@@ -506,6 +506,7 @@ div.table-container { display: inline-block; }
     padding: 20px; }
 
 .gexample {
+    font-family: monospace;
     min-width: 280px;
 	padding: 15px;
 	margin-top: 20px;
@@ -1098,6 +1099,7 @@ span.step {
 .raleway { font-family: 'Raleway', sans-serif; }
 .opensans { font-family: 'Open Sans', sans-serif; }
 .roboto { font-family: 'Roboto', sans-serif; }
+.mono { font-family: monospace; }
 
 .wordsp0-5 { word-spacing: 0.5em; }
 .wordsp1-0 { word-spacing: 1.0em; }

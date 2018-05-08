@@ -8,9 +8,6 @@ from .num2jp_kana import num2jp_kana
 import json
 
 
-class AppleWrap(TemplateView):
-    template_name = 'sandbox/appleview.html'
-
 class SandboxView(LoginRequiredMixin, ListView):
     model = Sandcastle
     template_name = 'sandbox/index.html'
