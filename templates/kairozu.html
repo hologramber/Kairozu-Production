@@ -135,8 +135,9 @@
                     });
                 };
                 $('#comment-button').click(function() {
-                    $('.dropdown-content').hide();
-                    $('.dropdown').removeClass('active');
+                    $('#myTopnav').removeClass('responsive');
+                    //$('.dropdown-content').hide();
+                    //$('.dropdown').removeClass('active');
                     $('#form-modal-body').load('/news/newissue/', function () {
                         modal.style.display = "block";
                         formAjaxSubmit('#form-modal-body form');

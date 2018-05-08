@@ -1,13 +1,12 @@
 <div class="table-responsive">
-    <table class="gpt">
+    <table class="gpt margin-0">
         <tbody>
         {% for row in tabledata %}
             <tr>
                 {% if row.0 == 'blank' %}
                     <td class="blankline" colspan=3>&nbsp;</td>
                 {% elif row.0 == 'rule' %}
-                    <td class="grule" colspan=2>&nbsp;</td>
-                    <td class="grule"><div class="grammar_rule">{{ row.1 }}</div></td>
+                    <td class="grule" colspan=3><div class="grammar_rule">{{ row.1 }}</div></td>
                 {% elif row.0 == 'skip' %}
                     <td colspan=2>&nbsp;</td>
                     <td>{% autoescape off %}{{ row.1 }}{% endautoescape %}</td>

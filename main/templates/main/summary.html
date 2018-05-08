@@ -35,15 +35,28 @@
         {% for lesson in object_list %}
             {% if lesson.point_active %}
                 <div class="fc-general-col">
-                    <h2 style="margin-top: 0;">{{ lesson.f_english|safe }}</h2>
-                    <h2>{{ lesson.f_hiragana|safe }}</h2>
+                    <h2 class="lessonhead margin-top-0">{{ lesson.f_english|safe }}</h2>
+                    <h2 class="lessonhead margin-top-0 mono">{{ lesson.f_hiragana|safe }}</h2>
                     <h4 class="raleway">{{ lesson.overview }}</h4>
 
-                    {% for example in lesson.examples.all %}
-                        <p>{{ example.f_english|safe }}<br />{{ example.f_hiragana|safe }}</p>
-                    {% endfor %}
+                    <div class="s-10"></div>
+
+                    {% if lesson.examples %}
+                        <ul class="fa-ul">
+                            {% for example in lesson.examples.all %}
+                                <li class="mono">
+                                    <i class="fa-li fa fa-arrow-right mdgrey-words" aria-hidden="true"></i>
+                                    {{ example.f_english|safe }}<br />
+                                    {{ example.f_hiragana|safe }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+
+                    <div class="s-20"></div>
 
                     {% kairozu_summary lesson %}
+
                     {% if not forloop.last %}
                         <div class="s-30"></div>
                         <div class="border-bottom-grey-dashed"></div>
