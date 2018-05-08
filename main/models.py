@@ -72,8 +72,8 @@ def hw_punctuation(hwtext):
 
 def quadspace(sptext):
     sptext = re.sub(r'。', '｡', sptext)
-    sptext = re.sub(r'、[ 　]*', '､&nbsp;&#32;&nbsp;&#32;', sptext)
-    sptext = re.sub(r'[ 　]+', '&nbsp;&#32;&nbsp;&#32;', sptext)
+    sptext = re.sub(r'、[ 　]*', '､&emsp;', sptext)
+    sptext = re.sub(r'[ 　]+', '&emsp;', sptext)
     return sptext
 
 
