@@ -615,7 +615,7 @@ table.gpt > tbody > tr > td.blankline { line-height: 5px; }
 	text-align: left; }
 
 #vocabholder, #sentenceholder, #practiceholder { margin-top: 20px; }
-.vocablist { width: 100%; max-width: 1400px; }
+.vocablist { width: 100%; max-width: 1400px; margin-bottom: 10px; }
 .vocablist > thead th { padding: 10px 5px; }
 .vocablist > tbody td { padding: 5px; }
 
@@ -1411,11 +1411,11 @@ span.step {
         width: 100%;
         overflow-y: hidden;
         -ms-overflow-style: -ms-autohiding-scrollbar; }
-    /*.table-responsive > .table { margin-bottom: 0; }*/
-    /*.table-responsive > .table > thead > tr > th,*/
-    /*.table-responsive > .table > tbody > tr > th,*/
-    /*.table-responsive > .table > thead > tr > td,*/
-    /*.table-responsive > .table > tbody > tr > td { white-space: nowrap; }*/
+    .table-responsive > .table { margin-bottom: 0px; }
+    .table-responsive > .table > thead > tr > th,
+    .table-responsive > .table > tbody > tr > th,
+    .table-responsive > .table > thead > tr > td,
+    .table-responsive > .table > tbody > tr > td { white-space: nowrap; }
 }
 
 @media screen and (max-width: 600px) {      /* only show up to 600px */
