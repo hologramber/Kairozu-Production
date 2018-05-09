@@ -1407,10 +1407,10 @@ span.step {
         width: auto;
         margin: 20% 20px 10px 20px; }
 
-    /*.table-responsive {*/
-        /*width: 100%;*/
-        /*overflow-y: hidden;*/
-        /*-ms-overflow-style: -ms-autohiding-scrollbar; }*/
+    .table-responsive {
+        width: 100%;
+        overflow-y: hidden;
+        -ms-overflow-style: -ms-autohiding-scrollbar; }
     /*.table-responsive > .table { margin-bottom: 0; }*/
     /*.table-responsive > .table > thead > tr > th,*/
     /*.table-responsive > .table > tbody > tr > th,*/
