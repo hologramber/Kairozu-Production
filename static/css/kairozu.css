@@ -334,7 +334,7 @@ span.footer-sm-text {
 .chartable {
     text-align: center;
     min-width: 400px;
-    margin: 0 auto; }
+    margin: 10px auto; }
 .chartable > tbody tr td { padding: 2px 14px; }
 .blogtable > tbody tr td { padding: 0 5px; }
 
@@ -1411,7 +1411,6 @@ span.step {
         width: 100%;
         overflow-y: hidden;
         -ms-overflow-style: -ms-autohiding-scrollbar; }
-    .table-responsive > .table { margin-bottom: 0px; }
     .table-responsive > .table > thead > tr > th,
     .table-responsive > .table > tbody > tr > th,
     .table-responsive > .table > thead > tr > td,
