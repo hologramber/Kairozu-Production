@@ -622,7 +622,7 @@ table.gpt > tbody > tr > td.blankline { line-height: 5px; }
 
 #vocabholder, #sentenceholder, #practiceholder { margin-top: 20px; }
 .vocablist { width: 100%; max-width: 1400px; margin-bottom: 10px; }
-.vocablist > thead th { padding: 10px 5px; }
+.vocablist > thead th { padding: 10px 5px; white-space: nowrap; }
 .vocablist > tbody td { padding: 5px; }
 
 .rlist { width: 100%; }                         /* resources for learning Japanese sandbox */
@@ -655,7 +655,7 @@ table.gpt > tbody > tr > td.blankline { line-height: 5px; }
     width: 100%;
     max-width: 350px;
     min-width: 200px;
-    white-space:nowrap;
+    white-space: nowrap;
     margin: 0 auto; }
 .groupdt > thead th { padding: 10px 5px; }
 .groupdt > tbody td { padding: 8px 10px 8px 10px; }
@@ -1120,7 +1120,6 @@ span.step {
 .mono { font-family: monospace; }
 
 .wordsp0-5 { word-spacing: 0.5em; }
-.wordsp1-0 { word-spacing: 1.0em; }
 .underline { text-decoration: underline; }
 .bold { font-weight: bold; }
 .normal { font-weight: normal; }
