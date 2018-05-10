@@ -125,10 +125,12 @@ ul, ol {
 
 .chartable > tbody tr,
 .vocablist > tbody tr,
+.exprlist > tbody tr,
 .rlist > tbody tr,
 .groupdt > tbody tr { border-bottom: 1px solid #bcbcbc66; }
 .chartable > tbody tr:last-child,
 .vocablist > tbody tr:last-child,
+.exprlist > tbody tr:last-child,
 .groupdt > tbody tr:last-child { border-bottom: none; }
 
 .fc-general { display: flex; }
@@ -622,24 +624,25 @@ table.gpt > tbody > tr > td.blankline { line-height: 5px; }
 
 #vocabholder, #sentenceholder, #practiceholder { margin-top: 20px; }
 .vocablist, .exprlist { width: 100%; max-width: 1400px; margin-bottom: 10px; }
-.vocablist > thead th, .exprlist > thead th {
-    padding: 10px 10px 5px 0;
+.vocablist > thead th {
+    padding: 10px 10px 5px 10px;
     white-space: nowrap;
     text-align: left; }
-.vocablist > tbody td { padding: 5px 10px 5px 0; }
+.exprlist > thead th {
+    padding: 10px 10px 0 10px;
+    white-space: nowrap;
+    text-align: left; }
+.vocablist > thead th:first-child { padding: 10px 10px 5px 0; }
+.exprlist > thead th:first-child { padding: 10px 10px 0 0; }
+
+.vocablist > tbody td { padding: 5px 10px; }
+.exprlist > tbody td { padding: 10px; }
+.vocablist > tbody td:first-child { padding: 5px 10px 5px 0; }
+.exprlist > tbody td:first-child { padding: 10px 10px 0 0; }
 
 .rlist { width: 100%; }                         /* resources for learning Japanese sandbox */
 .rlist > tbody td { padding: 5px; }
 .rlist > tbody td.resourceheader { padding: 5px 0; }
-
-.exprlist > tbody > tr:nth-child(2n+1) > td:first-child {   /* english */
-    vertical-align: bottom;
-    padding: 10px 10px 0 0; }
-.exprlist > tbody > tr:nth-child(2n+1) > td:nth-child(2) { padding: 10px 10px 10px 0; }
-.exprlist > tbody > tr:nth-child(2n+3) { border-top: 1px solid #bcbcbc66; } /* row lines */
-.exprlist > tbody > tr:nth-child(2n+0) > td:first-child {   /* kana-kanji */
-    padding: 0 10px 0 0;
-    vertical-align: top; }
 
 .freq_arrow { width: 100%; }
 .freq_line {

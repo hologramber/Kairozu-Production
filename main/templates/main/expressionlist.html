@@ -7,56 +7,22 @@
 {% load static %}
 {% block content %}
 
-<div id="wrapper">
-{% include 'main/sidebar.html' %}
-    <div class="fc-general-col">
-        <h1>{{ chapter.title }} Expressions</h1>
-        {% if user.profile.currentexpression > chapter.id %}
-            <p class="raleway">Congrats! You've finished the expressions for this chapter, but the <a href="{% url 'main:expressionquiz' chapter.id %}">Expression Quiz</a> interface is always available if you want more practice.</p>
-        {% else %}
-            <p class="raleway">This is a list of the expressions used throughout the {{ chapter.title }} material. Complete the <a href="{% url 'main:expressionquiz' chapter.id %}">Expression Quiz</a> to unlock the grammar lessons.</p>
-        {% endif %}
-        <p class="raleway smaller">Expressions in kana and kanji are marked with <i class="fa fa-circle-o mdgrey-words" aria-hidden="true"></i> and <i class="fa fa-circle mdgrey-words" aria-hidden="true"></i> respectively, or <i class="fa fa-star-o red-words" aria-hidden="true"></i> and <i class="fa fa-star red-words" aria-hidden="true"></i> if they involve the <a href="{% url 'sandbox:japanesekana' %}">katakana character set</a>. Hold down shift when entering text to switch from hiragana to katakana.</p>
-        <div class="s-5"></div>
-        <div class="table-responsive">
-            <table class="exprlist">
-                <thead>
-                    <tr><th>English・英語／Kana・仮名／Kanji・漢字</th><th>Note</th></tr>
-                </thead>
-                <tbody>
-                    {% for phrase in object_list %}
-                        <tr>
-                            <td>{{ phrase.english }}</td>
-                            <td class="min300" rowspan="2">
-                                {% if phrase.note %}
-                                    <div>{{ phrase.note }}</div>
-                                {% endif %}
-                                {% if phrase.prompt %}
-                                    <div class="smaller grey-words raleway">Example: {{ phrase.prompt }}</div>
-                                {% endif %}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="nowrap">
-                                {% if phrase.katakana %}
-                                    <ul class="fa-ul">
-                                        <li><i class="fa fa-li fa-star-o red-words" aria-hidden="true"></i>{{ phrase.kana }}</li>
-                                        <li><i class="fa fa-li fa-star red-words" aria-hidden="true"></i>{{ phrase.kanji }}</li>
-                                    </ul>
-                                {% else %}
-                                    <ul class="fa-ul">
-                                        <li><i class="fa fa-li fa-circle-o mdgrey-words" aria-hidden="true"></i>{{ phrase.kana }}</li>
-                                        <li><i class="fa fa-li fa-circle mdgrey-words" aria-hidden="true"></i>{{ phrase.kanji }}</li>
-                                    </ul>
-                                {% endif %}
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-        <div class="s-100"></div>
-    </div>
-</div>  <!-- /#wrapper -->
+    <div id="wrapper">
+        {% include 'main/sidebar.html' %}
+        <div class="fc-general-col">
+            <h1>{{ chapter.title }} Expressions</h1>
+
+            {% if user.profile.currentexpression > chapter.id %}
+                <p class="raleway">Congrats! You've finished the expressions for this chapter, but the <a href="{% url 'main:expressionquiz' chapter.id %}">Expression Quiz</a> interface is always available if you want more practice.</p>
+            {% else %}
+                <p class="raleway">This is a list of the expressions used throughout the {{ chapter.title }} material. Complete the <a href="{% url 'main:expressionquiz' chapter.id %}">Expression Quiz</a> to unlock the grammar lessons.</p>
+            {% endif %}
+
+            <p class="raleway smaller">Expressions in kana and kanji are marked with <i class="fa fa-circle-o mdgrey-words" aria-hidden="true"></i> and <i class="fa fa-circle mdgrey-words" aria-hidden="true"></i> respectively, or <i class="fa fa-star-o red-words" aria-hidden="true"></i> and <i class="fa fa-star red-words" aria-hidden="true"></i> if they involve the <a href="{% url 'sandbox:japanesekana' %}">katakana character set</a>. Hold down shift when entering text to switch from hiragana to katakana.</p>
+
+            {% include 'main/expressionlist_base.html' %}
+
+        </div>  <!-- /.fc-general-col -->
+    </div>  <!-- /#wrapper -->
 
 {% endblock %}

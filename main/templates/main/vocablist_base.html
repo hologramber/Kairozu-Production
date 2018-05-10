@@ -1,0 +1,51 @@
+<div class="s-5"></div>
+<div class="table-responsive">
+    <table class="vocablist">
+        <thead>
+            <tr>
+                <th>English・英語</th>
+                <th>Kana・仮名</th>
+                <th>Kanji・漢字</th>
+                {% if chapter %}
+                    <th><i class="fa fa-info-circle" aria-hidden="true"></i></th>
+                    <th>カ</th>
+                {% endif %}
+                <th>Note</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for word in object_list %}
+                <tr>
+                    <td>{{ word.english }}</td>
+                    <td>{{ word.kana }}</td>
+                    <td>{{ word.kanji }}</td>
+                    {% if chapter %}
+                        {# 17=iadj, 18=naadj, 19=noadj, 20=ruverb, 21=uverb, 22=irregverb #}
+                        <td>
+                            {% if word.partofspeech == 17 %}
+                                <span class="green-words partofspeech" title="い-adjective">い</span>
+                            {% elif word.partofspeech == 18 %}
+                                <span class="partofspeech blue-words" title="な-adjective">な</span>
+                            {% elif word.partofspeech == 19 %}
+                                <span class="partofspeech orange-words" title="の-adjective">の</span>
+                            {% elif word.partofspeech == 20 %}
+                                <span class="partofspeech purple-words" title="ichidan/る-verb">V1</span>
+                            {% elif word.partofspeech == 21 %}
+                                <span class="partofspeech orange-words" title="godan/う-verb">V5</span>
+                            {% elif word.partofspeech == 22 %}
+                                <i class="fa fa-exclamation-triangle ltgrey-words" aria-hidden="true" title="irregular verb"></i>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if word.katakana %}
+                                <i class="fa fa-star red-words" aria-hidden="true" title="katakana word"></i>
+                            {% endif %}
+                        </td>
+                    {% endif %}
+                    <td class="min300">{{ word.note }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<div class="s-100"></div>

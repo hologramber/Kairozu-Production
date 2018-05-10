@@ -7,73 +7,68 @@
 {% load static %}
 {% block content %}
 
-<div id="wrapper">
-{% include 'demo/sidebar.html' %}
-    <div class="fc-general-col">
-        <h1>Kairozu Grammar Chapters 1-5</h1>
-        <p class="raleway">Each chapter has eight <a href="{%url 'demo:demolesson' %}">Grammar Lessons</a>, with each lesson building upon those prior. Lessons have short explanations and examples for 1-3 grammar points, a set of practice sentences featuring vocabulary from the current chapter, and a short quiz with sentences which will enter a spaced-repetition system for future review. This is a brief overview of the topics covered in Chapters 1-5.</p>
+    <div id="wrapper">
+    {% include 'demo/sidebar.html' %}
+        <div class="fc-general-col">
+            <h1>Kairozu Grammar Chapters 1-5</h1>
+            <p class="raleway">Each chapter has eight <a href="{%url 'demo:demolesson' %}">Grammar Lessons</a>, with each lesson building upon those prior. Lessons have short explanations and examples for 1-3 grammar points, a set of practice sentences featuring vocabulary from the current chapter, and a short quiz with sentences which will enter a spaced-repetition system for future review. This is a brief overview of the topics covered in Chapters 1-5.</p>
 
-        <h2>Chapter 1</h2>
-        <div class="s-5"></div>
-        <div class="table-responsive">
-            <table class="vocablist">
-                {% for grammar in grammar_list %}
-                    {% if grammar.chapter.id == 1 %}
-                        <tr><td>{{ grammar.title }}</td><td>{{ grammar.overview }}</td></tr>
-                    {% endif %}
-                {% endfor %}
-            </table>
-        </div>
+            <h2>Chapter 1</h2>
+            <div class="table-responsive">
+                <table class="vocablist">
+                    {% for grammar in grammar_list %}
+                        {% if grammar.chapter.id == 1 %}
+                            <tr><td>{{ grammar.title }}</td><td>{{ grammar.overview }}</td></tr>
+                        {% endif %}
+                    {% endfor %}
+                </table>
+            </div>
 
-        <h2>Chapter 2</h2>
-        <div class="s-5"></div>
-        <div class="table-responsive">
-            <table class="vocablist">
-                {% for grammar in grammar_list %}
-                    {% if grammar.chapter.id == 2 %}
-                        <tr><td>{{ grammar.title }}</td><td>{{ grammar.overview }}</td></tr>
-                    {% endif %}
-                {% endfor %}
-            </table>
-        </div>
+            <h2>Chapter 2</h2>
+            <div class="table-responsive">
+                <table class="vocablist">
+                    {% for grammar in grammar_list %}
+                        {% if grammar.chapter.id == 2 %}
+                            <tr><td>{{ grammar.title }}</td><td>{{ grammar.overview }}</td></tr>
+                        {% endif %}
+                    {% endfor %}
+                </table>
+            </div>
 
-        <h2>Chapter 3</h2>
-        <div class="s-5"></div>
-        <div class="table-responsive">
-            <table class="vocablist">
-                {% for grammar in grammar_list %}
-                    {% if grammar.chapter.id == 3 %}
-                        <tr><td>{{ grammar.title }}</td><td>{{ grammar.overview }}</td></tr>
-                    {% endif %}
-                {% endfor %}
-            </table>
-        </div>
+            <h2>Chapter 3</h2>
+            <div class="table-responsive">
+                <table class="vocablist">
+                    {% for grammar in grammar_list %}
+                        {% if grammar.chapter.id == 3 %}
+                            <tr><td>{{ grammar.title }}</td><td>{{ grammar.overview }}</td></tr>
+                        {% endif %}
+                    {% endfor %}
+                </table>
+            </div>
 
-        <h2>Chapter 4</h2>
-        <div class="s-5"></div>
-        <div class="table-responsive">
-            <table class="vocablist">
-                {% for grammar in grammar_list %}
-                    {% if grammar.chapter.id == 4 %}
-                        <tr><td>{{ grammar.title }}</td><td>{{ grammar.overview }}</td></tr>
-                    {% endif %}
-                {% endfor %}
-            </table>
-        </div>
+            <h2>Chapter 4</h2>
+            <div class="table-responsive">
+                <table class="vocablist">
+                    {% for grammar in grammar_list %}
+                        {% if grammar.chapter.id == 4 %}
+                            <tr><td>{{ grammar.title }}</td><td>{{ grammar.overview }}</td></tr>
+                        {% endif %}
+                    {% endfor %}
+                </table>
+            </div>
 
-        <h2>Chapter 5</h2>
-        <div class="s-5"></div>
-        <div class="table-responsive">
-            <table class="vocablist">
-                {% for grammar in grammar_list %}
-                    {% if grammar.chapter.id == 5 %}
-                        <tr><td>{{ grammar.title }}</td><td>{{ grammar.overview }}</td></tr>
-                    {% endif %}
-                {% endfor %}
-            </table>
+            <h2>Chapter 5</h2>
+            <div class="table-responsive">
+                <table class="vocablist">
+                    {% for grammar in grammar_list %}
+                        {% if grammar.chapter.id == 5 %}
+                            <tr><td>{{ grammar.title }}</td><td>{{ grammar.overview }}</td></tr>
+                        {% endif %}
+                    {% endfor %}
+                </table>
+            </div>
         </div>
-    </div>
-    <div class="s-100"></div>
-</div>  <!-- /#wrapper -->
+        <div class="s-100"></div>
+    </div>  <!-- /#wrapper -->
 
 {% endblock %}
