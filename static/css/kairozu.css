@@ -334,7 +334,8 @@ span.footer-sm-text {
 .chartable {
     text-align: center;
     min-width: 400px;
-    margin: 0 auto; }
+    white-space: nowrap;
+    margin: 10px auto; }
 .chartable > tbody tr td { padding: 2px 14px; }
 .blogtable > tbody tr td { padding: 0 5px; }
 
@@ -524,6 +525,7 @@ div.table-container { display: inline-block; }
 
 .table-responsive {
     min-height: .01%;
+    overflow-y: hidden;
     overflow-x: auto;
 	border-radius: 5px; 
 	margin-bottom: 15px;
@@ -550,6 +552,10 @@ table.gpt > tbody > tr > td.blankline { line-height: 5px; }
 .ht-summary, .toc-summary { padding: 20px 15px 20px 15px; }
 .toc-summary {
 	border: 2px solid #242424;
+	border-radius: 5px;
+	display: table; }
+.ht-noborder {
+    padding: 20px 15px 10px 15px;
 	border-radius: 5px;
 	display: table; }
 
@@ -615,7 +621,7 @@ table.gpt > tbody > tr > td.blankline { line-height: 5px; }
 	text-align: left; }
 
 #vocabholder, #sentenceholder, #practiceholder { margin-top: 20px; }
-.vocablist { width: 100%; max-width: 1400px; }
+.vocablist { width: 100%; max-width: 1400px; margin-bottom: 10px; }
 .vocablist > thead th { padding: 10px 5px; }
 .vocablist > tbody td { padding: 5px; }
 
@@ -1409,13 +1415,7 @@ span.step {
 
     .table-responsive {
         width: 100%;
-        overflow-y: hidden;
         -ms-overflow-style: -ms-autohiding-scrollbar; }
-    .table-responsive > .table { margin-bottom: 10px; }
-    .table-responsive > .table > thead > tr > th,
-    .table-responsive > .table > tbody > tr > th,
-    .table-responsive > .table > thead > tr > td,
-    .table-responsive > .table > tbody > tr > td { white-space: nowrap; }
 }
 
 @media screen and (max-width: 600px) {      /* only show up to 600px */
