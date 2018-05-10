@@ -1411,6 +1411,7 @@ span.step {
         width: 100%;
         overflow-y: hidden;
         -ms-overflow-style: -ms-autohiding-scrollbar; }
+    .table-responsive > .table { margin-bottom: 0; }
     .table-responsive > .table > thead > tr > th,
     .table-responsive > .table > tbody > tr > th,
     .table-responsive > .table > thead > tr > td,
