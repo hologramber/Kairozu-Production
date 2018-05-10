@@ -347,7 +347,7 @@ span.footer-sm-text {
 .interface-fg, .interface-fg li, .interface-fg ul, #katakana-tips, #finished-quiz, .reference-link, #expression-example, .quiz-tips, .quiz-tips li, .quiz-tips ul { font-family: 'Raleway', sans-serif; margin: 0; }
 .quiz-tips, #katakana-tips, #finished-quiz, #expression-example { margin-top: 30px; }
 
-.spot-table { display: table; margin: 35px 30px 30px 30px; }
+.spot-table { display: table; margin: 20px 30px 0 30px; }
 .spot-tablei { display: table; margin: 25px 10px 15px 0; }
 .spot-image { display: table-cell; }
 .spot-text {
@@ -621,13 +621,25 @@ table.gpt > tbody > tr > td.blankline { line-height: 5px; }
 	text-align: left; }
 
 #vocabholder, #sentenceholder, #practiceholder { margin-top: 20px; }
-.vocablist { width: 100%; max-width: 1400px; margin-bottom: 10px; }
-.vocablist > thead th { padding: 10px 5px; white-space: nowrap; }
-.vocablist > tbody td { padding: 5px; }
+.vocablist, .exprlist { width: 100%; max-width: 1400px; margin-bottom: 10px; }
+.vocablist > thead th, .exprlist > thead th {
+    padding: 10px 10px 5px 0;
+    white-space: nowrap;
+    text-align: left; }
+.vocablist > tbody td { padding: 5px 10px 5px 0; }
 
 .rlist { width: 100%; }                         /* resources for learning Japanese sandbox */
 .rlist > tbody td { padding: 5px; }
 .rlist > tbody td.resourceheader { padding: 5px 0; }
+
+.exprlist > tbody > tr:nth-child(2n+1) > td:first-child {   /* english */
+    vertical-align: bottom;
+    padding: 10px 10px 0 0; }
+.exprlist > tbody > tr:nth-child(2n+1) > td:nth-child(2) { padding: 10px 10px 10px 0; }
+.exprlist > tbody > tr:nth-child(2n+3) { border-top: 1px solid #bcbcbc66; } /* row lines */
+.exprlist > tbody > tr:nth-child(2n+0) > td:first-child {   /* kana-kanji */
+    padding: 0 10px 0 0;
+    vertical-align: top; }
 
 .freq_arrow { width: 100%; }
 .freq_line {
@@ -1041,6 +1053,7 @@ span.step {
 .s-400 { width: 100%; height: 400px; }
 .s-500 { width: 100%; height: 500px; }
 .s-600 { width: 100%; height: 600px; }
+.min300 { min-width: 300px; }
 .margin-0 { margin: 0; }
 .margin-20 { margin: 20px; }
 .margin-top-0 { margin-top: 0; }

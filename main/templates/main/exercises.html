@@ -12,10 +12,7 @@
     <div class="fc-general-col">
 
         <h1>{{ chapter.title }} Exercises</h1>
-        <div class="s-15"></div>
-
         <p class="raleway">Exercises summarize the grammar you've learned learned thus far; they mix previously encountered grammar lessons into cohesive passages and dialogues. Complete each exercise with >70% accuracy to unlock the one following. Complete all exercises and <a href="{% url "main:progress" %}">keep up with your reviews</a> to unlock the following chapter.</p>
-
         <div class="spot-table">
             {% for exer in object_list %}
                 {% if user.profile.currentstory > chapter.id and user.profile.currentexercise >= exer.exercise_order %}
@@ -103,8 +100,7 @@
         </div>
 
         {% if user.profile.pendingchapter > chapter.id %}
-        <p class="raleway"><h4>Congrats, you've finished the material for <a href="{% url 'main:interface' user.profile.currentchapter %}">{{ chapter.title }}</a>! Check your <a href="{% url 'main:progress' %}">progress</a> toward unlocking the next chapter.</h4>
-        </p>
+            <h4 class="raleway">Congrats, you've finished the material for <a href="{% url 'main:interface' user.profile.currentchapter %}">{{ chapter.title }}</a>! Check your <a href="{% url 'main:progress' %}">progress</a> toward unlocking the next chapter.</h4>
         {% endif %}
 
     </div>

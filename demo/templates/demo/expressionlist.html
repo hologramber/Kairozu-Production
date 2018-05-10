@@ -14,25 +14,30 @@
         <p class="raleway">This is a list of the expressions used in the Kairozu Demo. Try the <a href="{% url 'demo:demoexpressionquiz' %}">expression quiz demo</a> once you've learned these phrases -- in the regular interface, individual chapter quizzes remain accessible post-completion for review purposes, and a cumulative quiz becomes available to review content across chapters.</p>
         <div class="s-5"></div>
         <div class="table-responsive">
-            <table class="vocablist">
+            <table class="exprlist">
                 <thead>
-                    <tr><th>English・英語</th><th>Kana・仮名</th><th>Note</th></tr>
+                    <tr><th>English・英語／Kana・仮名</th><th>Note</th></tr>
                 </thead>
                 <tbody>
                     {% for phrase in object_list %}
                         <tr>
                             <td>{{ phrase.english }}</td>
-                            <td>{{ phrase.kana }}</td>
-                            <td>
-                                {{ phrase.note }}
-                                <br />
-                                {% if phrase.prompt %}
-                                    <span class="smaller grey-words raleway">Example: {{ phrase.prompt }}</span>
+                            <td class="min300" rowspan="2">
+                                {% if phrase.note %}
+                                    <div>{{ phrase.note }}</div>
                                 {% endif %}
-                                &nbsp;
+                                {% if phrase.prompt %}
+                                    <div class="smaller grey-words raleway">Example: {{ phrase.prompt }}</div>
+                                {% endif %}
                             </td>
                         </tr>
-
+                        <tr>
+                            <td class="nowrap">
+                                <ul class="fa-ul">
+                                    <li><i class="fa fa-li fa-circle-o mdgrey-words" aria-hidden="true"></i>{{ phrase.kana }}</li>
+                                </ul>
+                            </td>
+                        </tr>
                     {% endfor %}
                 </tbody>
             </table>
