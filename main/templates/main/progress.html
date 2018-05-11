@@ -64,7 +64,7 @@
                     <tr>
                     {% if obj.vocab %}
                         <td><a href="{% url 'main:vocablist' obj.vocab.chapter.id %}">第 {{ obj.vocab.chapter.id }} 章</a></td>
-                        <td>{{ obj.vocab.english }}</td>
+                        <td class="min300">{{ obj.vocab.english }}</td>
                     {% elif obj.sentence %}
                         <td><a href="{% url 'main:lesson' obj.sentence.lesson.id %}">第 {{ obj.sentence.lesson.chapter.id }} 章</a></td>
                         <td>{{ obj.sentence.english }}</td>
