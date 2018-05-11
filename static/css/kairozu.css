@@ -503,7 +503,7 @@ table.kaitable tbody td.blankline { line-height: 5px; }
 div.table-container { display: inline-block; }
 
 #gex { margin-top: 28px; }
-#gex p {
+#gex p, #gnote p {
 	font-family: 'Open Sans', sans-serif; 
 	margin-bottom: 0;
 	padding-bottom: 15px; }
@@ -1200,7 +1200,7 @@ span.step {
 
 .table-responsive::-webkit-scrollbar { -webkit-appearance: none; }
 .table-responsive::-webkit-scrollbar:vertical { width: 10px; }
-.table-responsive::-webkit-scrollbar:horizontal { height: 10px; }
+.table-responsive::-webkit-scrollbar:horizontal { height: 8px; }
 .table-responsive::-webkit-scrollbar-thumb { border-radius: 5px; background: #bcbcbc; }
 .table-responsive::-webkit-scrollbar-track { border-radius: 5px; }
 
