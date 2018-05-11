@@ -56,7 +56,7 @@
         <table class="vocablist">
             <thead>
                 <tr class="text-align-left">
-                    <th>Chapter</th><th>English</th><th>Available for Review</th><th>Level</th>
+                    <th>Chapter</th><th>English</th><th>Review Available</th><th>Level</th>
                 </tr>
             </thead>
             <tbody>
@@ -82,11 +82,11 @@
                         {% endif %}
 
                         {% if obj.score == 0 %}
-                            <td class="green-words"><i class="fa fa-star-o" aria-hidden="true"></i>&nbsp;<i class="fa fa-star-o" aria-hidden="true"></i>&nbsp;<i class="fa fa-star-o" aria-hidden="true"></i></td>
+                            <td class="green-words nowrap"><i class="fa fa-star-o" aria-hidden="true"></i>&nbsp;<i class="fa fa-star-o" aria-hidden="true"></i>&nbsp;<i class="fa fa-star-o" aria-hidden="true"></i></td>
                         {% elif obj.score == 1 %}
-                            <td class="green-words"><i class="fa fa-star" aria-hidden="true"></i>&nbsp;<i class="fa fa-star-o" aria-hidden="true"></i>&nbsp;<i class="fa fa-star-o" aria-hidden="true"></i></td>
+                            <td class="green-words nowrap"><i class="fa fa-star" aria-hidden="true"></i>&nbsp;<i class="fa fa-star-o" aria-hidden="true"></i>&nbsp;<i class="fa fa-star-o" aria-hidden="true"></i></td>
                         {% elif obj.score == 2 %}
-                            <td class="green-words"><i class="fa fa-star" aria-hidden="true"></i>&nbsp;<i class="fa fa-star" aria-hidden="true"></i>&nbsp;<i class="fa fa-star-o" aria-hidden="true"></i></td>
+                            <td class="green-words nowrap"><i class="fa fa-star" aria-hidden="true"></i>&nbsp;<i class="fa fa-star" aria-hidden="true"></i>&nbsp;<i class="fa fa-star-o" aria-hidden="true"></i></td>
                         {% else %}
                             <td></td>
                         {% endif %}

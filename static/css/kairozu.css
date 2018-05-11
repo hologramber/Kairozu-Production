@@ -1075,6 +1075,7 @@ span.step {
 .width-100, .reg-user-input input[type=email] { width: 100%; }
 .divt { display: table; }
 .divtc { display: table-cell; }
+.nowrap { white-space: nowrap; }
 
 .btn {
     outline: none;
