@@ -77,7 +77,7 @@ pre {
     box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.2); }
 pre::-webkit-scrollbar { -webkit-appearance: none; }
 pre::-webkit-scrollbar:vertical { width: 10px; }
-pre::-webkit-scrollbar:horizontal { height: 10px; }
+pre::-webkit-scrollbar:horizontal { height: 8px; }
 pre::-webkit-scrollbar-thumb { border-radius: 5px; background: #bcbcbc; }
 pre::-webkit-scrollbar-track { border-radius: 5px; }
 
@@ -686,13 +686,14 @@ table.gpt > tbody > tr > td.blankline { line-height: 5px; }
 	font-size: 45px;
 	margin-bottom: 10px;
     position: relative; }
-.promptc {	padding-left: 5px; } 	/* when missed ? on challenge/quizzes, the help text that pops up */
+.promptc { padding-left: 5px; } 	/* when missed ? on challenge/quizzes, the help text that pops up */
 
 #report-issue {
     position: absolute;
+    word-spacing: normal;
     bottom: 0;
     right: 5px;
-    font-size: 12px; }
+    font-size: 10px; }
 
 .litcontextbox {                                        /* literal content grey tag on quizzes */
     font-family: 'Ubuntu Condensed', sans-serif;
@@ -1304,9 +1305,7 @@ span.step {
 		padding-top: 5px;
 		padding-bottom: 15px; }
 
-	.promptc, .vocab-promptc {
-		font-size: 35px;
-		margin-bottom: 10px; }
+	.promptc, .vocab-promptc { font-size: 35px; }
 
 	.lit-c, .vocab-note, .context-container { font-size: 10px; }
     .context-container, .vocab-note { padding-top: 0; }
