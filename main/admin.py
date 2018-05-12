@@ -113,7 +113,7 @@ class ExerciseAdmin(nested_admin.NestedModelAdmin):
 
 
 class SentenceAdmin(admin.ModelAdmin):
-    list_display = ('english', 'literal', 'context', 'kana_all_blank', 'force_strict')
+    list_display = ('english', 'literal', 'context', 'force_strict')
     list_filter = ('lesson',)
     search_fields = ['english', 'kana', 'kanji', 'context', 'literal']
 
