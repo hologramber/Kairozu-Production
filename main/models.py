@@ -63,6 +63,7 @@ def all_blanks(kana):
 
 
 def hw_punctuation(hwtext):
+    hwtext = re.sub(r'<wbr>', '', hwtext)
     hwtext = re.sub(r'。', '｡　', hwtext)
     hwtext = re.sub(r'、[ 　]*', '､　', hwtext)
     hwtext = re.sub(r'[ 　]+', '　', hwtext)
@@ -105,7 +106,6 @@ def create_blanks(kana, disamb_location, altindex):
 
 
 def create_splits(splitme):
-    splitme = re.sub(r'<wbr>', '', splitme)
     splitme = re.sub(r'　', '　<wbr>', splitme)
     return splitme
 
