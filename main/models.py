@@ -63,16 +63,16 @@ def all_blanks(kana):
 
 
 def hw_punctuation(hwtext):
-    hwtext = re.sub(r'。', '｡ ', hwtext)
-    hwtext = re.sub(r'、[ 　]*', '､ ', hwtext)
-    hwtext = re.sub(r'[ 　]+', ' ', hwtext)
+    hwtext = re.sub(r'。', '｡　', hwtext)
+    hwtext = re.sub(r'、[ 　]*', '､　', hwtext)
+    hwtext = re.sub(r'[ 　]+', '　', hwtext)
     hwtext = hwtext.rstrip()
     return hwtext
 
 
 def disamb_all_blanks(kana, disamb_location):        # position 0 = disamb_loc 1
-    disamb_split = kana.split(' ')
-    sep = ' '
+    disamb_split = kana.split('　')
+    sep = '　'
     for index, segment in enumerate(disamb_split):
         if index == disamb_location - 1:
             disamb_split[index] = segment
@@ -83,8 +83,8 @@ def disamb_all_blanks(kana, disamb_location):        # position 0 = disamb_loc 1
 
 
 def create_blanks(kana, disamb_location, altindex):
-    sentence_split = kana.split(' ')
-    sep = ' '
+    sentence_split = kana.split('　')
+    sep = '　'
 
     if disamb_location > 0:
         kana_all_blank = disamb_all_blanks(kana, disamb_location)
@@ -102,6 +102,11 @@ def create_blanks(kana, disamb_location, altindex):
     kana_alt_blank = sep.join(sentence_split)
     kana_clean = clean_sentence(kana)
     return kana_all_blank, kana_alt_blank, kana_clean
+
+
+def create_splits(splitme):
+    splitme = re.sub(r'　', '　<wbr>', splitme)
+    return splitme
 
 
 class Profile(models.Model):
@@ -283,6 +288,10 @@ class Expression(models.Model):
         self.kana = hw_punctuation(self.kana)
         self.kanji = hw_punctuation(self.kanji)
         self.kana_all_blank, self.kana_alt_blank, self.kana_clean = create_blanks(self.kana, 0, False)
+        self.kana = create_splits(self.kana)
+        self.kanji = create_splits(self.kanji)
+        self.kana_all_blank = create_splits(self.kana_all_blank)
+        self.kana_alt_blank = create_splits(self.kana_alt_blank)
         super(Expression, self).save(*args, **kwargs)
 
 
@@ -451,6 +460,10 @@ class Vocabulary(models.Model):
             count += 1
         self.kana_alt_blank = alt_blank
         self.kana_clean = clean_sentence(self.kana)
+        self.kana = create_splits(self.kana)
+        self.kanji = create_splits(self.kanji)
+        self.kana_alt_blank = create_splits(self.kana_alt_blank)
+        self.kana_all_blank = create_splits(self.kana_all_blank)
         super(Vocabulary, self).save(*args, **kwargs)
 
     class Meta:
@@ -566,6 +579,7 @@ class Lesson(models.Model):
         self.overview = hw_punctuation(self.overview)
         self.f_english = highlight(self.english, KairozuLexer(ensurenl=False), KairozuFormatter(style='kairozu'))
         self.f_hiragana = highlight(self.hiragana, KairozuLexer(ensurenl=False), KairozuFormatter(style='kairozu'))
+        
         super(Lesson, self).save(*args, **kwargs)
 
     def __str__(self):
@@ -753,6 +767,14 @@ class Practice(models.Model):
         self.ptwo_kanji = hw_punctuation(self.ptwo_kanji)
         self.pone_kana_all, self.pone_kana_alt, self.pone_kana_clean = create_blanks(self.pone_kana, self.pone_disamb_location, True)
         self.ptwo_kana_all, self.ptwo_kana_alt, self.ptwo_kana_clean = create_blanks(self.ptwo_kana, self.ptwo_disamb_location, False)
+        self.pone_kana = create_splits(self.pone_kana)
+        self.pone_kanji = create_splits(self.pone_kanji)
+        self.pone_kana_all = create_splits(self.pone_kana_all)
+        self.pone_kana_alt = create_splits(self.pone_kana_alt)
+        self.ptwo_kana = create_splits(self.ptwo_kana)
+        self.ptwo_kanji = create_splits(self.pone_kanji)
+        self.pone_kana_all = create_splits(self.pone_kana_all)
+        self.pone_kana_alt = create_splits(self.pone_kana_alt)
         super(Practice, self).save(*args, **kwargs)
 
     class Meta:
@@ -824,6 +846,10 @@ class ExerciseSentence(ExercisePiece):
         self.kana = hw_punctuation(self.kana)
         self.kanji = hw_punctuation(self.kanji)
         self.kana_all_blank, self.kana_alt_blank, self.kana_clean = create_blanks(self.kana, self.disamb_location, False)
+        self.kana = create_splits(self.kana)
+        self.kanji = create_splits(self.kanji)
+        self.kana_alt_blank = create_splits(self.kana_alt_blank)
+        self.kana_all_blank = create_splits(self.kana_all_blank)
         super(ExerciseSentence, self).save(*args, **kwargs)
 
     class Meta:
@@ -837,6 +863,7 @@ class ExercisePrompt(ExercisePiece):
 
     def save(self, *args, **kwargs):
         self.prompt_kana = hw_punctuation(self.prompt_kana)
+        self.prompt_kana = create_splits(self.prompt_kana)
         super(ExercisePrompt, self).save(*args, **kwargs)
 
     class Meta:
@@ -866,6 +893,10 @@ class ExerciseResponse(models.Model):
         self.response_kana = hw_punctuation(self.response_kana)
         self.response_kanji = hw_punctuation(self.response_kanji)
         self.response_kana_all_blank, self.response_kana_alt_blank, self.response_kana_clean = create_blanks(self.response_kana, self.response_disamb_location, False)
+        self.response_kana = create_splits(self.response_kana)
+        self.response_kanji = create_splits(self.response_kanji)
+        self.response_kana_alt_blank = create_splits(self.response_kana_alt_blank)
+        self.response_kana_all_blank = create_splits(self.response_kana_all_blank)
         super(ExerciseResponse, self).save(*args, **kwargs)
 
 
@@ -944,6 +975,10 @@ class Sentence(models.Model):
         self.kana = hw_punctuation(self.kana)
         self.kanji = hw_punctuation(self.kanji)
         self.kana_all_blank, self.kana_alt_blank, self.kana_clean = create_blanks(self.kana, self.disamb_location, False)
+        self.kana = create_splits(self.kana)
+        self.kanji = create_splits(self.kanji)
+        self.kana_all_blank = create_splits(self.kana_all_blank)
+        self.kana_alt_blank = create_splits(self.kana_alt_blank)
         super(Sentence, self).save(*args, **kwargs)
 
     class Meta:

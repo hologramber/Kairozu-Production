@@ -41,7 +41,7 @@ $.ajaxSetup({
                 <div id='vocab_english' class='vocab-challenge text-align-center'></div>
 
                 <div class='vocab-promptc text-align-center wordsp0-5'>
-                    <span id='hint_block' class='ls5r'>&nbsp;</span>
+                    <span id='hint_block' class='ls5r'>&#8203;</span>
                 </div>
 
                 <form id='vocabquizform' action='' method='post' class='abox'>{% csrf_token %}
@@ -80,7 +80,7 @@ $.ajaxSetup({
             $('#vocabquizform #vactual').val(data['kana_clean']);
             switch(vlevel) {
                 case 3:
-                    $('#hint_block').html('&nbsp;'); break;
+                    $('#hint_block').html('&#8203;'); break;
                 case 2:
                     $('#hint_block').html(data['kana_all_blank']); break;
                 case 1:

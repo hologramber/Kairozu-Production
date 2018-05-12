@@ -39,7 +39,7 @@
             <div id='sfield'>
                 <div class='s-30 visible-xs'></div>
                 <div id='sentence_eng' class='challenge-grammar'></div>
-                <div class='promptc wordsp0-5'>
+                <div class='promptc'>
                     <span id='sentence_hint' class='ls5r'></span>
                 </div>
 
@@ -79,13 +79,13 @@
             $('#sentence_eng').html(data['english']);
             $('#sactual').val(data['kana_clean']);
             if (data['literal'].trim()) {
-                $('#literal_one').html('<div class="white-words litcontextbox upper">literal</div>' + data['literal'] + '&nbsp;');
+                $('#literal_one').html('<div class="white-words litcontextbox upper">literal</div>' + data['literal'] + '&#8203;');
             } else {
-                $('#literal_one').html('&nbsp;');
+                $('#literal_one').html('&#8203;');
             }
             switch (slevel) {
                 case 3:
-                    $('#sentence_hint').html('&nbsp;'); break;
+                    $('#sentence_hint').html('&#8203;'); break;
                 case 2:
                     $('#sentence_hint').html(data['kana_all_blank']); break;
                 case 1:

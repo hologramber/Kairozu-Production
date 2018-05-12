@@ -12,8 +12,8 @@
                 <div id='literal_note' class='vocab-note text-align-center'></div>
                 <div id='expression_english' class='vocab-challenge text-align-center'></div>
 
-                <div class='vocab-promptc text-align-center wordsp0-5'>
-                    <span id='hint_block' class='ls5'>&nbsp;</span>
+                <div class='vocab-promptc text-align-center'>
+                    <span id='hint_block' class='ls5'>&#8203;</span>
                     <a id="bug-button" href="#" tabindex="-1" style="display: none;">
                         <i id="report-issue" class="fa fa-bug red-words" aria-hidden="true"><span class="raleway">&nbsp;Error?</span></i>
                     </a>
@@ -61,14 +61,14 @@
 
     function expressionNext(data) {
         if (data['id'] != null) {
-            $('#literal_note').html('&nbsp;' + data['express']['note'] + '&nbsp;');
+            $('#literal_note').html('&#8203;' + data['express']['note'] + '&#8203;');
             $('#expression_english').html(data['express']['english']);
             $('#eactual').val(data['express']['kana_clean']);
             $('#eid').val(data['id']);
             if (data['express']['literal'].trim()) {
-                $('#literal_one').html('<div class="white-words litcontextbox upper">literal</div>' + data['express']['literal'] + '&nbsp;');
+                $('#literal_one').html('<div class="white-words litcontextbox upper">literal</div>' + data['express']['literal'] + '&#8203;');
             } else {
-                $('#literal_one').html('&nbsp;');
+                $('#literal_one').html('&#8203;');
             }
             $("#reflink").attr("href", '/main/chapter/' + data['express']['chapter'] + '/expressionlist/');
             switch(elevel) {

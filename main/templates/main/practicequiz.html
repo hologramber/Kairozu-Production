@@ -31,49 +31,49 @@
             $('#ptwoact').val(data['ptwo_kana_clean']);
             switch(pcode) {
                 case 'BC':
-                    $('#hint_one').html(data['pone_kana_all'] + '&nbsp;');
-                    $('#hint_two').html(data['ptwo_kana_all'] + '&nbsp;');
+                    $('#hint_one').html(data['pone_kana_all'] + '&#8203;');
+                    $('#hint_two').html(data['ptwo_kana_all'] + '&#8203;');
                     break;
                 case 'OC':
                     if (plevel == 1) {
-                        $('#hint_one').html(data['pone_kana'] + '&nbsp;');
-                        $('#hint_two').html(data['ptwo_kana_alt'] + '&nbsp;');
+                        $('#hint_one').html(data['pone_kana'] + '&#8203;');
+                        $('#hint_two').html(data['ptwo_kana_alt'] + '&#8203;');
                     } else {
-                        $('#hint_one').html(data['pone_kana'] + '&nbsp;');
-                        $('#hint_two').html(data['ptwo_kana'] + '&nbsp;');
+                        $('#hint_one').html(data['pone_kana'] + '&#8203;');
+                        $('#hint_two').html(data['ptwo_kana'] + '&#8203;');
                     }
                     break;
                 case 'TC':
                     if (plevel == 1) {
-                        $('#hint_one').html(data['pone_kana_alt'] + '&nbsp;');
-                        $('#hint_two').html(data['ptwo_kana'] + '&nbsp;');
+                        $('#hint_one').html(data['pone_kana_alt'] + '&#8203;');
+                        $('#hint_two').html(data['ptwo_kana'] + '&#8203;');
                     } else {
-                        $('#hint_one').html(data['pone_kana'] + '&nbsp;');
-                        $('#hint_two').html(data['ptwo_kana'] + '&nbsp;');
+                        $('#hint_one').html(data['pone_kana'] + '&#8203;');
+                        $('#hint_two').html(data['ptwo_kana'] + '&#8203;');
                     }
                     break;
                 default:
                     if (plevel == 1) {
-                        $('#hint_one').html(data['pone_kana_alt'] + '&nbsp;');
-                        $('#hint_two').html(data['ptwo_kana_alt'] + '&nbsp;');
+                        $('#hint_one').html(data['pone_kana_alt'] + '&#8203;');
+                        $('#hint_two').html(data['ptwo_kana_alt'] + '&#8203;');
                     } else {
-                        $('#hint_one').html(data['pone_kana'] + '&nbsp;');
-                        $('#hint_two').html(data['ptwo_kana'] + '&nbsp;');
+                        $('#hint_one').html(data['pone_kana'] + '&#8203;');
+                        $('#hint_two').html(data['ptwo_kana'] + '&#8203;');
                     }
                     break;
             }
             if (data['pone_literal'].trim()) {
-                $('#literal_one').html('<div class="white-words litcontextbox upper">literal</div>' + data['pone_literal'] + '&nbsp;');
+                $('#literal_one').html('<div class="white-words litcontextbox upper">literal</div>' + data['pone_literal'] + '&#8203;');
             } else {
-                $('#literal_one').html('&nbsp;');
+                $('#literal_one').html('&#8203;');
             }
             if (data['ptwo_literal'].trim()) {
-                $('#literal_two').html('<div class="white-words litcontextbox upper">literal</div>' + data['ptwo_literal'] + '&nbsp;');
+                $('#literal_two').html('<div class="white-words litcontextbox upper">literal</div>' + data['ptwo_literal'] + '&#8203;');
             } else {
-                $('#literal_two').html('&nbsp;');
+                $('#literal_two').html('&#8203;');
             }
-            $('#context_one').html(data['pone_context'] + '&nbsp;');
-            $('#context_two').html(data['ptwo_context'] + '&nbsp;');
+            $('#context_one').html(data['pone_context'] + '&#8203;');
+            $('#context_two').html(data['ptwo_context'] + '&#8203;');
             $('#id_pone_attempt').removeClass('kbox1_g kbox1_r');
             $('#id_ptwo_attempt').removeClass('kbox2_g kbox2_r');
             $('#ksubmit').removeClass('ksub_r ksub_g');

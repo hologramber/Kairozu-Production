@@ -34,14 +34,14 @@
 
     function vocabNext(data) {
         if (data['id'] != null) {
-            $('#literal_one').html('&nbsp;' + data['vocab']['note'] + '&nbsp;');
+            $('#literal_one').html('&#8203;' + data['vocab']['note'] + '&#8203;');
             $('#vocab_english').html(data['vocab']['english']);
             $('#vactual').val(data['vocab']['kana_clean']);
             $('#vid').val(data['id']);
             $("#reflink").attr("href", '/main/chapter/' + data['vocab']['chapter'] + '/vocablist/');
             switch(vlevel) {
                 case 3:
-                    $('#hint_block').html('&nbsp;'); break;
+                    $('#hint_block').html('&#8203;'); break;
                 case 2:
                     $('#hint_block').html(data['vocab']['kana_all_blank']); break;
                 case 1:

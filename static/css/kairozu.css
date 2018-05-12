@@ -685,6 +685,7 @@ table.gpt > tbody > tr > td.blankline { line-height: 5px; }
 .promptc, .vocab-promptc {
 	font-size: 45px;
 	margin-bottom: 10px;
+    white-space: nowrap;
     position: relative; }
 .promptc { padding-left: 5px; } 	/* when missed ? on challenge/quizzes, the help text that pops up */
 

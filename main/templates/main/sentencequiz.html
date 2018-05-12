@@ -26,18 +26,18 @@
             $('#sid').val(data['id']);
             $('#sstrict').val(data['sentence']['force_strict']);
             if (data['sentence']['literal'].trim()) {
-                $('#literal_one').html('<div class="white-words litcontextbox upper">literal</div>' + data['sentence']['literal'] + '&nbsp;');
+                $('#literal_one').html('<div class="white-words litcontextbox upper">literal</div>' + data['sentence']['literal'] + '&#8203;');
             } else {
-                $('#literal_one').html('&nbsp;');
+                $('#literal_one').html('&#8203;');
             }
-            $('#context_one').html(data['sentence']['context'] + '&nbsp;');
+            $('#context_one').html(data['sentence']['context'] + '&#8203;');
             switch (slevel) {
                 case 3:
                     if (data['sentence']['disamb_location'] != 0) {
                         $('#sentence_hint').html(data['sentence']['kana_all_blank']);
                         $('#sentence_hint').addClass('ls5y');
                     } else {
-                        $('#sentence_hint').html('&nbsp;');
+                        $('#sentence_hint').html('&#8203;');
                     } break;
                 case 2:
                     $('#sentence_hint').html(data['sentence']['kana_all_blank']);
