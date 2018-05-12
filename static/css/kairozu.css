@@ -529,7 +529,8 @@ div.table-container { display: inline-block; }
     min-height: .01%;
     overflow-y: hidden;
     overflow-x: auto;
-	border-radius: 5px; 
+	border-radius: 5px;
+    clear: both;
 	margin-bottom: 15px;
     border: 0; }
 .center-table {                         /* freq arrow lesson18 */
