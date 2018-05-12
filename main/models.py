@@ -773,7 +773,7 @@ class Practice(models.Model):
         self.pone_kana_all = create_splits(self.pone_kana_all)
         self.pone_kana_alt = create_splits(self.pone_kana_alt)
         self.ptwo_kana = create_splits(self.ptwo_kana)
-        self.ptwo_kanji = create_splits(self.pone_kanji)
+        self.ptwo_kanji = create_splits(self.ptwo_kanji)
         self.ptwo_kana_all = create_splits(self.ptwo_kana_all)
         self.ptwo_kana_alt = create_splits(self.ptwo_kana_alt)
         super(Practice, self).save(*args, **kwargs)
