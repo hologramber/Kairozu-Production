@@ -43,7 +43,7 @@
                 case 1:
                     $('#sentence_hint').html(data['sentence']['kana_alt_blank']); break;
                 default:
-                    $('#sentence_hint').html(data['sentence']['kana']); break;
+                    $('#sentence_hint').html(data['sentence']['f_kana']); break;
             }
             $('#sentencequizform').removeClass('abox_g abox_r');
         } else {
@@ -55,7 +55,7 @@
 
     $('#sentencequizform').submit(function(event) {
         event.preventDefault();
-        var clean_attempt = $('#id_sentenceattempt').val().replace(/[　｡。、？！「」'",.?!\s]/g, "");
+        var clean_attempt = $('#id_sentenceattempt').val().replace(/[　｡。、､？?！!「」｢｣'"`,.\s]/g, "");
         if (clean_attempt == $('#sactual').val()) {
             $('#sentencequizform').attr('class', 'abox abox_g');
             $('#bug-button').hide();
@@ -68,11 +68,7 @@
         } else {
             $('#bug-button').show();
             $('#sentencequizform').attr('class', 'abox_red abox_r');
-            if (slevel == 3) {
-                sentencecode = 'I';
-            } else {
-                sentencecode = 'A';
-            }
+            if (slevel == 3) { sentencecode = 'I'; } else { sentencecode = 'A'; }
             if (slevel > 0) { slevel--; }
         }
         $('#scode').val(sentencecode);

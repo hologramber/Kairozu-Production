@@ -49,7 +49,7 @@
                 case 1:
                     $('#hint_block').html(data['vocab']['kana_alt_blank']); break;
                 default:
-                    $('#hint_block').html(data['vocab']['kana']); break;
+                    $('#hint_block').html(data['vocab']['f_kana']); break;
             }
             $('#vocabquizform').removeClass('abox_g abox_r');
             if (data['vocab']['katakana'] == true) {
@@ -65,7 +65,7 @@
     }
     $('#vocabquizform').submit(function(event) {
         event.preventDefault();
-        var clean_attempt = $('#id_vocabattempt').val().replace(/[　｡。、？！「」'",.?!\s]/g, "");
+        var clean_attempt = $('#id_vocabattempt').val().replace(/[　｡。、､？?！!「」｢｣'"`,.\s]/g, "");
         if (clean_attempt == $('#vactual').val()) {
             $('#bug-button').hide();
             $('#vocabquizform').attr('class', 'abox abox_g');
@@ -78,11 +78,7 @@
         } else {
             $('#bug-button').show();
             $('#vocabquizform').attr('class', 'abox_red abox_r');
-            if (vlevel == 3) {
-                vocabcode = 'I';
-            } else {
-                vocabcode = 'A';
-            }
+            if (vlevel == 3) { vocabcode = 'I'; } else { vocabcode = 'A'; }
             if (vlevel > 0) { vlevel--; }
         }
         $('#vocabquizform #vcode').val(vocabcode);

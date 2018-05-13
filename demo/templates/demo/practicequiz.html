@@ -13,14 +13,14 @@
         <div id='practiceholder'>
             <div id='pfield'>
                 <div id='practice_eng_one' class='practice-grammar'></div>
-                <div class='promptc'><span id='hint_one' class='ls5'></span></div>
+                <div class='promptc'><span id='hint_one' class='ls5'>&#8203;</span></div>
 
                 <form id='practicequizform' action='' method='post'>{% csrf_token %}
                     <input id='id_pone_attempt' type='text' name='pone_attempt' class='kbox1' autocomplete='off' autocorrect='off' autocapitalize='off' spellcheck='false' />
                 <div id='literal_one' class='lit-c'></div>
 
                 <div id='practice_eng_two' class='practice-grammar'></div>
-                <div class='promptc'><span id='hint_two' class='ls5'></span></div>
+                <div class='promptc'><span id='hint_two' class='ls5'>&#8203;</span></div>
 
                     <input id='id_ptwo_attempt' type='text' name='ptwo_attempt' class='kbox2' autocomplete='off' autocorrect='off' autocapitalize='off' spellcheck='false' />
                     <input id='poneact' type='hidden' name='pone_actual' value='' />
@@ -48,6 +48,8 @@
 
 <!-- wanakana, menu toggle, and get/post mechanics -->
 <script type='text/javascript' src="{% static 'js/wanakana.js' %}"></script>
+<script type='text/javascript' src='{% static 'js/cookiemonster.js' %}'></script>
+
 <script type='text/javascript'>
     var plevel = 0;
     var pindex = 0;
@@ -56,28 +58,6 @@
     var input2 = document.getElementById('id_ptwo_attempt');
     wanakana.bind(input);
     wanakana.bind(input2);
-
-    function getCookie(name) {
-        var cookieValue = null;
-        if (document.cookie && document.cookie != '') {
-            var cookies = document.cookie.split(';');
-            for (var i = 0; i < cookies.length; i++) {
-                var cookie = jQuery.trim(cookies[i]);       // Does this cookie string begin with the name we want?
-                if (cookie.substring(0, name.length + 1) == (name + '=')) {
-                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                    break;
-                }
-            }
-        }
-        return cookieValue;
-    }
-    $.ajaxSetup({
-        beforeSend: function(xhr, settings) {
-            if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
-                xhr.setRequestHeader('X-CSRFToken', getCookie('csrftoken'));    // Only send token to relative/local URLs
-            }
-        }
-    });
 
     function practiceNext(data) {
         if (data['vieworder'] != null) {
@@ -92,20 +72,20 @@
                     break;
                 case 'OC':
                     if (plevel == 1) {
-                        $('#hint_one').html(data['pone_kana'] + '&#8203;');
+                        $('#hint_one').html(data['pone_kana_f'] + '&#8203;');
                         $('#hint_two').html(data['ptwo_kana_alt'] + '&#8203;');
                     } else {
-                        $('#hint_one').html(data['pone_kana'] + '&#8203;');
-                        $('#hint_two').html(data['ptwo_kana'] + '&#8203;');
+                        $('#hint_one').html(data['pone_kana_f'] + '&#8203;');
+                        $('#hint_two').html(data['ptwo_kana_f'] + '&#8203;');
                     }
                     break;
                 case 'TC':
                     if (plevel == 1) {
                         $('#hint_one').html(data['pone_kana_alt'] + '&#8203;');
-                        $('#hint_two').html(data['ptwo_kana'] + '&#8203;');
+                        $('#hint_two').html(data['ptwo_kana_f'] + '&#8203;');
                     } else {
-                        $('#hint_one').html(data['pone_kana'] + '&#8203;');
-                        $('#hint_two').html(data['ptwo_kana'] + '&#8203;');
+                        $('#hint_one').html(data['pone_kana_f'] + '&#8203;');
+                        $('#hint_two').html(data['ptwo_kana_f'] + '&#8203;');
                     }
                     break;
                 default:
@@ -113,8 +93,8 @@
                         $('#hint_one').html(data['pone_kana_alt'] + '&#8203;');
                         $('#hint_two').html(data['ptwo_kana_alt'] + '&#8203;');
                     } else {
-                        $('#hint_one').html(data['pone_kana'] + '&#8203;');
-                        $('#hint_two').html(data['ptwo_kana'] + '&#8203;');
+                        $('#hint_one').html(data['pone_kana_f'] + '&#8203;');
+                        $('#hint_two').html(data['ptwo_kana_f'] + '&#8203;');
                     }
                     break;                  
             }
@@ -140,15 +120,11 @@
 
     $('#practicequizform').submit(function(event) {
         event.preventDefault();
-        var pone_clean_att = $('#id_pone_attempt').val().replace(/[　。、？！「」\'\",.?!\s]/g, "");
-        var ptwo_clean_att = $('#id_ptwo_attempt').val().replace(/[　。、？！「」\'\",.?!\s]/g, "");
+        var pone_clean_att = $('#id_pone_attempt').val().replace(/[　｡。、､？?！!「」｢｣'"`,.\s]/g, "");
+        var ptwo_clean_att = $('#id_ptwo_attempt').val().replace(/[　｡。、､？?！!「」｢｣'"`,.\s]/g, "");
         if ((pone_clean_att == $('#poneact').val()) && (ptwo_clean_att == $('#ptwoact').val())) {
             pcode = 'BC';
-            if (plevel == 2) {
-                pindex++;
-            } else {
-                plevel = 2;
-            }
+            if (plevel == 2) { pindex++; } else { plevel = 2; }
             $('#id_pone_attempt').attr('class', 'kbox1 kbox1_g').prop("disabled", false).val('').focus();
             $('#id_ptwo_attempt').attr('class', 'kbox2 kbox2_g').prop("disabled", false).val('');
             $('#ksubmit').attr('class', 'ksub ksub_g');
@@ -156,9 +132,7 @@
             $('#hint_two').attr('class', 'ls5');
         } else if ((pone_clean_att == $('#poneact').val()) && (ptwo_clean_att != $('#ptwoact').val())) {
             pcode = 'OC';
-            if (plevel > 0) {
-               plevel --;
-           }
+            if (plevel > 0) { plevel --; }
             $('#id_pone_attempt').attr('class', 'kbox1 kbox1_g').prop("disabled", true);
             $('#id_ptwo_attempt').attr('class', 'kbox2_red kbox2_r').val('').focus();
             $('#ksubmit').attr('class', 'ksub_red ksub_r');
@@ -166,9 +140,7 @@
             $('#hint_two').attr('class', 'ls5r');
         } else if ((pone_clean_att != $('#poneact').val()) && (ptwo_clean_att == $('#ptwoact').val())) {
             pcode = 'TC';
-           if (plevel > 0) {
-               plevel --;
-           }
+            if (plevel > 0) { plevel --; }
             $('#id_pone_attempt').attr('class', 'kbox1_red kbox1_r').val('').focus();
             $('#id_ptwo_attempt').attr('class', 'kbox2 kbox2_g').prop("disabled", true);
             $('#ksubmit').attr('class', 'ksub ksub_g');
@@ -176,9 +148,7 @@
             $('#hint_two').attr('class', 'ls5g');
         } else {
             pcode = 'NC';
-           if (plevel > 0) {
-               plevel --;
-           }
+            if (plevel > 0) { plevel --; }
             $('#id_pone_attempt').attr('class', 'kbox1_red kbox1_r').val('').focus();
             $('#id_ptwo_attempt').attr('class', 'kbox2_red kbox2_r').val('');
             $('#ksubmit').attr('class', 'ksub_red ksub_r');

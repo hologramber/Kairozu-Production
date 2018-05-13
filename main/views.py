@@ -16,7 +16,7 @@ class MainView(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super(MainView, self).get_context_data(**kwargs)
         Profile.has_reviews(self.request.user)
-        # messages.add_message(self.request, messages.SUCCESS, 'Bug submitted! Apologies for the trouble, but thank you for letting me know.')
+        # messages.add_message(self.request, messages.SUCCESS, '...')
         return context
 
 

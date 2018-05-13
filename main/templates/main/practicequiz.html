@@ -36,20 +36,20 @@
                     break;
                 case 'OC':
                     if (plevel == 1) {
-                        $('#hint_one').html(data['pone_kana'] + '&#8203;');
+                        $('#hint_one').html(data['pone_kana_f'] + '&#8203;');
                         $('#hint_two').html(data['ptwo_kana_alt'] + '&#8203;');
                     } else {
-                        $('#hint_one').html(data['pone_kana'] + '&#8203;');
-                        $('#hint_two').html(data['ptwo_kana'] + '&#8203;');
+                        $('#hint_one').html(data['pone_kana_f'] + '&#8203;');
+                        $('#hint_two').html(data['ptwo_kana_f'] + '&#8203;');
                     }
                     break;
                 case 'TC':
                     if (plevel == 1) {
                         $('#hint_one').html(data['pone_kana_alt'] + '&#8203;');
-                        $('#hint_two').html(data['ptwo_kana'] + '&#8203;');
+                        $('#hint_two').html(data['ptwo_kana_f'] + '&#8203;');
                     } else {
-                        $('#hint_one').html(data['pone_kana'] + '&#8203;');
-                        $('#hint_two').html(data['ptwo_kana'] + '&#8203;');
+                        $('#hint_one').html(data['pone_kana_f'] + '&#8203;');
+                        $('#hint_two').html(data['ptwo_kana_f'] + '&#8203;');
                     }
                     break;
                 default:
@@ -57,8 +57,8 @@
                         $('#hint_one').html(data['pone_kana_alt'] + '&#8203;');
                         $('#hint_two').html(data['ptwo_kana_alt'] + '&#8203;');
                     } else {
-                        $('#hint_one').html(data['pone_kana'] + '&#8203;');
-                        $('#hint_two').html(data['ptwo_kana'] + '&#8203;');
+                        $('#hint_one').html(data['pone_kana_f'] + '&#8203;');
+                        $('#hint_two').html(data['ptwo_kana_f'] + '&#8203;');
                     }
                     break;
             }
@@ -88,11 +88,7 @@
         if (attempt == 1) {
             pcode = 'BC';
             $('#bug-button').hide();
-            if (plevel == 2) {
-                pindex++;
-            } else {
-                plevel = 2;
-            }
+            if (plevel == 2) { pindex++; } else { plevel = 2; }
             $('#id_pone_attempt').attr('class', 'kbox1 kbox1_g').prop("disabled", false).val('').focus();
             $('#id_ptwo_attempt').attr('class', 'kbox2 kbox2_g').prop("disabled", false).val('');
             $('#ksubmit').attr('class', 'ksub ksub_g');
@@ -101,9 +97,7 @@
         } else if (attempt == 2) {
             pcode = 'OC';
             $('#bug-button').show();
-            if (plevel > 0) {
-                plevel--;
-            }
+            if (plevel > 0) { plevel--; }
             $('#id_pone_attempt').attr('class', 'kbox1 kbox1_g').prop("disabled", true);
             $('#id_ptwo_attempt').attr('class', 'kbox2_red kbox2_r').val('').focus();
             $('#ksubmit').attr('class', 'ksub_red ksub_r');
@@ -138,8 +132,8 @@
     $('#practicequizform').submit(function(event) {
         event.preventDefault();
         if ($('#pstrict').val() == '1') {
-            var pone_clean_att = $('#id_pone_attempt').val().replace(/[　｡。、？！「」'",.?!\s]/g, "");
-            var ptwo_clean_att = $('#id_ptwo_attempt').val().replace(/[　｡。、？！「」'",.?!\s]/g, "");
+            var pone_clean_att = $('#id_pone_attempt').val().replace(/[　｡。、､？?！!「」｢｣'"`,.\s]/g, "");
+            var ptwo_clean_att = $('#id_ptwo_attempt').val().replace(/[　｡。、､？?！!「」｢｣'"`,.\s]/g, "");
             if ((pone_clean_att == $('#poneact').val()) && (ptwo_clean_att == $('#ptwoact').val())) {
                 processPractice(1);
             } else if ((pone_clean_att == $('#poneact').val()) && (ptwo_clean_att != $('#ptwoact').val())) {
@@ -150,8 +144,8 @@
                 processPractice(4);
             }
         } else {
-            var pone_clean_att = $('#id_pone_attempt').val().replace(/[　｡。、？！「」'",.?!\s]/g, "").split("");
-            var ptwo_clean_att = $('#id_ptwo_attempt').val().replace(/[　｡。、？！「」'",.?!\s]/g, "").split("");
+            var pone_clean_att = $('#id_pone_attempt').val().replace(/[　｡。、､？?！!「」｢｣'"`,.\s]/g, "").split("");
+            var ptwo_clean_att = $('#id_ptwo_attempt').val().replace(/[　｡。、､？?！!「」｢｣'"`,.\s]/g, "").split("");
             var pone_act_split = $('#poneact').val().split("");
             var ptwo_act_split = $('#ptwoact').val().split("");
             if ((wanakana.compare(pone_clean_att, pone_act_split)) && (wanakana.compare(ptwo_clean_att, ptwo_act_split))) {

@@ -7,31 +7,6 @@
 {% load static %}
 {% block content %}
 
-<script type='text/javascript'>
-    function getCookie(name) {
-        var cookieValue = null;
-        if (document.cookie && document.cookie != '') {
-            var cookies = document.cookie.split(';');
-            for (var i = 0; i < cookies.length; i++) {
-                var cookie = jQuery.trim(cookies[i]);       // Does this cookie string begin with the name we want?
-                if (cookie.substring(0, name.length + 1) == (name + '=')) {
-                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                    break;
-                }
-            }
-        }
-        return cookieValue;
-    }
-
-    $.ajaxSetup({
-        beforeSend: function(xhr, settings) {
-            if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
-                xhr.setRequestHeader('X-CSRFToken', getCookie('csrftoken'));    // Only send token to relative/local URLs
-            }
-        }
-    });
-</script>
-
 <div id='wrapper'>
 {% include 'demo/sidebar.html' %}
     <div class="fc-general-col">
@@ -40,7 +15,7 @@
                 <div class='s-30 visible-xs'></div>
                 <div id='sentence_eng' class='challenge-grammar'></div>
                 <div class='promptc'>
-                    <span id='sentence_hint' class='ls5r'></span>
+                    <span id='sentence_hint' class='ls5r'>&#8203;</span>
                 </div>
 
                 <form id='sentencequizform' action='' class='abox' method='post'>{% csrf_token %}
@@ -68,6 +43,8 @@
 
 <!-- wanakana, menu toggle, and get/post mechanics -->
 <script type='text/javascript' src='{% static 'js/wanakana.js' %}'></script>
+<script type='text/javascript' src='{% static 'js/cookiemonster.js' %}'></script>
+
 <script type='text/javascript'>
     var slevel = 3;
     var sindex = 0;
@@ -91,7 +68,7 @@
                 case 1:
                     $('#sentence_hint').html(data['kana_alt_blank']); break;
                 default:
-                    $('#sentence_hint').html(data['kana']); break;
+                    $('#sentence_hint').html(data['f_kana']); break;
             }
             $('#sentencequizform').removeClass('abox_g abox_r');
         } else {
@@ -103,19 +80,13 @@
 
     $('#sentencequizform').submit(function(event) {
         event.preventDefault();
-        var clean_attempt = $('#id_sentenceattempt').val().replace(/[　。、？！「」\'\",.?!\s]/g, "");
+        var clean_attempt = $('#id_sentenceattempt').val().replace(/[　｡。、､？?！!「」｢｣'"`,.\s]/g, "");
         if (clean_attempt == $('#sactual').val()) {
             $('#sentencequizform').attr('class', 'abox abox_g');
-            if (slevel == 3) {
-                sindex++;
-            } else {
-                slevel = 3;
-            }
+            if (slevel == 3) { sindex++; } else { slevel = 3; }
         } else {
             $('#sentencequizform').attr('class', 'abox_red abox_r');
-            if (slevel > 0) {
-                slevel--;
-            }
+            if (slevel > 0) { slevel--; }
         }
         $('#sentencequizform #sindex').val(sindex);
         var form_data = $('#sentencequizform').serialize();

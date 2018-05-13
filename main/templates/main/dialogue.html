@@ -26,7 +26,7 @@
                 <div id='context_one' class='context-container'></div>
                 <div id='dialogue_english' class='challenge-grammar'></div>
                 <div class='promptc'>
-                    <span id='dialogue_hint' class='ls5r'></span>
+                    <span id='dialogue_hint' class='ls5r'>&#8203;</span>
                     <a id="bug-button" href="#" tabindex="-1" style="display: none;">
                         <i id="report-issue" class="fa fa-bug red-words" aria-hidden="true"><span class="raleway">&nbsp;Error?</span></i>
                     </a>
@@ -92,11 +92,11 @@
             current_response = '#responsekana' + dialogue_index + '-' + response_index;
             current_name = '#dialoguename' + dialogue_index;
             $(current_name).html(data['prompt_name']);
-            $(current_prompt).html(data['prompt_kana']);
+            $(current_prompt).html(data['prompt_kana_f']);
             var topelement = document.getElementById("grammarholder");
             topelement.scrollIntoView();
             $('#dialogue_actual').val(data['responses'][response_index]['response_kana_clean']);
-            $('#dialogue_kana').val(data['responses'][response_index]['response_kana']);
+            $('#dialogue_kana').val(data['responses'][response_index]['response_kana_f']);
             $('#dialogue_english').html(data['responses'][response_index]['response_english']);
             if (data['responses'][response_index]['response_literal'].trim()) {
                 $('#literal_one').html('<div class="white-words litcontextbox upper">literal</div>' + data['responses'][response_index]['response_literal'] + '&#8203;');
@@ -119,7 +119,7 @@
                 case 1:
                     $('#dialogue_hint').html(data['responses'][response_index]['response_kana_alt_blank']); break;
                 case 0:
-                    $('#dialogue_hint').html(data['responses'][response_index]['response_kana']); break;
+                    $('#dialogue_hint').html(data['responses'][response_index]['response_kana_f']); break;
                 default:
                     $('#dialogue_hint').html('&#8203;'); break;
             }
@@ -140,7 +140,7 @@
 
     $('#dialogue_form').submit(function(event) {
         event.preventDefault();
-        var clean_attempt = $('#id_dialogue_attempt').val().replace(/[　｡。、？！「」'",.?!\s]/g, "");
+        var clean_attempt = $('#id_dialogue_attempt').val().replace(/[　｡。、､？?！!「」｢｣'"`,.\s]/g, "");
         if (clean_attempt == $('#dialogue_actual').val()) {
             $('#dialogue_form').attr('class', 'abox abox_g');
             $('#bug-button').hide();

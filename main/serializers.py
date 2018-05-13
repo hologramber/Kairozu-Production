@@ -5,7 +5,7 @@ from .models import Sentence, Practice, Vocabulary, VocabRecord, SentenceRecord,
 class VocabularySerializer(serializers.ModelSerializer):
     class Meta:
         model = Vocabulary
-        exclude = ('partofspeech',)
+        exclude = ('partofspeech','kana','kanji',)
 
 
 class VocabRecordSerializer(serializers.ModelSerializer):
@@ -20,7 +20,7 @@ class VocabRecordSerializer(serializers.ModelSerializer):
 class ExpressionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Expression
-        fields = '__all__'
+        exclude = ('kana','kanji',)
 
 
 class ExpressionRecordSerializer(serializers.ModelSerializer):
@@ -35,7 +35,7 @@ class ExpressionRecordSerializer(serializers.ModelSerializer):
 class SentenceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Sentence
-        fields = '__all__'
+        exclude = ('kana','kanji','disamb_location',)
 
 
 class SentenceRecordSerializer(serializers.ModelSerializer):
@@ -50,13 +50,13 @@ class SentenceRecordSerializer(serializers.ModelSerializer):
 class PracticeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Practice
-        fields = '__all__'
+        exclude = ('pone_kana','ptwo_kana','pone_kanji','ptwo_kanji','pone_disamb_location','ptwo_disamb_location','vieworder',)
 
 
 class ExerciseResponseSerializer(serializers.ModelSerializer):
     class Meta:
         model = ExerciseResponse
-        fields = '__all__'
+        exclude = ('response_order','response_kana','response_kanji','response_disamb_location',)
 
 
 class ExercisePromptSerializer(serializers.ModelSerializer):
@@ -70,4 +70,4 @@ class ExercisePromptSerializer(serializers.ModelSerializer):
 class ExerciseSentenceSerializer(serializers.ModelSerializer):
     class Meta:
         model = ExerciseSentence
-        fields = '__all__'
+        exclude = ('kana','kanji','disamb_location','display_order',)
