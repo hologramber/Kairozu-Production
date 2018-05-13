@@ -63,10 +63,17 @@ def all_blanks(kana):
 
 
 def hw_punctuation(hwtext):
-    hwtext = re.sub(r'<wbr>', '', hwtext)
     hwtext = re.sub(r'。', '｡　', hwtext)
     hwtext = re.sub(r'、[ 　]*', '､　', hwtext)
     hwtext = re.sub(r'[ 　]+', '　', hwtext)
+    hwtext = hwtext.rstrip()
+    return hwtext
+
+
+def hw_single(hwtext):
+    hwtext = re.sub(r'。', '｡ ', hwtext)
+    hwtext = re.sub(r'、[ 　]*', '､ ', hwtext)
+    hwtext = re.sub(r'[ 　]+', ' ', hwtext)
     hwtext = hwtext.rstrip()
     return hwtext
 
@@ -274,23 +281,25 @@ class Chapter(models.Model):
 
 class Expression(models.Model):
     chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE, blank=False, null=False)
-    english = models.CharField(max_length=250, unique=False, blank=False)
-    prompt = models.CharField(max_length=250, unique=False, blank=True)
-    literal = models.CharField(max_length=250, unique=False, blank=True)
+    english = models.CharField(max_length=250, blank=False)
+    prompt = models.CharField(max_length=250, blank=True)
+    literal = models.CharField(max_length=250, blank=True)
     katakana = models.BooleanField(default=False)
+    note = models.CharField(max_length=250, blank=True)
     kana = models.CharField(max_length=250, blank=False)
-    kana_clean = models.CharField(max_length=250, blank=True)
     kanji = models.CharField(max_length=250, unique=True, blank=False)
+    kana_clean = models.CharField(max_length=250, blank=True)
     kana_all_blank = models.CharField(max_length=250, blank=True)
     kana_alt_blank = models.CharField(max_length=250, blank=True)
-    note = models.CharField(max_length=250, blank=True)
+    f_kana = models.CharField(max_length=250, blank=True)
+    f_kanji = models.CharField(max_length=250, blank=True)
 
     def save(self, *args, **kwargs):
         self.kana = hw_punctuation(self.kana)
         self.kanji = hw_punctuation(self.kanji)
         self.kana_all_blank, self.kana_alt_blank, self.kana_clean = create_blanks(self.kana, 0, False)
-        self.kana = create_splits(self.kana)
-        self.kanji = create_splits(self.kanji)
+        self.f_kana = create_splits(self.kana)
+        self.f_kanji = create_splits(self.kanji)
         self.kana_all_blank = create_splits(self.kana_all_blank)
         self.kana_alt_blank = create_splits(self.kana_alt_blank)
         super(Expression, self).save(*args, **kwargs)
@@ -385,14 +394,16 @@ class ExpressionRecord(models.Model):
 
 class Vocabulary(models.Model):
     chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE, blank=False, null=False)
-    english = models.CharField(max_length=250, unique=False, blank=False)
+    english = models.CharField(max_length=250, blank=False)
     katakana = models.BooleanField(default=False)
+    note = models.CharField(max_length=250, blank=True)
     kana = models.CharField(max_length=250, blank=False)
-    kana_clean = models.CharField(max_length=250, blank=True)
     kanji = models.CharField(max_length=250, unique=True, blank=False)
+    kana_clean = models.CharField(max_length=250, blank=True)
     kana_all_blank = models.CharField(max_length=250, blank=True)
     kana_alt_blank = models.CharField(max_length=250, blank=True)
-    note = models.CharField(max_length=250, blank=True)
+    f_kana = models.CharField(max_length=250, blank=True)
+    f_kanji = models.CharField(max_length=250, blank=True)
 
     UNCLASSIFIED = 0
     NOUN = 1
@@ -461,8 +472,8 @@ class Vocabulary(models.Model):
             count += 1
         self.kana_alt_blank = alt_blank
         self.kana_clean = clean_sentence(self.kana)
-        self.kana = create_splits(self.kana)
-        self.kanji = create_splits(self.kanji)
+        self.f_kana = create_splits(self.kana)
+        self.f_kanji = create_splits(self.kanji)
         self.kana_alt_blank = create_splits(self.kana_alt_blank)
         self.kana_all_blank = create_splits(self.kana_all_blank)
         super(Vocabulary, self).save(*args, **kwargs)
@@ -500,7 +511,7 @@ class VocabRecord(models.Model):
     last_attempt = models.DateTimeField(default=timezone.now, blank=True)
     next_review = models.DateTimeField(null=True, blank=True)
     score = models.IntegerField(default=0)
-    rating = models.IntegerField(default=0)
+    rating = models.PositiveSmallIntegerField(default=0)
     objects = VocabRecordManager()
 
     class Meta:
@@ -562,14 +573,14 @@ class VocabRecord(models.Model):
 
 
 class Lesson(models.Model):
-    chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE)
+    chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE, blank=False, null=False)
     title = models.CharField(max_length=254, unique=True)
-    english = models.CharField(max_length=254, unique=True, blank=True)
-    f_english = models.CharField(max_length=254, blank=True)
-    hiragana = models.CharField(max_length=254, unique=True, blank=True)
-    f_hiragana = models.CharField(max_length=254, blank=True)
+    english = models.CharField(max_length=254, unique=True, blank=False)
+    hiragana = models.CharField(max_length=254, unique=True, blank=False)
     overview = models.TextField(blank=True)
     point_active = models.BooleanField(default=True)
+    f_english = models.CharField(max_length=254, blank=True)
+    f_hiragana = models.CharField(max_length=254, blank=True)
 
     def lesson_pieces(self):
         pieces_by_displayorder = Piece.objects.filter(lesson_id__in=[self.id]).select_subclasses().order_by('displayorder')
@@ -577,10 +588,10 @@ class Lesson(models.Model):
 
     def save(self, *args, **kwargs):
         self.hiragana = hw_punctuation(self.hiragana)
-        self.overview = hw_punctuation(self.overview)
+        self.overview = hw_single(self.overview)
         self.f_english = highlight(self.english, KairozuLexer(ensurenl=False), KairozuFormatter(style='kairozu'))
         self.f_hiragana = highlight(self.hiragana, KairozuLexer(ensurenl=False), KairozuFormatter(style='kairozu'))
-        
+        self.f_hiragana = create_splits(self.f_hiragana)
         super(Lesson, self).save(*args, **kwargs)
 
     def __str__(self):
@@ -591,7 +602,7 @@ class Lesson(models.Model):
 
 
 class PointTable(models.Model):
-    lesson = models.ForeignKey(Lesson, related_name='points', on_delete=models.CASCADE)
+    lesson = models.ForeignKey(Lesson, related_name='points', on_delete=models.CASCADE, blank=False, null=False)
     pointa = models.CharField(max_length=500, blank=True)
     pointb = models.CharField(max_length=500, blank=True)
     f_pointa = models.CharField(max_length=500, blank=True)
@@ -611,7 +622,7 @@ class PointTable(models.Model):
 
 
 class Piece(models.Model):
-    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE)
+    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, blank=False, null=False)
     displayorder = models.PositiveSmallIntegerField(default=0)
     objects = InheritanceManager()
 
@@ -649,7 +660,7 @@ class TwoTable(Piece):
 
 
 class TwoTableData(models.Model):
-    owner = models.ForeignKey(TwoTable, on_delete=models.CASCADE)
+    owner = models.ForeignKey(TwoTable, on_delete=models.CASCADE, blank=False, null=False)
     prea = models.CharField(max_length=254, blank=True)
     posta = models.CharField(max_length=254, blank=True)
     note = models.CharField(max_length=254, blank=True)
@@ -681,7 +692,7 @@ class FourTable(Piece):
 
 
 class FourTableData(models.Model):
-    owner = models.ForeignKey(FourTable, on_delete=models.CASCADE)
+    owner = models.ForeignKey(FourTable, on_delete=models.CASCADE, blank=False, null=False)
     prea = models.CharField(max_length=254, blank=True)
     preb = models.CharField(max_length=254, blank=True)
     prec = models.CharField(max_length=254, blank=True)
@@ -708,7 +719,7 @@ class FourTableData(models.Model):
         ordering = ['id']
 
 class Example(models.Model):
-    lesson = models.ForeignKey(Lesson, related_name='examples', on_delete=models.CASCADE)
+    lesson = models.ForeignKey(Lesson, related_name='examples', on_delete=models.CASCADE, blank=False, null=False)
     english = models.CharField(max_length=254, unique=True, blank=True)
     hiragana = models.CharField(max_length=254, unique=True, blank=True)
     f_english = models.CharField(max_length=512, blank=True)
@@ -716,36 +727,36 @@ class Example(models.Model):
 
     def save(self, *args, **kwargs):
         self.f_english = highlight(self.english, KairozuLexer(ensurenl=False), KairozuFormatter(style='kairozu'))
-        self.hiragana = hw_punctuation(self.hiragana)
+        self.hiragana = hw_single(self.hiragana)
         self.f_hiragana = highlight(self.hiragana, KairozuLexer(ensurenl=False), KairozuFormatter(style='kairozu'))
         super(Example, self).save(*args, **kwargs)
 
 
 class MoreInfo(models.Model):
-    lesson = models.ForeignKey(Lesson, related_name='moreinfos', on_delete=models.CASCADE)
+    lesson = models.ForeignKey(Lesson, related_name='moreinfos', on_delete=models.CASCADE, blank=False, null=False)
     text = models.TextField(blank=True)
 
 
 class InfoLink(models.Model):
-    lesson = models.ForeignKey(Lesson, related_name='infolinks', on_delete=models.CASCADE)
+    lesson = models.ForeignKey(Lesson, related_name='infolinks', on_delete=models.CASCADE, blank=False, null=False)
     linkname = models.CharField(max_length=50, unique=False, blank=True)
     linkurl = models.URLField(max_length=256, unique=False, blank=True)
     linkdesc = models.CharField(max_length=256, unique=False, blank=True)
 
 
 class Practice(models.Model):
-    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE)
+    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, blank=False, null=False)
     force_strict = models.PositiveSmallIntegerField(default=0)
-    pone_english = models.CharField(max_length=250, default='')
-    ptwo_english = models.CharField(max_length=250, default='')
-    pone_kana = models.CharField(max_length=250, default='')
-    ptwo_kana = models.CharField(max_length=250, default='')
-    pone_kanji = models.CharField(max_length=250, default='')
-    ptwo_kanji = models.CharField(max_length=250, default='')
-    pone_literal = models.CharField(max_length=250, default='', blank=True)
-    ptwo_literal = models.CharField(max_length=250, default='', blank=True)
-    pone_context = models.CharField(max_length=250, default='', blank=True)
-    ptwo_context = models.CharField(max_length=250, default='', blank=True)
+    pone_english = models.CharField(max_length=250, blank=False)
+    ptwo_english = models.CharField(max_length=250, blank=False)
+    pone_kana = models.CharField(max_length=250, blank=False)
+    ptwo_kana = models.CharField(max_length=250, blank=False)
+    pone_kanji = models.CharField(max_length=250, blank=False)
+    ptwo_kanji = models.CharField(max_length=250, blank=False)
+    pone_literal = models.CharField(max_length=250, blank=True)
+    ptwo_literal = models.CharField(max_length=250, blank=True)
+    pone_context = models.CharField(max_length=250, blank=True)
+    ptwo_context = models.CharField(max_length=250, blank=True)
     pone_disamb_location = models.PositiveSmallIntegerField(default=0)
     ptwo_disamb_location = models.PositiveSmallIntegerField(default=0)
     vieworder = models.PositiveSmallIntegerField(default=1)
@@ -755,6 +766,10 @@ class Practice(models.Model):
     ptwo_kana_all = models.CharField(max_length=250, blank=True)
     pone_kana_alt = models.CharField(max_length=250, blank=True)
     ptwo_kana_alt = models.CharField(max_length=250, blank=True)
+    pone_kana_f = models.CharField(max_length=250, blank=True)
+    ptwo_kana_f = models.CharField(max_length=250, blank=True)
+    pone_kanji_f = models.CharField(max_length=250, blank=True)
+    ptwo_kanji_f = models.CharField(max_length=250, blank=True)
 
     def save(self, *args, **kwargs):
         if '(' in self.pone_english:
@@ -768,12 +783,12 @@ class Practice(models.Model):
         self.ptwo_kanji = hw_punctuation(self.ptwo_kanji)
         self.pone_kana_all, self.pone_kana_alt, self.pone_kana_clean = create_blanks(self.pone_kana, self.pone_disamb_location, True)
         self.ptwo_kana_all, self.ptwo_kana_alt, self.ptwo_kana_clean = create_blanks(self.ptwo_kana, self.ptwo_disamb_location, False)
-        self.pone_kana = create_splits(self.pone_kana)
-        self.pone_kanji = create_splits(self.pone_kanji)
+        self.pone_kana_f = create_splits(self.pone_kana)
+        self.ptwo_kana_f = create_splits(self.ptwo_kana)
+        self.pone_kanji_f = create_splits(self.pone_kanji)
+        self.ptwo_kanji_f = create_splits(self.ptwo_kanji)
         self.pone_kana_all = create_splits(self.pone_kana_all)
         self.pone_kana_alt = create_splits(self.pone_kana_alt)
-        self.ptwo_kana = create_splits(self.ptwo_kana)
-        self.ptwo_kanji = create_splits(self.ptwo_kanji)
         self.ptwo_kana_all = create_splits(self.ptwo_kana_all)
         self.ptwo_kana_alt = create_splits(self.ptwo_kana_alt)
         super(Practice, self).save(*args, **kwargs)
@@ -783,7 +798,7 @@ class Practice(models.Model):
 
 
 class GrammarNote(models.Model):
-    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE)
+    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, blank=False, null=False)
     title = models.CharField(max_length=254, unique=True)
     notetext = models.TextField(blank=True)
 
@@ -795,7 +810,7 @@ class GrammarNote(models.Model):
 
 
 class Exercise(models.Model):
-    chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE)
+    chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE, blank=False, null=False)
     description = models.CharField(max_length=250, default='', blank=True)
     exercise_order = models.PositiveSmallIntegerField(default=1)
     EXERCISE_TYPE_CHOICES = Choices('passage', 'dialogue')
@@ -821,7 +836,7 @@ class Exercise(models.Model):
 
 
 class ExercisePiece(models.Model):
-    exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE)
+    exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE, blank=False, null=False)
     objects = InheritanceManager()
 
     class Meta:
@@ -830,15 +845,17 @@ class ExercisePiece(models.Model):
 
 class ExerciseSentence(ExercisePiece):
     display_order = models.PositiveSmallIntegerField(default=1)
-    english = models.CharField(max_length=250, default='')
-    kana = models.CharField(max_length=250, default='')
-    kanji = models.CharField(max_length=250, default='')
-    literal = models.CharField(max_length=250, default='', blank=True)
-    context = models.CharField(max_length=250, default='', blank=True)
+    english = models.CharField(max_length=250, blank=False)
+    kana = models.CharField(max_length=250, blank=False)
+    kanji = models.CharField(max_length=250, blank=False)
+    literal = models.CharField(max_length=250, blank=True)
+    context = models.CharField(max_length=250, blank=True)
     disamb_location = models.PositiveSmallIntegerField(default=0)
     kana_all_blank = models.CharField(max_length=250, blank=True)
     kana_alt_blank = models.CharField(max_length=250, blank=True)
     kana_clean = models.CharField(max_length=250, blank=True)
+    f_kana = models.CharField(max_length=250, blank=True)
+    f_kanji = models.CharField(max_length=250, blank=True)
 
     def save(self, *args, **kwargs):
         if '(' in self.english:
@@ -847,8 +864,8 @@ class ExerciseSentence(ExercisePiece):
         self.kana = hw_punctuation(self.kana)
         self.kanji = hw_punctuation(self.kanji)
         self.kana_all_blank, self.kana_alt_blank, self.kana_clean = create_blanks(self.kana, self.disamb_location, False)
-        self.kana = create_splits(self.kana)
-        self.kanji = create_splits(self.kanji)
+        self.f_kana = create_splits(self.kana)
+        self.f_kanji = create_splits(self.kanji)
         self.kana_alt_blank = create_splits(self.kana_alt_blank)
         self.kana_all_blank = create_splits(self.kana_all_blank)
         super(ExerciseSentence, self).save(*args, **kwargs)
@@ -858,13 +875,14 @@ class ExerciseSentence(ExercisePiece):
 
 
 class ExercisePrompt(ExercisePiece):
-    prompt_name = models.CharField(max_length=250, default='', blank=True)
+    prompt_name = models.CharField(max_length=250, blank=False)
     prompt_order = models.PositiveSmallIntegerField(default=1)
-    prompt_kana = models.CharField(max_length=250, default='')
+    prompt_kana = models.CharField(max_length=250, blank=False)
+    prompt_kana_f = models.CharField(max_length=250, blank=True)
 
     def save(self, *args, **kwargs):
         self.prompt_kana = hw_punctuation(self.prompt_kana)
-        self.prompt_kana = create_splits(self.prompt_kana)
+        self.prompt_kana_f = create_splits(self.prompt_kana)
         super(ExercisePrompt, self).save(*args, **kwargs)
 
     class Meta:
@@ -872,17 +890,19 @@ class ExercisePrompt(ExercisePiece):
 
 
 class ExerciseResponse(models.Model):
-    exercise_prompt = models.ForeignKey(ExercisePrompt, related_name='responses', on_delete=models.CASCADE)
+    exercise_prompt = models.ForeignKey(ExercisePrompt, related_name='responses', on_delete=models.CASCADE, blank=False, null=False)
     response_order = models.PositiveSmallIntegerField(default=1)
-    response_english = models.CharField(max_length=250, default='')
-    response_kana = models.CharField(max_length=250, default='')
-    response_kanji = models.CharField(max_length=250, default='')
-    response_literal = models.CharField(max_length=250, default='', blank=True)
-    response_context = models.CharField(max_length=250, default='', blank=True)
+    response_english = models.CharField(max_length=250, blank=False)
+    response_kana = models.CharField(max_length=250, blank=False)
+    response_kanji = models.CharField(max_length=250, blank=False)
+    response_literal = models.CharField(max_length=250, blank=True)
+    response_context = models.CharField(max_length=250, blank=True)
     response_disamb_location = models.PositiveSmallIntegerField(default=0)
     response_kana_all_blank = models.CharField(max_length=250, blank=True)
     response_kana_alt_blank = models.CharField(max_length=250, blank=True)
     response_kana_clean = models.CharField(max_length=250, blank=True)
+    response_kana_f = models.CharField(max_length=250, blank=True)
+    response_kanji_f = models.CharField(max_length=250, blank=True)
 
     class Meta:
         ordering = ['exercise_prompt', 'response_order']
@@ -894,8 +914,8 @@ class ExerciseResponse(models.Model):
         self.response_kana = hw_punctuation(self.response_kana)
         self.response_kanji = hw_punctuation(self.response_kanji)
         self.response_kana_all_blank, self.response_kana_alt_blank, self.response_kana_clean = create_blanks(self.response_kana, self.response_disamb_location, False)
-        self.response_kana = create_splits(self.response_kana)
-        self.response_kanji = create_splits(self.response_kanji)
+        self.response_kana_f = create_splits(self.response_kana)
+        self.response_kanji_f = create_splits(self.response_kanji)
         self.response_kana_alt_blank = create_splits(self.response_kana_alt_blank)
         self.response_kana_all_blank = create_splits(self.response_kana_all_blank)
         super(ExerciseResponse, self).save(*args, **kwargs)
@@ -924,7 +944,7 @@ class ExerciseRecord(models.Model):
     exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE, blank=False, null=False)
     last_attempt = models.DateTimeField(null=True, blank=True)
     score = models.FloatField(default=0.0)
-    rating = models.IntegerField(default=0)
+    rating = models.PositiveSmallIntegerField(default=0)
     objects = ExerciseRecordManager()
 
     class Meta:
@@ -957,17 +977,19 @@ class ExerciseRecord(models.Model):
 
 
 class Sentence(models.Model):
-    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE)
+    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, blank=False, null=False)
     force_strict = models.PositiveSmallIntegerField(default=0)
-    english = models.CharField(max_length=250, default='')
-    kana = models.CharField(max_length=250, default='')
-    kanji = models.CharField(max_length=250, default='')
-    literal = models.CharField(max_length=250, default='', blank=True)
-    context = models.CharField(max_length=250, default='', blank=True)
+    english = models.CharField(max_length=250, blank=False)
+    kana = models.CharField(max_length=250, blank=False)
+    kanji = models.CharField(max_length=250, blank=False)
+    literal = models.CharField(max_length=250, blank=True)
+    context = models.CharField(max_length=250, blank=True)
     disamb_location = models.PositiveSmallIntegerField(default=0)
     kana_all_blank = models.CharField(max_length=250, blank=True)
     kana_alt_blank = models.CharField(max_length=250, blank=True)
     kana_clean = models.CharField(max_length=250, blank=True)
+    f_kana = models.CharField(max_length=250, blank=True)
+    f_kanji = models.CharField(max_length=250, blank=True)
 
     def save(self, *args, **kwargs):
         if '(' in self.english:
@@ -976,8 +998,8 @@ class Sentence(models.Model):
         self.kana = hw_punctuation(self.kana)
         self.kanji = hw_punctuation(self.kanji)
         self.kana_all_blank, self.kana_alt_blank, self.kana_clean = create_blanks(self.kana, self.disamb_location, False)
-        self.kana = create_splits(self.kana)
-        self.kanji = create_splits(self.kanji)
+        self.f_kana = create_splits(self.kana)
+        self.f_kanji = create_splits(self.kanji)
         self.kana_all_blank = create_splits(self.kana_all_blank)
         self.kana_alt_blank = create_splits(self.kana_alt_blank)
         super(Sentence, self).save(*args, **kwargs)
