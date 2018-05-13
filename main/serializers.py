@@ -50,13 +50,13 @@ class SentenceRecordSerializer(serializers.ModelSerializer):
 class PracticeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Practice
-        exclude = ('pone_kana','ptwo_kana','pone_kanji','ptwo_kanji','pone_disamb_location','ptwo_disamb_location','vieworder',)
+        exclude = ('pone_kana','ptwo_kana','pone_kanji','ptwo_kanji','vieworder',)
 
 
 class ExerciseResponseSerializer(serializers.ModelSerializer):
     class Meta:
         model = ExerciseResponse
-        exclude = ('response_order','response_kana','response_kanji','response_disamb_location',)
+        exclude = ('response_order','response_kana','response_kanji',)
 
 
 class ExercisePromptSerializer(serializers.ModelSerializer):
@@ -70,4 +70,4 @@ class ExercisePromptSerializer(serializers.ModelSerializer):
 class ExerciseSentenceSerializer(serializers.ModelSerializer):
     class Meta:
         model = ExerciseSentence
-        exclude = ('kana','kanji','disamb_location','display_order',)
+        exclude = ('kana','kanji','display_order',)
