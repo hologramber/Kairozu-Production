@@ -1,5 +1,6 @@
 import re
 from main.models import Vocabulary
+from main.models import Expression
 from main.models import Sentence
 from main.models import Practice
 from main.models import Lesson
@@ -9,6 +10,7 @@ from main.models import ExerciseResponse
 from main.models import Example
 
 words = Vocabulary.objects.all()
+express = Expression.objects.all()
 sentences = Sentence.objects.all()
 practices = Practice.objects.all()
 lessons = Lesson.objects.all()
@@ -25,6 +27,9 @@ for word in words:
     # expression.kanji = re.sub('、[ 　]*', '､ ', expression.kanji)
     # expression.kanji = re.sub(r'[ 　]+', ' ', expression.kanji)
     word.save()
+
+for expression in express:
+    expression.save()
 
 for sentence in sentences:
     sentence.save()
