@@ -35,7 +35,7 @@ class ExpressionRecordSerializer(serializers.ModelSerializer):
 class SentenceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Sentence
-        exclude = ('kana','kanji','disamb_location',)
+        exclude = ('kana','kanji',)
 
 
 class SentenceRecordSerializer(serializers.ModelSerializer):

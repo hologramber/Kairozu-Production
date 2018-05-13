@@ -12,11 +12,11 @@
     <div class="fc-basic">
         <div id='vocabholder'>
             <div id='vfield'>
-                <div id='literal_one' class='vocab-note text-align-center'></div>
+                <div id='literal_one' class='vocab-note text-align-center'>&#8203;</div>
                 <div id='vocab_english' class='vocab-challenge text-align-center'></div>
 
-                <div class='vocab-promptc text-align-center wordsp0-5'>
-                    <span id='hint_block' class='ls5r'>&#8203;</span>
+                <div class='vocab-promptc text-align-center'>
+                    <span id='hint_block' class='ls5'>&#8203;</span>
                 </div>
 
                 <form id='vocabquizform' action='' method='post' class='abox'>{% csrf_token %}
@@ -46,7 +46,7 @@
 <script type='text/javascript' src='{% static 'js/cookiemonster.js' %}'></script>
 
 <script type='text/javascript'>
-    var vlevel = 3;
+    var vlevel = 2;
     var vindex = 0;
     var input = document.getElementById('id_vocabattempt');
     wanakana.bind(input);
@@ -56,8 +56,6 @@
             $('#vocab_english').html(data['english']);
             $('#vocabquizform #vactual').val(data['kana_clean']);
             switch(vlevel) {
-                case 3:
-                    $('#hint_block').html('&#8203;'); break;
                 case 2:
                     $('#hint_block').html(data['kana_all_blank']); break;
                 case 1:
@@ -77,10 +75,12 @@
         var clean_attempt = $('#id_vocabattempt').val().replace(/[　｡。、､？?！!「」｢｣'"`,.\s]/g, "");
         if (clean_attempt == $('#vactual').val()) {
             $('#vocabquizform').attr('class', 'abox abox_g');
-            if (vlevel == 3) { vindex++; } else { vlevel = 3; }
+            if (vlevel == 2) { vindex++; } else { vlevel = 2; }
+            $('#hint_block').attr('class', 'ls5');
         } else {
             $('#vocabquizform').attr('class', 'abox_red abox_r');
             if (vlevel > 0) { vlevel--; }
+            $('#hint_block').attr('class', 'ls5r');
         }
         $('#vocabquizform #vindex').val(vindex);
         var form_data = $('#vocabquizform').serialize();
