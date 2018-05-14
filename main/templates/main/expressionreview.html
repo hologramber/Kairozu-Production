@@ -54,8 +54,10 @@
 <script type='text/javascript' src='{% static 'js/cookiemonster.js' %}'></script>
 
 <script type='text/javascript'>
-    var elevel = 2;
-    var expressioncode = 'A';
+    var elevel = 2,
+        expressioncode = 'A';
+    var $hint_block = $('#hint_block'),
+        $expressionquizform = $('#expressionquizform');
     var input = document.getElementById('id_expressionattempt');
     wanakana.bind(input);
 
@@ -73,13 +75,13 @@
             $("#reflink").attr("href", '/main/chapter/' + data['express']['chapter'] + '/expressionlist/');
             switch(elevel) {
                 case 2:
-                    $('#hint_block').html(data['express']['kana_all_blank']); break;
+                    $hint_block.html(data['express']['kana_all_blank']); break;
                 case 1:
-                    $('#hint_block').html(data['express']['kana_alt_blank']); break;
+                    $hint_block.html(data['express']['kana_alt_blank']); break;
                 default:
-                    $('#hint_block').html(data['express']['f_kana']); break;
+                    $hint_block.html(data['express']['f_kana']); break;
             }
-            $('#expressionquizform').removeClass('abox_g abox_r');
+            $expressionquizform.removeClass('abox_g abox_r');
             if (data['express']['katakana'] == true) {
                 $('#katakana-tips').show();
             } else {
@@ -97,11 +99,11 @@
             });            
         }
     }
-    $('#expressionquizform').submit(function(event) {
+    $expressionquizform.submit(function(event) {
         event.preventDefault();
         var clean_attempt = $('#id_expressionattempt').val().replace(/[　｡。、､？?！!「」｢｣'"`,.\s]/g, "");
         if (clean_attempt == $('#eactual').val()) {
-            $('#expressionquizform').attr('class', 'abox abox_g');
+            $expressionquizform.attr('class', 'abox abox_g');
             $('#bug-button').hide();
             if (elevel == 2) {
                 expressioncode = 'C';
@@ -109,18 +111,18 @@
                 elevel = 2;
                 expressioncode = 'N';
             }
-            $('#hint_block').attr('class', 'ls5');
+            $hint_block.attr('class', 'ls5');
         } else {
-            $('#expressionquizform').attr('class', 'abox_red abox_r');
+            $expressionquizform.attr('class', 'abox_red abox_r');
             $('#bug-button').show();
             if (elevel == 2) { expressioncode = 'I'; } else { expressioncode = 'A'; }
             if (elevel > 0) { elevel--; }
-            $('#hint_block').attr('class', 'ls5r');
+            $hint_block.attr('class', 'ls5r');
         }
         $('#ecode').val(expressioncode);
-        var form_data = $('#expressionquizform').serialize();
+        var form_data = $expressionquizform.serialize();
         $.post("{% url 'main:reviewexpressioncheck' %}", form_data).done(function(data) {
-            $('#expressionquizform')[0].reset();
+            $expressionquizform[0].reset();
             expressionNext(data);
         });
     });

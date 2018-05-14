@@ -27,8 +27,10 @@
 <script type='text/javascript' src='{% static 'js/cookiemonster.js' %}'></script>
 
 <script type='text/javascript'>
-    var vlevel = 3;
-    var vocabcode = 'A';
+    var vlevel = 3,
+        vocabcode = 'A';
+    var $hint_block = $('#hint_block'),
+        $vocabquizform = $('#vocabquizform');
     var input = document.getElementById('id_vocabattempt');
     wanakana.bind(input);
 
@@ -41,15 +43,15 @@
             $("#reflink").attr("href", '/main/chapter/' + data['vocab']['chapter'] + '/vocablist/');
             switch(vlevel) {
                 case 3:
-                    $('#hint_block').html('&#8203;'); break;
+                    $hint_block.html('&#8203;'); break;
                 case 2:
-                    $('#hint_block').html(data['vocab']['kana_all_blank']); break;
+                    $hint_block.html(data['vocab']['kana_all_blank']); break;
                 case 1:
-                    $('#hint_block').html(data['vocab']['kana_alt_blank']); break;
+                    $hint_block.html(data['vocab']['kana_alt_blank']); break;
                 default:
-                    $('#hint_block').html(data['vocab']['f_kana']); break;
+                    $hint_block.html(data['vocab']['f_kana']); break;
             }
-            $('#vocabquizform').removeClass('abox_g abox_r');
+            $vocabquizform.removeClass('abox_g abox_r');
             if (data['vocab']['katakana'] == true) {
                 $('#katakana-tips').show();
             } else {
@@ -61,11 +63,11 @@
             });            
         }
     }
-    $('#vocabquizform').submit(function(event) {
+    $vocabquizform.submit(function(event) {
         event.preventDefault();
         var clean_attempt = $('#id_vocabattempt').val().replace(/[　｡。、､？?！!「」｢｣'"`,.\s]/g, "");
         if (clean_attempt == $('#vactual').val()) {
-            $('#vocabquizform').attr('class', 'abox abox_g');
+            $vocabquizform.attr('class', 'abox abox_g');
             $('#bug-button').hide();
             if (vlevel == 3) {
                 vocabcode = 'C';
@@ -74,15 +76,15 @@
                 vocabcode = 'N';
             }
         } else {
-            $('#vocabquizform').attr('class', 'abox_red abox_r');
+            $vocabquizform.attr('class', 'abox_red abox_r');
             $('#bug-button').show();
             if (vlevel == 3) { vocabcode = 'I'; } else { vocabcode = 'A'; }
             if (vlevel > 0) { vlevel--; }
         }
         $('#vcode').val(vocabcode);
-        var form_data = $('#vocabquizform').serialize();
+        var form_data = $vocabquizform.serialize();
         $.post("{% url 'main:reviewvocabcheck' %}", form_data).done(function(data) {
-            $('#vocabquizform')[0].reset();
+            $vocabquizform[0].reset();
             vocabNext(data);
         });
     });

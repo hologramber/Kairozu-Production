@@ -54,14 +54,15 @@
 <script type='text/javascript' src='{% static 'js/wanakana.js' %}'></script>
 <script type='text/javascript' src='{% static 'js/cookiemonster.js' %}'></script>
 <script type='text/javascript'>
-    var passage_level = 3;
-    var passage_index = 0;
-    var current_passage = '';
-    var currentline = '';
-    var totalinputs = 0;
-    var incorrectinputs = 0;
-    var nextstep = 1;
-    var newlywrong = 0;
+    var passage_level = 3,
+        passage_index = 0,
+        current_passage = '',
+        currentline = '',
+        totalinputs = 0,
+        incorrectinputs = 0,
+        nextstep = 1,
+        newlywrong = 0;
+    var $passagehint = $('#passage_hint');
     var input = document.getElementById('id_passageattempt');
     wanakana.bind(input);
 
@@ -80,19 +81,19 @@
             switch (passage_level) {
                 case 3:
                     if (data['disamb_location'] != 0) {
-                        $('#passage_hint').html(data['kana_all_blank']);
-                        $('#passage_hint').addClass('ls5y');
+                        $passagehint.html(data['kana_all_blank']);
+                        $passagehint.addClass('ls5y');
                     } else {
-                        $('#passage_hint').html('&#8203;');
+                        $passagehint.html('&#8203;');
                     } break;
                 case 2:
-                    $('#passage_hint').html(data['kana_all_blank']);
-                    $('#passage_hint').removeClass('ls5y');
+                    $passagehint.html(data['kana_all_blank']);
+                    $passagehint.removeClass('ls5y');
                     break;
                 case 1:
-                    $('#passage_hint').html(data['kana_alt_blank']); break;
+                    $passagehint.html(data['kana_alt_blank']); break;
                 default:
-                    $('#passage_hint').html(data['f_kana']); break;
+                    $passagehint.html(data['f_kana']); break;
             }
             currentline = '#sentence' + data['id'];
             $(currentline).attr('class', 'green-words-bold');

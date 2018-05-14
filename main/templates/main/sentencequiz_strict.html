@@ -14,16 +14,18 @@
 <script type='text/javascript' src='{% static 'js/cookiemonster.js' %}'></script>
 
 <script type='text/javascript'>
-    var slevel = 3;
-    var sentencecode = 'A';
+    var slevel = 3,
+        sentencecode = 'A';
+    var $sentencequizform = $('#sentencequizform'),
+        $sentencehint = $('#sentence_hint');
     var input = document.getElementById('id_sentenceattempt');
     wanakana.bind(input);
 
     function sentenceNext(data) {
         if (data['id'] != null) {
             $('#sentence_eng').html(data['sentence']['english']);
-            $('#sentencequizform #sactual').val(data['sentence']['kana_clean']);
-            $('#sentencequizform #sid').val(data['id']);
+            $('#sactual').val(data['sentence']['kana_clean']);
+            $('#sid').val(data['id']);
             if (data['sentence']['literal'].trim()) {
                 $('#literal_one').html('<div class="white-words litcontextbox upper">literal</div>' + data['sentence']['literal'] + '&#8203;');
             } else {
@@ -33,21 +35,21 @@
             switch (slevel) {
                 case 3:
                     if (data['sentence']['disamb_location'] != 0) {
-                        $('#sentence_hint').html(data['sentence']['kana_all_blank']);
-                        $('#sentence_hint').addClass('ls5y');
+                        $sentencehint.html(data['sentence']['kana_all_blank']);
+                        $sentencehint.addClass('ls5y');
                     } else {
-                        $('#sentence_hint').html('&#8203;');
+                        $sentencehint.html('&#8203;');
                     } break;
                 case 2:
-                    $('#sentence_hint').html(data['sentence']['kana_all_blank']);
-                    $('#sentence_hint').removeClass('ls5y');
+                    $sentencehint.html(data['sentence']['kana_all_blank']);
+                    $sentencehint.removeClass('ls5y');
                     break;
                 case 1:
-                    $('#sentence_hint').html(data['sentence']['kana_alt_blank']); break;
+                    $sentencehint.html(data['sentence']['kana_alt_blank']); break;
                 default:
-                    $('#sentence_hint').html(data['sentence']['f_kana']); break;
+                    $sentencehint.html(data['sentence']['f_kana']); break;
             }
-            $('#sentencequizform').removeClass('abox_g abox_r');
+            $sentencequizform.removeClass('abox_g abox_r');
         } else {
             $.get("{% url 'main:sentencesuccess' lesson.id %}").done(function (data) {
                 $('#wrapper').html(data);
@@ -55,12 +57,12 @@
         }
     }
 
-    $('#sentencequizform').submit(function(event) {
+    $sentencequizform.submit(function(event) {
         event.preventDefault();
         var clean_attempt = $('#id_sentenceattempt').val().replace(/[　｡。、､？?！!「」｢｣'"`,.\s]/g, "");
         if (clean_attempt == $('#sactual').val()) {
             $('#bug-button').hide();
-            $('#sentencequizform').attr('class', 'abox abox_g');
+            $sentencequizform.attr('class', 'abox abox_g');
             if (slevel == 3) {
                 sentencecode = 'C';
             } else {
@@ -69,14 +71,14 @@
             }
         } else {
             $('#bug-button').show();
-            $('#sentencequizform').attr('class', 'abox_red abox_r');
+            $sentencequizform.attr('class', 'abox_red abox_r');
             if (slevel == 3) { sentencecode = 'I'; } else { sentencecode = 'A'; }
             if (slevel > 0) { slevel--; }
         }
         $('#scode').val(sentencecode);
-        var form_data = $('#sentencequizform').serialize();
+        var form_data = $sentencequizform.serialize();
         $.post("{% url 'main:sentencecheck' lesson.id %}", form_data).done(function(data) {
-            $('#sentencequizform')[0].reset();
+            $sentencequizform[0].reset();
             sentenceNext(data);
         });
     });

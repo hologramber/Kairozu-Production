@@ -1426,10 +1426,6 @@ span.step {
 	.pass-e { line-height: 26px; }
 	.pass-j { line-height: 20px; }
 
-    .modal-content {
-        width: auto;
-        margin: 20% 20px 10px 20px; }
-
     .table-responsive {
         width: 100%;
         -ms-overflow-style: -ms-autohiding-scrollbar; }
