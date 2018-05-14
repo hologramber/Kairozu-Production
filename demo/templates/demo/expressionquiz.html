@@ -43,7 +43,7 @@
 
 <!-- wanakana, menu toggle, and get/post mechanics -->
 <script type='text/javascript' src='{% static 'js/wanakana.js' %}'></script>
-<script type='text/javascript' src='{% static 'js/kairozu-util.js' %}'></script>
+<script type='text/javascript' src='{% static 'js/kairozu-demo.js' %}'></script>
 
 <script type='text/javascript'>
     var vlevel = 2,
@@ -51,25 +51,6 @@
     var input = document.getElementById('id_vocabattempt');
     wanakana.bind(input);
 
-    function vocabNext(data) {
-        if (data['id'] != null) {
-            $('#vocab_english').html(data['english']);
-            $('#vocabquizform #vactual').val(data['kana_clean']);
-            switch(vlevel) {
-                case 2:
-                    $('#hint_block').html(data['kana_all_blank']); break;
-                case 1:
-                    $('#hint_block').html(data['kana_alt_blank']); break;
-                default:
-                    $('#hint_block').html(data['f_kana']); break;
-            }
-            $('#vocabquizform').removeClass('abox_g abox_r');
-        } else {
-            $.get("{% url 'demo:demoexpressionsuccess' %}").done(function (data) {
-                $('#wrapper').html(data);
-            });            
-        }
-    }
     $('#vocabquizform').submit(function(event) {
         event.preventDefault();
         var clean_attempt = cleanInput($('#id_vocabattempt').val());
@@ -82,19 +63,18 @@
             if (vlevel > 0) { vlevel--; }
             $('#hint_block').attr('class', 'ls5r');
         }
-        $('#vocabquizform #vindex').val(vindex);
+        $('#vindex').val(vindex);
         var form_data = $('#vocabquizform').serialize();
         $.post("{% url 'demo:demoexpressioncheck' %}", form_data).done(function(data) {
             $('#vocabquizform')[0].reset();
-            vocabNext(data);
+            expressionNextDemo(data);
         });
     });
 
     $(document).ready(function() {
         var urlstring = "/demo/expressionquiz/grab/0";
         $.get(urlstring).done(function (data) {
-            vocabNext(data);
-            $('#id_vocabattempt').focus();
+            expressionNextDemo(data);
         });
     });
 </script>

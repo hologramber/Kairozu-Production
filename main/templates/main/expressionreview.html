@@ -56,49 +56,11 @@
 <script type='text/javascript'>
     var elevel = 2,
         expressioncode = 'A';
-    var $hint_block = $('#hint_block'),
-        $expressionquizform = $('#expressionquizform');
+    var $expressionquizform = $('#expressionquizform');
+    var $hint_block = $('#hint_block');
     var input = document.getElementById('id_expressionattempt');
     wanakana.bind(input);
 
-    function expressionNext(data) {
-        if (data['id'] != null) {
-            $('#literal_note').html('&#8203;' + data['express']['note'] + '&#8203;');
-            $('#expression_english').html(data['express']['english']);
-            $('#eactual').val(data['express']['kana_clean']);
-            $('#eid').val(data['id']);
-            if (data['express']['literal'].trim()) {
-                $('#literal_one').html('<div class="white-words litcontextbox upper">literal</div>' + data['express']['literal'] + '&#8203;');
-            } else {
-                $('#literal_one').html('&#8203;');
-            }
-            $("#reflink").attr("href", '/main/chapter/' + data['express']['chapter'] + '/expressionlist/');
-            switch(elevel) {
-                case 2:
-                    $hint_block.html(data['express']['kana_all_blank']); break;
-                case 1:
-                    $hint_block.html(data['express']['kana_alt_blank']); break;
-                default:
-                    $hint_block.html(data['express']['f_kana']); break;
-            }
-            $expressionquizform.removeClass('abox_g abox_r');
-            if (data['express']['katakana'] == true) {
-                $('#katakana-tips').show();
-            } else {
-                $('#katakana-tips').hide();
-            }
-            if (data['express']['prompt']) {
-                $('#expression-example').show();
-                $('#prompt-text').html('Example: ' + data['express']['prompt']);
-            } else {
-                $('#expression-example').hide();
-            }
-        } else {
-            $.get("{% url 'main:reviewexpressioncurrent' %}").done(function (data) {
-                $('#allwrap').html(data);
-            });            
-        }
-    }
     $expressionquizform.submit(function(event) {
         event.preventDefault();
         var clean_attempt = cleanInput($('#id_expressionattempt').val());
@@ -123,13 +85,13 @@
         var form_data = $expressionquizform.serialize();
         $.post("{% url 'main:reviewexpressioncheck' %}", form_data).done(function(data) {
             $expressionquizform[0].reset();
-            expressionNext(data);
+            expressionNext(data, 'ereview');
         });
     });
 
     $(document).ready(function() {
         $.get("{% url 'main:reviewexpressiongrab' %}").done(function (data) {
-            expressionNext(data);
+            expressionNext(data, 'ereview');
         });
     });
 </script>

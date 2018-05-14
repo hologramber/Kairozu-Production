@@ -106,3 +106,6 @@ class DemoPractice(models.Model):
         self.ptwo_kana_all = create_splits(self.ptwo_kana_all)
         self.ptwo_kana_alt = create_splits(self.ptwo_kana_alt)
         super(DemoPractice, self).save(*args, **kwargs)
+
+    class Meta:
+        ordering = ['vieworder']

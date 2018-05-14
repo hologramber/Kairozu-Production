@@ -32,45 +32,16 @@
 <script type='text/javascript'>
     var vlevel = 3,
         vocabcode = 'A';
-    var $hint_block = $('#hint_block'),
-        $vocabquizform = $('#vocabquizform');
+    var $vocabquizform = $('#vocabquizform');
     var input = document.getElementById('id_vocabattempt');
     wanakana.bind(input);
 
-    function vocabNext(data) {
-        if (data['id'] != null) {
-            $('#literal_one').html('&#8203;' + data['vocab']['note'] + '&#8203;');
-            $('#vocab_english').html(data['vocab']['english']);
-            $('#vactual').val(data['vocab']['kana_clean']);
-            $('#vid').val(data['id']);
-            switch(vlevel) {
-                case 3:
-                    $hint_block.html('&#8203;'); break;
-                case 2:
-                    $hint_block.html(data['vocab']['kana_all_blank']); break;
-                case 1:
-                    $hint_block.html(data['vocab']['kana_alt_blank']); break;
-                default:
-                    $hint_block.html(data['vocab']['f_kana']); break;
-            }
-            $vocabquizform.removeClass('abox_g abox_r');
-            if (data['vocab']['katakana'] == true) {
-                $('#katakana-tips').show();
-            } else {
-                $('#katakana-tips').hide();
-            }
-        } else {
-            $.get("{% url 'main:vocabsuccess' chapter.id %}").done(function (data) {
-                $('#wrapper').html(data);
-            });
-        }
-    }
     $vocabquizform.submit(function(event) {
         event.preventDefault();
         var clean_attempt = cleanInput($('#id_vocabattempt').val());
         if (clean_attempt == $('#vactual').val()) {
-            $('#bug-button').hide();
             $vocabquizform.attr('class', 'abox abox_g');
+            $('#bug-button').hide();
             if (vlevel == 3) {
                 vocabcode = 'C';
             } else {
@@ -78,8 +49,8 @@
                 vocabcode = 'N';
             }
         } else {
-            $('#bug-button').show();
             $vocabquizform.attr('class', 'abox_red abox_r');
+            $('#bug-button').show();
             if (vlevel == 3) { vocabcode = 'I'; } else { vocabcode = 'A'; }
             if (vlevel > 0) { vlevel--; }
         }
@@ -87,15 +58,16 @@
         var form_data = $vocabquizform.serialize();
         $.post("{% url 'main:vocabcheck' chapter.id %}", form_data).done(function(data) {
             $vocabquizform[0].reset();
-            vocabNext(data);
+            vocabNext(data, 'vquiz');
         });
     });
 
     $(document).ready(function() {
         $.get("{% url 'main:vocabgrab' chapter.id %}").done(function (data) {
-            vocabNext(data);
+            vocabNext(data, 'vquiz');
         });
     });
+
 </script>
 
 {% endblock %}

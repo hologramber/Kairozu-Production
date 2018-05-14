@@ -16,46 +16,9 @@
 <script type='text/javascript'>
     var slevel = 3,
         sentencecode = 'A';
-    var $sentencequizform = $('#sentencequizform'),
-        $sentencehint = $('#sentence_hint');
+    var $sentencequizform = $('#sentencequizform');
     var input = document.getElementById('id_sentenceattempt');
     wanakana.bind(input);
-
-    function sentenceNext(data) {
-        if (data['id'] != null) {
-            $('#sentence_eng').html(data['sentence']['english']);
-            $('#sactual').val(data['sentence']['kana_clean']);
-            $('#sid').val(data['id']);
-            if (data['sentence']['literal'].trim()) {
-                $('#literal_one').html('<div class="white-words litcontextbox upper">literal</div>' + data['sentence']['literal'] + '&#8203;');
-            } else {
-                $('#literal_one').html('&#8203;');
-            }
-            $('#context_one').html(data['sentence']['context'] + '&#8203;');
-            switch (slevel) {
-                case 3:
-                    if (data['sentence']['disamb_location'] != 0) {
-                        $sentencehint.html(data['sentence']['kana_all_blank']);
-                        $sentencehint.addClass('ls5y');
-                    } else {
-                        $sentencehint.html('&#8203;');
-                    } break;
-                case 2:
-                    $sentencehint.html(data['sentence']['kana_all_blank']);
-                    $sentencehint.removeClass('ls5y');
-                    break;
-                case 1:
-                    $sentencehint.html(data['sentence']['kana_alt_blank']); break;
-                default:
-                    $sentencehint.html(data['sentence']['f_kana']); break;
-            }
-            $sentencequizform.removeClass('abox_g abox_r');
-        } else {
-            $.get("{% url 'main:sentencesuccess' lesson.id %}").done(function (data) {
-                $('#wrapper').html(data);
-            });
-        }
-    }
 
     $sentencequizform.submit(function(event) {
         event.preventDefault();
@@ -79,13 +42,13 @@
         var form_data = $sentencequizform.serialize();
         $.post("{% url 'main:sentencecheck' lesson.id %}", form_data).done(function(data) {
             $sentencequizform[0].reset();
-            sentenceNext(data);
+            sentenceNext(data, 'squiz');
         });
     });
 
     $(document).ready(function() {
         $.get("{% url 'main:sentencegrab' lesson.id %}").done(function (data) {
-            sentenceNext(data);
+            sentenceNext(data, 'squiz');
         });
     });
 </script>
