@@ -23,7 +23,7 @@
     wanakana.bind(input2);
 
     function practiceNext(data) {
-        if (data['vieworder'] != null) {
+        if (data['pone_english'] != null) {
             $('#practice_eng_one').html(data['pone_english']);
             $('#practice_eng_two').html(data['ptwo_english']);
             $('#pstrict').val(data['force_strict']);

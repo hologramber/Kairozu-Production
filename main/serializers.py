@@ -10,7 +10,7 @@ class VocabularySerializer(serializers.ModelSerializer):
 
 class VocabRecordSerializer(serializers.ModelSerializer):
     user = serializers.StringRelatedField()
-    vocab = VocabularySerializer()
+    vocab = VocabularySerializer(read_only=True)
 
     class Meta:
         model = VocabRecord
@@ -25,7 +25,7 @@ class ExpressionSerializer(serializers.ModelSerializer):
 
 class ExpressionRecordSerializer(serializers.ModelSerializer):
     user = serializers.StringRelatedField()
-    express = ExpressionSerializer()
+    express = ExpressionSerializer(read_only=True)
 
     class Meta:
         model = ExpressionRecord
@@ -40,7 +40,7 @@ class SentenceSerializer(serializers.ModelSerializer):
 
 class SentenceRecordSerializer(serializers.ModelSerializer):
     user = serializers.StringRelatedField()
-    sentence = SentenceSerializer()
+    sentence = SentenceSerializer(read_only=True)
 
     class Meta:
         model = SentenceRecord
@@ -50,7 +50,7 @@ class SentenceRecordSerializer(serializers.ModelSerializer):
 class PracticeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Practice
-        fields = '__all__'
+        exclude = ('pone_kana','ptwo_kana','pone_kanji','ptwo_kanji',)
 
 
 class ExerciseResponseSerializer(serializers.ModelSerializer):
@@ -64,7 +64,7 @@ class ExercisePromptSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ExercisePrompt
-        fields = '__all__'
+        exclude = ('prompt_kana',)
 
 
 class ExerciseSentenceSerializer(serializers.ModelSerializer):
