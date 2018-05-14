@@ -52,7 +52,8 @@
 
 <!-- wanakana, menu toggle, and get/post mechanics -->
 <script type='text/javascript' src='{% static 'js/wanakana.js' %}'></script>
-<script type='text/javascript' src='{% static 'js/cookiemonster.js' %}'></script>
+<script type='text/javascript' src='{% static 'js/kairozu-util.js' %}'></script>
+
 <script type='text/javascript'>
     var passage_level = 3,
         passage_index = 0,
@@ -114,7 +115,7 @@
 
     $('#passageform').submit(function(event) {
         event.preventDefault();
-        var clean_attempt = $('#id_passageattempt').val().replace(/[　｡。、､？?！!「」｢｣'"`,.\s]/g, "");
+        var clean_attempt = cleanInput($('#id_passageattempt').val());
         if (clean_attempt == $('#passageactual').val()) {
             $('#bug-button').hide();
             $('#passageform').attr('class', 'abox abox_g');
@@ -152,13 +153,6 @@
             passageNext(data);
             $('#id_passageattempt').focus();
         })
-    });
-
-    $('#bug-button').click(function() {
-        $('#form-modal-body').load('/news/newissue/', function () {
-            modal.style.display = "block";
-            formAjaxSubmit('#form-modal-body form', '#form-modal');
-        });
     });
 </script>
 

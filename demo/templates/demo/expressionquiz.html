@@ -43,11 +43,11 @@
 
 <!-- wanakana, menu toggle, and get/post mechanics -->
 <script type='text/javascript' src='{% static 'js/wanakana.js' %}'></script>
-<script type='text/javascript' src='{% static 'js/cookiemonster.js' %}'></script>
+<script type='text/javascript' src='{% static 'js/kairozu-util.js' %}'></script>
 
 <script type='text/javascript'>
-    var vlevel = 2;
-    var vindex = 0;
+    var vlevel = 2,
+        vindex = 0;
     var input = document.getElementById('id_vocabattempt');
     wanakana.bind(input);
 
@@ -72,7 +72,7 @@
     }
     $('#vocabquizform').submit(function(event) {
         event.preventDefault();
-        var clean_attempt = $('#id_vocabattempt').val().replace(/[　｡。、､？?！!「」｢｣'"`,.\s]/g, "");
+        var clean_attempt = cleanInput($('#id_vocabattempt').val());
         if (clean_attempt == $('#vactual').val()) {
             $('#vocabquizform').attr('class', 'abox abox_g');
             if (vlevel == 2) { vindex++; } else { vlevel = 2; }

@@ -11,7 +11,7 @@
 
 <!-- wanakana, menu toggle, and get/post mechanics -->
 <script type='text/javascript' src='{% static 'js/wanakana.js' %}'></script>
-<script type='text/javascript' src='{% static 'js/cookiemonster.js' %}'></script>
+<script type='text/javascript' src='{% static 'js/kairozu-util.js' %}'></script>
 
 <script type='text/javascript'>
     var slevel = 3,
@@ -84,15 +84,15 @@
 
     $sentencequizform.submit(function(event) {
         event.preventDefault();
+        var clean_attempt = cleanInput($('#id_sentenceattempt').val());
         if ($('#sstrict').val() == '1') {
-            var clean_attempt = $('#id_sentenceattempt').val().replace(/[　｡。、､？?！!「」｢｣'"`,.\s]/g, "");
             if (clean_attempt == $('#sactual').val()) {
                 processQuiz(1);
             } else {
                 processQuiz(0);
             }
         } else {
-            var clean_attempt = $('#id_sentenceattempt').val().replace(/[　｡。、､？?！!「」｢｣'"`,.\s]/g, "").split("");
+            clean_attempt = clean_attempt.split("");
             var actual_split = $('#sactual').val().split("");
             if (wanakana.compare(clean_attempt, actual_split)) {
                 processQuiz(1);
@@ -105,13 +105,6 @@
     $(document).ready(function() {
         $.get("{% url 'main:sentencegrab' lesson.id %}").done(function (data) {
             sentenceNext(data);
-        });
-    });
-
-    $('#bug-button').click(function() {
-        $('#form-modal-body').load('/news/newissue/', function () {
-            modal.style.display = "block";
-            formAjaxSubmit('#form-modal-body form', '#form-modal');
         });
     });
 </script>

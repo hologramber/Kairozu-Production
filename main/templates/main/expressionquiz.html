@@ -55,7 +55,7 @@
 
 <!-- wanakana, menu toggle, and get/post mechanics -->
 <script type='text/javascript' src='{% static 'js/wanakana.js' %}'></script>
-<script type='text/javascript' src='{% static 'js/cookiemonster.js' %}'></script>
+<script type='text/javascript' src='{% static 'js/kairozu-util.js' %}'></script>
 
 <script type='text/javascript'>
     var elevel = 2,
@@ -104,7 +104,7 @@
     }
     $expressionquizform.submit(function(event) {
         event.preventDefault();
-        var clean_attempt = $('#id_expressionattempt').val().replace(/[　｡。、､？?！!「」｢｣'"`,.\s]/g, "");
+        var clean_attempt = cleanInput($('#id_expressionattempt').val());
         if (clean_attempt == $('#eactual').val()) {
             $('#bug-button').hide();
             $expressionquizform.attr('class', 'abox abox_g');
@@ -133,13 +133,6 @@
     $(document).ready(function() {
         $.get("{% url 'main:expressiongrab' chapter.id %}").done(function (data) {
             expressionNext(data);
-        });
-    });
-
-    $('#bug-button').click(function() {
-        $('#form-modal-body').load('/news/newissue/', function () {
-            modal.style.display = "block";
-            formAjaxSubmit('#form-modal-body form', '#form-modal');
         });
     });
 </script>
