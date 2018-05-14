@@ -50,7 +50,7 @@ class SentenceRecordSerializer(serializers.ModelSerializer):
 class PracticeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Practice
-        exclude = ('pone_kana','ptwo_kana','pone_kanji','ptwo_kanji','vieworder',)
+        fields = '__all__'
 
 
 class ExerciseResponseSerializer(serializers.ModelSerializer):
