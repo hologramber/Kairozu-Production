@@ -12,8 +12,7 @@
     </script>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
 	<link href="https://fonts.googleapis.com/css?family=Raleway:400,700|Roboto:400,700|Open+Sans:400,700" rel="stylesheet" />
-    <script type='text/javascript' src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script type='text/javascript' src='{% static 'js/kairozu.js' %}'></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
 	<link rel="icon" type="image/png" sizes="192x192" href="{% static 'favicon/favicon-192x192.png' %}" />
 	<link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon/favicon-32x32.png' %}" />
@@ -122,13 +121,13 @@
             <script type="text/javascript">
                 var modal = document.getElementById('form-modal');
                 var formAjaxSubmit = function(form) {
-                    $(form).submit(function(e) {
-                        e.preventDefault();
+                    $(form).submit(function (bugevent) {
+                        bugevent.preventDefault();
                         $.ajax({
                             type: $(this).attr('method'),
                             url: $(this).attr('action'),
                             data: $(this).serialize(),
-                            success: function(xhr) {
+                            success: function (xhr) {
                                 modal.style.display = "none";
                                 $('#show-message').html(xhr);
                             }
@@ -147,6 +146,41 @@
                 $('#byemodal').click(function() { modal.style.display = "none"; });
             </script>
         {% endif %}
+
+		<script type="text/javascript">
+            $("#byealert").click(function() { $(this).parent().remove(); });
+			$("#menu-toggle").click(function(e) {
+				e.preventDefault();
+				$("#wrapper").toggleClass("toggled");
+			});
+
+			$('#nav-toggle').click(function(e) {
+			    $('#myTopnav').toggleClass("responsive");
+                $('.dropdown-content').hide();
+                $('.dropdown').removeClass('active');
+			    e.stopPropagation();
+			});
+
+            $('.dropdown').click(function(e) {
+                $(this).children('.dropdown-content').slideToggle();
+                this.classList.toggle('active');
+                $('.dropdown-content').not($(this).children()).hide();
+                $('.dropdown').not($(this)).removeClass('active');
+                e.stopPropagation();
+            });
+
+            $('html').click(function(e) {
+                if (e.target.id == 'form-modal') {
+                    e.target.style.display = "none";
+                } else {
+                    $('.dropdown-content').hide();
+                    $('.dropdown').removeClass('active');
+                    $('#myTopnav').removeClass('responsive');
+                }
+                e.stopPropagation();
+            });
+        </script>
+
 	</main>
 </body>
 </html>

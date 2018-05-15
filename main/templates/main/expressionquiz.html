@@ -55,47 +55,89 @@
 
 <!-- wanakana, menu toggle, and get/post mechanics -->
 <script type='text/javascript' src='{% static 'js/wanakana.js' %}'></script>
-<script type='text/javascript' src='{% static 'js/kairozu-util.js' %}'></script>
+<script type='text/javascript' src='{% static 'js/cookiemonster.js' %}'></script>
 
 <script type='text/javascript'>
-    var elevel = 2,
-        expressioncode = 'A';
-    var $expressionquizform = $('#expressionquizform');
-    var $hint_block = $('#hint_block');
+    var elevel = 2;
+    var expressioncode = 'A';
     var input = document.getElementById('id_expressionattempt');
     wanakana.bind(input);
 
-    $expressionquizform.submit(function(event) {
+    function expressionNext(data) {
+        if (data['id'] != null) {
+            $('#literal_note').html('&#8203;' + data['express']['note'] + '&#8203;');
+            $('#expression_english').html(data['express']['english']);
+            $('#eactual').val(data['express']['kana_clean']);
+            $('#eid').val(data['id']);
+            if (data['express']['literal'].trim()) {
+                $('#literal_one').html('<div class="white-words litcontextbox upper">literal</div>' + data['express']['literal'] + '&#8203;');
+            } else {
+                $('#literal_one').html('&#8203;');
+            }
+            switch(elevel) {
+                case 2:
+                    $('#hint_block').html(data['express']['kana_all_blank']); break;
+                case 1:
+                    $('#hint_block').html(data['express']['kana_alt_blank']); break;
+                default:
+                    $('#hint_block').html(data['express']['f_kana']); break;
+            }
+            $('#expressionquizform').removeClass('abox_g abox_r');
+            if (data['express']['katakana'] == true) {
+                $('#katakana-tips').show();
+            } else {
+                $('#katakana-tips').hide();
+            }
+            if (data['express']['prompt']) {
+                $('#expression-example').show();
+                $('#prompt-text').html('Example: ' + data['express']['prompt']);
+            } else {
+                $('#expression-example').hide();
+            }
+        } else {
+            $.get("{% url 'main:expressionsuccess' chapter.id %}").done(function (data) {
+                $('#wrapper').html(data);
+            });
+        }
+    }
+    $('#expressionquizform').submit(function(event) {
         event.preventDefault();
-        var clean_attempt = cleanInput($('#id_expressionattempt').val());
+        var clean_attempt = $('#id_expressionattempt').val().replace(/[　｡。、､？?！!「」｢｣'"`,.\s]/g, "");
         if (clean_attempt == $('#eactual').val()) {
             $('#bug-button').hide();
-            $expressionquizform.attr('class', 'abox abox_g');
+            $('#expressionquizform').attr('class', 'abox abox_g');
             if (elevel == 2) {
                 expressioncode = 'C';
             } else {
                 elevel = 2;
                 expressioncode = 'N';
             }
-            $hint_block.attr('class', 'ls5');
+            $('#hint_block').attr('class', 'ls5');
         } else {
-            $expressionquizform.attr('class', 'abox_red abox_r');
+            $('#expressionquizform').attr('class', 'abox_red abox_r');
             $('#bug-button').show();
             if (elevel == 2) { expressioncode = 'I'; } else { expressioncode = 'A'; }
             if (elevel > 0) { elevel--; }
-            $hint_block.attr('class', 'ls5r');
+            $('#hint_block').attr('class', 'ls5r');
         }
         $('#ecode').val(expressioncode);
-        var form_data = $expressionquizform.serialize();
+        var form_data = $('#expressionquizform').serialize();
         $.post("{% url 'main:expressioncheck' chapter.id %}", form_data).done(function(data) {
-            $expressionquizform[0].reset();
-            expressionNext(data, 'equiz');
+            $('#expressionquizform')[0].reset();
+            expressionNext(data);
         });
     });
 
     $(document).ready(function() {
         $.get("{% url 'main:expressiongrab' chapter.id %}").done(function (data) {
-            expressionNext(data, 'equiz');
+            expressionNext(data);
+        });
+    });
+
+    $('#bug-button').click(function() {
+        $('#form-modal-body').load('/news/newissue/', function () {
+            modal.style.display = "block";
+            formAjaxSubmit('#form-modal-body form', '#form-modal');
         });
     });
 </script>

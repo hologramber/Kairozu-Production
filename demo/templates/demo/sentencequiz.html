@@ -42,17 +42,44 @@
 
 <!-- wanakana, menu toggle, and get/post mechanics -->
 <script type='text/javascript' src='{% static 'js/wanakana.js' %}'></script>
-<script type='text/javascript' src='{% static 'js/kairozu-demo.js' %}'></script>
+<script type='text/javascript' src='{% static 'js/cookiemonster.js' %}'></script>
 
 <script type='text/javascript'>
-    var slevel = 3,
-        sindex = 0;
+    var slevel = 3;
+    var sindex = 0;
     var input = document.getElementById('id_sentenceattempt');
     wanakana.bind(input);
 
+    function sentenceNext(data) {
+        if (data['id'] != null) {
+            $('#sentence_eng').html(data['english']);
+            $('#sactual').val(data['kana_clean']);
+            if (data['literal'].trim()) {
+                $('#literal_one').html('<div class="white-words litcontextbox upper">literal</div>' + data['literal'] + '&#8203;');
+            } else {
+                $('#literal_one').html('&#8203;');
+            }
+            switch (slevel) {
+                case 3:
+                    $('#sentence_hint').html('&#8203;'); break;
+                case 2:
+                    $('#sentence_hint').html(data['kana_all_blank']); break;
+                case 1:
+                    $('#sentence_hint').html(data['kana_alt_blank']); break;
+                default:
+                    $('#sentence_hint').html(data['f_kana']); break;
+            }
+            $('#sentencequizform').removeClass('abox_g abox_r');
+        } else {
+            $.get("{% url 'demo:demosentencesuccess' %}").done(function (data) {
+                $('#wrapper').html(data);
+            });    
+        }
+    }
+
     $('#sentencequizform').submit(function(event) {
         event.preventDefault();
-        var clean_attempt = cleanInput($('#id_sentenceattempt').val());
+        var clean_attempt = $('#id_sentenceattempt').val().replace(/[　｡。、､？?！!「」｢｣'"`,.\s]/g, "");
         if (clean_attempt == $('#sactual').val()) {
             $('#sentencequizform').attr('class', 'abox abox_g');
             if (slevel == 3) { sindex++; } else { slevel = 3; }
@@ -60,18 +87,19 @@
             $('#sentencequizform').attr('class', 'abox_red abox_r');
             if (slevel > 0) { slevel--; }
         }
-        $('#sindex').val(sindex);
+        $('#sentencequizform #sindex').val(sindex);
         var form_data = $('#sentencequizform').serialize();
         $.post("{% url 'demo:demosentencecheck' %}", form_data).done(function(data) {
             $('#sentencequizform')[0].reset();
-            sentenceNextDemo(data);
+            sentenceNext(data);
         });
     });
 
     $(document).ready(function() {
         var urlstring = "/demo/sentencequiz/grab/0";
         $.get(urlstring).done(function (data) {
-            sentenceNextDemo(data);
+            sentenceNext(data);
+            $('#id_sentenceattempt').focus();
         });
     });
 </script>

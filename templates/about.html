@@ -83,7 +83,9 @@
     </div>
 </div>
 
+
 <div class="fc">
+
     <div class="fc-center fc-flex-50">
         {% if user.is_authenticated %}
             <a href="{% url 'main:progress' %}">
@@ -132,8 +134,11 @@
             </a>
         {% endif %}
     </div>
+
 </div>
 
 <div class="s-100"></div>
+
 {% include 'footer.html' %}
+
 {% endblock %}

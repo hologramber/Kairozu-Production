@@ -11,23 +11,86 @@
 
 <!-- wanakana, menu toggle, and get/post mechanics -->
 <script type='text/javascript' src="{% static 'js/wanakana.js' %}"></script>
-<script type='text/javascript' src='{% static 'js/kairozu-util.js' %}'></script>
+<script type='text/javascript' src='{% static 'js/cookiemonster.js' %}'></script>
 
 <script type='text/javascript'>
     var plevel = 0,
         pindex = 0,
         pcode = 'AD';
-    var $id_pone_attempt = $('#id_pone_attempt'),
+    var $hint_one = $('#hint_one'),
+        $hint_two = $('#hint_two'),
+        $id_pone_attempt = $('#id_pone_attempt'),
         $id_ptwo_attempt = $('#id_ptwo_attempt');
     var input = document.getElementById('id_pone_attempt');
     var input2 = document.getElementById('id_ptwo_attempt');
     wanakana.bind(input);
     wanakana.bind(input2);
 
+    function practiceNext(data) {
+        if (data['pone_english'] != null) {
+            $('#practice_eng_one').html(data['pone_english']);
+            $('#practice_eng_two').html(data['ptwo_english']);
+            $('#poneact').val(data['pone_kana_clean']);
+            $('#ptwoact').val(data['ptwo_kana_clean']);
+            switch(pcode) {
+                case 'BC':
+                    $hint_one.html(data['pone_kana_all'] + '&#8203;');
+                    $hint_two.html(data['ptwo_kana_all'] + '&#8203;');
+                    break;
+                case 'OC':
+                    if (plevel == 1) {
+                        $hint_one.html(data['pone_kana_f'] + '&#8203;');
+                        $hint_two.html(data['ptwo_kana_alt'] + '&#8203;');
+                    } else {
+                        $hint_one.html(data['pone_kana_f'] + '&#8203;');
+                        $hint_two.html(data['ptwo_kana_f'] + '&#8203;');
+                    }
+                    break;
+                case 'TC':
+                    if (plevel == 1) {
+                        $hint_one.html(data['pone_kana_alt'] + '&#8203;');
+                        $hint_two.html(data['ptwo_kana_f'] + '&#8203;');
+                    } else {
+                        $hint_one.html(data['pone_kana_f'] + '&#8203;');
+                        $hint_two.html(data['ptwo_kana_f'] + '&#8203;');
+                    }
+                    break;
+                default:
+                    if (plevel == 1) {
+                        $hint_one.html(data['pone_kana_alt'] + '&#8203;');
+                        $hint_two.html(data['ptwo_kana_alt'] + '&#8203;');
+                    } else {
+                        $hint_one.html(data['pone_kana_f'] + '&#8203;');
+                        $hint_two.html(data['ptwo_kana_f'] + '&#8203;');
+                    }
+                    break;
+            }
+            if (data['pone_literal'].trim()) {
+                $('#literal_one').html('<div class="white-words litcontextbox upper">literal</div>' + data['pone_literal'] + '&#8203;');
+            } else {
+                $('#literal_one').html('&#8203;');
+            }
+            if (data['ptwo_literal'].trim()) {
+                $('#literal_two').html('<div class="white-words litcontextbox upper">literal</div>' + data['ptwo_literal'] + '&#8203;');
+            } else {
+                $('#literal_two').html('&#8203;');
+            }
+            $('#context_one').html(data['pone_context'] + '&#8203;');
+            $('#context_two').html(data['ptwo_context'] + '&#8203;');
+            $id_pone_attempt.removeClass('kbox1_g kbox1_r');
+            $id_ptwo_attempt.removeClass('kbox2_g kbox2_r');
+            $('#ksubmit').removeClass('ksub_r ksub_g');
+        } else {
+            $.get("{% url 'main:practicesuccess' lesson.id %}").done(function (data) {
+                $('#wrapper').html(data);
+            });
+        }
+    }
+
     $('#practicequizform').submit(function(event) {
         event.preventDefault();
-        var pone_clean_att = cleanInput($id_pone_attempt.val());
-        var ptwo_clean_att = cleanInput($id_ptwo_attempt.val());
+        var pone_clean_att = $id_pone_attempt.val().replace(/[　｡。、､？?！!「」｢｣'"`,.\s]/g, "");
+        var ptwo_clean_att = $id_ptwo_attempt.val().replace(/[　｡。、､？?！!「」｢｣'"`,.\s]/g, "");
         if ((pone_clean_att == $('#poneact').val()) && (ptwo_clean_att == $('#ptwoact').val())) {
             pcode = 'BC';
             $('#bug-button').hide();
@@ -79,6 +142,14 @@
             $id_pone_attempt.focus();
         });
     });
+
+    $('#bug-button').click(function() {
+        $('#form-modal-body').load('/news/newissue/', function () {
+            modal.style.display = "block";
+            formAjaxSubmit('#form-modal-body form', '#form-modal');
+        });
+    });
+
 </script>
 
 {% endblock %}
