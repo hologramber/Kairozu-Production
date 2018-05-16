@@ -1,4 +1,3 @@
-import re
 from django.db import models
 from main.models import clean_sentence, all_blanks, hw_punctuation, create_blanks, create_splits
 
@@ -106,3 +105,6 @@ class DemoPractice(models.Model):
         self.ptwo_kana_all = create_splits(self.ptwo_kana_all)
         self.ptwo_kana_alt = create_splits(self.ptwo_kana_alt)
         super(DemoPractice, self).save(*args, **kwargs)
+
+    class Meta:
+        ordering = ['vieworder']

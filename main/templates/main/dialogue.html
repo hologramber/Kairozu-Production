@@ -185,7 +185,6 @@
         var urlstring = "/main/chapter/" + '{{ chapter.id }}' + "/exercise_d" + '{{ exercise.id }}' + "/grab/0";
         $.get(urlstring).done(function (data) {
             dialogueNext(data);
-            $('#id_dialogue_attempt').focus();
         })
     });
 

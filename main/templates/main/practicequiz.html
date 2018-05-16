@@ -168,7 +168,6 @@
         var urlstring = "/main/lesson/" + '{{ lesson.id }}' + "/practicequiz/grab/0";
         $.get(urlstring).done(function (data) {
             practiceNext(data);
-            $id_pone_attempt.focus();
         });
     });
 
