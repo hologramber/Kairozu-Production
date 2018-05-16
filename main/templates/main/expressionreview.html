@@ -99,7 +99,7 @@
     }
     $('#expressionquizform').submit(function(event) {
         event.preventDefault();
-        var clean_attempt = $('#id_expressionattempt').val().replace(/[　｡。、､？?！!「」｢｣'"`,.\s]/g, "");
+        var clean_attempt = cleanInput($('#id_expressionattempt').val());
         if (clean_attempt == $('#eactual').val()) {
             $('#expressionquizform').attr('class', 'abox abox_g');
             $('#bug-button').hide();

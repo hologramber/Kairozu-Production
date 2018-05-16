@@ -89,8 +89,8 @@
 
     $('#practicequizform').submit(function(event) {
         event.preventDefault();
-        var pone_clean_att = $id_pone_attempt.val().replace(/[　｡。、､？?！!「」｢｣'"`,.\s]/g, "");
-        var ptwo_clean_att = $id_ptwo_attempt.val().replace(/[　｡。、､？?！!「」｢｣'"`,.\s]/g, "");
+        var pone_clean_att = cleanInput($id_pone_attempt.val());
+        var ptwo_clean_att = cleanInput($id_ptwo_attempt.val());
         if ((pone_clean_att == $('#poneact').val()) && (ptwo_clean_att == $('#ptwoact').val())) {
             pcode = 'BC';
             $('#bug-button').hide();

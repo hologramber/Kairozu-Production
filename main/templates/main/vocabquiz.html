@@ -65,7 +65,7 @@
     }
     $('#vocabquizform').submit(function(event) {
         event.preventDefault();
-        var clean_attempt = $('#id_vocabattempt').val().replace(/[　｡。、､？?！!「」｢｣'"`,.\s]/g, "");
+        var clean_attempt = cleanInput($('#id_vocabattempt').val());
         if (clean_attempt == $('#vactual').val()) {
             $('#bug-button').hide();
             $('#vocabquizform').attr('class', 'abox abox_g');

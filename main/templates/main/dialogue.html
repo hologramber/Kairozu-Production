@@ -140,7 +140,7 @@
 
     $('#dialogue_form').submit(function(event) {
         event.preventDefault();
-        var clean_attempt = $('#id_dialogue_attempt').val().replace(/[　｡。、､？?！!「」｢｣'"`,.\s]/g, "");
+        var clean_attempt = cleanInput($('#id_dialogue_attempt').val());
         if (clean_attempt == $('#dialogue_actual').val()) {
             $('#dialogue_form').attr('class', 'abox abox_g');
             $('#bug-button').hide();

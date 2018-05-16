@@ -80,15 +80,15 @@
 
     $('#sentencequizform').submit(function(event) {
         event.preventDefault();
+        var clean_attempt = cleanInput($('#id_sentenceattempt').val());
         if ($('#sstrict').val() == '1') {
-            var clean_attempt = $('#id_sentenceattempt').val().replace(/[　｡。、､？?！!「」｢｣'"`,.\s]/g, "");
             if (clean_attempt == $('#sactual').val()) {
                 processQuiz(1);
             } else {
                 processQuiz(0);
             }
         } else {
-            var clean_attempt = $('#id_sentenceattempt').val().replace(/[　｡。、､？?！!「」｢｣'"`,.\s]/g, "").split("");
+            clean_attempt = clean_attempt.split("");
             var actual_split = $('#sactual').val().split("");
             if (wanakana.compare(clean_attempt, actual_split)) {
                 processQuiz(1);

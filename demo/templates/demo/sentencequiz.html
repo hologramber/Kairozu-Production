@@ -79,7 +79,7 @@
 
     $('#sentencequizform').submit(function(event) {
         event.preventDefault();
-        var clean_attempt = $('#id_sentenceattempt').val().replace(/[　｡。、､？?！!「」｢｣'"`,.\s]/g, "");
+        var clean_attempt = cleanInput($('#id_sentenceattempt').val());
         if (clean_attempt == $('#sactual').val()) {
             $('#sentencequizform').attr('class', 'abox abox_g');
             if (slevel == 3) { sindex++; } else { slevel = 3; }

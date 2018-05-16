@@ -58,8 +58,8 @@
     }
     $('#vocabquizform').submit(function(event) {
         event.preventDefault();
-        var clean_attempt = $('#id_vocabattempt').val().replace(/[　。、？！「」\'\",.?!\s]/g, "");
-        $('#vocabquizform #max_number').val($("input[name=optradio]:checked").val());
+        var clean_attempt = cleanInput($('#id_vocabattempt').val());
+        $('#max_number').val($("input[name=optradio]:checked").val());
         var form_data = $('#vocabquizform').serialize();
         if (clean_attempt == $('#vactual').val()) {
             $('#vocabquizform').attr('class', 'abox abox_g');

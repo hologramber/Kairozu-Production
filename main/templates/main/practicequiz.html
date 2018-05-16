@@ -135,8 +135,8 @@
 
     $('#practicequizform').submit(function(event) {
         event.preventDefault();
-        var pone_clean_att = $id_pone_attempt.val().replace(/[　｡。、､？?！!「」｢｣'"`,.\s]/g, "");
-        var ptwo_clean_att = $id_ptwo_attempt.val().replace(/[　｡。、､？?！!「」｢｣'"`,.\s]/g, "");
+        var pone_clean_att = cleanInput($id_pone_attempt.val());
+        var ptwo_clean_att = cleanInput($id_ptwo_attempt.val());
         if ($('#pstrict').val() == '1') {
             if ((pone_clean_att == $('#poneact').val()) && (ptwo_clean_att == $('#ptwoact').val())) {
                 processPractice(1);
@@ -150,6 +150,8 @@
         } else {
             var pone_act_split = $('#poneact').val().split("");
             var ptwo_act_split = $('#ptwoact').val().split("");
+            pone_clean_att = pone_clean_att.split("");
+            ptwo_clean_att = ptwo_clean_att.split("");
             if ((wanakana.compare(pone_clean_att, pone_act_split)) && (wanakana.compare(ptwo_clean_att, ptwo_act_split))) {
                 processPractice(1);
             } else if (wanakana.compare(pone_clean_att, pone_act_split)) {

@@ -113,7 +113,7 @@
 
     $('#passageform').submit(function(event) {
         event.preventDefault();
-        var clean_attempt = $('#id_passageattempt').val().replace(/[　｡。、､？?！!「」｢｣'"`,.\s]/g, "");
+        var clean_attempt = cleanInput($('#id_passageattempt').val());
         if (clean_attempt == $('#passageactual').val()) {
             $('#bug-button').hide();
             $('#passageform').attr('class', 'abox abox_g');
