@@ -45,8 +45,8 @@
 <script type='text/javascript' src='{% static 'js/cookiemonster.js' %}'></script>
 
 <script type='text/javascript'>
-    var slevel = 3;
-    var sindex = 0;
+    var slevel = 3,
+        sindex = 0;
     var input = document.getElementById('id_sentenceattempt');
     wanakana.bind(input);
 
@@ -87,7 +87,7 @@
             $('#sentencequizform').attr('class', 'abox_red abox_r');
             if (slevel > 0) { slevel--; }
         }
-        $('#sentencequizform #sindex').val(sindex);
+        $('#sindex').val(sindex);
         var form_data = $('#sentencequizform').serialize();
         $.post("{% url 'demo:demosentencecheck' %}", form_data).done(function(data) {
             $('#sentencequizform')[0].reset();

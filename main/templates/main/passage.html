@@ -54,14 +54,14 @@
 <script type='text/javascript' src='{% static 'js/wanakana.js' %}'></script>
 <script type='text/javascript' src='{% static 'js/cookiemonster.js' %}'></script>
 <script type='text/javascript'>
-    var passage_level = 3;
-    var passage_index = 0;
-    var current_passage = '';
-    var currentline = '';
-    var totalinputs = 0;
-    var incorrectinputs = 0;
-    var nextstep = 1;
-    var newlywrong = 0;
+    var passage_level = 3,
+        passage_index = 0,
+        current_passage = '',
+        currentline = '',
+        totalinputs = 0,
+        incorrectinputs = 0,
+        nextstep = 1,
+        newlywrong = 0;
     var input = document.getElementById('id_passageattempt');
     wanakana.bind(input);
 

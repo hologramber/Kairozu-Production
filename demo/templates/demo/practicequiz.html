@@ -55,9 +55,9 @@
 <script type='text/javascript' src='{% static 'js/cookiemonster.js' %}'></script>
 
 <script type='text/javascript'>
-    var plevel = 0;
-    var pindex = 0;
-    var pcode = 'AD';
+    var plevel = 0,
+        pindex = 0,
+        pcode = 'AD';
     var input = document.getElementById('id_pone_attempt');
     var input2 = document.getElementById('id_ptwo_attempt');
     wanakana.bind(input);
@@ -67,8 +67,8 @@
         if (data['pone_english'] != null) {
             $('#practice_eng_one').html(data['pone_english']);
             $('#practice_eng_two').html(data['ptwo_english']);
-            $('#practicequizform #poneact').val(data['pone_kana_clean']);
-            $('#practicequizform #ptwoact').val(data['ptwo_kana_clean']);
+            $('#poneact').val(data['pone_kana_clean']);
+            $('#ptwoact').val(data['ptwo_kana_clean']);
             switch(pcode) {
                 case 'BC':
                     $('#hint_one').html(data['pone_kana_all'] + '&#8203;');
@@ -159,7 +159,7 @@
             $('#hint_one').attr('class', 'ls5r');
             $('#hint_two').attr('class', 'ls5r');
         }
-        $('#practicequizform #pindex').val(pindex);
+        $('#pindex').val(pindex);
         var form_data = $('#practicequizform').serialize();
         $.post("{% url 'demo:demopracticecheck' %}", form_data).done(function(data) {
             practiceNext(data);

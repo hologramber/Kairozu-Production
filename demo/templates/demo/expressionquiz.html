@@ -46,15 +46,15 @@
 <script type='text/javascript' src='{% static 'js/cookiemonster.js' %}'></script>
 
 <script type='text/javascript'>
-    var vlevel = 2;
-    var vindex = 0;
+    var vlevel = 2,
+        vindex = 0;
     var input = document.getElementById('id_vocabattempt');
     wanakana.bind(input);
 
     function vocabNext(data) {
         if (data['id'] != null) {
             $('#vocab_english').html(data['english']);
-            $('#vocabquizform #vactual').val(data['kana_clean']);
+            $('#vactual').val(data['kana_clean']);
             switch(vlevel) {
                 case 2:
                     $('#hint_block').html(data['kana_all_blank']); break;
@@ -82,7 +82,7 @@
             if (vlevel > 0) { vlevel--; }
             $('#hint_block').attr('class', 'ls5r');
         }
-        $('#vocabquizform #vindex').val(vindex);
+        $('#vindex').val(vindex);
         var form_data = $('#vocabquizform').serialize();
         $.post("{% url 'demo:demoexpressioncheck' %}", form_data).done(function(data) {
             $('#vocabquizform')[0].reset();

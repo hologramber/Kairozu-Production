@@ -30,8 +30,8 @@
 <script type='text/javascript' src='{% static 'js/cookiemonster.js' %}'></script>
 
 <script type='text/javascript'>
-    var vlevel = 3;
-    var vocabcode = 'A';
+    var vlevel = 3,
+        vocabcode = 'A';
     var input = document.getElementById('id_vocabattempt');
     wanakana.bind(input);
 
@@ -39,8 +39,8 @@
         if (data['id'] != null) {
             $('#literal_one').html('&#8203;' + data['vocab']['note'] + '&#8203;');
             $('#vocab_english').html(data['vocab']['english']);
-            $('#vocabquizform #vactual').val(data['vocab']['kana_clean']);
-            $('#vocabquizform #vid').val(data['id']);
+            $('#vactual').val(data['vocab']['kana_clean']);
+            $('#vid').val(data['id']);
             switch(vlevel) {
                 case 3:
                     $('#hint_block').html('&#8203;'); break;
@@ -81,7 +81,7 @@
             if (vlevel == 3) { vocabcode = 'I'; } else { vocabcode = 'A'; }
             if (vlevel > 0) { vlevel--; }
         }
-        $('#vocabquizform #vcode').val(vocabcode);
+        $('#vcode').val(vocabcode);
         var form_data = $('#vocabquizform').serialize();
         $.post("{% url 'main:vocabcheck' chapter.id %}", form_data).done(function(data) {
             $('#vocabquizform')[0].reset();
