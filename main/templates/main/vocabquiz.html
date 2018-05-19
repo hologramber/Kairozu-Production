@@ -67,8 +67,8 @@
         event.preventDefault();
         var clean_attempt = cleanInput($('#id_vocabattempt').val());
         if (clean_attempt == $('#vactual').val()) {
-            $('#bug-button').hide();
             $('#vocabquizform').attr('class', 'abox abox_g');
+            $('#bug-button').hide();
             if (vlevel == 3) {
                 vocabcode = 'C';
             } else {
@@ -76,8 +76,8 @@
                 vocabcode = 'N';
             }
         } else {
-            $('#bug-button').show();
             $('#vocabquizform').attr('class', 'abox_red abox_r');
+            $('#bug-button').show();
             if (vlevel == 3) { vocabcode = 'I'; } else { vocabcode = 'A'; }
             if (vlevel > 0) { vlevel--; }
         }
@@ -92,13 +92,6 @@
     $(document).ready(function() {
         $.get("{% url 'main:vocabgrab' chapter.id %}").done(function (data) {
             vocabNext(data);
-        });
-    });
-
-    $('#bug-button').click(function() {
-        $('#form-modal-body').load('/news/newissue/', function () {
-            modal.style.display = "block";
-            formAjaxSubmit('#form-modal-body form', '#form-modal');
         });
     });
 </script>
