@@ -86,6 +86,13 @@
             sentenceNext(data);
         });
     });
+
+    $('#bug-button').click(function() {
+        $('#form-modal-body').load('/news/newissue/', function () {
+            modal.style.display = "block";
+            formAjaxSubmit('#form-modal-body form', '#form-modal');
+        });
+    });
 </script>
 
 {% endblock %}

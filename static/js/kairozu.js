@@ -1,4 +1,7 @@
-function cleanInput(text) { return text.replace(/[　｡。、､？?！!「」｢｣'"`,.\s]/g, ""); }
+function cleanInput(text) {
+    text = text.replace(/[　｡。、､？?！!「」｢｣'"`,.\s]/g, "");
+    return text;
+}
 
 $(function() {
     $("#byealert").click(function () {
@@ -11,11 +14,10 @@ $(function() {
     });
 
     $('#nav-toggle').click(function (e) {
-        e.stopPropagation();
         $('#myTopnav').toggleClass("responsive");
         $('.dropdown-content').hide();
         $('.dropdown').removeClass('active');
-
+        e.stopPropagation();
     });
 
     $('.dropdown').click(function (e) {
@@ -26,14 +28,7 @@ $(function() {
         e.stopPropagation();
     });
 
-    $('#bug-button').click(function() {
-        $('#form-modal-body').load('/news/newissue/', function () {
-            modal.style.display = "block";
-            formAjaxSubmit('#form-modal-body form', '#form-modal');
-        });
-    });
-
-    $('body').click(function (e) {
+    $('html').click(function (e) {
         if (e.target.id == 'form-modal') {
             e.target.style.display = "none";
         } else {

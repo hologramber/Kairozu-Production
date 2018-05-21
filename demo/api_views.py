@@ -21,14 +21,14 @@ class DemoExpressionGrab(generics.RetrieveAPIView):
     serializer_class = serializers.DemoExpressionSerializer
 
     def get_object(self):
-        vindex = int(self.kwargs['eindex'])
-        next_expression = DemoExpression.objects.all()
+        vindex = int(self.kwargs['vindex'])
+        next_vocab = DemoExpression.objects.all()
 
-        if len(next_expression) > vindex:
-            next_expression = next_expression[vindex]
+        if len(next_vocab) > vindex:
+            next_vocab = next_vocab[vindex]
         else:
-            next_expression = DemoExpression.objects.filter(id__lt=0).first()
-        return next_expression
+            next_vocab = DemoExpression.objects.filter(id__lt=0).first()
+        return next_vocab
 
 
 class DemoPracticeGrab(generics.RetrieveAPIView):

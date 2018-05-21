@@ -47,7 +47,6 @@
 <script type='text/javascript'>
     var slevel = 3,
         sindex = 0;
-    var $sentencequizform = $('#sentencequizform');
     var input = document.getElementById('id_sentenceattempt');
     wanakana.bind(input);
 
@@ -70,7 +69,7 @@
                 default:
                     $('#sentence_hint').html(data['f_kana']); break;
             }
-            $sentencequizform.removeClass('abox_g abox_r');
+            $('#sentencequizform').removeClass('abox_g abox_r');
         } else {
             $.get("{% url 'demo:demosentencesuccess' %}").done(function (data) {
                 $('#wrapper').html(data);
@@ -78,20 +77,20 @@
         }
     }
 
-    $sentencequizform.submit(function(event) {
+    $('#sentencequizform').submit(function(event) {
         event.preventDefault();
         var clean_attempt = cleanInput($('#id_sentenceattempt').val());
         if (clean_attempt == $('#sactual').val()) {
-            $sentencequizform.attr('class', 'abox abox_g');
+            $('#sentencequizform').attr('class', 'abox abox_g');
             if (slevel == 3) { sindex++; } else { slevel = 3; }
         } else {
-            $sentencequizform.attr('class', 'abox_red abox_r');
+            $('#sentencequizform').attr('class', 'abox_red abox_r');
             if (slevel > 0) { slevel--; }
         }
         $('#sindex').val(sindex);
-        var form_data = $sentencequizform.serialize();
+        var form_data = $('#sentencequizform').serialize();
         $.post("{% url 'demo:demosentencecheck' %}", form_data).done(function(data) {
-            $sentencequizform[0].reset();
+            $('#sentencequizform')[0].reset();
             sentenceNext(data);
         });
     });
