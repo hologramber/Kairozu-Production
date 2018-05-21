@@ -62,8 +62,8 @@ class DemoExpressionQuizView(TemplateView):
 
 
 def demo_expression_check(request):
-    vindex = int(request.POST['vindex'])
-    return HttpResponseRedirect(reverse('demo:demoexpressiongrab', kwargs={'vindex': vindex}))
+    eindex = int(request.POST['eindex'])
+    return HttpResponseRedirect(reverse('demo:demoexpressiongrab', kwargs={'eindex': eindex}))
 
 
 class DemoExpressionSuccessView(TemplateView):

@@ -1,6 +1,4 @@
-function cleanInput(text) {
-    return text.replace(/[　｡。、､？?！!「」｢｣'"`,.\s]/g, "");
-}
+function cleanInput(text) { return text.replace(/[　｡。、､？?！!「」｢｣'"`,.\s]/g, ""); }
 
 $(function() {
     $("#byealert").click(function () {
