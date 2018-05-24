@@ -43,11 +43,6 @@ class DemoVocabQuizView(TemplateView):
     template_name = 'demo/vocabquiz.html'
 
 
-def demo_vocab_check(request):
-    vindex = int(request.POST['vindex'])
-    return HttpResponseRedirect(reverse('demo:demovocabgrab', kwargs={'vindex': vindex}))
-
-
 class DemoVocabSuccessView(TemplateView):
     template_name = 'demo/vocabsuccess.html'
 

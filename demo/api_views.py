@@ -3,18 +3,9 @@ from .models import DemoVocab, DemoSentence, DemoPractice, DemoExpression
 from . import serializers
 
 
-class DemoVocabGrab(generics.RetrieveAPIView):
+class DemoVocabGrab(generics.ListAPIView):
     serializer_class = serializers.DemoVocabSerializer
-
-    def get_object(self):
-        vindex = int(self.kwargs['vindex'])
-        next_vocab = DemoVocab.objects.all()
-
-        if len(next_vocab) > vindex:
-            next_vocab = next_vocab[vindex]
-        else:
-            next_vocab = DemoVocab.objects.filter(id__lt=0).first()
-        return next_vocab
+    queryset = DemoVocab.objects.all()
 
 
 class DemoExpressionGrab(generics.RetrieveAPIView):

@@ -725,10 +725,10 @@ table.gpt > tbody > tr > td.blankline { line-height: 5px; }
 .dialogue-green { padding: 15px 15px 0 20px; }
 .dialogue-orange { padding: 5px 10px 0 15px; }
 
-.ls5 { letter-spacing: 5px; }
-.ls5r { letter-spacing: 5px; color: #d92425; }
-.ls5g { letter-spacing: 5px; color: #89AE13; }
-.ls5y { letter-spacing: 5px; color: #bcbcbc; }
+.ls5 { letter-spacing: 4px; }
+.ls5r { letter-spacing: 4px; color: #d92425; }
+.ls5g { letter-spacing: 4px; color: #89AE13; }
+.ls5y { letter-spacing: 4px; color: #bcbcbc; }
 
 .passage-holder {
 	width: 100%;
@@ -761,6 +761,26 @@ table.gpt > tbody > tr > td.blankline { line-height: 5px; }
 @-moz-keyframes incorrectA { from { background:#d92425; } to { background:#FFF; } }
 @keyframes incorrectA { from { background:#d92425; } to { background:#FFF; } }
 
+/* make keyframes that tell the start state and the end state of our object */
+@-webkit-keyframes reset_cA { from { background:#89AE13; } to { background:#FFF; } }
+@-moz-keyframes reset_cA { from { background:#89AE13; } to { background:#FFF; } }
+@keyframes reset_cA { from { background:#89AE13; } to { background:#FFF; } }
+@-webkit-keyframes reset_iA { from { background:#d92425; } to { background:#FFF; } }
+@-moz-keyframes reset_iA { from { background:#d92425; } to { background:#FFF; } }
+@keyframes reset_iA { from { background:#d92425; } to { background:#FFF; } }
+
+.reset_abox_g > input[type=text],
+.reset_abox_g > input[type=submit] {
+	-webkit-animation:reset_cA;				/* call keyframe reset_cA, ease-in and repeat it only 1 time */
+	-moz-animation:reset_cA;
+	animation:reset_cA; }
+
+.reset_abox_r > input[type=text],
+.reset_abox_r > input[type=submit] {
+	-webkit-animation:reset_iA;  			/* call keyframe reset_iA, ease-in and repeat it only 1 time */
+	-moz-animation:reset_iA;
+	animation:reset_iA; }
+
 /* kbox1 and kbox2 are the practice quiz boxes */
 /* abox is vocab, expression, sentence, dialogue, passage, all reviews */
 .abox_g > input[type=text],
@@ -785,6 +805,10 @@ input[type=submit].ksub_r {
 .abox_g > input[type=submit],
 .abox_r > input[type=text],
 .abox_r > input[type=submit],
+.reset_abox_g > input[type=text],
+.reset_abox_g > input[type=submit],
+.reset_abox_r > input[type=text],
+.reset_abox_r > input[type=submit],
 input[type=text].kbox1_g,
 input[type=text].kbox2_g,
 input[type=text].kbox1_r,
@@ -795,9 +819,12 @@ input[type=submit].ksub_r {
 	-webkit-animation-fill-mode:forwards;	/* makes sure that after animation is done we remain @ last keyframe value (white bg) */
 	-moz-animation-fill-mode:forwards;
 	animation-fill-mode:forwards;
-	-webkit-animation-duration:0.2s;
-	-moz-animation-duration:0.2s;
-	animation-duration:0.2s; }
+	/*-webkit-animation-duration:5s;*/
+	/*-moz-animation-duration:5s;*/
+	/*animation-duration:5s; }*/
+	-webkit-animation-duration:0.3s;
+	-moz-animation-duration:0.3s;
+	animation-duration:0.3s; }
 
 input[type=text].kbox1,
 input[type=text].kbox1_g,
