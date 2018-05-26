@@ -13,14 +13,14 @@
         <div id='vocabholder'>
             <div id='vfield'>
                 <div id='literal_one' class='vocab-note text-align-center'>&#8203;</div>
-                <div id='vocab_english' class='vocab-challenge text-align-center'></div>
+                <div id='english' class='vocab-challenge text-align-center'></div>
 
                 <div class='vocab-promptc text-align-center'>
-                    <span id='hint_block' class='ls5r'>&#8203;</span>
+                    <span id='hint' class='ls5r'>&#8203;</span>
                 </div>
 
-                <form id='vocabquizform' action='' method='post' class='abox'>{% csrf_token %}
-                    <input id='id_vocabattempt' type='text' name='vocab_attempt' autocomplete='off' autocorrect='off' autocapitalize='off' spellcheck='false' autofocus />
+                <form id='quiz_form' class='abox' action='' method='post'>{% csrf_token %}
+                    <input id='attempt' type='text' autocomplete='off' autocorrect='off' autocapitalize='off' spellcheck='false' autofocus />
                     <input type='submit' value='&#8680;' />
                 </form>
             </div>  <!-- /#vfield -->
@@ -44,31 +44,31 @@
 <script type='text/javascript' src='{% static 'js/cookiemonster.js' %}'></script>
 
 <script type='text/javascript'>
-    var input = document.getElementById('id_vocabattempt');
+    var input = document.getElementById('attempt');
     wanakana.bind(input);
 
-    const english = $('#vocab_english');
-    const hint = $('#hint_block');
-    const qform = $('#vocabquizform');
-    const attempt = $('#id_vocabattempt');
+    const english = $('#english');
+    const hint = $('#hint');
+    const qform = $('#quiz_form');
+    const attempt = $('#attempt');
     const pagewrap = $('#wrapper');
 
-    var quizdata = '',
+    var qdata = '',
         q = 0,
         totalq = 0,
         level = 3;
 
     function vocab() {
-        english.html(quizdata[q]['english']);
+        english.html(qdata[q]['english']);
         switch(level) {
             case 3:
                 hint.html('&#8203;'); break;
             case 2:
-                hint.html(quizdata[q]['kana_all_blank']); break;
+                hint.html(qdata[q]['kana_all_blank']); break;
             case 1:
-                hint.html(quizdata[q]['kana_alt_blank']); break;
+                hint.html(qdata[q]['kana_alt_blank']); break;
             default:
-                hint.html(quizdata[q]['f_kana']); break;
+                hint.html(qdata[q]['f_kana']); break;
         }
         if (qform.hasClass('abox_g')) {
             qform.attr('class', 'abox reset_abox_g');
@@ -79,8 +79,8 @@
 
     qform.submit(function(event) {
         event.preventDefault();
-        var clean_attempt = cleanInput(attempt.val());
-        if (clean_attempt === quizdata[q]['kana_clean']) {
+        var clean = cleanInput(attempt.val());
+        if (clean === qdata[q]['kana_clean']) {
             qform.attr('class', 'abox abox_g');
             if (level === 3) { q++; } else { level = 3; }
         } else {
@@ -98,11 +98,10 @@
     });
 
     $(document).ready(function() {
-        localStorage.clear();
         var urlstring = "/demo/vocabquiz/grab/";
         $.get(urlstring).done(function (data) {
-            quizdata = data;
-            totalq = quizdata.length;
+            qdata = data;
+            totalq = qdata.length;
             vocab();
         });
     });

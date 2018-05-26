@@ -56,11 +56,6 @@ class DemoExpressionQuizView(TemplateView):
     template_name = 'demo/expressionquiz.html'
 
 
-def demo_expression_check(request):
-    vindex = int(request.POST['vindex'])
-    return HttpResponseRedirect(reverse('demo:demoexpressiongrab', kwargs={'vindex': vindex}))
-
-
 class DemoExpressionSuccessView(TemplateView):
     template_name = 'demo/expressionsuccess.html'
 
@@ -73,22 +68,12 @@ class DemoPracticeQuizView(TemplateView):
     template_name = 'demo/practicequiz.html'
 
 
-def demo_practice_check(request):
-    pindex = int(request.POST['pindex'])
-    return HttpResponseRedirect(reverse('demo:demopracticegrab', kwargs={'pindex': pindex}))
-
-
 class DemoPracticeSuccessView(TemplateView):
     template_name = 'demo/practicesuccess.html'
 
 
 class DemoSentenceQuizView(TemplateView):
     template_name = 'demo/sentencequiz.html'
-
-
-def demo_sentence_check(request):
-    sindex = int(request.POST['sindex'])
-    return HttpResponseRedirect(reverse('demo:demosentencegrab', kwargs={'sindex': sindex}))
 
 
 class DemoSentenceSuccessView(TemplateView):

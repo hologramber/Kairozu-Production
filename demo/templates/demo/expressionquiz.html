@@ -13,16 +13,14 @@
         <div id='vocabholder'>
             <div id='vfield'>
                 <div id='literal_one' class='vocab-note text-align-center'>&#8203;</div>
-                <div id='vocab_english' class='vocab-challenge text-align-center'></div>
+                <div id='english' class='vocab-challenge text-align-center'></div>
 
                 <div class='vocab-promptc text-align-center'>
-                    <span id='hint_block' class='ls5'>&#8203;</span>
+                    <span id='hint' class='ls5'>&#8203;</span>
                 </div>
 
-                <form id='vocabquizform' action='' method='post' class='abox'>{% csrf_token %}
-                    <input id='id_vocabattempt' type='text' name='vocab_attempt' autocomplete='off' autocorrect='off' autocapitalize='off' spellcheck='false' autofocus />
-                    <input id='vactual' type='hidden' name='vocab_actual' value='' />
-                    <input id='vindex' type='hidden' name='vindex' value='' />
+                <form id='quiz_form' class='abox' action='' method='post'>{% csrf_token %}
+                    <input id='attempt' type='text' autocomplete='off' autocorrect='off' autocapitalize='off' spellcheck='false' autofocus />
                     <input type='submit' value='&#8680;' />
                 </form>
             </div>  <!-- /#vfield -->
@@ -46,54 +44,65 @@
 <script type='text/javascript' src='{% static 'js/cookiemonster.js' %}'></script>
 
 <script type='text/javascript'>
-    var vlevel = 2,
-        vindex = 0;
-    var input = document.getElementById('id_vocabattempt');
+    var input = document.getElementById('attempt');
     wanakana.bind(input);
 
-    function vocabNext(data) {
-        if (data['id'] != null) {
-            $('#vocab_english').html(data['english']);
-            $('#vactual').val(data['kana_clean']);
-            switch(vlevel) {
-                case 2:
-                    $('#hint_block').html(data['kana_all_blank']); break;
-                case 1:
-                    $('#hint_block').html(data['kana_alt_blank']); break;
-                default:
-                    $('#hint_block').html(data['f_kana']); break;
-            }
-            $('#vocabquizform').removeClass('abox_g abox_r');
-        } else {
-            $.get("{% url 'demo:demoexpressionsuccess' %}").done(function (data) {
-                $('#wrapper').html(data);
-            });            
+    const english = $('#english');
+    const hint = $('#hint');
+    const qform = $('#quiz_form');
+    const attempt = $('#attempt');
+    const pagewrap = $('#wrapper');
+
+    var qdata = '',
+        q = 0,
+        totalq = 0,
+        level = 2;
+
+    function vocab() {
+        english.html(qdata[q]['english']);
+        switch(level) {
+            case 2:
+                hint.html(qdata[q]['kana_all_blank']); break;
+            case 1:
+                hint.html(qdata[q]['kana_alt_blank']); break;
+            default:
+                hint.html(qdata[q]['f_kana']); break;
+        }
+        if (qform.hasClass('abox_g')) {
+            qform.attr('class', 'abox reset_abox_g');
+        } else if (qform.hasClass('abox_r')) {
+            qform.attr('class', 'abox_red reset_abox_r');
         }
     }
-    $('#vocabquizform').submit(function(event) {
+
+    qform.submit(function(event) {
         event.preventDefault();
-        var clean_attempt = cleanInput($('#id_vocabattempt').val());
-        if (clean_attempt == $('#vactual').val()) {
-            $('#vocabquizform').attr('class', 'abox abox_g');
-            if (vlevel == 2) { vindex++; } else { vlevel = 2; }
-            $('#hint_block').attr('class', 'ls5');
+        var clean = cleanInput(attempt.val());
+        if (clean === qdata[q]['kana_clean']) {
+            qform.attr('class', 'abox abox_g');
+            hint.attr('class', 'ls5');
+            if (level === 2) { q++; } else { level = 2; }
         } else {
-            $('#vocabquizform').attr('class', 'abox_red abox_r');
-            if (vlevel > 0) { vlevel--; }
-            $('#hint_block').attr('class', 'ls5r');
+            qform.attr('class', 'abox_red abox_r');
+            hint.attr('class', 'ls5r');
+            if (level > 0) { level--; }
         }
-        $('#vindex').val(vindex);
-        var form_data = $('#vocabquizform').serialize();
-        $.post("{% url 'demo:demoexpressioncheck' %}", form_data).done(function(data) {
-            $('#vocabquizform')[0].reset();
-            vocabNext(data);
-        });
+        if (q < totalq) {
+            qform[0].reset();
+            vocab();
+        } else {
+            $.get("{% url 'demo:demoexpressionsuccess' %}").done(function (data) {
+                pagewrap.html(data);
+            });
+        }
     });
 
     $(document).ready(function() {
-        var urlstring = "/demo/expressionquiz/grab/0";
+        var urlstring = "/demo/expressionquiz/grab/";
         $.get(urlstring).done(function (data) {
-            vocabNext(data);
+            qdata = data;
+            totalq = qdata.length;
+            vocab();
         });
     });
 </script>

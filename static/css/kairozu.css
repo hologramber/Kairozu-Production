@@ -770,13 +770,19 @@ table.gpt > tbody > tr > td.blankline { line-height: 5px; }
 @keyframes reset_iA { from { background:#d92425; } to { background:#FFF; } }
 
 .reset_abox_g > input[type=text],
-.reset_abox_g > input[type=submit] {
+.reset_abox_g > input[type=submit],
+input[type=text].reset_kbox1_g,
+input[type=text].reset_kbox2_g,
+input[type=submit].reset_ksub_g {
 	-webkit-animation:reset_cA;				/* call keyframe reset_cA, ease-in and repeat it only 1 time */
 	-moz-animation:reset_cA;
 	animation:reset_cA; }
 
 .reset_abox_r > input[type=text],
-.reset_abox_r > input[type=submit] {
+.reset_abox_r > input[type=submit],
+input[type=text].reset_kbox1_r,
+input[type=text].reset_kbox2_r,
+input[type=submit].reset_ksub_r {
 	-webkit-animation:reset_iA;  			/* call keyframe reset_iA, ease-in and repeat it only 1 time */
 	-moz-animation:reset_iA;
 	animation:reset_iA; }
@@ -807,8 +813,14 @@ input[type=submit].ksub_r {
 .abox_r > input[type=submit],
 .reset_abox_g > input[type=text],
 .reset_abox_g > input[type=submit],
+input[type=text].reset_kbox1_g,
+input[type=text].reset_kbox2_g,
+input[type=submit].reset_ksub_g,
 .reset_abox_r > input[type=text],
 .reset_abox_r > input[type=submit],
+input[type=text].reset_kbox1_r,
+input[type=text].reset_kbox2_r ,
+input[type=submit].reset_ksub_r,
 input[type=text].kbox1_g,
 input[type=text].kbox2_g,
 input[type=text].kbox1_r,
@@ -1342,20 +1354,23 @@ span.step {
 		font-size: 35px;
 		padding-bottom: 5px; }
 
-	input[type=text].kbox1,
-    input[type=text].kbox1_g,
-    input[type=text].kbox1_r,
-    input[type=text].kbox1_red {
-		padding: 5px 10px;
-		font-size: 30px; }
-
 	.abox_red > input[type=text],
 	.abox > input[type=text],
     .abox_g > input[type=text],
+    .reset_abox_g > input[type=text],
     .abox_r > input[type=text],
+    .reset_abox_r > input[type=text],
+	input[type=text].kbox1,
+    input[type=text].kbox1_g,
+    input[type=text].kbox1_r,
+    input[type=text].reset_kbox1_g,
+    input[type=text].reset_kbox1_r,
+    input[type=text].kbox1_red,
 	input[type=text].kbox2,
     input[type=text].kbox2_g,
     input[type=text].kbox2_r,
+    input[type=text].reset_kbox2_g,
+    input[type=text].reset_kbox2_r,
     input[type=text].kbox2_red {
 		padding: 5px 10px;
 		font-size: 30px; }
@@ -1364,9 +1379,13 @@ span.step {
 	.abox > input[type=submit],
     .abox_g > input[type=submit],
     .abox_r > input[type=submit],
+    .reset_abox_g > input[type=submit],
+    .reset_abox_r > input[type=submit],
 	input[type=submit].ksub,
     input[type=submit].ksub_r,
     input[type=submit].ksub_g,
+    input[type=submit].reset_ksub_r,
+    input[type=submit].reset_ksub_g,
     input[type=submit].ksub_red {
 		font-size: 30px;
 		margin-left: -20px;
