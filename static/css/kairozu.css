@@ -653,7 +653,7 @@ table.gpt > tbody > tr > td.blankline { line-height: 5px; }
 	border-radius: 5px;
     float:left;
 	background: #8a8a8a; /* Old browsers */
-	background: -moz-linear-gradient(left, #8a8a8a 0%, #89ae13 100%); /* FF3.6-15 */
+	background: -moz-linear-gradient(left, #8a8a8a 0%,#89ae13 100%); /* FF3.6-15 */
 	background: -webkit-linear-gradient(left, #8a8a8a 0%,#89ae13 100%); /* Chrome10-25,Safari5.1-6 */
 	background: linear-gradient(to right, #8a8a8a 0%,#89ae13 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8a8a8a', endColorstr='#89ae13',GradientType=1 ); /* IE6-9 */ }
@@ -761,32 +761,6 @@ table.gpt > tbody > tr > td.blankline { line-height: 5px; }
 @-moz-keyframes incorrectA { from { background:#d92425; } to { background:#FFF; } }
 @keyframes incorrectA { from { background:#d92425; } to { background:#FFF; } }
 
-/* make keyframes that tell the start state and the end state of our object */
-@-webkit-keyframes reset_cA { from { background:#89AE13; } to { background:#FFF; } }
-@-moz-keyframes reset_cA { from { background:#89AE13; } to { background:#FFF; } }
-@keyframes reset_cA { from { background:#89AE13; } to { background:#FFF; } }
-@-webkit-keyframes reset_iA { from { background:#d92425; } to { background:#FFF; } }
-@-moz-keyframes reset_iA { from { background:#d92425; } to { background:#FFF; } }
-@keyframes reset_iA { from { background:#d92425; } to { background:#FFF; } }
-
-.reset_abox_g > input[type=text],
-.reset_abox_g > input[type=submit],
-input[type=text].reset_kbox1_g,
-input[type=text].reset_kbox2_g,
-input[type=submit].reset_ksub_g {
-	-webkit-animation:reset_cA;				/* call keyframe reset_cA, ease-in and repeat it only 1 time */
-	-moz-animation:reset_cA;
-	animation:reset_cA; }
-
-.reset_abox_r > input[type=text],
-.reset_abox_r > input[type=submit],
-input[type=text].reset_kbox1_r,
-input[type=text].reset_kbox2_r,
-input[type=submit].reset_ksub_r {
-	-webkit-animation:reset_iA;  			/* call keyframe reset_iA, ease-in and repeat it only 1 time */
-	-moz-animation:reset_iA;
-	animation:reset_iA; }
-
 /* kbox1 and kbox2 are the practice quiz boxes */
 /* abox is vocab, expression, sentence, dialogue, passage, all reviews */
 .abox_g > input[type=text],
@@ -811,16 +785,6 @@ input[type=submit].ksub_r {
 .abox_g > input[type=submit],
 .abox_r > input[type=text],
 .abox_r > input[type=submit],
-.reset_abox_g > input[type=text],
-.reset_abox_g > input[type=submit],
-input[type=text].reset_kbox1_g,
-input[type=text].reset_kbox2_g,
-input[type=submit].reset_ksub_g,
-.reset_abox_r > input[type=text],
-.reset_abox_r > input[type=submit],
-input[type=text].reset_kbox1_r,
-input[type=text].reset_kbox2_r ,
-input[type=submit].reset_ksub_r,
 input[type=text].kbox1_g,
 input[type=text].kbox2_g,
 input[type=text].kbox1_r,
@@ -831,9 +795,6 @@ input[type=submit].ksub_r {
 	-webkit-animation-fill-mode:forwards;	/* makes sure that after animation is done we remain @ last keyframe value (white bg) */
 	-moz-animation-fill-mode:forwards;
 	animation-fill-mode:forwards;
-	/*-webkit-animation-duration:5s;*/
-	/*-moz-animation-duration:5s;*/
-	/*animation-duration:5s; }*/
 	-webkit-animation-duration:0.3s;
 	-moz-animation-duration:0.3s;
 	animation-duration:0.3s; }
@@ -1357,20 +1318,14 @@ span.step {
 	.abox_red > input[type=text],
 	.abox > input[type=text],
     .abox_g > input[type=text],
-    .reset_abox_g > input[type=text],
     .abox_r > input[type=text],
-    .reset_abox_r > input[type=text],
 	input[type=text].kbox1,
     input[type=text].kbox1_g,
     input[type=text].kbox1_r,
-    input[type=text].reset_kbox1_g,
-    input[type=text].reset_kbox1_r,
     input[type=text].kbox1_red,
 	input[type=text].kbox2,
     input[type=text].kbox2_g,
     input[type=text].kbox2_r,
-    input[type=text].reset_kbox2_g,
-    input[type=text].reset_kbox2_r,
     input[type=text].kbox2_red {
 		padding: 5px 10px;
 		font-size: 30px; }
@@ -1379,13 +1334,9 @@ span.step {
 	.abox > input[type=submit],
     .abox_g > input[type=submit],
     .abox_r > input[type=submit],
-    .reset_abox_g > input[type=submit],
-    .reset_abox_r > input[type=submit],
 	input[type=submit].ksub,
     input[type=submit].ksub_r,
     input[type=submit].ksub_g,
-    input[type=submit].reset_ksub_r,
-    input[type=submit].reset_ksub_g,
     input[type=submit].ksub_red {
 		font-size: 30px;
 		margin-left: -20px;
