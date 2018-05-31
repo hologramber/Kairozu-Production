@@ -77,16 +77,8 @@
     function practice() {
         english.html(qdata[q]['pone_english']);
         english_b.html(qdata[q]['ptwo_english']);
-        if (qdata[q]['pone_literal'].trim()) {
-            literal.html('<div class="white-words litcontextbox upper">literal</div>' + qdata[q]['pone_literal'] + '&#8203;');
-        } else {
-            literal.html('&#8203;');
-        }
-        if (qdata[q]['ptwo_literal'].trim()) {
-            literal_b.html('<div class="white-words litcontextbox upper">literal</div>' + qdata[q]['ptwo_literal'] + '&#8203;');
-        } else {
-            literal_b.html('&#8203;');
-        }
+        literal.html('<div class="white-words litcontextbox upper">literal</div>' + qdata[q]['pone_literal'] + '&#8203;');
+        literal_b.html('<div class="white-words litcontextbox upper">literal</div>' + qdata[q]['ptwo_literal'] + '&#8203;');
         switch(pcode) {
             case 'BC':
                 hint.html(qdata[q]['pone_kana_all'] + '&#8203;');
@@ -121,9 +113,11 @@
 
     qform.submit(function(event) {
         event.preventDefault();
-        var clean = cleanInput(attempt.val());
-        var clean_b = cleanInput(attempt_b.val());
-        if ((clean === qdata[q]['pone_kana_clean']) && (clean_b === qdata[q]['ptwo_kana_clean'])) {
+        var clean = cleanInput(attempt.val()),
+            clean_b = cleanInput(attempt_b.val()),
+            actual = qdata[q]['pone_kana_clean'],
+            actual_b = qdata[q]['ptwo_kana_clean'];
+        if ((clean === actual) && (clean_b === actual_b)) {
             pcode = 'BC';
             if (level === 2) { q++; } else { level = 2; }
 
@@ -131,49 +125,49 @@
             attempt_b.removeClass("kbox2_red");
             submit.removeClass("ksub_red");
 
-            attempt.addClass("kbox1_g").one(
+            attempt.addClass("kbox1_g").prop("disabled", false).val('').one(
                 "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend",
-                function() { attempt.removeClass("kbox1_g").prop("disabled", false).val('').focus(); });
-            attempt_b.addClass("kbox2_g").one(
+                function() { attempt.removeClass("kbox1_g").focus(); });
+            attempt_b.addClass("kbox2_g").prop("disabled", false).val('').one(
                 "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend",
-                function() { attempt_b.removeClass("kbox2_g").prop("disabled", false).val(''); });
+                function() { attempt_b.removeClass("kbox2_g"); });
             submit.addClass("ksub_g").one(
                 "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend",
                 function() { submit.removeClass("ksub_g"); });
 
             hint.attr('class', 'ls5');
             hint_b.attr('class', 'ls5');
-        } else if ((clean === qdata[q]['pone_kana_clean']) && (clean_b !== qdata[q]['ptwo_kana_clean'])) {
+        } else if ((clean === actual) && (clean_b !== actual_b)) {
             pcode = 'OC';
             if (level > 0) { level--; }
 
             attempt.removeClass("kbox1_red");
 
-            attempt.addClass("kbox1_g").one(
+            attempt.addClass("kbox1_g").prop("disabled", true).one(
                 "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend",
-                function() { attempt.removeClass("kbox1_g").prop("disabled", true); });
-            attempt_b.addClass("kbox2_red kbox2_r").one(
+                function() { attempt.removeClass("kbox1_g"); });
+            attempt_b.addClass("kbox2_red kbox2_r").val('').one(
                 "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend",
-                function() { attempt_b.removeClass("kbox2_r").val('').focus(); });
+                function() { attempt_b.removeClass("kbox2_r").focus(); });
             submit.addClass("ksub_red ksub_r").one(
                 "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend",
                 function() { submit.removeClass("ksub_r"); });
 
             hint.attr('class', 'ls5g');
             hint_b.attr('class', 'ls5r');
-        } else if ((clean !== qdata[q]['pone_kana_clean']) && (clean_b === qdata[q]['ptwo_kana_clean'])) {
+        } else if ((clean !== actual) && (clean_b === actual_b)) {
             pcode = 'TC';
             if (level > 0) { level--; }
 
             attempt.removeClass("kbox2_red");
             submit.removeClass("ksub_red");
 
-            attempt.addClass("kbox1_red kbox1_r").one(
+            attempt.addClass("kbox1_red kbox1_r").val('').one(
                 "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend",
-                function() { attempt.removeClass("kbox1_r").val('').focus(); });
-            attempt_b.addClass("kbox2_g").one(
+                function() { attempt.removeClass("kbox1_r").focus(); });
+            attempt_b.addClass("kbox2_g").prop("disabled", true).one(
                 "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend",
-                function() { attempt_b.removeClass("kbox2_g").prop("disabled", true); });
+                function() { attempt_b.removeClass("kbox2_g"); });
             submit.addClass("ksub_g").one(
                 "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend",
                 function() { submit.removeClass("ksub_g"); });
@@ -184,12 +178,12 @@
             pcode = 'NC';
             if (level > 0) { level--; }
 
-            attempt.addClass("kbox1_red kbox1_r").one(
+            attempt.addClass("kbox1_red kbox1_r").val('').one(
                 "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend",
-                function() { attempt.removeClass("kbox1_r").val('').focus(); });
-            attempt_b.addClass("kbox2_red kbox2_r").one(
+                function() { attempt.removeClass("kbox1_r").focus(); });
+            attempt_b.addClass("kbox2_red kbox2_r").val('').one(
                 "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend",
-                function() { attempt_b.removeClass("kbox2_r").val(''); });
+                function() { attempt_b.removeClass("kbox2_r"); });
             submit.addClass("ksub_red ksub_r").one(
                 "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend",
                 function() { submit.removeClass("ksub_r"); });
