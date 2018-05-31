@@ -18,3 +18,8 @@ class ChangeStrictModeForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ('strictmode',)
+
+
+class ValidateFinishForm(forms.Form):
+    q = forms.IntegerField(max_value=50)
+    totalq = forms.IntegerField(max_value=50)

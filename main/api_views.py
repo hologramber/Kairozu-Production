@@ -50,21 +50,12 @@ class ReviewVocabRecordGrab(LoginRequiredMixin, generics.RetrieveAPIView):
         return next_vocab
 
 
-class PracticeGrab(LoginRequiredMixin, generics.RetrieveAPIView):
+class PracticeGrab(LoginRequiredMixin, generics.ListAPIView):
     serializer_class = serializers.PracticeSerializer
 
-    def get_object(self):
-        lesson_id = int(self.kwargs['lesson_id'])
-        pindex = int(self.kwargs['pindex'])
-        next_practice = Practice.objects.filter(lesson_id=lesson_id)
-
-        if len(next_practice) > pindex:
-            next_practice = next_practice[pindex]
-            return next_practice
-        else:
-            if self.request.user.profile.currentpractice == lesson_id:
-                Profile.graduate_practice(self.request.user, lesson_id)
-            return None
+    def get_queryset(self):
+        practices = Practice.objects.filter(lesson_id__exact=self.kwargs['lesson_id'])
+        return practices
 
 
 class SentenceRecordGrab(LoginRequiredMixin, generics.RetrieveAPIView):

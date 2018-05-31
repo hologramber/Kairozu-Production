@@ -747,6 +747,7 @@ class InfoLink(models.Model):
 class Practice(models.Model):
     lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, blank=False, null=False)
     force_strict = models.PositiveSmallIntegerField(default=0)
+    strict = models.BooleanField(default=False)
     pone_english = models.CharField(max_length=250, blank=False)
     ptwo_english = models.CharField(max_length=250, blank=False)
     pone_kana = models.CharField(max_length=250, blank=False)
@@ -777,6 +778,10 @@ class Practice(models.Model):
         if '(' in self.ptwo_english:
             self.ptwo_context = create_context(self.ptwo_english)
 
+        if self.force_strict == 1:
+            self.strict = True
+        else:
+            self.strict = False
         self.pone_kana = hw_punctuation(self.pone_kana)
         self.ptwo_kana = hw_punctuation(self.ptwo_kana)
         self.pone_kanji = hw_punctuation(self.pone_kanji)
@@ -979,6 +984,7 @@ class ExerciseRecord(models.Model):
 class Sentence(models.Model):
     lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, blank=False, null=False)
     force_strict = models.PositiveSmallIntegerField(default=0)
+    strict = models.BooleanField(default=False)
     english = models.CharField(max_length=250, blank=False)
     kana = models.CharField(max_length=250, blank=False)
     kanji = models.CharField(max_length=250, blank=False)
@@ -995,6 +1001,10 @@ class Sentence(models.Model):
         if '(' in self.english:
             self.context = create_context(self.english)
 
+        if self.force_strict == 1:
+            self.strict = True
+        else:
+            self.strict = False
         self.kana = hw_punctuation(self.kana)
         self.kanji = hw_punctuation(self.kanji)
         self.kana_all_blank, self.kana_alt_blank, self.kana_clean = create_blanks(self.kana, self.disamb_location, False)

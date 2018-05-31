@@ -14,149 +14,199 @@
 <script type='text/javascript' src='{% static 'js/cookiemonster.js' %}'></script>
 
 <script type='text/javascript'>
-    var plevel = 0,
-        pindex = 0,
-        pcode = 'AD';
-    var $hint_one = $('#hint_one'),
-        $hint_two = $('#hint_two'),
-        $id_pone_attempt = $('#id_pone_attempt'),
-        $id_ptwo_attempt = $('#id_ptwo_attempt');
-    var input = document.getElementById('id_pone_attempt');
-    var input2 = document.getElementById('id_ptwo_attempt');
+    var input = document.getElementById('attempt');
+    var input_b = document.getElementById('attempt_b');
     wanakana.bind(input);
-    wanakana.bind(input2);
+    wanakana.bind(input_b);
 
-    function practiceNext(data) {
-        if (data['pone_english'] != null) {
-            $('#practice_eng_one').html(data['pone_english']);
-            $('#practice_eng_two').html(data['ptwo_english']);
-            $('#pstrict').val(data['force_strict']);
-            $('#poneact').val(data['pone_kana_clean']);
-            $('#ptwoact').val(data['ptwo_kana_clean']);
-            switch(pcode) {
-                case 'BC':
-                    $hint_one.html(data['pone_kana_all'] + '&#8203;');
-                    $hint_two.html(data['ptwo_kana_all'] + '&#8203;');
-                    break;
-                case 'OC':
-                    if (plevel == 1) {
-                        $hint_one.html(data['pone_kana_f'] + '&#8203;');
-                        $hint_two.html(data['ptwo_kana_alt'] + '&#8203;');
-                    } else {
-                        $hint_one.html(data['pone_kana_f'] + '&#8203;');
-                        $hint_two.html(data['ptwo_kana_f'] + '&#8203;');
-                    }
-                    break;
-                case 'TC':
-                    if (plevel == 1) {
-                        $hint_one.html(data['pone_kana_alt'] + '&#8203;');
-                        $hint_two.html(data['ptwo_kana_f'] + '&#8203;');
-                    } else {
-                        $hint_one.html(data['pone_kana_f'] + '&#8203;');
-                        $hint_two.html(data['ptwo_kana_f'] + '&#8203;');
-                    }
-                    break;
-                default:
-                    if (plevel == 1) {
-                        $hint_one.html(data['pone_kana_alt'] + '&#8203;');
-                        $hint_two.html(data['ptwo_kana_alt'] + '&#8203;');
-                    } else {
-                        $hint_one.html(data['pone_kana_f'] + '&#8203;');
-                        $hint_two.html(data['ptwo_kana_f'] + '&#8203;');
-                    }
-                    break;
-            }
-            if (data['pone_literal'].trim()) {
-                $('#literal_one').html('<div class="white-words litcontextbox upper">literal</div>' + data['pone_literal'] + '&#8203;');
-            } else {
-                $('#literal_one').html('&#8203;');
-            }
-            if (data['ptwo_literal'].trim()) {
-                $('#literal_two').html('<div class="white-words litcontextbox upper">literal</div>' + data['ptwo_literal'] + '&#8203;');
-            } else {
-                $('#literal_two').html('&#8203;');
-            }
-            $('#context_one').html(data['pone_context'] + '&#8203;');
-            $('#context_two').html(data['ptwo_context'] + '&#8203;');
-            $id_pone_attempt.removeClass('kbox1_g kbox1_r');
-            $id_ptwo_attempt.removeClass('kbox2_g kbox2_r');
-            $('#ksubmit').removeClass('ksub_r ksub_g');
+    const qform = $('#quiz_form'),
+        context = $('#context'),
+        context_b = $('#context_b'),
+        english = $('#english'),
+        english_b = $('#english_b'),
+        hint = $('#hint'),
+        hint_b = $('#hint_b'),
+        attempt = $('#attempt'),
+        attempt_b = $('#attempt_b'),
+        pagewrap = $('#wrapper'),
+        literal = $('#literal'),
+        literal_b = $('#literal_b'),
+        submit = $('#ksubmit'),
+        bug = $('#bug-button');
+
+    var qdata = '',
+        q = 0,
+        pcode = 'AD',
+        totalq = 0,
+        level = 0;
+
+    function practice() {
+        english.html(qdata[q]['pone_english']);
+        english_b.html(qdata[q]['ptwo_english']);
+        literal.html('<div class="white-words litcontextbox upper">literal</div>' + qdata[q]['pone_literal'] + '&#8203;');
+        literal_b.html('<div class="white-words litcontextbox upper">literal</div>' + qdata[q]['ptwo_literal'] + '&#8203;');
+        context.html(qdata[q]['pone_context'] + '&#8203;');
+        context_b.html(qdata[q]['ptwo_context'] + '&#8203;');
+        switch(pcode) {
+            case 'BC':
+                hint.html(qdata[q]['pone_kana_all'] + '&#8203;');
+                hint_b.html(qdata[q]['ptwo_kana_all'] + '&#8203;');
+                break;
+            case 'OC':
+                if (level === 1) {
+                    hint.html(qdata[q]['pone_kana_f'] + '&#8203;');
+                    hint_b.html(qdata[q]['ptwo_kana_alt'] + '&#8203;');
+                } else {
+                    hint.html(qdata[q]['pone_kana_f'] + '&#8203;');
+                    hint_b.html(qdata[q]['ptwo_kana_f'] + '&#8203;');
+                } break;
+            case 'TC':
+                if (level === 1) {
+                    hint.html(qdata[q]['pone_kana_alt'] + '&#8203;');
+                    hint_b.html(qdata[q]['ptwo_kana_f'] + '&#8203;');
+                } else {
+                    hint.html(qdata[q]['pone_kana_f'] + '&#8203;');
+                    hint_b.html(qdata[q]['ptwo_kana_f'] + '&#8203;');
+                } break;
+            default:
+                if (level === 1) {
+                    hint.html(qdata[q]['pone_kana_alt'] + '&#8203;');
+                    hint_b.html(qdata[q]['ptwo_kana_alt'] + '&#8203;');
+                } else {
+                    hint.html(qdata[q]['pone_kana_f'] + '&#8203;');
+                    hint_b.html(qdata[q]['ptwo_kana_f'] + '&#8203;');
+                } break;
+        }
+    }
+
+    function processPractice(status) {
+        switch(status) {
+            case 1:
+                bug.hide();
+                pcode = 'BC';
+                if (level === 2) { q++; } else { level = 2; }
+                attempt.removeClass("kbox1_red");
+                attempt_b.removeClass("kbox2_red");
+                submit.removeClass("ksub_red");
+
+                attempt.addClass("kbox1_g").prop("disabled", false).val('').one(
+                    "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend",
+                    function() { attempt.removeClass("kbox1_g").focus(); });
+                attempt_b.addClass("kbox2_g").prop("disabled", false).val('').one(
+                    "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend",
+                    function() { attempt_b.removeClass("kbox2_g"); });
+                submit.addClass("ksub_g").one(
+                    "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend",
+                    function() { submit.removeClass("ksub_g"); });
+
+                hint.attr('class', 'ls5');
+                hint_b.attr('class', 'ls5');
+                break;
+
+            case 2:
+                bug.show();
+                pcode = 'OC';
+                if (level > 0) { level--; }
+                attempt.removeClass("kbox1_red");
+
+                attempt.addClass("kbox1_g").prop("disabled", true).one(
+                    "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend",
+                    function() { attempt.removeClass("kbox1_g"); });
+                attempt_b.addClass("kbox2_red kbox2_r").val('').one(
+                    "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend",
+                    function() { attempt_b.removeClass("kbox2_r").focus(); });
+                submit.addClass("ksub_red ksub_r").one(
+                    "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend",
+                    function() { submit.removeClass("ksub_r"); });
+
+                hint.attr('class', 'ls5g');
+                hint_b.attr('class', 'ls5r');
+                break;
+
+            case 3:
+                bug.show();
+                pcode = 'TC';
+                if (level > 0) { level--; }
+                attempt.removeClass("kbox2_red");
+                submit.removeClass("ksub_red");
+
+                attempt.addClass("kbox1_red kbox1_r").val('').one(
+                    "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend",
+                    function() { attempt.removeClass("kbox1_r").focus(); });
+                attempt_b.addClass("kbox2_g").prop("disabled", true).one(
+                    "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend",
+                    function() { attempt_b.removeClass("kbox2_g"); });
+                submit.addClass("ksub_g").one(
+                    "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend",
+                    function() { submit.removeClass("ksub_g"); });
+
+                hint.attr('class', 'ls5r');
+                hint_b.attr('class', 'ls5g');
+                break;
+
+            default:
+                bug.show();
+                pcode = 'NC';
+                if (level > 0) { level--; }
+
+                attempt.addClass("kbox1_red kbox1_r").val('').one(
+                    "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend",
+                    function() { attempt.removeClass("kbox1_r").focus(); });
+                attempt_b.addClass("kbox2_red kbox2_r").val('').one(
+                    "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend",
+                    function() { attempt_b.removeClass("kbox2_r"); });
+                submit.addClass("ksub_red ksub_r").one(
+                    "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend",
+                    function() { submit.removeClass("ksub_r"); });
+
+                hint.attr('class', 'ls5r');
+                hint_b.attr('class', 'ls5r');
+                break;
+        }
+        if (q < totalq) {
+            practice();
         } else {
-            $.get("{% url 'main:practicesuccess' lesson.id %}").done(function (data) {
-                $('#wrapper').html(data);
+            $.ajax({
+                type: "POST",
+                url: "{% url 'main:practicefinish' lesson.id %}",
+                data: {q: q, totalq: totalq},
+                success: function (data) {
+                    if (data.error) {
+                        location.reload();
+                    } else {
+                        pagewrap.html(data);
+                    }
+                }
             });
         }
     }
 
-    function processPractice(attempt) {
-        if (attempt == 1) {
-            pcode = 'BC';
-            $('#bug-button').hide();
-            if (plevel == 2) { pindex++; } else { plevel = 2; }
-            $id_pone_attempt.attr('class', 'kbox1 kbox1_g').prop("disabled", false).val('').focus();
-            $id_ptwo_attempt.attr('class', 'kbox2 kbox2_g').prop("disabled", false).val('');
-            $('#ksubmit').attr('class', 'ksub ksub_g');
-            $hint_one.attr('class', 'ls5');
-            $hint_two.attr('class', 'ls5');
-        } else if (attempt == 2) {
-            pcode = 'OC';
-            $('#bug-button').show();
-            if (plevel > 0) { plevel--; }
-            $id_pone_attempt.attr('class', 'kbox1 kbox1_g').prop("disabled", true);
-            $id_ptwo_attempt.attr('class', 'kbox2_red kbox2_r').val('').focus();
-            $('#ksubmit').attr('class', 'ksub_red ksub_r');
-            $hint_one.attr('class', 'ls5g');
-            $hint_two.attr('class', 'ls5r');
-        } else if (attempt == 3) {
-            pcode = 'TC';
-            $('#bug-button').show();
-            if (plevel > 0) { plevel --; }
-            $id_pone_attempt.attr('class', 'kbox1_red kbox1_r').val('').focus();
-            $id_ptwo_attempt.attr('class', 'kbox2 kbox2_g').prop("disabled", true);
-            $('#ksubmit').attr('class', 'ksub ksub_g');
-            $hint_one.attr('class', 'ls5r');
-            $hint_two.attr('class', 'ls5g');
-        } else {
-            pcode = 'NC';
-            $('#bug-button').show();
-            if (plevel > 0) { plevel --; }
-            $id_pone_attempt.attr('class', 'kbox1_red kbox1_r').val('').focus();
-            $id_ptwo_attempt.attr('class', 'kbox2_red kbox2_r').val('');
-            $('#ksubmit').attr('class', 'ksub_red ksub_r');
-            $hint_one.attr('class', 'ls5r');
-            $hint_two.attr('class', 'ls5r');
-        }
-        $('#pindex').val(pindex);
-        var form_data = $('#practicequizform').serialize();
-        $.post("{% url 'main:practicecheck' lesson.id %}", form_data).done(function(data) {
-            practiceNext(data);
-        });
-    }
-
-    $('#practicequizform').submit(function(event) {
+    qform.submit(function(event) {
         event.preventDefault();
-        var pone_clean_att = cleanInput($id_pone_attempt.val());
-        var ptwo_clean_att = cleanInput($id_ptwo_attempt.val());
-        if ($('#pstrict').val() == '1') {
-            if ((pone_clean_att == $('#poneact').val()) && (ptwo_clean_att == $('#ptwoact').val())) {
+        var clean = cleanInput(attempt.val()),
+            clean_b = cleanInput(attempt_b.val()),
+            actual = qdata[q]['pone_kana_clean'],
+            actual_b = qdata[q]['ptwo_kana_clean'];
+        if ('{{ user.profile.strictmode }}' === 'True' || (qdata[q]['strict'])) {
+            if ((clean === actual) && (clean_b === actual_b)) {
                 processPractice(1);
-            } else if ((pone_clean_att == $('#poneact').val()) && (ptwo_clean_att != $('#ptwoact').val())) {
+            } else if (clean === actual) {
                 processPractice(2);
-            } else if ((pone_clean_att != $('#poneact').val()) && (ptwo_clean_att == $('#ptwoact').val())) {
+            } else if (clean_b === actual_b) {
                 processPractice(3);
             } else {
                 processPractice(4);
             }
         } else {
-            var pone_act_split = $('#poneact').val().split("");
-            var ptwo_act_split = $('#ptwoact').val().split("");
-            pone_clean_att = pone_clean_att.split("");
-            ptwo_clean_att = ptwo_clean_att.split("");
-            if ((wanakana.compare(pone_clean_att, pone_act_split)) && (wanakana.compare(ptwo_clean_att, ptwo_act_split))) {
+            actual = actual.split("");
+            actual_b = actual_b.split("");
+            clean = clean.split("");
+            clean_b = clean_b.split("");
+            if ((wanakana.compare(clean, actual)) && (wanakana.compare(clean_b, actual_b))) {
                 processPractice(1);
-            } else if (wanakana.compare(pone_clean_att, pone_act_split)) {
+            } else if (wanakana.compare(clean, actual)) {
                 processPractice(2);
-            } else if (wanakana.compare(ptwo_clean_att, ptwo_act_split)) {
+            } else if (wanakana.compare(clean_b, actual_b)) {
                 processPractice(3);
             } else {
                 processPractice(4);
@@ -165,19 +215,13 @@
     });
 
     $(document).ready(function() {
-        var urlstring = "/main/lesson/" + '{{ lesson.id }}' + "/practicequiz/grab/0";
+        var urlstring = "/main/lesson/" + '{{ lesson.id }}' + "/practicequiz/grab/";
         $.get(urlstring).done(function (data) {
-            practiceNext(data);
+            qdata = data;
+            totalq = qdata.length;
+            practice();
         });
     });
-
-    $('#bug-button').click(function() {
-        $('#form-modal-body').load('/news/newissue/', function () {
-            modal.style.display = "block";
-            formAjaxSubmit('#form-modal-body form', '#form-modal');
-        });
-    });
-
 </script>
 
 {% endblock %}

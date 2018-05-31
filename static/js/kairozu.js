@@ -28,6 +28,13 @@ $(function() {
         e.stopPropagation();
     });
 
+    $('#bug-button').click(function() {
+        $('#form-modal-body').load('/news/newissue/', function () {
+            modal.style.display = "block";
+            formAjaxSubmit('#form-modal-body form', '#form-modal');
+        });
+    });
+
     $('html').click(function (e) {
         if (e.target.id == 'form-modal') {
             e.target.style.display = "none";

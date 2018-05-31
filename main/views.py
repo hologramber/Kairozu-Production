@@ -2,10 +2,13 @@ from itertools import chain
 
 from django.shortcuts import get_object_or_404
 from django.views.generic import TemplateView, ListView
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
+from django.views.decorators.http import require_http_methods
 from django.urls import reverse
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from .models import Profile, Expression, ExpressionRecord, Vocabulary, Lesson, Chapter, VocabRecord, SentenceRecord, Exercise, ExerciseRecord, ExerciseSentence, GrammarNote
+from .models import Profile, Expression, ExpressionRecord, Vocabulary, Practice, Lesson, Chapter, VocabRecord, SentenceRecord, Exercise, ExerciseRecord, ExerciseSentence, GrammarNote
+from .forms import ValidateFinishForm
 
 
 # where users enter chapters; grid of red sun chapters/progress
@@ -263,11 +266,7 @@ class ExpressionSuccessView(LoginRequiredMixin, UserPassesTestMixin, TemplateVie
 
 # practice quiz first-load (future loads aren't full refreshes)
 class PracticeQuizView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
-    def get_template_names(self):
-        if self.request.user.profile.strictmode:
-            return ['main/practicequiz_strict.html']
-        else:
-            return ['main/practicequiz.html']
+    template_name = 'main/practicequiz.html'
 
     def get_context_data(self, **kwargs):
         context = super(PracticeQuizView, self).get_context_data(**kwargs)
@@ -280,15 +279,27 @@ class PracticeQuizView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
         if int(self.kwargs['lesson_id']) <= self.request.user.profile.currentpractice:
             return True
 
-
-def practice_check(request, lesson_id):
-    pindex = int(request.POST['pindex'])
-    return HttpResponseRedirect(reverse('main:practicegrab', kwargs={'lesson_id': lesson_id, 'pindex': pindex}))
-
-
-def practice_reset(request, lesson_id):
-    reseturl = reverse('main:practicequiz', kwargs={'lesson_id': lesson_id})
-    return HttpResponseRedirect(reseturl)
+@require_http_methods(["POST"])
+def practicefinish(request, lesson_id):
+    badfinish = 'It looks like you haven\'t met the requirements to complete this lesson\'s practice sentences. Please e-mail kairozu@kairozu.com if you suspect this is an error.'
+    baddata = {'error': True}
+    if request.user.profile.currentpractice < int(lesson_id):
+        return JsonResponse(baddata)
+    else:
+        form = ValidateFinishForm(request.POST)
+        if form.is_valid():
+            q = form.cleaned_data['q']
+            totalq = form.cleaned_data['totalq']
+            if q == totalq == Practice.objects.filter(lesson_id__exact=lesson_id).count():
+                if request.user.profile.currentpractice == int(lesson_id):
+                    Profile.graduate_practice(request.user, lesson_id)
+                return HttpResponseRedirect(reverse('main:practicesuccess', kwargs={'lesson_id': lesson_id}))
+            else:   # if # of questions doesn't line up
+                messages.add_message(request, messages.ERROR, badfinish)
+                return JsonResponse(baddata)
+        else:   # if form is not valid
+            messages.add_message(request, messages.ERROR, badfinish)
+            return JsonResponse(baddata)
 
 
 class PracticeSuccessView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):

@@ -11,7 +11,6 @@ urlpatterns = [
     url(r'^chapter/(?P<chapter_id>[0-9]+)/summary/$', views.SummaryView.as_view(), name='summary'),       # summary of ch lessons
     url(r'^progress/$', views.ProgressView.as_view(), name='progress'),
 
-
     # ################## VOCABULARY ####################
     url(r'^chapter/(?P<chapter_id>[0-9]+)/vocablist/$', views.VocabListView.as_view(), name='vocablist'), # /main/chapter/1/vocablist
     url(r'^chapter/(?P<chapter_id>[0-9]+)/vocabquiz/$', views.VocabQuizView.as_view(), name='vocabquiz'), # /main/chapter/1/vocabquiz
@@ -24,29 +23,22 @@ urlpatterns = [
     url(r'^chapter/(?P<chapter_id>[0-9]+)/expressionlist/$', views.ExpressionListView.as_view(), name='expressionlist'),
     url(r'^chapter/(?P<chapter_id>[0-9]+)/expressionquiz/$', views.ExpressionQuizView.as_view(), name='expressionquiz'),
     url(r'^chapter/(?P<chapter_id>[0-9]+)/expressionquiz/check/$', views.expression_check, name='expressioncheck'),
-    url(r'^chapter/(?P<chapter_id>[0-9]+)/expressionquiz/success/$', views.ExpressionSuccessView.as_view(),
-        name='expressionsuccess'),
-    url(r'^chapter/(?P<chapter_id>[0-9]+)/expressionquiz/grab/$', api_views.ExpressionRecordGrab.as_view(),
-        name='expressiongrab'),
+    url(r'^chapter/(?P<chapter_id>[0-9]+)/expressionquiz/success/$', views.ExpressionSuccessView.as_view(), name='expressionsuccess'),
+    url(r'^chapter/(?P<chapter_id>[0-9]+)/expressionquiz/grab/$', api_views.ExpressionRecordGrab.as_view(), name='expressiongrab'),
 
 
     # ################## PRACTICES #####################
     url(r'^lesson/(?P<lesson_id>[0-9]+)/practicequiz/$', views.PracticeQuizView.as_view(), name='practicequiz'),
-    url(r'^lesson/(?P<lesson_id>[0-9]+)/practicequiz/check/$', views.practice_check, name='practicecheck'),
-    url(r'^lesson/(?P<lesson_id>[0-9]+)/practicequiz/reset/$', views.practice_reset, name='practicereset'),
-    url(r'^lesson/(?P<lesson_id>[0-9]+)/practicequiz/success/$', views.PracticeSuccessView.as_view(),
-        name='practicesuccess'),
-    url(r'^lesson/(?P<lesson_id>[0-9]+)/practicequiz/grab/(?P<pindex>[0-9]+)/$', api_views.PracticeGrab.as_view(),
-        name='practicegrab'),
+    url(r'^lesson/(?P<lesson_id>[0-9]+)/practicequiz/grab/$', api_views.PracticeGrab.as_view(), name='practicegrab'),
+    url(r'^lesson/(?P<lesson_id>[0-9]+)/practicequiz/finish/$', views.practicefinish, name='practicefinish'),
+    url(r'^lesson/(?P<lesson_id>[0-9]+)/practicequiz/success/$', views.PracticeSuccessView.as_view(), name='practicesuccess'),
 
 
     # ################## SENTENCES #####################
     url(r'^lesson/(?P<lesson_id>[0-9]+)/sentencequiz/$', views.SentenceQuizView.as_view(), name='sentencequiz'),
     url(r'^lesson/(?P<lesson_id>[0-9]+)/sentencequiz/check/$', views.sentence_check, name='sentencecheck'),
-    url(r'^lesson/(?P<lesson_id>[0-9]+)/sentencequiz/success/$', views.SentenceSuccessView.as_view(),
-        name='sentencesuccess'),
-    url(r'^lesson/(?P<lesson_id>[0-9]+)/sentencequiz/grab/$', api_views.SentenceRecordGrab.as_view(),
-        name='sentencegrab'),
+    url(r'^lesson/(?P<lesson_id>[0-9]+)/sentencequiz/success/$', views.SentenceSuccessView.as_view(), name='sentencesuccess'),
+    url(r'^lesson/(?P<lesson_id>[0-9]+)/sentencequiz/grab/$', api_views.SentenceRecordGrab.as_view(), name='sentencegrab'),
 
 
     # ################## REVIEWS #######################
