@@ -76,7 +76,7 @@
     }
 
     function expression() {
-        context.html('&#8203;' + qdata[q]['express']['note'] + '&#8203;');
+        context.html('&#8203;' + qdata[q]['express']['context'] + '&#8203;');
         english.html(qdata[q]['express']['english']);
         literal.html('<div class="white-words litcontextbox upper">literal</div>' + qdata[q]['express']['literal'] + '&#8203;');
         switch(level) {
@@ -92,9 +92,9 @@
         } else {
             katakana.hide();
         }
-        if (qdata[q]['express']['prompt']) {
+        if (qdata[q]['express']['example']) {
             example.show();
-            example.html('Example: ' + qdata[q]['express']['prompt'])
+            example.html('Example: ' + qdata[q]['express']['example'])
         } else {
             example.hide();
         }

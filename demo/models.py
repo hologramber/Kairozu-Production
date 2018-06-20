@@ -32,7 +32,7 @@ class DemoVocab(models.Model):
     kanji = models.CharField(max_length=250, blank=False)
     f_kanji = models.CharField(max_length=250, blank=True)
     kana_clean = models.CharField(max_length=250, blank=True)
-    note = models.CharField(max_length=250, blank=True)
+    context = models.CharField(max_length=250, blank=True)
     kana_all_blank = models.CharField(max_length=250, blank=True)
     kana_alt_blank = models.CharField(max_length=250, blank=True)
 
@@ -61,11 +61,11 @@ class DemoExpression(models.Model):
     english = models.CharField(max_length=250, unique=True, blank=False)
     kana = models.CharField(max_length=250, blank=False)
     f_kana = models.CharField(max_length=250, blank=True)
-    prompt = models.CharField(max_length=250, blank=True)
+    example = models.CharField(max_length=250, blank=True)
     kana_clean = models.CharField(max_length=250, blank=True)
     kana_all_blank = models.CharField(max_length=250, blank=True)
     kana_alt_blank = models.CharField(max_length=250, blank=True)
-    note = models.CharField(max_length=250, blank=True)
+    context = models.CharField(max_length=250, blank=True)
 
     def save(self, *args, **kwargs):
         self.kana = hw_punctuation(self.kana)

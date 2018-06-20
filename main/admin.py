@@ -73,15 +73,15 @@ class ChapterAdmin(admin.ModelAdmin):
 
 
 class VocabularyAdmin(nested_admin.NestedModelAdmin):
-    list_display = ('english', 'kana', 'kanji', 'partofspeech', 'chapter', 'note')
+    list_display = ('english', 'kana', 'kanji', 'partofspeech', 'chapter')
     list_filter = ('chapter',)
-    search_fields = ['english', 'kana', 'kanji', 'note']
+    search_fields = ['english', 'kana', 'kanji']
 
 
 class ExpressionAdmin(nested_admin.NestedModelAdmin):
-    list_display = ('english', 'kana', 'literal', 'chapter', 'note')
+    list_display = ('english', 'kana', 'literal', 'chapter')
     list_filter = ('chapter',)
-    search_fields = ['english', 'kana', 'literal', 'note']
+    search_fields = ['english', 'kana', 'literal']
 
 
 class PracticeAdmin(admin.ModelAdmin):

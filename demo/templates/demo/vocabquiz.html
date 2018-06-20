@@ -10,21 +10,7 @@
 <div id='wrapper'>
 {% include 'demo/sidebar.html' %}
     <div class="fc-basic">
-        <div id='vocabholder'>
-            <div id='vfield'>
-                <div id='literal' class='vocab-note text-align-center'>&#8203;</div>
-                <div id='english' class='vocab-challenge text-align-center'></div>
-
-                <div class='vocab-promptc text-align-center'>
-                    <span id='hint' class='ls5r'>&#8203;</span>
-                </div>
-
-                <form id='quiz' class='abox' action='' method='post'>{% csrf_token %}
-                    <input id='attempt' type='text' autocomplete='off' autocorrect='off' autocapitalize='off' spellcheck='false' autofocus />
-                    <input type='submit' value='&#8680;' />
-                </form>
-            </div>  <!-- /#vfield -->
-        </div>  <!-- /#vocabholder -->
+        {% include 'main/vocab_base.html' %}
     </div>
     <div class="fc-basic">
         <div class="quiz-tips dashed-grey-2">
@@ -48,6 +34,7 @@
     wanakana.bind(input);
 
     const english = $('#english'),
+        context = $('#context'),
         hint = $('#hint'),
         quiz = $('#quiz'),
         attempt = $('#attempt'),
@@ -59,6 +46,7 @@
         level = 3;
 
     function vocab() {
+        context.html('&#8203;' + qdata[q]['context'] + '&#8203;');
         english.html(qdata[q]['english']);
         switch(level) {
             case 3:
