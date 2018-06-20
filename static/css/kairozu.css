@@ -345,9 +345,9 @@ span.footer-sm-text {
     border-radius: 5px;
 	display: table;
 	padding: 15px; }
-#katakana-tips, #finished-quiz, #expression-example, .visible-block, .reference-link { display: table; }
-.interface-fg, .interface-fg li, .interface-fg ul, #katakana-tips, #finished-quiz, .reference-link, #expression-example, .quiz-tips, .quiz-tips li, .quiz-tips ul { font-family: 'Raleway', sans-serif; margin: 0; }
-.quiz-tips, #katakana-tips, #finished-quiz, #expression-example { margin-top: 30px; }
+#katakana, #finished-quiz, #example, .visible-block, .reference-link { display: table; }
+.interface-fg, .interface-fg li, .interface-fg ul, #katakana, #finished-quiz, .reference-link, #example, .quiz-tips, .quiz-tips li, .quiz-tips ul { font-family: 'Raleway', sans-serif; margin: 0; }
+.quiz-tips, #katakana, #finished-quiz, #example { margin-top: 30px; }
 
 .spot-table { display: table; margin: 20px 30px 0 30px; }
 .spot-tablei { display: table; margin: 25px 10px 15px 0; }
@@ -1347,7 +1347,7 @@ span.step {
 		margin: 0;
 		font-size: 12px;
 		line-height: 16px; }
-	.quiz-tips, #katakana-tips, #finished-quiz, #expression-example { margin-top: 30px; }
+	.quiz-tips, #katakana, #finished-quiz, #example { margin-top: 30px; }
     .gpt > tbody > tr > td, .gpt th { font-size: 20px; line-height: 24px; }
 	.pass-j, .pass-e { font-size: 16px; }
 	.pass-e { line-height: 28px; }
@@ -1417,7 +1417,7 @@ span.step {
 		margin: 0;
 		font-size: 12px;
 		line-height: 16px; }
-	.quiz-tips, #katakana-tips, #finished-quiz, #expression-example { margin-top: 30px; }
+	.quiz-tips, #katakana, #finished-quiz, #example { margin-top: 30px; }
     .gpt > tbody > tr > td, .gpt th { font-size: 16px; line-height: 20px; }
     .pass-j, .pass-e { font-size: 16px; }
 	.pass-e { line-height: 26px; }

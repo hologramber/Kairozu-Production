@@ -12,14 +12,14 @@
     <div class="fc-basic">
         <div id='vocabholder'>
             <div id='vfield'>
-                <div id='literal_one' class='vocab-note text-align-center'>&#8203;</div>
+                <div id='literal' class='vocab-note text-align-center'>&#8203;</div>
                 <div id='english' class='vocab-challenge text-align-center'></div>
 
                 <div class='vocab-promptc text-align-center'>
                     <span id='hint' class='ls5'>&#8203;</span>
                 </div>
 
-                <form id='quiz_form' class='abox' action='' method='post'>{% csrf_token %}
+                <form id='quiz' class='abox' action='' method='post'>{% csrf_token %}
                     <input id='attempt' type='text' autocomplete='off' autocorrect='off' autocapitalize='off' spellcheck='false' autofocus />
                     <input type='submit' value='&#8680;' />
                 </form>
@@ -47,11 +47,11 @@
     var input = document.getElementById('attempt');
     wanakana.bind(input);
 
-    const english = $('#english');
-    const hint = $('#hint');
-    const qform = $('#quiz_form');
-    const attempt = $('#attempt');
-    const pagewrap = $('#wrapper');
+    const english = $('#english'),
+        hint = $('#hint'),
+        quiz = $('#quiz'),
+        attempt = $('#attempt'),
+        pagewrap = $('#wrapper');
 
     var qdata = '',
         q = 0,
@@ -70,25 +70,25 @@
         }
     }
 
-    qform.submit(function(event) {
+    quiz.submit(function(event) {
         event.preventDefault();
         var clean = cleanInput(attempt.val());
         if (clean === qdata[q]['kana_clean']) {
-            qform.removeClass("abox_red");
-            qform.addClass("abox_g").one(
+            quiz.removeClass("abox_red");
+            quiz.addClass("abox_g").one(
                 "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend",
-                function() { qform.removeClass("abox_g"); });
+                function() { quiz.removeClass("abox_g"); });
             hint.attr('class', 'ls5');
             if (level === 2) { q++; } else { level = 2; }
         } else {
-            qform.addClass("abox_red abox_r").one(
+            quiz.addClass("abox_red abox_r").one(
                 "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend",
-                function() { qform.removeClass("abox_r"); });
+                function() { quiz.removeClass("abox_r"); });
             hint.attr('class', 'ls5r');
             if (level > 0) { level--; }
         }
         if (q < totalq) {
-            qform[0].reset();
+            quiz[0].reset();
             vocab();
         } else {
             $.get("{% url 'demo:demoexpressionsuccess' %}").done(function (data) {

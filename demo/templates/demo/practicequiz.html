@@ -17,7 +17,7 @@
                     <span id='hint' class='ls5'>&#8203;</span>
                 </div>
 
-                <form id='quiz_form' action='' method='post'>{% csrf_token %}
+                <form id='quiz' action='' method='post'>{% csrf_token %}
                     <input id='attempt' class='kbox1' type='text' autocomplete='off' autocorrect='off' autocapitalize='off' spellcheck='false' autofocus />
                     <div id='literal' class='lit-c'>&#8203;</div>
 
@@ -56,7 +56,7 @@
     wanakana.bind(input);
     wanakana.bind(input_b);
 
-    const qform = $('#quiz_form'),
+    const quiz = $('#quiz'),
         english = $('#english'),
         english_b = $('#english_b'),
         hint = $('#hint'),
@@ -111,7 +111,7 @@
         }
     }
 
-    qform.submit(function(event) {
+    quiz.submit(function(event) {
         event.preventDefault();
         var clean = cleanInput(attempt.val()),
             clean_b = cleanInput(attempt_b.val()),

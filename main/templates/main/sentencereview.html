@@ -20,12 +20,12 @@
         if (data['id'] != null) {
             $('#sentence_eng').html(data['sentence']['english']);
             $('#sactual').val(data['sentence']['kana_clean']);
-            $('#sstrict').val(data['sentence']['force_strict']);
+            $('#sstrict').val(data['sentence']['strict']);
             $('#sid').val(data['id']);
             if (data['sentence']['literal'].trim()) {
-                $('#literal_one').html('<div class="white-words litcontextbox upper">literal</div>' + data['sentence']['literal'] + '&#8203;');
+                $('#literal').html('<div class="white-words litcontextbox upper">literal</div>' + data['sentence']['literal'] + '&#8203;');
             } else {
-                $('#literal_one').html('&#8203;');
+                $('#literal').html('&#8203;');
             }
             $('#context_one').html(data['sentence']['context'] + '&#8203;');
             $("#reflink").attr("href", '/main/lesson/' + data['sentence']['lesson'] + '/');

@@ -19,7 +19,7 @@
     wanakana.bind(input);
     wanakana.bind(input_b);
 
-    const qform = $('#quiz_form'),
+    const quiz = $('#quiz'),
         context = $('#context'),
         context_b = $('#context_b'),
         english = $('#english'),
@@ -181,7 +181,7 @@
         }
     }
 
-    qform.submit(function(event) {
+    quiz.submit(function(event) {
         event.preventDefault();
         var clean = cleanInput(attempt.val()),
             clean_b = cleanInput(attempt_b.val()),

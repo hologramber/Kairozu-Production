@@ -777,6 +777,10 @@ class Practice(models.Model):
         if '(' in self.ptwo_english:
             self.ptwo_context = create_context(self.ptwo_english)
 
+        if self.force_strict == 1:
+            self.strict = True
+        else:
+            self.strict = False
         self.pone_kana = hw_punctuation(self.pone_kana)
         self.ptwo_kana = hw_punctuation(self.ptwo_kana)
         self.pone_kanji = hw_punctuation(self.pone_kanji)

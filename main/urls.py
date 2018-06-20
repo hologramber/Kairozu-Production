@@ -11,10 +11,12 @@ urlpatterns = [
     url(r'^chapter/(?P<chapter_id>[0-9]+)/summary/$', views.SummaryView.as_view(), name='summary'),       # summary of ch lessons
     url(r'^progress/$', views.ProgressView.as_view(), name='progress'),
 
+
     # ################## VOCABULARY ####################
     url(r'^chapter/(?P<chapter_id>[0-9]+)/vocablist/$', views.VocabListView.as_view(), name='vocablist'), # /main/chapter/1/vocablist
     url(r'^chapter/(?P<chapter_id>[0-9]+)/vocabquiz/$', views.VocabQuizView.as_view(), name='vocabquiz'), # /main/chapter/1/vocabquiz
-    url(r'^chapter/(?P<chapter_id>[0-9]+)/vocabquiz/check/$', views.vocab_check, name='vocabcheck'),      # is attempt correct?
+    url(r'^chapter/(?P<chapter_id>[0-9]+)/vocabquiz/finish/$', views.vocabfinish, name='vocabfinish'),
+    url(r'^chapter/(?P<chapter_id>[0-9]+)/vocabquiz/save/$', views.vocabsave, name='vocabsave'),
     url(r'^chapter/(?P<chapter_id>[0-9]+)/vocabquiz/success/$', views.VocabSuccessView.as_view(), name='vocabsuccess'), # vocab quiz finished
     url(r'^chapter/(?P<chapter_id>[0-9]+)/vocabquiz/grab/$', api_views.VocabRecordGrab.as_view(), name='vocabgrab'), # grab next vocab for quiz
 
@@ -22,7 +24,8 @@ urlpatterns = [
     # ################## EXPRESSIONS ###################
     url(r'^chapter/(?P<chapter_id>[0-9]+)/expressionlist/$', views.ExpressionListView.as_view(), name='expressionlist'),
     url(r'^chapter/(?P<chapter_id>[0-9]+)/expressionquiz/$', views.ExpressionQuizView.as_view(), name='expressionquiz'),
-    url(r'^chapter/(?P<chapter_id>[0-9]+)/expressionquiz/check/$', views.expression_check, name='expressioncheck'),
+    url(r'^chapter/(?P<chapter_id>[0-9]+)/expressionquiz/finish/$', views.expressionfinish, name='expressionfinish'),
+    url(r'^chapter/(?P<chapter_id>[0-9]+)/expressionquiz/save/$', views.expressionsave, name='expressionsave'),
     url(r'^chapter/(?P<chapter_id>[0-9]+)/expressionquiz/success/$', views.ExpressionSuccessView.as_view(), name='expressionsuccess'),
     url(r'^chapter/(?P<chapter_id>[0-9]+)/expressionquiz/grab/$', api_views.ExpressionRecordGrab.as_view(), name='expressiongrab'),
 

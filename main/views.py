@@ -1,4 +1,5 @@
 from itertools import chain
+import json
 
 from django.shortcuts import get_object_or_404
 from django.views.generic import TemplateView, ListView
@@ -9,6 +10,7 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from .models import Profile, Expression, ExpressionRecord, Vocabulary, Practice, Lesson, Chapter, VocabRecord, SentenceRecord, Exercise, ExerciseRecord, ExerciseSentence, GrammarNote
 from .forms import ValidateFinishForm
+from .serializers import VocabRecordSerializer, ExpressionRecordSerializer, SentenceRecordSerializer
 
 
 # where users enter chapters; grid of red sun chapters/progress
@@ -110,6 +112,13 @@ class ProgressView(LoginRequiredMixin, ListView):
         return result_list
 
 
+def last_query(request, query_type, query_id):
+    if query_type == 'VQ':
+        lq = VocabRecord.objects.filter(user_id=request.user.id, vocab__chapter_id__exact=query_id).order_by('last_attempt').first()
+
+
+
+
 # #################################################################################
 # ################################## VOCABULARY ###################################
 # #################################################################################
@@ -149,17 +158,45 @@ class VocabQuizView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
             return True
 
 
-# assign vocab code depending if vocab quiz submission was correct or not
-def vocab_check(request, chapter_id):
-    vocab_code = request.POST['vocab_code']
-    vocabrecord_id = int(request.POST['vocabrecord_id'])
-    if vocab_code == 'C':
-        VocabRecord.correct_attempt(vocabrecord_id)
-    elif vocab_code == 'N':
-        VocabRecord.new_attempt(vocabrecord_id)
-    elif vocab_code == 'I':
-        VocabRecord.incorrect_attempt(vocabrecord_id)
-    return HttpResponseRedirect(reverse('main:vocabgrab', kwargs={'chapter_id': chapter_id}))
+@require_http_methods(["POST"])
+def vocabsave(request, chapter_id):
+    error_finish = 'There was a problem with saving your current progress. Please e-mail kairozu@kairozu.com if you suspect this is an error.'
+    error_data = {'error': True}
+    save_data = {'save': True}
+    vr_queryset = VocabRecord.objects.filter(user_id=request.user.id, vocab__chapter_id__exact=chapter_id)
+    vrupdate = VocabRecordSerializer(vr_queryset, data=json.loads(request.POST.get('qdata')), partial=True, many=True)
+    if vrupdate.is_valid():
+        vrupdate.save()
+        return JsonResponse(save_data)
+    else:
+        messages.add_message(request, messages.ERROR, error_finish)
+        return JsonResponse(error_data)
+
+
+@require_http_methods(["POST"])
+def vocabfinish(request, chapter_id):
+    error_finish = 'It looks like you haven\'t met the requirements to complete this chapter\'s vocabulary quiz. Please e-mail kairozu@kairozu.com if you suspect this is an error.'
+    error_data = {'error': True}
+    loop_data = {'loop': True}
+    if request.user.profile.currentvocab < int(chapter_id):
+        messages.add_message(request, messages.ERROR, error_finish)
+        return JsonResponse(error_data)
+    else:
+        vr_queryset = VocabRecord.objects.filter(user_id=request.user.id, vocab__chapter_id__exact=chapter_id)
+        vrupdate = VocabRecordSerializer(vr_queryset, data=json.loads(request.POST.get('qdata')), partial=True, many=True)
+        if vrupdate.is_valid():
+            vrupdate.save()
+            if int(chapter_id) < request.user.profile.currentvocab:
+                return JsonResponse(loop_data)
+            elif int(chapter_id) == request.user.profile.currentvocab:
+                vrecords = VocabRecord.objects.filter(user_id=request.user.id, vocab__chapter__id__exact=chapter_id, rating__lte=0).order_by('last_attempt')
+                if vrecords is None:
+                    Profile.graduate_vocab(request.user, chapter_id)
+                    return HttpResponseRedirect(reverse('main:vocabsuccess', kwargs={'chapter_id': chapter_id}))
+                else:
+                    return JsonResponse(loop_data)
+        else:
+            return JsonResponse(error_data)
 
 
 class VocabSuccessView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
@@ -225,16 +262,45 @@ class ExpressionQuizView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
             return True
 
 
-def expression_check(request, chapter_id):
-    expression_code = request.POST['expression_code']
-    expressionrecord_id = int(request.POST['expressionrecord_id'])
-    if expression_code == 'C':
-        ExpressionRecord.correct_attempt(expressionrecord_id)
-    elif expression_code == 'N':
-        ExpressionRecord.new_attempt(expressionrecord_id)
-    elif expression_code == 'I':
-        ExpressionRecord.incorrect_attempt(expressionrecord_id)
-    return HttpResponseRedirect(reverse('main:expressiongrab', kwargs={'chapter_id': chapter_id}))
+@require_http_methods(["POST"])
+def expressionsave(request, chapter_id):
+    error_finish = 'There was a problem with saving your current progress. Please e-mail kairozu@kairozu.com if you suspect this is an error.'
+    error_data = {'error': True}
+    save_data = {'save': True}
+    er_queryset = ExpressionRecord.objects.filter(user_id=request.user.id, express__chapter_id__exact=chapter_id)
+    erupdate = ExpressionRecordSerializer(er_queryset, data=json.loads(request.POST.get('qdata')), partial=True, many=True)
+    if erupdate.is_valid():
+        erupdate.save()
+        return JsonResponse(save_data)
+    else:
+        messages.add_message(request, messages.ERROR, error_finish)
+        return JsonResponse(error_data)
+
+
+@require_http_methods(["POST"])
+def expressionfinish(request, chapter_id):
+    error_finish = 'It looks like you haven\'t met the requirements to complete this chapter\'s expression quiz. Please e-mail kairozu@kairozu.com if you suspect this is an error.'
+    error_data = {'error': True}
+    loop_data = {'loop': True}
+    if request.user.profile.currentexpression < int(chapter_id):
+        messages.add_message(request, messages.ERROR, error_finish)
+        return JsonResponse(error_data)
+    else:
+        er_queryset = ExpressionRecord.objects.filter(user_id=request.user.id, express__chapter_id__exact=chapter_id)
+        erupdate = ExpressionRecordSerializer(er_queryset, data=json.loads(request.POST.get('qdata')), partial=True, many=True)
+        if erupdate.is_valid():
+            erupdate.save()
+            if int(chapter_id) < request.user.profile.currentexpression:
+                return JsonResponse(loop_data)
+            elif int(chapter_id) == request.user.profile.currentexpression:
+                erecords = ExpressionRecord.objects.filter(user_id=request.user.id, express__chapter_id__exact=chapter_id, rating__lte=0).order_by('last_attempt')
+                if erecords is None:
+                    Profile.graduate_expression(request.user, chapter_id)
+                    return HttpResponseRedirect(reverse('main:expressionsuccess', kwargs={'chapter_id': chapter_id}))
+                else:
+                    return JsonResponse(loop_data)
+        else:
+            return JsonResponse(error_data)
 
 
 class ExpressionSuccessView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
@@ -281,10 +347,10 @@ class PracticeQuizView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
 
 @require_http_methods(["POST"])
 def practicefinish(request, lesson_id):
-    badfinish = 'It looks like you haven\'t met the requirements to complete this lesson\'s practice sentences. Please e-mail kairozu@kairozu.com if you suspect this is an error.'
-    baddata = {'error': True}
+    error_finish = 'It looks like you haven\'t met the requirements to complete this lesson\'s practice sentences. Please e-mail kairozu@kairozu.com if you suspect this is an error.'
+    error_data = {'error': True}
     if request.user.profile.currentpractice < int(lesson_id):
-        return JsonResponse(baddata)
+        return JsonResponse(error_data)
     else:
         form = ValidateFinishForm(request.POST)
         if form.is_valid():
@@ -295,11 +361,11 @@ def practicefinish(request, lesson_id):
                     Profile.graduate_practice(request.user, lesson_id)
                 return HttpResponseRedirect(reverse('main:practicesuccess', kwargs={'lesson_id': lesson_id}))
             else:   # if # of questions doesn't line up
-                messages.add_message(request, messages.ERROR, badfinish)
-                return JsonResponse(baddata)
+                messages.add_message(request, messages.ERROR, error_finish)
+                return JsonResponse(error_data)
         else:   # if form is not valid
-            messages.add_message(request, messages.ERROR, badfinish)
-            return JsonResponse(baddata)
+            messages.add_message(request, messages.ERROR, error_finish)
+            return JsonResponse(error_data)
 
 
 class PracticeSuccessView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
