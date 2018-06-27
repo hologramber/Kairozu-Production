@@ -29,11 +29,11 @@
                         {% endif %}
                     </td>
                     <td class="min300">
-                        {% if phrase.note %}
-                            <div>{{ phrase.note }}</div>
+                        {% if phrase.context %}
+                            <div>{{ phrase.context }}</div>
                         {% endif %}
-                        {% if phrase.prompt %}
-                            <div class="smaller grey-words raleway">Example: {{ phrase.prompt }}</div>
+                        {% if phrase.example %}
+                            <div class="smaller grey-words raleway">Example: {{ phrase.example }}</div>
                         {% endif %}
                     </td>
                 </tr>

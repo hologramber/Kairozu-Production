@@ -1,5 +1,6 @@
 from itertools import chain
 import json
+from datetime import datetime
 
 from django.shortcuts import get_object_or_404
 from django.views.generic import TemplateView, ListView
@@ -12,6 +13,10 @@ from .models import Profile, Expression, ExpressionRecord, Vocabulary, Practice,
 from .forms import ValidateFinishForm
 from .serializers import VocabRecordSerializer, ExpressionRecordSerializer, SentenceRecordSerializer
 
+error_finish = 'There was a problem with saving your current progress. Please e-mail kairozu@kairozu.com if you suspect this is an error.'
+error_data = {'error': True}
+loop_data = {'loop': True}
+save_data = {'save': True}
 
 # where users enter chapters; grid of red sun chapters/progress
 class MainView(LoginRequiredMixin, ListView):
@@ -117,8 +122,6 @@ def last_query(request, query_type, query_id):
         lq = VocabRecord.objects.filter(user_id=request.user.id, vocab__chapter_id__exact=query_id).order_by('last_attempt').first()
 
 
-
-
 # #################################################################################
 # ################################## VOCABULARY ###################################
 # #################################################################################
@@ -145,7 +148,7 @@ class VocabListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
 
 # vocabulary quiz first-load (future loads aren't full refreshes)
 class VocabQuizView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
-    template_name = 'main/vocabquiz.html'
+    template_name = 'main/vocab_quiz.html'
 
     def get_context_data(self, **kwargs):
         context = super(VocabQuizView, self).get_context_data(**kwargs)
@@ -160,9 +163,6 @@ class VocabQuizView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
 
 @require_http_methods(["POST"])
 def vocabsave(request, chapter_id):
-    error_finish = 'There was a problem with saving your current progress. Please e-mail kairozu@kairozu.com if you suspect this is an error.'
-    error_data = {'error': True}
-    save_data = {'save': True}
     vr_queryset = VocabRecord.objects.filter(user_id=request.user.id, vocab__chapter_id__exact=chapter_id)
     vrupdate = VocabRecordSerializer(vr_queryset, data=json.loads(request.POST.get('qdata')), partial=True, many=True)
     if vrupdate.is_valid():
@@ -175,9 +175,6 @@ def vocabsave(request, chapter_id):
 
 @require_http_methods(["POST"])
 def vocabfinish(request, chapter_id):
-    error_finish = 'It looks like you haven\'t met the requirements to complete this chapter\'s vocabulary quiz. Please e-mail kairozu@kairozu.com if you suspect this is an error.'
-    error_data = {'error': True}
-    loop_data = {'loop': True}
     if request.user.profile.currentvocab < int(chapter_id):
         messages.add_message(request, messages.ERROR, error_finish)
         return JsonResponse(error_data)
@@ -249,7 +246,7 @@ class ExpressionListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
 
 # expression quiz first-load (future loads aren't full refreshes)
 class ExpressionQuizView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
-    template_name = 'main/expressionquiz.html'
+    template_name = 'main/expression_quiz.html'
 
     def get_context_data(self, **kwargs):
         context = super(ExpressionQuizView, self).get_context_data(**kwargs)
@@ -264,9 +261,6 @@ class ExpressionQuizView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
 
 @require_http_methods(["POST"])
 def expressionsave(request, chapter_id):
-    error_finish = 'There was a problem with saving your current progress. Please e-mail kairozu@kairozu.com if you suspect this is an error.'
-    error_data = {'error': True}
-    save_data = {'save': True}
     er_queryset = ExpressionRecord.objects.filter(user_id=request.user.id, express__chapter_id__exact=chapter_id)
     erupdate = ExpressionRecordSerializer(er_queryset, data=json.loads(request.POST.get('qdata')), partial=True, many=True)
     if erupdate.is_valid():
@@ -279,9 +273,6 @@ def expressionsave(request, chapter_id):
 
 @require_http_methods(["POST"])
 def expressionfinish(request, chapter_id):
-    error_finish = 'It looks like you haven\'t met the requirements to complete this chapter\'s expression quiz. Please e-mail kairozu@kairozu.com if you suspect this is an error.'
-    error_data = {'error': True}
-    loop_data = {'loop': True}
     if request.user.profile.currentexpression < int(chapter_id):
         messages.add_message(request, messages.ERROR, error_finish)
         return JsonResponse(error_data)
@@ -347,8 +338,6 @@ class PracticeQuizView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
 
 @require_http_methods(["POST"])
 def practicefinish(request, lesson_id):
-    error_finish = 'It looks like you haven\'t met the requirements to complete this lesson\'s practice sentences. Please e-mail kairozu@kairozu.com if you suspect this is an error.'
-    error_data = {'error': True}
     if request.user.profile.currentpractice < int(lesson_id):
         return JsonResponse(error_data)
     else:
@@ -461,23 +450,39 @@ class SentenceSuccessView(LoginRequiredMixin, UserPassesTestMixin, TemplateView)
 
 # vocabulary quiz first-load (future loads aren't full refreshes)
 class ReviewVocabView(LoginRequiredMixin, TemplateView):
-    template_name = 'main/vocabreview.html'
+    template_name = 'main/vocab_review.html'
 
 
-def reviewvocab_check(request):
-    vocab_code = request.POST['vocab_code']
-    vocabrecord_id = int(request.POST['vocabrecord_id'])
-    if vocab_code == 'C':
-        VocabRecord.review_correct_attempt(vocabrecord_id)
-    elif vocab_code == 'N':
-        VocabRecord.review_new_attempt(vocabrecord_id)
-    elif vocab_code == 'I':
-        VocabRecord.review_incorrect_attempt(vocabrecord_id)
-    return HttpResponseRedirect(reverse('main:reviewvocabgrab'))
+@require_http_methods(["POST"])
+def reviewvocabsave(request):
+    vr_queryset = VocabRecord.objects.filter(user_id=request.user.id, next_review__lte=datetime.now())
+    vrupdate = VocabRecordSerializer(vr_queryset, data=json.loads(request.POST.get('qdata')), partial=True, many=True)
+    if vrupdate.is_valid():
+        vrupdate.save()
+        return JsonResponse(save_data)
+    else:
+        messages.add_message(request, messages.ERROR, error_finish)
+        return JsonResponse(error_data)
+
+
+@require_http_methods(["POST"])
+def reviewvocabfinish(request):
+    vr_queryset = VocabRecord.objects.filter(user_id=request.user.id, next_review__lte=datetime.now())
+    vrupdate = VocabRecordSerializer(vr_queryset, data=json.loads(request.POST.get('qdata')), partial=True, many=True)
+    if vrupdate.is_valid():
+        vrupdate.save()
+        vrecords = VocabRecord.objects.filter(user_id=request.user.id, next_review__lte=datetime.now())
+        if vrecords is None:
+            return HttpResponseRedirect(reverse('main:reviewvocabcurrent'))
+        else:
+            return JsonResponse(loop_data)
+    else:
+        messages.add_message(request, messages.ERROR, error_finish)
+        return JsonResponse(error_data)
 
 
 class ReviewVocabCurrentView(LoginRequiredMixin, ListView):
-    template_name = 'main/vocabcurrent.html'
+    template_name = 'main/vocab_current.html'
 
     def get_context_data(self, **kwargs):
         context = super(ReviewVocabCurrentView, self).get_context_data(**kwargs)
@@ -488,6 +493,52 @@ class ReviewVocabCurrentView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         return VocabRecord.objects.filter(user_id=self.request.user.id).exclude(next_review__isnull=True).order_by('next_review')[:10]
+
+
+class ReviewExpressionView(LoginRequiredMixin, TemplateView):
+    template_name = 'main/expression_review.html'
+
+
+@require_http_methods(["POST"])
+def reviewexpressionsave(request):
+    er_queryset = ExpressionRecord.objects.filter(user_id=request.user.id, next_review__lte=datetime.now())
+    erupdate = ExpressionRecordSerializer(er_queryset, data=json.loads(request.POST.get('qdata')), partial=True, many=True)
+    if erupdate.is_valid():
+        erupdate.save()
+        return JsonResponse(save_data)
+    else:
+        messages.add_message(request, messages.ERROR, error_finish)
+        return JsonResponse(error_data)
+
+
+@require_http_methods(["POST"])
+def reviewexpressionfinish(request):
+    er_queryset = ExpressionRecord.objects.filter(user_id=request.user.id, next_review__lte=datetime.now())
+    erupdate = ExpressionRecordSerializer(er_queryset, data=json.loads(request.POST.get('qdata')), partial=True, many=True)
+    if erupdate.is_valid():
+        erupdate.save()
+        erecords = ExpressionRecord.objects.filter(user_id=request.user.id, next_review__lte=datetime.now())
+        if erecords is None:
+            return HttpResponseRedirect(reverse('main:reviewexpressioncurrent'))
+        else:
+            return JsonResponse(loop_data)
+    else:
+        messages.add_message(request, messages.ERROR, error_finish)
+        return JsonResponse(error_data)
+
+
+class ReviewExpressionCurrentView(LoginRequiredMixin, ListView):
+    template_name = 'main/expression_current.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ReviewExpressionCurrentView, self).get_context_data(**kwargs)
+        currentchapter = get_object_or_404(Chapter, pk=self.request.user.profile.currentchapter)
+        context['currentchapter'] = currentchapter
+        Profile.has_reviews(self.request.user)
+        return context
+
+    def get_queryset(self):
+        return ExpressionRecord.objects.filter(user_id=self.request.user.id).exclude(next_review__isnull=True).order_by('next_review')[:10]
 
 
 class ReviewSentenceView(LoginRequiredMixin, TemplateView):
@@ -524,36 +575,6 @@ class ReviewSentenceCurrentView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         return SentenceRecord.objects.filter(user_id=self.request.user.id).exclude(next_review__isnull=True).order_by('next_review')[:10]
 
-
-class ReviewExpressionView(LoginRequiredMixin, TemplateView):
-    template_name = 'main/expressionreview.html'
-
-
-def reviewexpression_check(request):
-    expression_code = request.POST['expression_code']
-    expressionrecord_id = int(request.POST['expressionrecord_id'])
-
-    if expression_code == 'C':
-        ExpressionRecord.review_correct_attempt(expressionrecord_id)
-    elif expression_code == 'N':
-        ExpressionRecord.review_new_attempt(expressionrecord_id)
-    elif expression_code == 'I':
-        ExpressionRecord.review_incorrect_attempt(expressionrecord_id)
-    return HttpResponseRedirect(reverse('main:reviewexpressiongrab'))
-
-
-class ReviewExpressionCurrentView(LoginRequiredMixin, ListView):
-    template_name = 'main/expressioncurrent.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(ReviewExpressionCurrentView, self).get_context_data(**kwargs)
-        currentchapter = get_object_or_404(Chapter, pk=self.request.user.profile.currentchapter)
-        context['currentchapter'] = currentchapter
-        Profile.has_reviews(self.request.user)
-        return context
-
-    def get_queryset(self):
-        return ExpressionRecord.objects.filter(user_id=self.request.user.id).exclude(next_review__isnull=True).order_by('next_review')[:10]
 
 # #################################################################################
 # ################################ END REVIEWS ####################################

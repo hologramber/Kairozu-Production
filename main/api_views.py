@@ -1,6 +1,5 @@
 from datetime import datetime
 from rest_framework import generics
-from rest_framework.response import Response
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Practice, VocabRecord, Profile, SentenceRecord, ExpressionRecord, ExercisePrompt, ExerciseSentence
 from . import serializers
@@ -17,6 +16,7 @@ class VocabRecordGrab(LoginRequiredMixin, generics.ListAPIView):
             vrecords = VocabRecord.objects.filter(user_id=self.request.user.id, vocab__chapter__id__exact=chapter_id, rating__lte=0).order_by('last_attempt')
             if vrecords is None:
                 Profile.graduate_vocab(self.request.user, chapter_id)
+                vrecords = VocabRecord.objects.none()
         else:
             vrecords = VocabRecord.objects.none()
         return vrecords
@@ -33,27 +33,30 @@ class ExpressionRecordGrab(LoginRequiredMixin, generics.ListAPIView):
             erecords = ExpressionRecord.objects.filter(user_id=self.request.user.id, express__chapter__id__exact=chapter_id, rating__lte=0).order_by('last_attempt')
             if erecords is None:
                 Profile.graduate_expression(self.request.user, chapter_id)
+                erecords = ExpressionRecord.objects.none()
         else:
             erecords = ExpressionRecord.objects.none()
         return erecords
 
 
-class ReviewExpressionRecordGrab(LoginRequiredMixin, generics.RetrieveAPIView):
-    serializer_class = serializers.ExpressionRecordSerializer
-
-    def get_object(self):
-        now = datetime.now()
-        next_expression = ExpressionRecord.objects.filter(user_id=self.request.user.id, next_review__lte=now).first()
-        return next_expression
-
-
-class ReviewVocabRecordGrab(LoginRequiredMixin, generics.RetrieveAPIView):
+class ReviewVocabRecordGrab(LoginRequiredMixin, generics.ListAPIView):
     serializer_class = serializers.VocabRecordSerializer
 
-    def get_object(self):
-        now = datetime.now()
-        next_vocab = VocabRecord.objects.filter(user_id=self.request.user.id, next_review__lte=now).first()
-        return next_vocab
+    def get_queryset(self):
+        vrecords = VocabRecord.objects.filter(user_id=self.request.user.id, next_review__lte=datetime.now())
+        if vrecords is None:
+            vrecords = VocabRecord.objects.none()
+        return vrecords
+
+
+class ReviewExpressionRecordGrab(LoginRequiredMixin, generics.ListAPIView):
+    serializer_class = serializers.ExpressionRecordSerializer
+
+    def get_queryset(self):
+        erecords = ExpressionRecord.objects.filter(user_id=self.request.user.id, next_review__lte=datetime.now())
+        if erecords is None:
+            erecords = ExpressionRecord.objects.none()
+        return erecords
 
 
 class PracticeGrab(LoginRequiredMixin, generics.ListAPIView):

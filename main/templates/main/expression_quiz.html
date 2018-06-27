@@ -1,0 +1,163 @@
+{% extends 'kairozu.html' %}
+{% block title %}Kairozu {{ chapter.title }} Expression Quiz{% endblock %}
+{% block sidecollapse %}
+    {% include 'main/sidecollapse.html' %}
+{% endblock %}
+
+{% load static %}
+{% block content %}
+
+<div id='wrapper'>
+{% include 'main/sidebar.html' %}
+    <div class="fc-basic">
+        {% include 'main/expression_base.html' %}
+    </div>
+    <div class="fc-basic">
+        <div id="example" style="display: none;">
+            <i class="fa fa-info-circle green-words" aria-hidden="true"></i>&nbsp;&nbsp;<span id="prompt-text" class="grey-words smaller"></span>
+        </div>
+
+        <div id="katakana" style="display: none;">
+            <i class="fa fa-star red-words" aria-hidden="true"></i>&nbsp;&nbsp;<span class="grey-words smaller">This expression uses katakana characters (press shift when typing).</span>
+        </div>
+
+        {% if user.profile.currentexpression > chapter.id %}
+            <div id="finished-quiz">
+                <i class="fa fa-star green-words" aria-hidden="true"></i><span class="grey-words smaller"> You've successfully completed this quiz; expressions will loop for as long as you'd like to practice.</span>
+            </div>
+        {% endif %}
+
+    </div>
+    <div class="s-100"></div>
+</div>  <!-- /#wrapper -->
+
+<!-- wanakana, menu toggle, and get/post mechanics -->
+<script type='text/javascript' src='{% static 'js/wanakana.js' %}'></script>
+<script type='text/javascript' src='{% static 'js/cookiemonster.js' %}'></script>
+
+<script type='text/javascript'>
+    var input = document.getElementById('attempt');
+    wanakana.bind(input);
+
+    const english = $('#english'),
+        literal = $('#literal'),
+        context = $('#context'),
+        hint = $('#hint'),
+        example = $('#example'),
+        quiz = $('#quiz'),
+        attempt = $('#attempt'),
+        pagewrap = $('#wrapper'),
+        katakana = $('#katakana'),
+        bug = $('#bug-button');
+
+    var qdata = [],
+        storage = "expressquiz-" + {{ chapter.id }},
+        qcount = 0,
+        q = 0,
+        totalq = 0,
+        level = 2,
+        repeat = 0;
+
+    function saveq() {
+        $.ajax({
+            type: "POST",
+            url: "{% url 'main:expressionsave' chapter.id %}",
+            dataType: 'json',
+            data: {qdata: JSON.stringify(qdata)},
+            success: function (data) {
+                if (data.error) { location.reload(); } else { qcount = 0; }
+            }
+        });
+    }
+
+    function expression() {
+        context.html('&#8203;' + qdata[q]['express']['context'] + '&#8203;');
+        english.html(qdata[q]['express']['english']);
+        literal.html('<div class="white-words litcontextbox upper">literal</div>' + qdata[q]['express']['literal'] + '&#8203;');
+        switch(level) {
+            case 2:
+                hint.html(qdata[q]['express']['kana_all_blank']); break;
+            case 1:
+                hint.html(qdata[q]['express']['kana_alt_blank']); break;
+            default:
+                hint.html(qdata[q]['express']['f_kana']); break;
+        }
+        if (qdata[q]['express']['katakana']) { katakana.show(); } else { katakana.hide(); }
+        if (qdata[q]['express']['example']) {
+            example.show();
+            example.html('Example: ' + qdata[q]['express']['example'])
+        } else {
+            example.hide();
+        }
+    }
+
+    quiz.submit(function(event) {
+        event.preventDefault();
+        qdata = JSON.parse(localStorage.getItem(storage));
+        var clean = cleanInput(attempt.val());
+        if (clean === qdata[q]['express']['kana_clean']) {
+            bug.hide();
+            hint.attr('class', 'ls5');
+            quiz.removeClass("abox_red");
+            quiz.addClass("abox_g").one(
+                "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend",
+                function() { quiz.removeClass("abox_g"); });
+            qdata[q]['last_attempt'] = addTime(0);
+            if (level === 2) {
+                if (repeat) {
+                    qdata.push(qdata.splice(q,1)[0]);
+                    repeat = 0;
+                } else {
+                    qdata[q]['rating'] = qdata[q]['rating'] + 1;
+                }
+                q++;
+                qcount++;
+            } else {
+                level = 2;
+                repeat = 1;
+            }
+        } else {
+            bug.show();
+            hint.attr('class', 'ls5r');
+            quiz.addClass("abox_red abox_r").one(
+                "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend",
+                function() { quiz.removeClass("abox_r"); });
+            qdata[q]['rating'] = 0;
+            if (level > 0) { level--; }
+        }
+        localStorage.setItem(storage, JSON.stringify(qdata));
+        if (q < totalq) {
+            quiz[0].reset();
+            expression();
+            if (qcount > 10) { saveq(); }
+        } else {
+            $.ajax({
+                type: "POST",
+                url: "{% url 'main:expressionfinish' chapter.id %}",
+                dataType: 'json',
+                data: {qdata: JSON.stringify(qdata)},
+                success: function (data) {
+                    if ((data.error) || (data.loop)) { location.reload(); } else { pagewrap.html(data); }
+                }
+            });
+        }
+    });
+
+    $(document).ready(function() {
+        localStorage.clear();
+        $.get("{% url 'main:expressiongrab' chapter.id %}").done(function (data) {
+            qdata = data;
+            localStorage.setItem(storage, JSON.stringify(qdata));
+            totalq = qdata.length;
+            if (totalq > 0) {
+                expression();
+            } else {
+                $.get("{% url 'main:expressionsuccess' %}").done(function (data) {
+                    pagewrap.html(data);
+                });
+            }
+        });
+    });
+</script>
+
+{% endblock %}

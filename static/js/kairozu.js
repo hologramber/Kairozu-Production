@@ -3,6 +3,23 @@ function cleanInput(text) {
     return text;
 }
 
+function addTime(score) {
+    // use addTime(0) to return current time
+    var datenow = new Date(),
+        // # score     0, 1, 2,  3,  4,  5,   6,   7,   8,   9,  10,   11,   12,   13,   14
+        hours_scale = [0, 1, 7, 24, 48, 72, 120, 240, 336, 480, 984, 1680, 2328, 3000, 6000],
+        addhours;
+        if (score < 0) {
+            addhours = 0;
+        } else if (score > 14) {
+            addhours = 12000;
+        } else {
+            addhours = hours_scale[score];
+        }
+    datenow.setHours(datenow.getHours()+addhours);
+    return datenow.toJSON();
+}
+
 $(function() {
     $("#byealert").click(function () {
         $(this).parent().remove();

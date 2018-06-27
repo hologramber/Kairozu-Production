@@ -48,8 +48,7 @@
         q = 0,
         totalq = 0,
         level = 3,
-        repeat = 0,
-        statcode = 'A';
+        repeat = 0;
 
     function saveq() {
         $.ajax({
@@ -89,31 +88,29 @@
             quiz.addClass("abox_g").one(
                 "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend",
                 function() { quiz.removeClass("abox_g"); });
+            qdata[q]['last_attempt'] = addTime(0);
             if (level === 3) {
                 if (repeat) {
                     qdata.push(qdata.splice(q,1)[0]);
                     repeat = 0;
                 } else {
                     qdata[q]['rating'] = qdata[q]['rating'] + 1;
+                    if (!qdata[q]['next_review']) {
+                        qdata[q]['next_review'] = addTime(1);
+                    }
                 }
-                statcode = 'C';
-                qdata[q]['last_attempt'] = new Date().toJSON();
                 q++;
                 qcount++;
             } else { 
                 level = 3;
                 repeat = 1;
-                statcode = 'N';
-                qdata[q]['last_attempt'] = new Date().toJSON(); }
+            }
         } else {
             bug.show();
             quiz.addClass("abox_red abox_r").one(
                 "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend",
                 function() { quiz.removeClass("abox_r"); });
-            if (level === 3) {
-                statcode = 'I';
-                qdata[q]['rating'] = 0;
-            } else { statcode = 'A'; }
+            qdata[q]['rating'] = 0;
             if (level > 0) { level--; }
         }
         localStorage.setItem(storage, JSON.stringify(qdata));
@@ -140,7 +137,13 @@
             qdata = data;
             localStorage.setItem(storage, JSON.stringify(qdata));
             totalq = qdata.length;
-            vocab();
+            if (totalq > 0) {
+                vocab();
+            } else {
+                $.get("{% url 'main:vocabsuccess' %}").done(function (data) {
+                    pagewrap.html(data);
+                });
+            }
         });
     });
 </script>
