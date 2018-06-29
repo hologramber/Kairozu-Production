@@ -40,11 +40,11 @@ class DemoVocabListView(ListView):
 
 
 class DemoVocabQuizView(TemplateView):
-    template_name = 'demo/vocabquiz.html'
+    template_name = 'demo/vocabq.html'
 
 
 class DemoVocabSuccessView(TemplateView):
-    template_name = 'demo/vocabsuccess.html'
+    template_name = 'demo/vocabq_success.html'
 
 
 class DemoExpressionListView(ListView):
@@ -53,11 +53,11 @@ class DemoExpressionListView(ListView):
 
 
 class DemoExpressionQuizView(TemplateView):
-    template_name = 'demo/expressionquiz.html'
+    template_name = 'demo/expressionq.html'
 
 
 class DemoExpressionSuccessView(TemplateView):
-    template_name = 'demo/expressionsuccess.html'
+    template_name = 'demo/expressionq_success.html'
 
 
 def demolesson(request):
@@ -65,19 +65,19 @@ def demolesson(request):
 
 
 class DemoPracticeQuizView(TemplateView):
-    template_name = 'demo/practicequiz.html'
+    template_name = 'demo/practiceq.html'
 
 
 class DemoPracticeSuccessView(TemplateView):
-    template_name = 'demo/practicesuccess.html'
+    template_name = 'demo/practiceq_success.html'
 
 
 class DemoSentenceQuizView(TemplateView):
-    template_name = 'demo/sentencequiz.html'
+    template_name = 'demo/sentenceq.html'
 
 
 class DemoSentenceSuccessView(TemplateView):
-    template_name = 'demo/sentencesuccess.html'
+    template_name = 'demo/sentenceq_success.html'
 
 
 class BetaEmailView(CreateView):

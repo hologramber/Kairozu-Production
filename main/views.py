@@ -148,7 +148,7 @@ class VocabListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
 
 # vocabulary quiz first-load (future loads aren't full refreshes)
 class VocabQuizView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
-    template_name = 'main/vocab_quiz.html'
+    template_name = 'main/vocabq.html'
 
     def get_context_data(self, **kwargs):
         context = super(VocabQuizView, self).get_context_data(**kwargs)
@@ -246,7 +246,7 @@ class ExpressionListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
 
 # expression quiz first-load (future loads aren't full refreshes)
 class ExpressionQuizView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
-    template_name = 'main/expression_quiz.html'
+    template_name = 'main/expressionq.html'
 
     def get_context_data(self, **kwargs):
         context = super(ExpressionQuizView, self).get_context_data(**kwargs)
@@ -323,7 +323,7 @@ class ExpressionSuccessView(LoginRequiredMixin, UserPassesTestMixin, TemplateVie
 
 # practice quiz first-load (future loads aren't full refreshes)
 class PracticeQuizView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
-    template_name = 'main/practicequiz.html'
+    template_name = 'main/practiceq.html'
 
     def get_context_data(self, **kwargs):
         context = super(PracticeQuizView, self).get_context_data(**kwargs)
@@ -389,11 +389,7 @@ class PracticeSuccessView(LoginRequiredMixin, UserPassesTestMixin, TemplateView)
 
 # sentence quiz first-load (future loads aren't full refreshes)
 class SentenceQuizView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
-    def get_template_names(self):
-        if self.request.user.profile.strictmode:
-            return ['main/sentencequiz_strict.html']
-        else:
-            return ['main/sentencequiz.html']
+    template_name = 'main/sentenceq.html'
 
     def get_context_data(self, **kwargs):
         context = super(SentenceQuizView, self).get_context_data(**kwargs)
@@ -407,16 +403,39 @@ class SentenceQuizView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
             return True
 
 
-def sentence_check(request, lesson_id):
-    sentence_code = request.POST['sentence_code']
-    sentencerecord_id = int(request.POST['sentencerecord_id'])
-    if sentence_code == 'C':
-        SentenceRecord.correct_attempt(sentencerecord_id)
-    elif sentence_code == 'N':
-        SentenceRecord.new_attempt(sentencerecord_id)
-    elif sentence_code == 'I':
-        SentenceRecord.incorrect_attempt(sentencerecord_id)
-    return HttpResponseRedirect(reverse('main:sentencegrab', kwargs={'lesson_id': lesson_id}))
+@require_http_methods(["POST"])
+def sentencesave(request, lesson_id):
+    sr_queryset = SentenceRecord.objects.filter(user_id=request.user.id, sentence__lesson__id__exact=lesson_id)
+    srupdate = SentenceRecordSerializer(sr_queryset, data=json.loads(request.POST.get('qdata')), partial=True, many=True)
+    if srupdate.is_valid():
+        srupdate.save()
+        return JsonResponse(save_data)
+    else:
+        messages.add_message(request, messages.ERROR, error_finish)
+        return JsonResponse(error_data)
+
+
+@require_http_methods(["POST"])
+def sentencefinish(request, lesson_id):
+    if request.user.profile.currentlesson < int(lesson_id):
+        messages.add_message(request, messages.ERROR, error_finish)
+        return JsonResponse(error_data)
+    else:
+        sr_queryset = SentenceRecord.objects.filter(user_id=request.user.id, sentence__lesson__id__exact=lesson_id)
+        srupdate = SentenceRecordSerializer(sr_queryset, data=json.loads(request.POST.get('qdata')), partial=True, many=True)
+        if srupdate.is_valid():
+            srupdate.save()
+            if int(lesson_id) < request.user.profile.currentlesson:
+                return JsonResponse(loop_data)
+            elif int(lesson_id) == request.user.profile.currentlesson:
+                srecords = SentenceRecord.objects.filter(user_id=request.user.id, sentence__lesson__id__exact=lesson_id, rating__lte=0).order_by('last_attempt')
+                if srecords is None:
+                    Profile.graduate_lesson(request.user, lesson_id)
+                    return HttpResponseRedirect(reverse('main:sentencesuccess', kwargs={'lesson_id': lesson_id}))
+                else:
+                    return JsonResponse(loop_data)
+        else:
+            return JsonResponse(error_data)
 
 
 class SentenceSuccessView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
@@ -450,7 +469,7 @@ class SentenceSuccessView(LoginRequiredMixin, UserPassesTestMixin, TemplateView)
 
 # vocabulary quiz first-load (future loads aren't full refreshes)
 class ReviewVocabView(LoginRequiredMixin, TemplateView):
-    template_name = 'main/vocab_review.html'
+    template_name = 'main/vocabq_review.html'
 
 
 @require_http_methods(["POST"])
@@ -482,7 +501,7 @@ def reviewvocabfinish(request):
 
 
 class ReviewVocabCurrentView(LoginRequiredMixin, ListView):
-    template_name = 'main/vocab_current.html'
+    template_name = 'main/vocabq_review_current.html'
 
     def get_context_data(self, **kwargs):
         context = super(ReviewVocabCurrentView, self).get_context_data(**kwargs)
@@ -496,7 +515,7 @@ class ReviewVocabCurrentView(LoginRequiredMixin, ListView):
 
 
 class ReviewExpressionView(LoginRequiredMixin, TemplateView):
-    template_name = 'main/expression_review.html'
+    template_name = 'main/expressionq_review.html'
 
 
 @require_http_methods(["POST"])
@@ -528,7 +547,7 @@ def reviewexpressionfinish(request):
 
 
 class ReviewExpressionCurrentView(LoginRequiredMixin, ListView):
-    template_name = 'main/expression_current.html'
+    template_name = 'main/expressionq_review_current.html'
 
     def get_context_data(self, **kwargs):
         context = super(ReviewExpressionCurrentView, self).get_context_data(**kwargs)
@@ -542,28 +561,39 @@ class ReviewExpressionCurrentView(LoginRequiredMixin, ListView):
 
 
 class ReviewSentenceView(LoginRequiredMixin, TemplateView):
-    def get_template_names(self):
-        if self.request.user.profile.strictmode:
-            return ['main/sentencereview_strict.html']
+    template_name = 'main/sentenceq_review.html'
+
+
+@require_http_methods(["POST"])
+def reviewsentencesave(request):
+    sr_queryset = SentenceRecord.objects.filter(user_id=request.user.id, next_review__lte=datetime.now())
+    srupdate = SentenceRecordSerializer(sr_queryset, data=json.loads(request.POST.get('qdata')), partial=True, many=True)
+    if srupdate.is_valid():
+        srupdate.save()
+        return JsonResponse(save_data)
+    else:
+        messages.add_message(request, messages.ERROR, error_finish)
+        return JsonResponse(error_data)
+
+
+@require_http_methods(["POST"])
+def reviewsentencefinish(request):
+    sr_queryset = SentenceRecord.objects.filter(user_id=request.user.id, next_review__lte=datetime.now())
+    srupdate = SentenceRecordSerializer(sr_queryset, data=json.loads(request.POST.get('qdata')), partial=True, many=True)
+    if srupdate.is_valid():
+        srupdate.save()
+        srecords = SentenceRecord.objects.filter(user_id=request.user.id, next_review__lte=datetime.now())
+        if srecords is None:
+            return HttpResponseRedirect(reverse('main:reviewsentencecurrent'))
         else:
-            return ['main/sentencereview.html']
-
-
-def reviewsentence_check(request):
-    sentence_code = request.POST['sentence_code']
-    sentencerecord_id = int(request.POST['sentencerecord_id'])
-
-    if sentence_code == 'C':
-        SentenceRecord.review_correct_attempt(sentencerecord_id)
-    elif sentence_code == 'N':
-        SentenceRecord.review_new_attempt(sentencerecord_id)
-    elif sentence_code == 'I':
-        SentenceRecord.review_incorrect_attempt(sentencerecord_id)
-    return HttpResponseRedirect(reverse('main:reviewsentencegrab'))
+            return JsonResponse(loop_data)
+    else:
+        messages.add_message(request, messages.ERROR, error_finish)
+        return JsonResponse(error_data)
 
 
 class ReviewSentenceCurrentView(LoginRequiredMixin, ListView):
-    template_name = 'main/sentencecurrent.html'
+    template_name = 'main/sentenceq_review_current.html'
 
     def get_context_data(self, **kwargs):
         context = super(ReviewSentenceCurrentView, self).get_context_data(**kwargs)
@@ -634,7 +664,7 @@ def exercise_passage_grade(request, chapter_id, exercise_id):
 
 
 class ExercisePassageSuccessView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
-    template_name = 'main/passagesuccess.html'
+    template_name = 'main/passage_success.html'
 
     def get_context_data(self, **kwargs):
         context = super(ExercisePassageSuccessView, self).get_context_data(**kwargs)
@@ -684,7 +714,7 @@ def exercise_dialogue_grade(request, chapter_id, exercise_id):
 
 
 class ExerciseDialogueSuccessView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
-    template_name = 'main/dialoguesuccess.html'
+    template_name = 'main/dialogue_success.html'
 
     def get_context_data(self, **kwargs):
         context = super(ExerciseDialogueSuccessView, self).get_context_data(**kwargs)

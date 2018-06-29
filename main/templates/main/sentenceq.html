@@ -1,26 +1,13 @@
 {% extends 'kairozu.html' %}
-{% block title %}Kairozu Vocabulary Review{% endblock %}
+{% block title %}Kairozu {{ chapter.title }}・{{ lesson.id }} クイズ{% endblock %}
+{% block sidecollapse %}
+    {% include 'main/sidecollapse.html' %}
+{% endblock %}
 
 {% load static %}
 {% block content %}
 
-<div id="allwrap">
-    <div class="fc-basic">
-        {% include 'main/vocab_base.html' %}
-    </div>
-
-    <div class="fc-basic">
-        <div class="reference-link smaller">
-            <a id="reflink" href="">View Vocabulary List</a>
-        </div>
-
-        <div id="katakana" style="display: none;">
-            <i class="fa fa-star red-words" aria-hidden="true"></i><span class="grey-words smaller"> This vocabulary uses katakana characters (press shift when typing).</span>
-        </div>
-    </div>
-</div>
-
-<div class="s-100"></div>
+{% include 'main/sentenceq_base.html' %}
 
 <!-- wanakana, menu toggle, and get/post mechanics -->
 <script type='text/javascript' src='{% static 'js/wanakana.js' %}'></script>
@@ -31,27 +18,27 @@
     wanakana.bind(input);
 
     const english = $('#english'),
+        literal = $('#literal'),
         context = $('#context'),
         hint = $('#hint'),
         quiz = $('#quiz'),
         attempt = $('#attempt'),
-        pagewrap = $('#allwrap'),
-        katakana = $('#katakana'),
-        reflink = $("#reflink"),
+        pagewrap = $('#wrapper'),
         bug = $('#bug-button');
 
     var qdata = [],
-        storage = "reviewvocab",
+        storage = "sentencequiz-" + {{ chapter.id }},
         qcount = 0,
         q = 0,
         totalq = 0,
         level = 3,
         repeat = 0;
 
+
     function saveq() {
         $.ajax({
             type: "POST",
-            url: "{% url 'main:reviewvocabsave' %}",
+            url: "{% url 'main:sentencesave' lesson.id %}",
             dataType: 'json',
             data: {qdata: JSON.stringify(qdata)},
             success: function (data) {
@@ -60,28 +47,32 @@
         });
     }
 
-    function vocab() {
-        context.html('&#8203;' + qdata[q]['vocab']['context'] + '&#8203;');
-        english.html(qdata[q]['vocab']['english']);
-        reflink.attr("href", '/main/chapter/' + qdata[q]['vocab']['chapter'] + '/vocablist/');
+    function sentence() {
+        context.html('&#8203;' + qdata[q]['sentence']['context'] + '&#8203;');
+        literal.html('<div class="white-words litcontextbox upper">literal</div>' + qdata[q]['sentence']['literal'] + '&#8203;');
+        english.html(qdata[q]['sentence']['english']);
         switch(level) {
             case 3:
-                hint.html('&#8203;'); break;
+                if (qdata[q]['sentence']['disamb_location'] != 0) {
+                    hint.html(qdata[q]['sentence']['kana_all_blank']);
+                    hint.addClass('ls5y');
+                } else {
+                    hint.html('&#8203;');
+                } break;
             case 2:
-                hint.html(qdata[q]['vocab']['kana_all_blank']); break;
+                hint.html(qdata[q]['sentence']['kana_all_blank']);
+                hint.removeClass('ls5y');
+                break;
             case 1:
-                hint.html(qdata[q]['vocab']['kana_alt_blank']); break;
+                hint.html(qdata[q]['sentence']['kana_alt_blank']); break;
             default:
-                hint.html(qdata[q]['vocab']['f_kana']); break;
+                hint.html(qdata[q]['sentence']['f_kana']); break;
         }
-        if (qdata[q]['vocab']['katakana']) { katakana.show(); } else { katakana.hide(); }
     }
 
-    quiz.submit(function(event) {
-        event.preventDefault();
-        qdata = JSON.parse(localStorage.getItem(storage));
-        var clean = cleanInput(attempt.val());
-        if (clean === qdata[q]['vocab']['kana_clean']) {
+
+    function processQuiz(attempt) {
+        if (attempt === 1) {
             bug.hide();
             quiz.removeClass("abox_red");
             quiz.addClass("abox_g").one(
@@ -90,34 +81,37 @@
             qdata[q]['last_attempt'] = addTime(0);
             if (level === 3) {
                 if (repeat) {
-                    qdata[q]['next_review'] = addTime(1);
+                    qdata.push(qdata.splice(q,1)[0]);
                     repeat = 0;
                 } else {
-                    qdata[q]['score'] = qdata[q]['score'] + 1;
-                    qdata[q]['next_review'] = addTime(qdata[q]['score']);
+                    qdata[q]['rating'] = qdata[q]['rating'] + 1;
+                    if (!qdata[q]['next_review']) {
+                        qdata[q]['next_review'] = addTime(1);
+                    }
                 }
                 q++;
                 qcount++;
             } else {
                 level = 3;
-                repeat = 1; }
+                repeat = 1;
+            }
         } else {
             bug.show();
             quiz.addClass("abox_red abox_r").one(
                 "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend",
                 function() { quiz.removeClass("abox_r"); });
-            qdata[q]['score'] = 0;
+            qdata[q]['rating'] = 0;
             if (level > 0) { level--; }
         }
         localStorage.setItem(storage, JSON.stringify(qdata));
         if (q < totalq) {
             quiz[0].reset();
             if (qcount > 10) { saveq(); }
-            vocab();
+            sentence();
         } else {
             $.ajax({
                 type: "POST",
-                url: "{% url 'main:reviewvocabfinish' %}",
+                url: "{% url 'main:sentencefinish' lesson.id %}",
                 dataType: 'json',
                 data: {qdata: JSON.stringify(qdata)},
                 success: function (data) {
@@ -125,18 +119,31 @@
                 }
             });
         }
+    }
+
+    quiz.submit(function(event) {
+        event.preventDefault();
+        var clean = cleanInput(attempt.val()),
+            actual = qdata[q]['sentence']['kana_clean'];
+        if ('{{ user.profile.strictmode }}' === 'True' || (qdata[q]['sentence']['strict'])) {
+            if (clean === actual) { processQuiz(1); } else { processQuiz(0); }
+        } else {
+            actual = actual.split("");
+            clean = clean.split("");
+            if (wanakana.compare(clean, actual)) { processQuiz(1); } else { processQuiz(0); }
+        }
     });
 
     $(document).ready(function() {
         localStorage.clear();
-        $.get("{% url 'main:reviewvocabgrab' %}").done(function (data) {
+        $.get("{% url 'main:sentencegrab' lesson.id %}").done(function (data) {
             qdata = data;
             localStorage.setItem(storage, JSON.stringify(qdata));
             totalq = qdata.length;
             if (totalq > 0) {
-                vocab();
+                sentence();
             } else {
-                $.get("{% url 'main:reviewvocabcurrent' %}").done(function (data) {
+                $.get("{% url 'main:sentencesuccess' %}").done(function (data) {
                     pagewrap.html(data);
                 });
             }

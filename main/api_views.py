@@ -22,6 +22,16 @@ class VocabRecordGrab(LoginRequiredMixin, generics.ListAPIView):
         return vrecords
 
 
+class ReviewVocabRecordGrab(LoginRequiredMixin, generics.ListAPIView):
+    serializer_class = serializers.VocabRecordSerializer
+
+    def get_queryset(self):
+        vrecords = VocabRecord.objects.filter(user_id=self.request.user.id, next_review__lte=datetime.now())
+        if vrecords is None:
+            vrecords = VocabRecord.objects.none()
+        return vrecords
+
+
 class ExpressionRecordGrab(LoginRequiredMixin, generics.ListAPIView):
     serializer_class = serializers.ExpressionRecordSerializer
 
@@ -37,16 +47,6 @@ class ExpressionRecordGrab(LoginRequiredMixin, generics.ListAPIView):
         else:
             erecords = ExpressionRecord.objects.none()
         return erecords
-
-
-class ReviewVocabRecordGrab(LoginRequiredMixin, generics.ListAPIView):
-    serializer_class = serializers.VocabRecordSerializer
-
-    def get_queryset(self):
-        vrecords = VocabRecord.objects.filter(user_id=self.request.user.id, next_review__lte=datetime.now())
-        if vrecords is None:
-            vrecords = VocabRecord.objects.none()
-        return vrecords
 
 
 class ReviewExpressionRecordGrab(LoginRequiredMixin, generics.ListAPIView):
@@ -71,28 +71,31 @@ class PracticeGrab(LoginRequiredMixin, generics.ListAPIView):
         return practices
 
 
-class SentenceRecordGrab(LoginRequiredMixin, generics.RetrieveAPIView):
+class SentenceRecordGrab(LoginRequiredMixin, generics.ListAPIView):
     serializer_class = serializers.SentenceRecordSerializer
 
-    def get_object(self):
+    def get_queryset(self):
         lesson_id = int(self.kwargs['lesson_id'])
-
-        if self.request.user.profile.currentlesson > lesson_id:
-            next_sentence = SentenceRecord.objects.filter(user_id=self.request.user.id, sentence__lesson__id__exact=lesson_id).order_by('last_attempt').first()
-        else:
-            next_sentence = SentenceRecord.objects.filter(user_id=self.request.user.id, sentence__lesson__id__exact=lesson_id, rating__lte=0).order_by('last_attempt').first()
-            if next_sentence is None and self.request.user.profile.currentlesson == lesson_id:
+        if lesson_id < self.request.user.profile.currentlesson:
+            srecords = SentenceRecord.objects.filter(user_id=self.request.user.id, sentence__lesson__id__exact=lesson_id).order_by('last_attempt')
+        elif lesson_id == self.request.user.profile.currentlesson:
+            srecords = SentenceRecord.objects.filter(user_id=self.request.user.id, sentence__lesson__id__exact=lesson_id, rating__lte=0).order_by('last_attempt')
+            if srecords is None:
                 Profile.graduate_lesson(self.request.user, lesson_id)
-        return next_sentence
+                srecords = SentenceRecord.objects.none()
+        else:
+            srecords = SentenceRecord.objects.none()
+        return srecords
 
 
-class ReviewSentenceRecordGrab(LoginRequiredMixin, generics.RetrieveAPIView):
+class ReviewSentenceRecordGrab(LoginRequiredMixin, generics.ListAPIView):
     serializer_class = serializers.SentenceRecordSerializer
 
-    def get_object(self):
-        now = datetime.now()
-        next_sentence = SentenceRecord.objects.filter(user_id=self.request.user.id, next_review__lte=now).first()
-        return next_sentence
+    def get_queryset(self):
+        srecords = SentenceRecord.objects.filter(user_id=self.request.user.id, next_review__lte=datetime.now())
+        if srecords is None:
+            srecords = SentenceRecord.objects.none()
+        return srecords
 
 
 class ExercisePassageGrab(LoginRequiredMixin, generics.RetrieveAPIView):

@@ -61,12 +61,14 @@ class SentenceSerializer(serializers.ModelSerializer):
 
 
 class SentenceRecordSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField()
     user = serializers.StringRelatedField()
     sentence = SentenceSerializer(read_only=True)
 
     class Meta:
         model = SentenceRecord
         fields = '__all__'
+        list_serializer_class = RecordListSerializer
 
 
 class PracticeSerializer(serializers.ModelSerializer):

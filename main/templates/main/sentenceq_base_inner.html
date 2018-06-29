@@ -1,0 +1,18 @@
+<div id='sentenceholder'>
+    <div id='sfield'>
+        <div id='context' class='context-container'></div>
+        <div id='english' class='challenge-grammar'></div>
+        <div class='promptc'>
+            <span id='hint' class='ls5r'>&#8203;</span>
+            <a id="bug-button" href="#" tabindex="-1" style="display: none;">
+                <i id="report-issue" class="fa fa-bug red-words" aria-hidden="true"><span class="raleway">&nbsp;Error?</span></i>
+            </a>
+        </div>
+
+        <form id='quiz' action='' class='abox' method='post'>{% csrf_token %}
+            <input id='attempt' type='text' autocomplete='off' autocorrect='off' autocapitalize='off' spellcheck='false' autofocus />
+            <input type='submit' value='&#8680;' />
+        </form>
+        <div id='literal' class='lit-c'></div>
+    </div>  <!-- /#sfield -->
+</div>  <!-- /#sentenceholder -->

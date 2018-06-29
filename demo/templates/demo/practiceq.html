@@ -205,7 +205,9 @@
         $.get(urlstring).done(function (data) {
             qdata = data;
             totalq = qdata.length;
-            practice();
+            if (totalq > 0) {
+                practice();
+            }
         });
     });
 </script>

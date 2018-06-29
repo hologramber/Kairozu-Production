@@ -1,29 +1,26 @@
 {% extends 'kairozu.html' %}
-{% block title %}Kairozu {{ chapter.title }} Vocab Quiz{% endblock %}
-{% block sidecollapse %}
-    {% include 'main/sidecollapse.html' %}
-{% endblock %}
+{% block title %}Kairozu Vocabulary Review{% endblock %}
 
 {% load static %}
 {% block content %}
 
-<div id='wrapper'>
-{% include 'main/sidebar.html' %}
+<div id="allwrap">
     <div class="fc-basic">
-        {% include 'main/vocab_base.html' %}
+        {% include 'main/vocabq_base.html' %}
     </div>
+
     <div class="fc-basic">
-        {% if user.profile.currentvocab > chapter.id %}
-            <div id="finished-quiz">
-                <i class="fa fa-star green-words" aria-hidden="true"></i><span class="grey-words smaller"> You've successfully completed this quiz; words will loop for as long as you'd like to practice.</span>
-            </div>
-        {% endif %}
+        <div class="reference-link smaller">
+            <a id="reflink" href="">View Vocabulary List</a>
+        </div>
+
         <div id="katakana" style="display: none;">
             <i class="fa fa-star red-words" aria-hidden="true"></i><span class="grey-words smaller"> This vocabulary uses katakana characters (press shift when typing).</span>
         </div>
     </div>
-    <div class="s-100"></div>
-</div>  <!-- /#wrapper -->
+</div>
+
+<div class="s-100"></div>
 
 <!-- wanakana, menu toggle, and get/post mechanics -->
 <script type='text/javascript' src='{% static 'js/wanakana.js' %}'></script>
@@ -38,12 +35,13 @@
         hint = $('#hint'),
         quiz = $('#quiz'),
         attempt = $('#attempt'),
-        pagewrap = $('#wrapper'),
+        pagewrap = $('#allwrap'),
         katakana = $('#katakana'),
+        reflink = $("#reflink"),
         bug = $('#bug-button');
 
     var qdata = [],
-        storage = "vocabquiz-" + {{ chapter.id }},
+        storage = "reviewvocab",
         qcount = 0,
         q = 0,
         totalq = 0,
@@ -53,7 +51,7 @@
     function saveq() {
         $.ajax({
             type: "POST",
-            url: "{% url 'main:vocabsave' chapter.id %}",
+            url: "{% url 'main:reviewvocabsave' %}",
             dataType: 'json',
             data: {qdata: JSON.stringify(qdata)},
             success: function (data) {
@@ -65,6 +63,7 @@
     function vocab() {
         context.html('&#8203;' + qdata[q]['vocab']['context'] + '&#8203;');
         english.html(qdata[q]['vocab']['english']);
+        reflink.attr("href", '/main/chapter/' + qdata[q]['vocab']['chapter'] + '/vocablist/');
         switch(level) {
             case 3:
                 hint.html('&#8203;'); break;
@@ -91,26 +90,23 @@
             qdata[q]['last_attempt'] = addTime(0);
             if (level === 3) {
                 if (repeat) {
-                    qdata.push(qdata.splice(q,1)[0]);
+                    qdata[q]['next_review'] = addTime(1);
                     repeat = 0;
                 } else {
-                    qdata[q]['rating'] = qdata[q]['rating'] + 1;
-                    if (!qdata[q]['next_review']) {
-                        qdata[q]['next_review'] = addTime(1);
-                    }
+                    qdata[q]['score'] = qdata[q]['score'] + 1;
+                    qdata[q]['next_review'] = addTime(qdata[q]['score']);
                 }
                 q++;
                 qcount++;
-            } else { 
+            } else {
                 level = 3;
-                repeat = 1;
-            }
+                repeat = 1; }
         } else {
             bug.show();
             quiz.addClass("abox_red abox_r").one(
                 "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend",
                 function() { quiz.removeClass("abox_r"); });
-            qdata[q]['rating'] = 0;
+            qdata[q]['score'] = 0;
             if (level > 0) { level--; }
         }
         localStorage.setItem(storage, JSON.stringify(qdata));
@@ -121,7 +117,7 @@
         } else {
             $.ajax({
                 type: "POST",
-                url: "{% url 'main:vocabfinish' chapter.id %}",
+                url: "{% url 'main:reviewvocabfinish' %}",
                 dataType: 'json',
                 data: {qdata: JSON.stringify(qdata)},
                 success: function (data) {
@@ -133,14 +129,14 @@
 
     $(document).ready(function() {
         localStorage.clear();
-        $.get("{% url 'main:vocabgrab' chapter.id %}").done(function (data) {
+        $.get("{% url 'main:reviewvocabgrab' %}").done(function (data) {
             qdata = data;
             localStorage.setItem(storage, JSON.stringify(qdata));
             totalq = qdata.length;
             if (totalq > 0) {
                 vocab();
             } else {
-                $.get("{% url 'main:vocabsuccess' %}").done(function (data) {
+                $.get("{% url 'main:reviewvocabcurrent' %}").done(function (data) {
                     pagewrap.html(data);
                 });
             }

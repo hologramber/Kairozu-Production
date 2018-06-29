@@ -1,5 +1,5 @@
 {% extends 'kairozu.html' %}
-{% block title %}Kairozu Demo Vocab Quiz{% endblock %}
+{% block title %}Kairozu Demo クイズ{% endblock %}
 {% block sidecollapse %}
     {% include 'main/sidecollapse.html' %}
 {% endblock %}
@@ -9,10 +9,23 @@
 
 <div id='wrapper'>
 {% include 'demo/sidebar.html' %}
-    <div class="fc-basic">
-        {% include 'main/vocab_base.html' %}
+    <div class="fc-general-col">
+        <div id='sentenceholder'>
+            <div id='sfield'>
+                <div id='english' class='challenge-grammar'></div>
+                <div class='promptc'>
+                    <span id='hint' class='ls5r'>&#8203;</span>
+                </div>
+
+                <form id='quiz' class='abox' action='' method='post'>{% csrf_token %}
+                    <input id='attempt' type='text' autocomplete='off' autocorrect='off' autocapitalize='off' spellcheck='false' autofocus />
+                    <input type='submit' value='&#8680;' />
+                </form>
+                <div id='literal' class='lit-c'>&#8203;</div>
+            </div>  <!-- /#sfield -->
+        </div>  <!-- /#vocabholder -->
     </div>
-    <div class="fc-basic">
+    <div class="fc-general-col">
         <div class="quiz-tips dashed-grey-2">
             <span class="bold">Tips:</span>
             <ul>
@@ -34,20 +47,20 @@
     wanakana.bind(input);
 
     const english = $('#english'),
-        context = $('#context'),
         hint = $('#hint'),
         quiz = $('#quiz'),
         attempt = $('#attempt'),
-        pagewrap = $('#wrapper');
+        pagewrap = $('#wrapper'),
+        literal = $('#literal');
 
     var qdata = '',
         q = 0,
         totalq = 0,
         level = 3;
 
-    function vocab() {
-        context.html('&#8203;' + qdata[q]['context'] + '&#8203;');
+    function sentence() {
         english.html(qdata[q]['english']);
+        literal.html('<div class="white-words litcontextbox upper">literal</div>' + qdata[q]['literal'] + '&#8203;');
         switch(level) {
             case 3:
                 hint.html('&#8203;'); break;
@@ -68,29 +81,33 @@
             quiz.addClass("abox_g").one(
                 "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend",
                 function() { quiz.removeClass("abox_g"); });
+            hint.attr('class', 'ls5');
             if (level === 3) { q++; } else { level = 3; }
         } else {
             quiz.addClass("abox_red abox_r").one(
                 "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend",
                 function() { quiz.removeClass("abox_r"); });
+            hint.attr('class', 'ls5r');
             if (level > 0) { level--; }
         }
         if (q < totalq) {
             quiz[0].reset();
-            vocab();
+            sentence();
         } else {
-            $.get("{% url 'demo:demovocabsuccess' %}").done(function (data) {
+            $.get("{% url 'demo:demosentencesuccess' %}").done(function (data) {
                 pagewrap.html(data);
             });
         }
     });
 
     $(document).ready(function() {
-        var urlstring = "/demo/vocabquiz/grab/";
+        var urlstring = "/demo/sentencequiz/grab/";
         $.get(urlstring).done(function (data) {
             qdata = data;
             totalq = qdata.length;
-            vocab();
+            if (totalq > 0) {
+                sentence();
+            }
         });
     });
 </script>

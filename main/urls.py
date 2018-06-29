@@ -39,7 +39,8 @@ urlpatterns = [
 
     # ################## SENTENCES #####################
     url(r'^lesson/(?P<lesson_id>[0-9]+)/sentencequiz/$', views.SentenceQuizView.as_view(), name='sentencequiz'),
-    url(r'^lesson/(?P<lesson_id>[0-9]+)/sentencequiz/check/$', views.sentence_check, name='sentencecheck'),
+    url(r'^lesson/(?P<lesson_id>[0-9]+)/sentencequiz/finish/$', views.sentencefinish, name='sentencefinish'),
+    url(r'^lesson/(?P<lesson_id>[0-9]+)/sentencequiz/save/$', views.sentencesave, name='sentencesave'),
     url(r'^lesson/(?P<lesson_id>[0-9]+)/sentencequiz/success/$', views.SentenceSuccessView.as_view(), name='sentencesuccess'),
     url(r'^lesson/(?P<lesson_id>[0-9]+)/sentencequiz/grab/$', api_views.SentenceRecordGrab.as_view(), name='sentencegrab'),
 
@@ -58,7 +59,8 @@ urlpatterns = [
     url(r'^reviewexpression/grab/$', api_views.ReviewExpressionRecordGrab.as_view(), name='reviewexpressiongrab'),
 
     url(r'^reviewsentence/$', views.ReviewSentenceView.as_view(), name='reviewsentence'),
-    url(r'^reviewsentence/check/$', views.reviewsentence_check, name='reviewsentencecheck'),
+    url(r'^reviewsentence/finish/$', views.reviewsentencefinish, name='reviewsentencefinish'),
+    url(r'^reviewsentence/save/$', views.reviewsentencesave, name='reviewsentencesave'),
     url(r'^reviewsentence/current/$', views.ReviewSentenceCurrentView.as_view(), name='reviewsentencecurrent'),
     url(r'^reviewsentence/grab/$', api_views.ReviewSentenceRecordGrab.as_view(), name='reviewsentencegrab'),
 

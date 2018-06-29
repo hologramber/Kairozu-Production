@@ -1,13 +1,10 @@
 {% extends 'kairozu.html' %}
-{% block title %}Kairozu {{ chapter.title }}・{{ lesson.id }} クイズ{% endblock %}
-{% block sidecollapse %}
-    {% include 'main/sidecollapse.html' %}
-{% endblock %}
+{% block title %}Kairozu Sentence Review{% endblock %}
 
 {% load static %}
 {% block content %}
 
-{% include 'main/sentencequiz_base.html' %}
+{% include 'main/sentenceq_review_base.html' %}
 
 <!-- wanakana, menu toggle, and get/post mechanics -->
 <script type='text/javascript' src='{% static 'js/wanakana.js' %}'></script>
@@ -22,14 +19,16 @@
     function sentenceNext(data) {
         if (data['id'] != null) {
             $('#sentence_eng').html(data['sentence']['english']);
-            $('#sentencequizform #sactual').val(data['sentence']['kana_clean']);
-            $('#sentencequizform #sid').val(data['id']);
+            $('#sactual').val(data['sentence']['kana_clean']);
+            $('#sstrict').val(data['sentence']['strict']);
+            $('#sid').val(data['id']);
             if (data['sentence']['literal'].trim()) {
                 $('#literal').html('<div class="white-words litcontextbox upper">literal</div>' + data['sentence']['literal'] + '&#8203;');
             } else {
                 $('#literal').html('&#8203;');
             }
             $('#context_one').html(data['sentence']['context'] + '&#8203;');
+            $("#reflink").attr("href", '/main/lesson/' + data['sentence']['lesson'] + '/');
             switch (slevel) {
                 case 3:
                     if (data['sentence']['disamb_location'] != 0) {
@@ -49,18 +48,16 @@
             }
             $('#sentencequizform').removeClass('abox_g abox_r');
         } else {
-            $.get("{% url 'main:sentencesuccess' lesson.id %}").done(function (data) {
-                $('#wrapper').html(data);
-            });
+            $.get("{% url 'main:reviewsentencecurrent' %}").done(function (data) {
+                $('#allwrap').html(data);
+            });    
         }
     }
 
-    $('#sentencequizform').submit(function(event) {
-        event.preventDefault();
-        var clean_attempt = cleanInput($('#id_sentenceattempt').val());
-        if (clean_attempt == $('#sactual').val()) {
-            $('#bug-button').hide();
+    function processQuiz(attempt) {
+        if (attempt == 1) {
             $('#sentencequizform').attr('class', 'abox abox_g');
+            $('#bug-button').hide();
             if (slevel == 3) {
                 sentencecode = 'C';
             } else {
@@ -75,14 +72,34 @@
         }
         $('#scode').val(sentencecode);
         var form_data = $('#sentencequizform').serialize();
-        $.post("{% url 'main:sentencecheck' lesson.id %}", form_data).done(function(data) {
+        $.post("{% url 'main:reviewsentencecheck' %}", form_data).done(function(data) {
             $('#sentencequizform')[0].reset();
             sentenceNext(data);
         });
+    }
+
+    $('#sentencequizform').submit(function(event) {
+        event.preventDefault();
+        var clean_attempt = cleanInput($('#id_sentenceattempt').val());
+        if ($('#sstrict').val() == '1') {
+            if (clean_attempt == $('#sactual').val()) {
+                processQuiz(1);
+            } else {
+                processQuiz(0);
+            }
+        } else {
+            clean_attempt = clean_attempt.split("");
+            var actual_split = $('#sactual').val().split("");
+            if (wanakana.compare(clean_attempt, actual_split)) {
+                processQuiz(1);
+            } else {
+                processQuiz(0);
+            }
+        }
     });
 
     $(document).ready(function() {
-        $.get("{% url 'main:sentencegrab' lesson.id %}").done(function (data) {
+        $.get("{% url 'main:reviewsentencegrab' %}").done(function (data) {
             sentenceNext(data);
         });
     });
