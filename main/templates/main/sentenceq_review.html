@@ -11,103 +11,137 @@
 <script type='text/javascript' src='{% static 'js/cookiemonster.js' %}'></script>
 
 <script type='text/javascript'>
-    var slevel = 3,
-        sentencecode = 'A';
-    var input = document.getElementById('id_sentenceattempt');
+    var input = document.getElementById('attempt');
     wanakana.bind(input);
 
-    function sentenceNext(data) {
-        if (data['id'] != null) {
-            $('#sentence_eng').html(data['sentence']['english']);
-            $('#sactual').val(data['sentence']['kana_clean']);
-            $('#sstrict').val(data['sentence']['strict']);
-            $('#sid').val(data['id']);
-            if (data['sentence']['literal'].trim()) {
-                $('#literal').html('<div class="white-words litcontextbox upper">literal</div>' + data['sentence']['literal'] + '&#8203;');
-            } else {
-                $('#literal').html('&#8203;');
+    const english = $('#english'),
+        literal = $('#literal'),
+        context = $('#context'),
+        hint = $('#hint'),
+        quiz = $('#quiz'),
+        attempt = $('#attempt'),
+        pagewrap = $('#allwrap'),
+        reflink = $("#reflink"),
+        bug = $('#bug-button');
+
+    var qdata = [],
+        storage = "reviewsentence",
+        qcount = 0,
+        q = 0,
+        totalq = 0,
+        level = 3,
+        repeat = 0;
+
+    function saveq() {
+        $.ajax({
+            type: "POST",
+            url: "{% url 'main:reviewsentencesave' %}",
+            dataType: 'json',
+            data: {qdata: JSON.stringify(qdata)},
+            success: function (data) {
+                if (data.error) { location.reload(); } else { qcount = 0; }
             }
-            $('#context_one').html(data['sentence']['context'] + '&#8203;');
-            $("#reflink").attr("href", '/main/lesson/' + data['sentence']['lesson'] + '/');
-            switch (slevel) {
-                case 3:
-                    if (data['sentence']['disamb_location'] != 0) {
-                        $('#sentence_hint').html(data['sentence']['kana_all_blank']);
-                        $('#sentence_hint').addClass('ls5y');
-                    } else {
-                        $('#sentence_hint').html('&#8203;');
-                    } break;
-                case 2:
-                    $('#sentence_hint').html(data['sentence']['kana_all_blank']);
-                    $('#sentence_hint').removeClass('ls5y');
-                    break;
-                case 1:
-                    $('#sentence_hint').html(data['sentence']['kana_alt_blank']); break;
-                default:
-                    $('#sentence_hint').html(data['sentence']['f_kana']); break;
-            }
-            $('#sentencequizform').removeClass('abox_g abox_r');
-        } else {
-            $.get("{% url 'main:reviewsentencecurrent' %}").done(function (data) {
-                $('#allwrap').html(data);
-            });    
+        });
+    }
+
+    function sentence() {
+        context.html('&#8203;' + qdata[q]['sentence']['context'] + '&#8203;');
+        literal.html('<div class="white-words litcontextbox upper">literal</div>' + qdata[q]['sentence']['literal'] + '&#8203;');
+        english.html(qdata[q]['sentence']['english']);
+        reflink.attr("href", '/main/lesson/' + qdata[q]['sentence']['lesson'] + '/');
+        switch(level) {
+            case 3:
+                if (qdata[q]['sentence']['disamb_location'] != 0) {
+                    hint.html(qdata[q]['sentence']['kana_all_blank']);
+                    hint.addClass('ls5y');
+                } else {
+                    hint.html('&#8203;');
+                } break;
+            case 2:
+                hint.html(qdata[q]['sentence']['kana_all_blank']);
+                hint.removeClass('ls5y');
+                break;
+            case 1:
+                hint.html(qdata[q]['sentence']['kana_alt_blank']); break;
+            default:
+                hint.html(qdata[q]['sentence']['f_kana']); break;
         }
     }
 
     function processQuiz(attempt) {
-        if (attempt == 1) {
-            $('#sentencequizform').attr('class', 'abox abox_g');
-            $('#bug-button').hide();
-            if (slevel == 3) {
-                sentencecode = 'C';
+        if (attempt === 1) {
+            bug.hide();
+            quiz.removeClass("abox_red");
+            quiz.addClass("abox_g").one(
+                "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend",
+                function() { quiz.removeClass("abox_g"); });
+            qdata[q]['last_attempt'] = addTime(0);
+            if (level === 3) {
+                if (repeat) {
+                    qdata[q]['next_review'] = addTime(1);
+                    repeat = 0;
+                } else {
+                    qdata[q]['score'] = qdata[q]['score'] + 1;
+                    qdata[q]['next_review'] = addTime(qdata[q]['score']);
+                }
+                q++;
+                qcount++;
             } else {
-                slevel = 3;
-                sentencecode = 'N';
+                level = 3;
+                repeat = 1;
             }
         } else {
-            $('#bug-button').show();
-            $('#sentencequizform').attr('class', 'abox_red abox_r');
-            if (slevel == 3) { sentencecode = 'I'; } else { sentencecode = 'A'; }
-            if (slevel > 0) { slevel--; }
+            bug.show();
+            quiz.addClass("abox_red abox_r").one(
+                "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend",
+                function() { quiz.removeClass("abox_r"); });
+            qdata[q]['score'] = 0;
+            if (level > 0) { level--; }
         }
-        $('#scode').val(sentencecode);
-        var form_data = $('#sentencequizform').serialize();
-        $.post("{% url 'main:reviewsentencecheck' %}", form_data).done(function(data) {
-            $('#sentencequizform')[0].reset();
-            sentenceNext(data);
-        });
+        localStorage.setItem(storage, JSON.stringify(qdata));
+        if (q < totalq) {
+            quiz[0].reset();
+            if (qcount > 10) { saveq(); }
+            sentence();
+        } else {
+            $.ajax({
+                type: "POST",
+                url: "{% url 'main:reviewsentencefinish' %}",
+                dataType: 'json',
+                data: {qdata: JSON.stringify(qdata)},
+                success: function (data) {
+                    if ((data.error) || (data.loop)) { location.reload(); } else { pagewrap.html(data); }
+                }
+            });
+        }
     }
 
-    $('#sentencequizform').submit(function(event) {
+    quiz.submit(function(event) {
         event.preventDefault();
-        var clean_attempt = cleanInput($('#id_sentenceattempt').val());
-        if ($('#sstrict').val() == '1') {
-            if (clean_attempt == $('#sactual').val()) {
-                processQuiz(1);
-            } else {
-                processQuiz(0);
-            }
+        var clean = cleanInput(attempt.val()),
+            actual = qdata[q]['sentence']['kana_clean'];
+        if ('{{ user.profile.strictmode }}' === 'True' || (qdata[q]['sentence']['strict'])) {
+            if (clean === actual) { processQuiz(1); } else { processQuiz(0); }
         } else {
-            clean_attempt = clean_attempt.split("");
-            var actual_split = $('#sactual').val().split("");
-            if (wanakana.compare(clean_attempt, actual_split)) {
-                processQuiz(1);
-            } else {
-                processQuiz(0);
-            }
+            actual = actual.split("");
+            clean = clean.split("");
+            if (wanakana.compare(clean, actual)) { processQuiz(1); } else { processQuiz(0); }
         }
     });
 
     $(document).ready(function() {
+        localStorage.clear();
         $.get("{% url 'main:reviewsentencegrab' %}").done(function (data) {
-            sentenceNext(data);
-        });
-    });
-
-    $('#bug-button').click(function() {
-        $('#form-modal-body').load('/news/newissue/', function () {
-            modal.style.display = "block";
-            formAjaxSubmit('#form-modal-body form', '#form-modal');
+            qdata = data;
+            localStorage.setItem(storage, JSON.stringify(qdata));
+            totalq = qdata.length;
+            if (totalq > 0) {
+                sentence();
+            } else {
+                $.get("{% url 'main:reviewsentencecurrent' %}").done(function (data) {
+                    pagewrap.html(data);
+                });
+            }
         });
     });
 </script>

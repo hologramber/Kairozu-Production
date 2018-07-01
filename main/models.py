@@ -1,12 +1,10 @@
-from datetime import timedelta
-from django.utils import timezone
 import re
-
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.contrib.auth.signals import user_logged_in
 from django.dispatch import receiver
+from django.utils import timezone
 from model_utils.managers import InheritanceManager
 from model_utils import Choices
 from pygments import highlight
@@ -336,60 +334,6 @@ class ExpressionRecord(models.Model):
 
     class Meta:
         ordering = ['next_review']
-        
-    # @staticmethod
-    # def review_new_attempt(expressionrecord_id):
-    #     """updates the current time of last attempt where success was finally achieved"""
-    #     expressionrecord = ExpressionRecord.objects.get(id=expressionrecord_id)
-    #     expressionrecord.last_attempt = timezone.now()
-    #     expressionrecord.next_review = timezone.now() + timedelta(hours=1)
-    #     expressionrecord.save()
-
-    # @staticmethod
-    # def review_correct_attempt(expressionrecord_id):
-    #     expressionrecord = ExpressionRecord.objects.get(id=expressionrecord_id)
-    #     expressionrecord.score += 1
-    #     expressionrecord.last_attempt = timezone.now()
-    #     # score        0, 1,  2,  3,  4,   5,   6,   7,   8,   9,   10,   11,   12
-    #     hours_scale = [1, 7, 24, 48, 72, 120, 240, 336, 480, 984, 1680, 2328, 3000]
-    #     if expressionrecord.score < 0:
-    #         addhours = 1
-    #     elif expressionrecord.score > 12:
-    #         addhours = 4000
-    #     else:
-    #         addhours = hours_scale[expressionrecord.score]
-    #     expressionrecord.next_review = timezone.now() + timedelta(hours=addhours)
-    #     expressionrecord.save()
-
-    # @staticmethod
-    # def review_incorrect_attempt(expressionrecord_id):
-    #     expressionrecord = ExpressionRecord.objects.get(id=expressionrecord_id)
-    #     expressionrecord.score = 0
-    #     expressionrecord.save()
-
-    # @staticmethod
-    # def new_attempt(expressionrecord_id):
-    #     """updates the current time of last attempt where success was finally achieved"""
-    #     expressionrecord = ExpressionRecord.objects.get(id=expressionrecord_id)
-    #     expressionrecord.last_attempt = timezone.now()
-    #     expressionrecord.save()
-
-    # @staticmethod
-    # def correct_attempt(expressionrecord_id):
-    #     """updates the number of times correct/current time"""
-    #     expressionrecord = ExpressionRecord.objects.get(id=expressionrecord_id)
-    #     expressionrecord.last_attempt = timezone.now()
-    #     expressionrecord.rating += 1
-    #     if expressionrecord.next_review is None:
-    #         expressionrecord.next_review = timezone.now() + timedelta(hours=1)
-    #     expressionrecord.save()
-
-    # @staticmethod
-    # def incorrect_attempt(expressionrecord_id):
-    #     """updates the number of times incorrect/current time"""
-    #     expressionrecord = ExpressionRecord.objects.get(id=expressionrecord_id)
-    #     expressionrecord.rating = 0
-    #     expressionrecord.save()
 
 
 class Vocabulary(models.Model):
@@ -516,60 +460,6 @@ class VocabRecord(models.Model):
 
     class Meta:
         ordering = ['next_review']
-
-    # @staticmethod
-    # def review_new_attempt(vocabrecord_id):
-    #     """updates the current time of last attempt where success was finally achieved"""
-    #     vocabrecord = VocabRecord.objects.get(id=vocabrecord_id)
-    #     vocabrecord.last_attempt = timezone.now()
-    #     vocabrecord.next_review = timezone.now() + timedelta(hours=1)
-    #     vocabrecord.save()
-
-    # @staticmethod
-    # def review_correct_attempt(vocabrecord_id):
-    #     vocabrecord = VocabRecord.objects.get(id=vocabrecord_id)
-    #     vocabrecord.score += 1
-    #     vocabrecord.last_attempt = timezone.now()
-    #     # score        0, 1,  2,  3,  4,   5,   6,   7,   8,   9,   10,   11,   12
-    #     hours_scale = [1, 7, 24, 48, 72, 120, 240, 336, 480, 984, 1680, 2328, 3000]
-    #     if vocabrecord.score < 0:
-    #         addhours = 1
-    #     elif vocabrecord.score > 12:
-    #         addhours = 4000
-    #     else:
-    #         addhours = hours_scale[vocabrecord.score]
-    #     vocabrecord.next_review = timezone.now() + timedelta(hours=addhours)
-    #     vocabrecord.save()
-
-    # @staticmethod
-    # def review_incorrect_attempt(vocabrecord_id):
-    #     vocabrecord = VocabRecord.objects.get(id=vocabrecord_id)
-    #     vocabrecord.score = 0
-    #     vocabrecord.save()
-
-    # @staticmethod
-    # def new_attempt(vocabrecord_id):
-    #     """updates the current time of last attempt where success was finally achieved"""
-    #     vocabrecord = VocabRecord.objects.get(id=vocabrecord_id)
-    #     vocabrecord.last_attempt = timezone.now()
-    #     vocabrecord.save()
-
-    # @staticmethod
-    # def correct_attempt(vocabrecord_id):
-    #     """updates the number of times correct/current time"""
-    #     vocabrecord = VocabRecord.objects.get(id=vocabrecord_id)
-    #     vocabrecord.last_attempt = timezone.now()
-    #     vocabrecord.rating += 1
-    #     if vocabrecord.next_review is None:
-    #         vocabrecord.next_review = timezone.now() + timedelta(hours=1)
-    #     vocabrecord.save()
-
-    # @staticmethod
-    # def incorrect_attempt(vocabrecord_id):
-    #     """updates the number of times incorrect/current time"""
-    #     vocabrecord = VocabRecord.objects.get(id=vocabrecord_id)
-    #     vocabrecord.rating = 0
-    #     vocabrecord.save()
 
 
 class Lesson(models.Model):
@@ -1044,60 +934,6 @@ class SentenceRecord(models.Model):
 
     class Meta:
         ordering = ['next_review']
-
-    @staticmethod
-    def review_new_attempt(sentencerecord_id):
-        """updates the current time of last attempt where success was finally achieved"""
-        sentencerecord = SentenceRecord.objects.get(id=sentencerecord_id)
-        sentencerecord.last_attempt = timezone.now()
-        sentencerecord.next_review = timezone.now() + timedelta(hours=1)
-        sentencerecord.save()
-
-    @staticmethod
-    def review_correct_attempt(sentencerecord_id):
-        sentencerecord = SentenceRecord.objects.get(id=sentencerecord_id)
-        sentencerecord.score += 1
-        sentencerecord.last_attempt = timezone.now()
-        # score        0, 1,  2,  3,  4,   5,   6,   7,   8,   9,   10,   11,   12
-        hours_scale = [1, 7, 24, 48, 72, 120, 240, 336, 480, 984, 1680, 2328, 3000]
-        if sentencerecord.score < 0:
-            addhours = 1
-        elif sentencerecord.score > 12:
-            addhours = 4000
-        else:
-            addhours = hours_scale[sentencerecord.score]
-        sentencerecord.next_review = timezone.now() + timedelta(hours=addhours)
-        sentencerecord.save()
-
-    @staticmethod
-    def review_incorrect_attempt(sentencerecord_id):
-        sentencerecord = SentenceRecord.objects.get(id=sentencerecord_id)
-        sentencerecord.score = 0
-        sentencerecord.save()
-
-    @staticmethod
-    def new_attempt(sentencerecord_id):
-        """updates the current time of last attempt where success was finally achieved"""
-        sentencerecord = SentenceRecord.objects.get(id=sentencerecord_id)
-        sentencerecord.last_attempt = timezone.now()
-        sentencerecord.save()
-
-    @staticmethod
-    def correct_attempt(sentencerecord_id):
-        """updates the number of times correct/current time"""
-        sentencerecord = SentenceRecord.objects.get(id=sentencerecord_id)
-        sentencerecord.last_attempt = timezone.now()
-        if sentencerecord.next_review is None:
-            sentencerecord.next_review = timezone.now() + timedelta(hours=1)
-        sentencerecord.rating += 1
-        sentencerecord.save()
-
-    @staticmethod
-    def incorrect_attempt(sentencerecord_id):
-        """updates the number of times incorrect/current time"""
-        sentencerecord = SentenceRecord.objects.get(id=sentencerecord_id)
-        sentencerecord.rating = 0
-        sentencerecord.save()
 
 
 @receiver(user_logged_in)
