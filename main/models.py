@@ -852,15 +852,15 @@ class ExerciseRecord(models.Model):
             Profile.ok_to_graduate(user)
 
     @staticmethod
-    def update_grade(exerciserecord_id, exercise_grade, user):
-        grade = float(exercise_grade)
+    def update_score(exerciserecord_id, exercise_score, user):
+        score = float(exercise_score)
         exerciserecord = ExerciseRecord.objects.get(id=exerciserecord_id)
         exerciserecord.last_attempt = timezone.now()
-        exerciserecord.score = grade
-        if grade >= 0.98:
+        exerciserecord.score = score
+        if score >= 0.98:
             exerciserecord.rating = 3
             Profile.graduate_exercise(user, exerciserecord.exercise.exercise_order)
-        elif grade >= 0.70:
+        elif score >= 0.70:
             exerciserecord.rating = 2
             Profile.graduate_exercise(user, exerciserecord.exercise.exercise_order)
         else:

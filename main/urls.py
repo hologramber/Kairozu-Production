@@ -67,17 +67,16 @@ urlpatterns = [
 
     # ################## EXERCISES #####################
     url(r'^chapter/(?P<chapter_id>[0-9]+)/exercises/$', views.ExercisesView.as_view(), name='exercises'),
-    url(r'^chapter/(?P<chapter_id>[0-9]+)/exercise_p(?P<exercise_id>[0-9]+)/$', views.ExercisePassageView.as_view(), name='exercisepassage'),
-    url(r'^chapter/(?P<chapter_id>[0-9]+)/exercise_p(?P<exercise_id>[0-9]+)/check/$', views.exercise_passage_check, name='exercisepassagecheck'),
-    url(r'^chapter/(?P<chapter_id>[0-9]+)/exercise_p(?P<exercise_id>[0-9]+)/grade/$', views.exercise_passage_grade, name='exercisepassagegrade'),
-    url(r'^chapter/(?P<chapter_id>[0-9]+)/exercise_p(?P<exercise_id>[0-9]+)/grab/(?P<passage_index>[0-9]+)$', api_views.ExercisePassageGrab.as_view(), name='exercisepassagegrab'),
-    url(r'^chapter/(?P<chapter_id>[0-9]+)/exercise_p(?P<exercise_id>[0-9]+)/success/$', views.ExercisePassageSuccessView.as_view(), name='exercisepassagesuccess'),
 
-    url(r'^chapter/(?P<chapter_id>[0-9]+)/exercise_d(?P<exercise_id>[0-9]+)/$', views.ExerciseDialogueView.as_view(), name='exercisedialogue'),
-    url(r'^chapter/(?P<chapter_id>[0-9]+)/exercise_d(?P<exercise_id>[0-9]+)/check/$', views.exercise_dialogue_check, name='exercisedialoguecheck'),
-    url(r'^chapter/(?P<chapter_id>[0-9]+)/exercise_d(?P<exercise_id>[0-9]+)/grade/$', views.exercise_dialogue_grade, name='exercisedialoguegrade'),
-    url(r'^chapter/(?P<chapter_id>[0-9]+)/exercise_d(?P<exercise_id>[0-9]+)/grab/(?P<dialogue_index>[0-9]+)$', api_views.ExerciseDialogueGrab.as_view(), name='exercisedialoguegrab'),
-    url(r'^chapter/(?P<chapter_id>[0-9]+)/exercise_d(?P<exercise_id>[0-9]+)/success/$', views.ExerciseDialogueSuccessView.as_view(), name='exercisedialoguesuccess'),
+    url(r'^chapter/(?P<chapter_id>[0-9]+)/exercise_p(?P<exercise_id>[0-9]+)/$', views.PassageView.as_view(), name='passage'),
+    url(r'^chapter/(?P<chapter_id>[0-9]+)/exercise_p(?P<exercise_id>[0-9]+)/finish/$', views.passagefinish, name='passagefinish'),
+    url(r'^chapter/(?P<chapter_id>[0-9]+)/exercise_p(?P<exercise_id>[0-9]+)/success/$', views.PassageSuccessView.as_view(), name='passagesuccess'),
+    url(r'^chapter/(?P<chapter_id>[0-9]+)/exercise_p(?P<exercise_id>[0-9]+)/grab/$', api_views.PassageGrab.as_view(), name='passagegrab'),
+
+    url(r'^chapter/(?P<chapter_id>[0-9]+)/exercise_d(?P<exercise_id>[0-9]+)/$', views.DialogueView.as_view(), name='dialogue'),
+    url(r'^chapter/(?P<chapter_id>[0-9]+)/exercise_d(?P<exercise_id>[0-9]+)/finish/$', views.dialoguefinish, name='dialoguefinish'),
+    url(r'^chapter/(?P<chapter_id>[0-9]+)/exercise_d(?P<exercise_id>[0-9]+)/grab/$', api_views.DialogueGrab.as_view(), name='dialoguegrab'),
+    url(r'^chapter/(?P<chapter_id>[0-9]+)/exercise_d(?P<exercise_id>[0-9]+)/success/$', views.DialogueSuccessView.as_view(), name='dialoguesuccess'),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

@@ -10,7 +10,7 @@ from django.urls import reverse
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from .models import Profile, Expression, ExpressionRecord, Vocabulary, Practice, Lesson, Chapter, VocabRecord, SentenceRecord, Exercise, ExerciseRecord, ExerciseSentence, GrammarNote
-from .forms import ValidateFinishForm
+from .forms import ValidateFinishForm, ValidateExerciseFinish
 from .serializers import VocabRecordSerializer, ExpressionRecordSerializer, SentenceRecordSerializer
 
 error_finish = 'There was a problem with saving your current progress. Please e-mail kairozu@kairozu.com if you suspect this is an error.'
@@ -186,7 +186,7 @@ def vocabfinish(request, chapter_id):
             if int(chapter_id) < request.user.profile.currentvocab:
                 return JsonResponse(loop_data)
             elif int(chapter_id) == request.user.profile.currentvocab:
-                vrecords = VocabRecord.objects.filter(user_id=request.user.id, vocab__chapter__id__exact=chapter_id, rating__lte=0).order_by('last_attempt')
+                vrecords = VocabRecord.objects.filter(user_id=request.user.id, vocab__chapter__id__exact=chapter_id, rating__lte=0).order_by('last_attempt')[:20]
                 if vrecords is None:
                     Profile.graduate_vocab(request.user, chapter_id)
                     return HttpResponseRedirect(reverse('main:vocabsuccess', kwargs={'chapter_id': chapter_id}))
@@ -284,7 +284,7 @@ def expressionfinish(request, chapter_id):
             if int(chapter_id) < request.user.profile.currentexpression:
                 return JsonResponse(loop_data)
             elif int(chapter_id) == request.user.profile.currentexpression:
-                erecords = ExpressionRecord.objects.filter(user_id=request.user.id, express__chapter_id__exact=chapter_id, rating__lte=0).order_by('last_attempt')
+                erecords = ExpressionRecord.objects.filter(user_id=request.user.id, express__chapter_id__exact=chapter_id, rating__lte=0).order_by('last_attempt')[:20]
                 if erecords is None:
                     Profile.graduate_expression(request.user, chapter_id)
                     return HttpResponseRedirect(reverse('main:expressionsuccess', kwargs={'chapter_id': chapter_id}))
@@ -428,7 +428,7 @@ def sentencefinish(request, lesson_id):
             if int(lesson_id) < request.user.profile.currentlesson:
                 return JsonResponse(loop_data)
             elif int(lesson_id) == request.user.profile.currentlesson:
-                srecords = SentenceRecord.objects.filter(user_id=request.user.id, sentence__lesson__id__exact=lesson_id, rating__lte=0).order_by('last_attempt')
+                srecords = SentenceRecord.objects.filter(user_id=request.user.id, sentence__lesson__id__exact=lesson_id, rating__lte=0).order_by('last_attempt')[:20]
                 if srecords is None:
                     Profile.graduate_lesson(request.user, lesson_id)
                     return HttpResponseRedirect(reverse('main:sentencesuccess', kwargs={'lesson_id': lesson_id}))
@@ -490,7 +490,7 @@ def reviewvocabfinish(request):
     vrupdate = VocabRecordSerializer(vr_queryset, data=json.loads(request.POST.get('qdata')), partial=True, many=True)
     if vrupdate.is_valid():
         vrupdate.save()
-        vrecords = VocabRecord.objects.filter(user_id=request.user.id, next_review__lte=datetime.now())
+        vrecords = VocabRecord.objects.filter(user_id=request.user.id, next_review__lte=datetime.now())[:20]
         if vrecords is None:
             return HttpResponseRedirect(reverse('main:reviewvocabcurrent'))
         else:
@@ -536,7 +536,7 @@ def reviewexpressionfinish(request):
     erupdate = ExpressionRecordSerializer(er_queryset, data=json.loads(request.POST.get('qdata')), partial=True, many=True)
     if erupdate.is_valid():
         erupdate.save()
-        erecords = ExpressionRecord.objects.filter(user_id=request.user.id, next_review__lte=datetime.now())
+        erecords = ExpressionRecord.objects.filter(user_id=request.user.id, next_review__lte=datetime.now())[:20]
         if erecords is None:
             return HttpResponseRedirect(reverse('main:reviewexpressioncurrent'))
         else:
@@ -582,7 +582,7 @@ def reviewsentencefinish(request):
     srupdate = SentenceRecordSerializer(sr_queryset, data=json.loads(request.POST.get('qdata')), partial=True, many=True)
     if srupdate.is_valid():
         srupdate.save()
-        srecords = SentenceRecord.objects.filter(user_id=request.user.id, next_review__lte=datetime.now())
+        srecords = SentenceRecord.objects.filter(user_id=request.user.id, next_review__lte=datetime.now())[:20]
         if srecords is None:
             return HttpResponseRedirect(reverse('main:reviewsentencecurrent'))
         else:
@@ -632,11 +632,11 @@ class ExercisesView(LoginRequiredMixin, UserPassesTestMixin, ListView):
             return True
 
 
-class ExercisePassageView(LoginRequiredMixin, UserPassesTestMixin, ListView):
-    template_name = 'main/passage.html'
+class PassageView(LoginRequiredMixin, UserPassesTestMixin, ListView):
+    template_name = 'main/exercise_passage.html'
 
     def get_context_data(self, **kwargs):
-        context = super(ExercisePassageView, self).get_context_data(**kwargs)
+        context = super(PassageView, self).get_context_data(**kwargs)
         exercise = get_object_or_404(Exercise, pk=self.kwargs['exercise_id'])
         context['exercise'] = exercise
         context['chapter'] = exercise.chapter
@@ -651,23 +651,37 @@ class ExercisePassageView(LoginRequiredMixin, UserPassesTestMixin, ListView):
             return True
 
 
-def exercise_passage_check(request, chapter_id, exercise_id):
-    passage_index = int(request.POST['passage_index'])
-    return HttpResponseRedirect(reverse('main:exercisepassagegrab', kwargs={'chapter_id': chapter_id, 'exercise_id': exercise_id, 'passage_index': passage_index}))
+@require_http_methods(["POST"])
+def passagefinish(request, chapter_id, exercise_id):
+    if request.user.profile.currentexercise < int(exercise_id):
+        return JsonResponse(error_data)
+    else:
+        form = ValidateExerciseFinish(request.POST)
+        if form.is_valid():
+            q = form.cleaned_data['q']
+            totalq = form.cleaned_data['totalq']
+            score = form.cleaned_data['score']
+            if q == totalq == ExerciseSentence.objects.filter(exercise_id__exact=exercise_id).count():
+                er_id = ExerciseRecord.objects.get(user_id=request.user.id, exercise__id__exact=exercise_id).id
+                if er_id:
+                    ExerciseRecord.update_score(er_id, score, request.user)
+                    return HttpResponseRedirect(reverse('main:passagesuccess', kwargs={'chapter_id': chapter_id, 'exercise_id': exercise_id}))
+                else:
+                    messages.add_message(request, messages.ERROR, error_finish)
+                    return JsonResponse(error_data)
+            else:   # if # of questions doesn't line up
+                messages.add_message(request, messages.ERROR, error_finish)
+                return JsonResponse(error_data)
+        else:   # if form is not valid
+            messages.add_message(request, messages.ERROR, error_finish)
+            return JsonResponse(error_data)
 
 
-def exercise_passage_grade(request, chapter_id, exercise_id):
-    exerciserecord_user = ExerciseRecord.objects.get(user_id=request.user.id, exercise__id__exact=exercise_id)
-    passage_grade = request.POST['passage_grade']
-    ExerciseRecord.update_grade(exerciserecord_user.id, passage_grade, request.user)
-    return HttpResponseRedirect(reverse('main:exercisepassagesuccess', kwargs={'chapter_id': chapter_id, 'exercise_id': exercise_id}))
-
-
-class ExercisePassageSuccessView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
-    template_name = 'main/passage_success.html'
+class PassageSuccessView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
+    template_name = 'main/exercise_passage_success.html'
 
     def get_context_data(self, **kwargs):
-        context = super(ExercisePassageSuccessView, self).get_context_data(**kwargs)
+        context = super(PassageSuccessView, self).get_context_data(**kwargs)
         Profile.has_reviews(self.request.user)
         chapter = get_object_or_404(Chapter, pk=self.kwargs['chapter_id'])
         currentc = get_object_or_404(Chapter, pk=self.request.user.profile.currentchapter)
@@ -685,11 +699,11 @@ class ExercisePassageSuccessView(LoginRequiredMixin, UserPassesTestMixin, Templa
             return True
 
 
-class ExerciseDialogueView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
-    template_name = 'main/dialogue.html'
+class DialogueView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
+    template_name = 'main/exercise_dialogue.html'
 
     def get_context_data(self, **kwargs):
-        context = super(ExerciseDialogueView, self).get_context_data(**kwargs)
+        context = super(DialogueView, self).get_context_data(**kwargs)
         exercise = get_object_or_404(Exercise, pk=self.kwargs['exercise_id'])
         context['exercise'] = exercise
         context['chapter'] = exercise.chapter
@@ -701,23 +715,27 @@ class ExerciseDialogueView(LoginRequiredMixin, UserPassesTestMixin, TemplateView
             return True
 
 
-def exercise_dialogue_check(request, chapter_id, exercise_id):
-    dialogue_index = int(request.POST['dialogue_index'])
-    return HttpResponseRedirect(reverse('main:exercisedialoguegrab', kwargs={'chapter_id': chapter_id, 'exercise_id': exercise_id, 'dialogue_index': dialogue_index}))
+@require_http_methods(["POST"])
+def dialoguefinish(request):
+    return None
+
+# def exercise_dialogue_check(request, chapter_id, exercise_id):
+#     dialogue_index = int(request.POST['dialogue_index'])
+#     return HttpResponseRedirect(reverse('main:exercisedialoguegrab', kwargs={'chapter_id': chapter_id, 'exercise_id': exercise_id, 'dialogue_index': dialogue_index}))
+#
+#
+# def exercise_dialogue_grade(request, chapter_id, exercise_id):
+#     exerciserecord_user = ExerciseRecord.objects.get(user_id=request.user.id, exercise__id__exact=exercise_id)
+#     dialogue_grade = request.POST['dialogue_grade']
+#     ExerciseRecord.update_grade(exerciserecord_user.id, dialogue_grade, request.user)
+#     return HttpResponseRedirect(reverse('main:exercisedialoguesuccess', kwargs={'chapter_id': chapter_id, 'exercise_id': exercise_id}))
 
 
-def exercise_dialogue_grade(request, chapter_id, exercise_id):
-    exerciserecord_user = ExerciseRecord.objects.get(user_id=request.user.id, exercise__id__exact=exercise_id)
-    dialogue_grade = request.POST['dialogue_grade']
-    ExerciseRecord.update_grade(exerciserecord_user.id, dialogue_grade, request.user)
-    return HttpResponseRedirect(reverse('main:exercisedialoguesuccess', kwargs={'chapter_id': chapter_id, 'exercise_id': exercise_id}))
-
-
-class ExerciseDialogueSuccessView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
-    template_name = 'main/dialogue_success.html'
+class DialogueSuccessView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
+    template_name = 'main/exercise_dialogue_success.html'
 
     def get_context_data(self, **kwargs):
-        context = super(ExerciseDialogueSuccessView, self).get_context_data(**kwargs)
+        context = super(DialogueSuccessView, self).get_context_data(**kwargs)
         chapter = get_object_or_404(Chapter, pk=self.kwargs['chapter_id'])
         currentc = get_object_or_404(Chapter, pk=self.request.user.profile.currentchapter)
         erecord = ExerciseRecord.objects.get(user_id=self.request.user.id, exercise__id__exact=self.kwargs['exercise_id'])

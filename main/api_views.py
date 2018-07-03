@@ -11,9 +11,9 @@ class VocabRecordGrab(LoginRequiredMixin, generics.ListAPIView):
     def get_queryset(self):
         chapter_id = int(self.kwargs['chapter_id'])
         if chapter_id < self.request.user.profile.currentvocab:
-            vrecords = VocabRecord.objects.filter(user_id=self.request.user.id, vocab__chapter__id__exact=chapter_id).order_by('last_attempt')
+            vrecords = VocabRecord.objects.filter(user_id=self.request.user.id, vocab__chapter__id__exact=chapter_id).order_by('last_attempt')[:20]
         elif chapter_id == self.request.user.profile.currentvocab:
-            vrecords = VocabRecord.objects.filter(user_id=self.request.user.id, vocab__chapter__id__exact=chapter_id, rating__lte=0).order_by('last_attempt')
+            vrecords = VocabRecord.objects.filter(user_id=self.request.user.id, vocab__chapter__id__exact=chapter_id, rating__lte=0).order_by('last_attempt')[:20]
             if vrecords is None:
                 Profile.graduate_vocab(self.request.user, chapter_id)
                 vrecords = VocabRecord.objects.none()
@@ -26,7 +26,7 @@ class ReviewVocabRecordGrab(LoginRequiredMixin, generics.ListAPIView):
     serializer_class = serializers.VocabRecordSerializer
 
     def get_queryset(self):
-        vrecords = VocabRecord.objects.filter(user_id=self.request.user.id, next_review__lte=datetime.now())
+        vrecords = VocabRecord.objects.filter(user_id=self.request.user.id, next_review__lte=datetime.now())[:20]
         if vrecords is None:
             vrecords = VocabRecord.objects.none()
         return vrecords
@@ -38,9 +38,9 @@ class ExpressionRecordGrab(LoginRequiredMixin, generics.ListAPIView):
     def get_queryset(self):
         chapter_id = int(self.kwargs['chapter_id'])
         if chapter_id < self.request.user.profile.currentexpression:
-            erecords = ExpressionRecord.objects.filter(user_id=self.request.user.id, express__chapter__id__exact=chapter_id).order_by('last_attempt')
+            erecords = ExpressionRecord.objects.filter(user_id=self.request.user.id, express__chapter__id__exact=chapter_id).order_by('last_attempt')[:20]
         elif chapter_id == self.request.user.profile.currentexpression:
-            erecords = ExpressionRecord.objects.filter(user_id=self.request.user.id, express__chapter__id__exact=chapter_id, rating__lte=0).order_by('last_attempt')
+            erecords = ExpressionRecord.objects.filter(user_id=self.request.user.id, express__chapter__id__exact=chapter_id, rating__lte=0).order_by('last_attempt')[:20]
             if erecords is None:
                 Profile.graduate_expression(self.request.user, chapter_id)
                 erecords = ExpressionRecord.objects.none()
@@ -53,7 +53,7 @@ class ReviewExpressionRecordGrab(LoginRequiredMixin, generics.ListAPIView):
     serializer_class = serializers.ExpressionRecordSerializer
 
     def get_queryset(self):
-        erecords = ExpressionRecord.objects.filter(user_id=self.request.user.id, next_review__lte=datetime.now())
+        erecords = ExpressionRecord.objects.filter(user_id=self.request.user.id, next_review__lte=datetime.now())[:20]
         if erecords is None:
             erecords = ExpressionRecord.objects.none()
         return erecords
@@ -77,9 +77,9 @@ class SentenceRecordGrab(LoginRequiredMixin, generics.ListAPIView):
     def get_queryset(self):
         lesson_id = int(self.kwargs['lesson_id'])
         if lesson_id < self.request.user.profile.currentlesson:
-            srecords = SentenceRecord.objects.filter(user_id=self.request.user.id, sentence__lesson__id__exact=lesson_id).order_by('last_attempt')
+            srecords = SentenceRecord.objects.filter(user_id=self.request.user.id, sentence__lesson__id__exact=lesson_id).order_by('last_attempt')[:20]
         elif lesson_id == self.request.user.profile.currentlesson:
-            srecords = SentenceRecord.objects.filter(user_id=self.request.user.id, sentence__lesson__id__exact=lesson_id, rating__lte=0).order_by('last_attempt')
+            srecords = SentenceRecord.objects.filter(user_id=self.request.user.id, sentence__lesson__id__exact=lesson_id, rating__lte=0).order_by('last_attempt')[:20]
             if srecords is None:
                 Profile.graduate_lesson(self.request.user, lesson_id)
                 srecords = SentenceRecord.objects.none()
@@ -92,37 +92,31 @@ class ReviewSentenceRecordGrab(LoginRequiredMixin, generics.ListAPIView):
     serializer_class = serializers.SentenceRecordSerializer
 
     def get_queryset(self):
-        srecords = SentenceRecord.objects.filter(user_id=self.request.user.id, next_review__lte=datetime.now())
+        srecords = SentenceRecord.objects.filter(user_id=self.request.user.id, next_review__lte=datetime.now())[:20]
         if srecords is None:
             srecords = SentenceRecord.objects.none()
         return srecords
 
 
-class ExercisePassageGrab(LoginRequiredMixin, generics.RetrieveAPIView):
+class PassageGrab(LoginRequiredMixin, generics.ListAPIView):
     serializer_class = serializers.ExerciseSentenceSerializer
 
-    def get_object(self):
+    def get_queryset(self):
         exercise_id = int(self.kwargs['exercise_id'])
-        passage_index = int(self.kwargs['passage_index'])
-        next_sentence = ExerciseSentence.objects.filter(exercise_id=exercise_id)
-
-        if len(next_sentence) > passage_index:
-            next_sentence = next_sentence[passage_index]
-            return next_sentence
+        if exercise_id <= self.request.user.profile.currentexercise:
+            exercise_sentences = ExerciseSentence.objects.filter(exercise_id=exercise_id)
         else:
-            return None
+            exercise_sentences = ExerciseSentence.objects.none()
+        return exercise_sentences
 
 
-class ExerciseDialogueGrab(LoginRequiredMixin, generics.RetrieveAPIView):
+class DialogueGrab(LoginRequiredMixin, generics.ListAPIView):
     serializer_class = serializers.ExercisePromptSerializer
 
-    def get_object(self):
+    def get_queryset(self):
         exercise_id = int(self.kwargs['exercise_id'])
-        dialogue_index = int(self.kwargs['dialogue_index'])
-        next_prompt = ExercisePrompt.objects.filter(exercise_id=exercise_id)
-
-        if len(next_prompt) > dialogue_index:
-            next_prompt = next_prompt[dialogue_index]
-            return next_prompt
+        if exercise_id <= self.request.user.profile.currentexercise:
+            exercise_prompts = ExercisePrompt.objects.filter(exercise_id=exercise_id)
         else:
-            return None
+            exercise_prompts = ExercisePrompt.objects.none()
+        return exercise_prompts

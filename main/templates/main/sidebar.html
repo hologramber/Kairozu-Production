@@ -102,7 +102,7 @@
 			<li>
                 {% if user.profile.currentstory > chapter.id and user.profile.currentexercise >= exercisesb.exercise_order %}
                     {% if exercisesb.exercise_type == 'passage' %}
-                        <a href="{% url 'main:exercisepassage' chapter.id exercisesb.id %}"><span class="pad-left-15"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>　{{ exercisesb.exercise_word }}</span>
+                        <a href="{% url 'main:passage' chapter.id exercisesb.id %}"><span class="pad-left-15"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>　{{ exercisesb.exercise_word }}</span>
                             <div class="progress-status">
                                 {% if user.profile.currentexercise > exercisesb.exercise_order %}
                                     <span class="green-words normal"><i class="fa fa-check" aria-hidden="true"></i></span>
@@ -114,7 +114,7 @@
                             </div>
                         </a>
                     {% else %}
-                        <a href="{% url 'main:exercisedialogue' chapter.id exercisesb.id %}"><span class="pad-left-15"><i class="fa fa-comment-o fa-fw" aria-hidden="true"></i>　{{ exercisesb.exercise_word }}</span>
+                        <a href="{% url 'main:dialogue' chapter.id exercisesb.id %}"><span class="pad-left-15"><i class="fa fa-comment-o fa-fw" aria-hidden="true"></i>　{{ exercisesb.exercise_word }}</span>
                             <div class="progress-status">
                                 {% if user.profile.currentexercise > exercisesb.exercise_order %}
                                     <span class="green-words normal"><i class="fa fa-check" aria-hidden="true"></i></span>
