@@ -62,7 +62,6 @@
         pagewrap = $('#wrapper'),
         literal = $('#literal'),
         bug = $('#bug-button'),
-        retain = $('#retain-passage'),
         jpassage = $('#passage_jp');
 
     var qdata = '',
@@ -71,10 +70,10 @@
         level = 3,
         current_passage = '',
         currentline = '',
-        totalinputs = 0,
-        incorrectinputs = 0,
+        intotal = 0,
+        inwrong = 0,
         nextstep = 1,
-        newlywrong = 0;
+        wrongnew = 0;
 
     function passage() {
         english.html(qdata[q]['english']);
@@ -115,15 +114,15 @@
                 function() { quiz.removeClass("abox_g"); });
             english.attr('class', 'challenge-grammar');
             if (level === 3) {
-                totalinputs++;
+                intotal++;
                 nextstep = 1;
-                newlywrong = 0;
+                wrongnew = 0;
                 $(currentline).removeClass('green-words-bold');
                 current_passage = current_passage + ' ' + qdata[q]['f_kana'];
                 q++;
             } else {
-                if (newlywrong === 0) { incorrectinputs++; }
-                newlywrong = 1;
+                if (wrongnew === 0) { inwrong++; }
+                wrongnew = 1;
                 nextstep = 0;
                 level = 3;
             }
@@ -140,9 +139,8 @@
             quiz[0].reset();
             passage();
         } else {
-            var score = (totalinputs-incorrectinputs)/totalinputs,
-                total_passage = retain.html();
-            alert(score);
+            var score = (intotal-inwrong)/intotal,
+                total_passage = $('#retain-passage').html();
             $.ajax({
                 type: "POST",
                 url: "{% url 'main:passagefinish' chapter.id exercise.id %}",
@@ -152,11 +150,10 @@
                         location.reload();
                     } else {
                         pagewrap.html(data);
-                        retain.html(total_passage);
+                        $('#retain-passage').html(total_passage);
                     }
                 }
             });
-
         }
     });
 

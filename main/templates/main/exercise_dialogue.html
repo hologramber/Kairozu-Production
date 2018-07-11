@@ -23,21 +23,18 @@
 
         <div id="dialogue-input">
             <div id="grammarholder">
-                <div id='context_one' class='context-container'></div>
-                <div id='dialogue_english' class='challenge-grammar'></div>
+                <div id='context' class='context-container'></div>
+                <div id='english' class='challenge-grammar'></div>
                 <div class='promptc'>
-                    <span id='dialogue_hint' class='ls5r'>&#8203;</span>
+                    <span id='hint' class='ls5r'>&#8203;</span>
                     <a id="bug-button" href="#" tabindex="-1" style="display: none;">
                         <i id="report-issue" class="fa fa-bug red-words" aria-hidden="true"><span class="raleway">&nbsp;Error?</span></i>
                     </a>
                 </div>
             </div>  <!-- /#grammarholder -->
 
-            <form id='dialogue_form' action='' class='abox' method='post'>{% csrf_token %}
-                <input id='id_dialogue_attempt' type='text' name='dialogue_attempt' autocomplete='off' autocorrect='off' autocapitalize='off' spellcheck='false' autofocus />
-                <input id='dialogue_actual' type='hidden' name='dialogue_actual' value='' />
-                <input id='dialogue_index' type='hidden' name='dialogue_index' value='' />
-                <input id='dialogue_kana' type='hidden' name='dialogue_kana' value='' />
+            <form id='quiz' action='' class='abox' method='post'>{% csrf_token %}
+                <input id='attempt' type='text'  autocomplete='off' autocorrect='off' autocapitalize='off' spellcheck='false' autofocus />
                 <input type='submit' value='&#8680;' />
             </form>
             <div id='literal' class='lit-c'></div>
@@ -51,148 +48,160 @@
 <script type='text/javascript' src='{% static 'js/wanakana.js' %}'></script>
 <script type='text/javascript' src='{% static 'js/cookiemonster.js' %}'></script>
 <script type='text/javascript'>
-    var dialogue_level = 3;
-    var dialogue_index = 0;
-    var response_index = 0;
-    var response_length = 0;
-    var total_inputs = 0;
-    var incorrect_inputs = 0;
-    var next_step = 1;
-    var newly_wrong = 0;
-    var current_dialogue = '';
-    var current_prompt = '';
-    var current_response = '';
-    var current_name = '';
-    var newpromptline = '';
-    var newpromptline_a = "<tr><td class='dialogue-green'><i class='fa fa-user fa-lg green-words' aria-hidden='true'></i> <span id='dialoguename";
-    var newpromptline_b = "' class='green-words bigbold'></span></td></tr><tr><td><div class='message'><div><p><span id='dialogueprompt";
-    var newpromptline_c = "'></div></p></span></div></td></tr>";
-    var newresponseline = '';
-    var newresponseline_a ="<tr style='text-align:right;'><td class='dialogue-orange'><i class='fa fa-user fa-lg orange-words' aria-hidden='true'></i> <span class='orange-words bigbold'>You</span></td></tr><tr><td><div class='message me'><div><p><span id='responsekana"
-    var newresponseline_b = "' class='bold'></div></p></span></div></td></tr>";
-    var newsecondaryline = '';
-    var newsecondaryline_a = "<tr><td><div class='message me'><div><p><span id='responsekana"
-    var newsecondaryline_b = "' class='bold'></div></p></span></div></td></tr>";
-
-    var input = document.getElementById('id_dialogue_attempt');
+    var input = document.getElementById('attempt');
     wanakana.bind(input);
 
-    function dialogueNext(data) {
-        if (data['id'] != null) {
-            if (response_index == 0 && next_step == 1) {
-                newpromptline = newpromptline_a + dialogue_index + newpromptline_b + dialogue_index + newpromptline_c;
-                newresponseline = newresponseline_a + dialogue_index + '-' + response_index + newresponseline_b;
-                $('#dialogue-table').append(newpromptline, newresponseline);
-            } else if (next_step == 1) {
-                newsecondaryline = newsecondaryline_a + dialogue_index + '-' + response_index + newsecondaryline_b;
-                $('#dialogue-table').append(newsecondaryline);
-            }
-            response_length = data['responses'].length-1;
-            current_prompt = '#dialogueprompt' + dialogue_index;
-            current_response = '#responsekana' + dialogue_index + '-' + response_index;
-            current_name = '#dialoguename' + dialogue_index;
-            $(current_name).html(data['prompt_name']);
-            $(current_prompt).html(data['prompt_kana_f']);
-            var topelement = document.getElementById("grammarholder");
-            topelement.scrollIntoView();
-            $('#dialogue_actual').val(data['responses'][response_index]['response_kana_clean']);
-            $('#dialogue_kana').val(data['responses'][response_index]['response_kana_f']);
-            $('#dialogue_english').html(data['responses'][response_index]['response_english']);
-            if (data['responses'][response_index]['response_literal'].trim()) {
-                $('#literal').html('<div class="white-words litcontextbox upper">literal</div>' + data['responses'][response_index]['response_literal'] + '&#8203;');
-            } else {
-                $('#literal').html('&#8203;');
-            }
-            $('#context_one').html(data['responses'][response_index]['response_context'] + '&#8203;');
-            switch (dialogue_level) {
-                case 3:
-                    if (data['responses'][response_index]['response_disamb_location'] != 0) {
-                        $('#dialogue_hint').html(data['responses'][response_index]['response_kana_all_blank']);
-                        $('#dialogue_hint').addClass('ls5y');
-                    } else {
-                        $('#dialogue_hint').html('&#8203;');
-                    } break;
-                case 2:
-                    $('#dialogue_hint').html(data['responses'][response_index]['response_kana_all_blank']);
-                    $('#dialogue_hint').removeClass('ls5y');
-                    break;
-                case 1:
-                    $('#dialogue_hint').html(data['responses'][response_index]['response_kana_alt_blank']); break;
-                case 0:
-                    $('#dialogue_hint').html(data['responses'][response_index]['response_kana_f']); break;
-                default:
-                    $('#dialogue_hint').html('&#8203;'); break;
-            }
-            $('#dialogue_form').removeClass('abox_g abox_r');
-        } else {
-            var dialogue_grade = (total_inputs-incorrect_inputs)/total_inputs;
-            var total_dialogue = $('#dialogue-table').html();
-            $.ajax({
-                url: "{% url 'main:exercisedialoguegrade' chapter.id exercise.id %}",
-                data: { 'dialogue_grade' : dialogue_grade }, type: "POST",
-                success: function (data) {
-                    $('#wrapper').html(data);
-                    $('#dialogue-table').html(total_dialogue);
-                }
-            })
+    const quiz = $('#quiz'),
+        context = $('#context'),
+        english = $('#english'),
+        hint = $('#hint'),
+        attempt = $('#attempt'),
+        pagewrap = $('#wrapper'),
+        literal = $('#literal'),
+        bug = $('#bug-button');
+
+    var level = 3,
+        q = 0,
+        rindex = 0,
+        rlength = 0,
+        intotal = 0,
+        inwrong = 0,
+        next_step = 1,
+        wrongnew = 0,
+        current_dialogue = '',
+        current_prompt = '',
+        current_response = '',
+        current_name = '';
+
+    var nprompt = '',
+        nprompt_a = "<tr><td class='dialogue-green'><i class='fa fa-user fa-lg green-words' aria-hidden='true'></i> <span id='dialoguename",
+        nprompt_b = "' class='green-words bigbold'></span></td></tr><tr><td><div class='message'><div><p><span id='dialogueprompt",
+        nprompt_c = "'></div></p></span></div></td></tr>",
+        nresponse = '',
+        nresponse_a ="<tr style='text-align:right;'><td class='dialogue-orange'><i class='fa fa-user fa-lg orange-words' aria-hidden='true'></i> <span class='orange-words bigbold'>You</span></td></tr><tr><td><div class='message me'><div><p><span id='responsekana",
+        nresponse_b = "' class='bold'></div></p></span></div></td></tr>",
+        nsecond = '',
+        nsecond_a = "<tr><td><div class='message me'><div><p><span id='responsekana",
+        nsecond_b = "' class='bold'></div></p></span></div></td></tr>";
+
+    function dialogue() {
+        if (rindex === 0 && next_step === 1) {
+            nprompt = nprompt_a + q + nprompt_b + q + nprompt_c;
+            nresponse = nresponse_a + q + '-' + rindex + nresponse_b;
+            $('#dialogue-table').append(nprompt, nresponse);
+        } else if (next_step === 1) {
+            nsecond = nsecond_a + q + '-' + rindex + nsecond_b;
+            $('#dialogue-table').append(nsecond);
+        }
+
+        rlength = qdata[q]['responses'].length-1;
+        current_prompt = '#dialogueprompt' + q;
+        current_response = '#responsekana' + q + '-' + rindex;
+        current_name = '#dialoguename' + q;
+        $(current_name).html(qdata[q]['prompt_name']);
+        $(current_prompt).html(qdata[q]['prompt_kana_f']);
+
+        var topelement = document.getElementById("grammarholder");
+        topelement.scrollIntoView();
+
+        english.html(qdata[q]['responses'][rindex]['response_english']);
+        literal.html('<div class="white-words litcontextbox upper">literal</div>' + qdata[q]['responses'][rindex]['response_literal'] + '&#8203;');
+        context.html(qdata[q]['responses'][rindex]['response_context'] + '&#8203;');
+
+        switch (level) {
+            case 3:
+                if (qdata[q]['responses'][rindex]['response_disamb_location'] != 0) {
+                    hint.html(qdata[q]['responses'][rindex]['response_kana_all_blank']);
+                    hint.addClass('ls5y');
+                } else {
+                    hint.html('&#8203;');
+                } break;
+            case 2:
+                hint.html(qdata[q]['responses'][rindex]['response_kana_all_blank']);
+                hint.removeClass('ls5y');
+                break;
+            case 1:
+                hint.html(qdata[q]['responses'][rindex]['response_kana_alt_blank']); break;
+            case 0:
+                hint.html(qdata[q]['responses'][rindex]['response_kana_f']); break;
+            default:
+                hint.html('&#8203;'); break;
         }
     }
 
-    $('#dialogue_form').submit(function(event) {
+    quiz.submit(function(event) {
         event.preventDefault();
-        var clean_attempt = cleanInput($('#id_dialogue_attempt').val());
-        if (clean_attempt == $('#dialogue_actual').val()) {
-            $('#dialogue_form').attr('class', 'abox abox_g');
-            $('#bug-button').hide();
-            $('#dialogue_english').attr('class', 'challenge-grammar');
-            if (dialogue_level == 3) {
-                total_inputs++;
+        var clean = cleanInput(attempt.val()),
+            actual = qdata[q]['responses'][rindex]['response_kana_clean'];
+        if (clean === actual) {
+            bug.hide();
+            quiz.removeClass("abox_red");
+            quiz.addClass("abox_g").one(
+                "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend",
+                function() { quiz.removeClass("abox_g"); });
+            english.attr('class', 'challenge-grammar');
+            if (level === 3) {
+                intotal++;
                 next_step = 1;
-                newly_wrong = 0;
-                current_dialogue = $('#dialogue_kana').val();
+                wrongnew = 0;
+                current_dialogue = qdata[q]['responses'][rindex]['response_kana_f'];
                 $(current_response).html(current_dialogue);
-                if (response_index == response_length) {
-                    dialogue_index++;
-                    response_index = 0;
+                if (rindex === rlength) {
+                    q++;
+                    rindex = 0;
                     current_dialogue = '';
                 } else {
-                    response_index++;
+                    rindex++;
                 }
             } else {
-                if (newly_wrong == 0) { incorrect_inputs++; }
-                newly_wrong = 1;
+                if (wrongnew === 0) { inwrong++; }
+                wrongnew = 1;
                 next_step = 0;
-                dialogue_level = 3;
+                level = 3;
             }
         } else {
-            $('#bug-button').show();
-            $('#dialogue_form').attr('class', 'abox_red abox_r');
-            $('#dialogue_english').attr('class', 'challenge-grammar red-words');
-            if (dialogue_level > 0) {
+            bug.show();
+            quiz.addClass("abox_red abox_r").one(
+                "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend",
+                function() { quiz.removeClass("abox_r"); });
+            english.attr('class', 'challenge-grammar red-words');
+            if (level > 0) {
                 next_step = 0;
-                dialogue_level--;
+                level--;
             }
         }
-        $('#dialogue_index').val(dialogue_index);
-        var form_data = $('#dialogue_form').serialize();
-        $.post("{% url 'main:exercisedialoguecheck' chapter.id exercise.id %}", form_data).done(function(data) {
-            $('#dialogue_form')[0].reset();
-            dialogueNext(data);
-        })
+
+        if (q < totalq) {
+            quiz[0].reset();
+            dialogue();
+        } else {
+            var score = (intotal-inwrong)/intotal,
+                total_passage = $('#dialogue-table').html();
+            $.ajax({
+                type: "POST",
+                url: "{% url 'main:dialoguefinish' chapter.id exercise.id %}",
+                data: {q: q, totalq: totalq, score: score},
+                success: function (data) {
+                    if (data.error) {
+                        location.reload();
+                    } else {
+                        pagewrap.html(data);
+                        $('#dialogue-table').html(total_passage);
+                    }
+                }
+            });
+        }
     });
 
     $(document).ready(function() {
-        var urlstring = "/main/chapter/" + '{{ chapter.id }}' + "/exercise_d" + '{{ exercise.id }}' + "/grab/0";
+        var urlstring = "/main/chapter/" + '{{ chapter.id }}' + "/exercise_d" + '{{ exercise.id }}' + "/grab/";
         $.get(urlstring).done(function (data) {
-            dialogueNext(data);
+            qdata = data;
+            totalq = qdata.length;
+            if (totalq > 0) {
+                dialogue();
+            }
         })
-    });
-
-    $('#bug-button').click(function() {
-        $('#form-modal-body').load('/news/newissue/', function () {
-            modal.style.display = "block";
-            formAjaxSubmit('#form-modal-body form', '#form-modal');
-        });
     });
 </script>
 

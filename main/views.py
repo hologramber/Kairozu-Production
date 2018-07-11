@@ -9,7 +9,7 @@ from django.views.decorators.http import require_http_methods
 from django.urls import reverse
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from .models import Profile, Expression, ExpressionRecord, Vocabulary, Practice, Lesson, Chapter, VocabRecord, SentenceRecord, Exercise, ExerciseRecord, ExerciseSentence, GrammarNote
+from .models import Profile, Expression, ExpressionRecord, Vocabulary, Practice, Lesson, Chapter, VocabRecord, SentenceRecord, Exercise, ExerciseRecord, ExerciseSentence, ExercisePrompt, GrammarNote
 from .forms import ValidateFinishForm, ValidateExerciseFinish
 from .serializers import VocabRecordSerializer, ExpressionRecordSerializer, SentenceRecordSerializer
 
@@ -716,19 +716,29 @@ class DialogueView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
 
 
 @require_http_methods(["POST"])
-def dialoguefinish(request):
-    return None
-
-# def exercise_dialogue_check(request, chapter_id, exercise_id):
-#     dialogue_index = int(request.POST['dialogue_index'])
-#     return HttpResponseRedirect(reverse('main:exercisedialoguegrab', kwargs={'chapter_id': chapter_id, 'exercise_id': exercise_id, 'dialogue_index': dialogue_index}))
-#
-#
-# def exercise_dialogue_grade(request, chapter_id, exercise_id):
-#     exerciserecord_user = ExerciseRecord.objects.get(user_id=request.user.id, exercise__id__exact=exercise_id)
-#     dialogue_grade = request.POST['dialogue_grade']
-#     ExerciseRecord.update_grade(exerciserecord_user.id, dialogue_grade, request.user)
-#     return HttpResponseRedirect(reverse('main:exercisedialoguesuccess', kwargs={'chapter_id': chapter_id, 'exercise_id': exercise_id}))
+def dialoguefinish(request, chapter_id, exercise_id):
+    if request.user.profile.currentexercise < int(exercise_id):
+        return JsonResponse(error_data)
+    else:
+        form = ValidateExerciseFinish(request.POST)
+        if form.is_valid():
+            q = form.cleaned_data['q']
+            totalq = form.cleaned_data['totalq']
+            score = form.cleaned_data['score']
+            if q == totalq == ExercisePrompt.objects.filter(exercise_id__exact=exercise_id).count():
+                er_id = ExerciseRecord.objects.get(user_id=request.user.id, exercise__id__exact=exercise_id).id
+                if er_id:
+                    ExerciseRecord.update_score(er_id, score, request.user)
+                    return HttpResponseRedirect(reverse('main:dialoguesuccess', kwargs={'chapter_id': chapter_id, 'exercise_id': exercise_id}))
+                else:
+                    messages.add_message(request, messages.ERROR, error_finish)
+                    return JsonResponse(error_data)
+            else:   # if # of prompts doesn't line up
+                messages.add_message(request, messages.ERROR, error_finish)
+                return JsonResponse(error_data)
+        else:   # if form is not valid
+            messages.add_message(request, messages.ERROR, error_finish)
+            return JsonResponse(error_data)
 
 
 class DialogueSuccessView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
