@@ -152,7 +152,7 @@
             if (totalq > 0) {
                 expression();
             } else {
-                $.get("{% url 'main:expressionsuccess' %}").done(function (data) {
+                $.get("{% url 'main:expressionsuccess' chapter.id %}").done(function (data) {
                     pagewrap.html(data);
                 });
             }

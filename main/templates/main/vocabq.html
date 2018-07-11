@@ -140,7 +140,7 @@
             if (totalq > 0) {
                 vocab();
             } else {
-                $.get("{% url 'main:vocabsuccess' %}").done(function (data) {
+                $.get("{% url 'main:vocabsuccess' chapter.id %}").done(function (data) {
                     pagewrap.html(data);
                 });
             }
