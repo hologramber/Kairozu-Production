@@ -40,6 +40,7 @@
         attempt = $('#attempt'),
         pagewrap = $('#wrapper'),
         katakana = $('#katakana'),
+        savestat = $('#savenow'),
         bug = $('#bug-button');
 
     var qdata = [],
@@ -57,7 +58,12 @@
             dataType: 'json',
             data: {qdata: JSON.stringify(qdata)},
             success: function (data) {
-                if (data.error) { location.reload(); } else { qcount = 0; }
+                if (data.error) {
+                    location.reload();
+                } else {
+                    qcount = 0;
+                    savestat.html('<i class=\'fa fa-save green-words\' aria-hidden=\'true\'></i>');
+                }
             }
         });
     }
@@ -113,10 +119,13 @@
             qdata[q]['rating'] = 0;
             if (level > 0) { level--; }
         }
+        savestat.html('<a href=\'#\' onclick=\'saveq()\'><i class=\'fa fa-save\' aria-hidden=\'true\'></i></a>');
         localStorage.setItem(storage, JSON.stringify(qdata));
         if (q < totalq) {
             quiz[0].reset();
-            if (qcount > 10) { saveq(); }
+            if (qcount > 10) {
+                saveq();
+            }
             vocab();
         } else {
             $.ajax({
@@ -125,7 +134,11 @@
                 dataType: 'json',
                 data: {qdata: JSON.stringify(qdata)},
                 success: function (data) {
-                    if ((data.error) || (data.loop)) { location.reload(); } else { pagewrap.html(data); }
+                    if ((data.error) || (data.loop)) {
+                        location.reload();
+                    } else {
+                        pagewrap.html(data);
+                    }
                 }
             });
         }

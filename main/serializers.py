@@ -10,7 +10,9 @@ class VocabularySerializer(serializers.ModelSerializer):
 
 class RecordListSerializer(serializers.ListSerializer):
     def update(self, instance, validated_data):
+        # record_mapping = vocab records, creates a dictionary of { vocabrecord.id: vocabrecord }
         record_mapping = {record.id: record for record in instance}     # id -> instance
+        # data_mapping = creates a dictionary of { vocabrecord.id: validated-vocabrecord-data }
         data_mapping = {item['id']: item for item in validated_data}    # id -> data item
 
         record_multi = []

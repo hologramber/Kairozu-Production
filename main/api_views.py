@@ -11,9 +11,9 @@ class VocabRecordGrab(LoginRequiredMixin, generics.ListAPIView):
     def get_queryset(self):
         chapter_id = int(self.kwargs['chapter_id'])
         if chapter_id < self.request.user.profile.currentvocab:
-            vrecords = VocabRecord.objects.filter(user_id=self.request.user.id, vocab__chapter__id__exact=chapter_id).order_by('last_attempt')[:20]
+            vrecords = VocabRecord.objects.filter(user_id=self.request.user.id, vocab__chapter__id__exact=chapter_id).order_by('last_attempt')
         elif chapter_id == self.request.user.profile.currentvocab:
-            vrecords = VocabRecord.objects.filter(user_id=self.request.user.id, vocab__chapter__id__exact=chapter_id, rating__lte=0).order_by('last_attempt')[:20]
+            vrecords = VocabRecord.objects.filter(user_id=self.request.user.id, vocab__chapter__id__exact=chapter_id, rating__lte=0).order_by('last_attempt')
             if vrecords is None:
                 Profile.graduate_vocab(self.request.user, chapter_id)
                 vrecords = VocabRecord.objects.none()
@@ -38,9 +38,9 @@ class ExpressionRecordGrab(LoginRequiredMixin, generics.ListAPIView):
     def get_queryset(self):
         chapter_id = int(self.kwargs['chapter_id'])
         if chapter_id < self.request.user.profile.currentexpression:
-            erecords = ExpressionRecord.objects.filter(user_id=self.request.user.id, express__chapter__id__exact=chapter_id).order_by('last_attempt')[:20]
+            erecords = ExpressionRecord.objects.filter(user_id=self.request.user.id, express__chapter__id__exact=chapter_id).order_by('last_attempt')
         elif chapter_id == self.request.user.profile.currentexpression:
-            erecords = ExpressionRecord.objects.filter(user_id=self.request.user.id, express__chapter__id__exact=chapter_id, rating__lte=0).order_by('last_attempt')[:20]
+            erecords = ExpressionRecord.objects.filter(user_id=self.request.user.id, express__chapter__id__exact=chapter_id, rating__lte=0).order_by('last_attempt')
             if erecords is None:
                 Profile.graduate_expression(self.request.user, chapter_id)
                 erecords = ExpressionRecord.objects.none()
@@ -77,9 +77,9 @@ class SentenceRecordGrab(LoginRequiredMixin, generics.ListAPIView):
     def get_queryset(self):
         lesson_id = int(self.kwargs['lesson_id'])
         if lesson_id < self.request.user.profile.currentlesson:
-            srecords = SentenceRecord.objects.filter(user_id=self.request.user.id, sentence__lesson__id__exact=lesson_id).order_by('last_attempt')[:20]
+            srecords = SentenceRecord.objects.filter(user_id=self.request.user.id, sentence__lesson__id__exact=lesson_id).order_by('last_attempt')
         elif lesson_id == self.request.user.profile.currentlesson:
-            srecords = SentenceRecord.objects.filter(user_id=self.request.user.id, sentence__lesson__id__exact=lesson_id, rating__lte=0).order_by('last_attempt')[:20]
+            srecords = SentenceRecord.objects.filter(user_id=self.request.user.id, sentence__lesson__id__exact=lesson_id, rating__lte=0).order_by('last_attempt')
             if srecords is None:
                 Profile.graduate_lesson(self.request.user, lesson_id)
                 srecords = SentenceRecord.objects.none()

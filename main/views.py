@@ -186,7 +186,7 @@ def vocabfinish(request, chapter_id):
             if int(chapter_id) < request.user.profile.currentvocab:
                 return JsonResponse(loop_data)
             elif int(chapter_id) == request.user.profile.currentvocab:
-                vrecords = VocabRecord.objects.filter(user_id=request.user.id, vocab__chapter__id__exact=chapter_id, rating__lte=0).order_by('last_attempt')[:20]
+                vrecords = VocabRecord.objects.filter(user_id=request.user.id, vocab__chapter__id__exact=chapter_id, rating__lte=0)[:20]
                 if vrecords is None:
                     Profile.graduate_vocab(request.user, chapter_id)
                     return HttpResponseRedirect(reverse('main:vocabsuccess', kwargs={'chapter_id': chapter_id}))
