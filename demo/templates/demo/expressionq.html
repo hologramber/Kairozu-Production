@@ -97,6 +97,7 @@
     });
 
     $(document).ready(function() {
+        $('#savenow').hide();
         var urlstring = "/demo/expressionquiz/grab/";
         $.get(urlstring).done(function (data) {
             qdata = data;

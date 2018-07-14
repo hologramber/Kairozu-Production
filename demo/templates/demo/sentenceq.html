@@ -101,6 +101,7 @@
     });
 
     $(document).ready(function() {
+        $('#savenow').hide();
         var urlstring = "/demo/sentencequiz/grab/";
         $.get(urlstring).done(function (data) {
             qdata = data;

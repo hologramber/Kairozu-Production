@@ -24,6 +24,7 @@
         quiz = $('#quiz'),
         attempt = $('#attempt'),
         pagewrap = $('#wrapper'),
+        savestat = $('#savenow'),
         bug = $('#bug-button');
 
     var qdata = [],
@@ -46,6 +47,7 @@
                     location.reload();
                 } else {
                     qcount = 0;
+                    savestat.html('<i class=\'fa fa-save green-words\' aria-hidden=\'true\'></i>');
                 }
             }
         });
@@ -107,6 +109,7 @@
             qdata[q]['rating'] = 0;
             if (level > 0) { level--; }
         }
+        savestat.html('<a href=\'#\' onclick=\'saveq()\'><i class=\'fa fa-save\' aria-hidden=\'true\'></i></a>');
         localStorage.setItem(storage, JSON.stringify(qdata));
         if (q < totalq) {
             quiz[0].reset();

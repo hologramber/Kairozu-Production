@@ -284,7 +284,7 @@ def expressionfinish(request, chapter_id):
             if int(chapter_id) < request.user.profile.currentexpression:
                 return JsonResponse(loop_data)
             elif int(chapter_id) == request.user.profile.currentexpression:
-                erecords = ExpressionRecord.objects.filter(user_id=request.user.id, express__chapter_id__exact=chapter_id, rating__lte=0).order_by('last_attempt')[:20]
+                erecords = ExpressionRecord.objects.filter(user_id=request.user.id, express__chapter_id__exact=chapter_id, rating__lte=0)[:20]
                 if erecords is None:
                     Profile.graduate_expression(request.user, chapter_id)
                     return HttpResponseRedirect(reverse('main:expressionsuccess', kwargs={'chapter_id': chapter_id}))
@@ -428,7 +428,7 @@ def sentencefinish(request, lesson_id):
             if int(lesson_id) < request.user.profile.currentlesson:
                 return JsonResponse(loop_data)
             elif int(lesson_id) == request.user.profile.currentlesson:
-                srecords = SentenceRecord.objects.filter(user_id=request.user.id, sentence__lesson__id__exact=lesson_id, rating__lte=0).order_by('last_attempt')[:20]
+                srecords = SentenceRecord.objects.filter(user_id=request.user.id, sentence__lesson__id__exact=lesson_id, rating__lte=0)[:20]
                 if srecords is None:
                     Profile.graduate_lesson(request.user, lesson_id)
                     return HttpResponseRedirect(reverse('main:sentencesuccess', kwargs={'lesson_id': lesson_id}))
