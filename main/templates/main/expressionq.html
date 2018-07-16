@@ -52,7 +52,6 @@
         bug = $('#bug-button');
 
     var qdata = [],
-        storage = "expressquiz-" + {{ chapter.id }},
         qcount = 0,
         q = 0,
         totalq = 0,
@@ -99,7 +98,6 @@
 
     quiz.submit(function(event) {
         event.preventDefault();
-        qdata = JSON.parse(localStorage.getItem(storage));
         var clean = cleanInput(attempt.val());
         if (clean === qdata[q]['express']['kana_clean']) {
             bug.hide();
@@ -132,7 +130,6 @@
             if (level > 0) { level--; }
         }
         savestat.html('<a href=\'#\' onclick=\'saveq()\'><i class=\'fa fa-save\' aria-hidden=\'true\'></i></a>');
-        localStorage.setItem(storage, JSON.stringify(qdata));
         if (q < totalq) {
             quiz[0].reset();
             if (qcount > 10) {
@@ -157,10 +154,8 @@
     });
 
     $(document).ready(function() {
-        localStorage.clear();
         $.get("{% url 'main:expressiongrab' chapter.id %}").done(function (data) {
             qdata = data;
-            localStorage.setItem(storage, JSON.stringify(qdata));
             totalq = qdata.length;
             if (totalq > 0) {
                 expression();
