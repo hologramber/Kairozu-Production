@@ -82,7 +82,7 @@
             totalq = qdata.length;
             q = 0;
             if (totalq > 0) {
-                sentence();
+                expression();
             } else {
                 $.get("{% url 'main:reviewexpressioncurrent' %}").done(function (data) {
                     pagewrap.html(data);
