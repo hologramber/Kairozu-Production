@@ -186,7 +186,7 @@ def vocabfinish(request, chapter_id):
             if int(chapter_id) < request.user.profile.currentvocab:
                 return JsonResponse(loop_data)
             elif int(chapter_id) == request.user.profile.currentvocab:
-                vrecords = VocabRecord.objects.filter(user_id=request.user.id, vocab__chapter__id__exact=chapter_id, rating__lte=0)[:20]
+                vrecords = VocabRecord.objects.filter(user_id=request.user.id, vocab__chapter__id__exact=chapter_id, rating__lte=0)[:10]
                 if vrecords is None:
                     Profile.graduate_vocab(request.user, chapter_id)
                     return HttpResponseRedirect(reverse('main:vocabsuccess', kwargs={'chapter_id': chapter_id}))
@@ -284,7 +284,7 @@ def expressionfinish(request, chapter_id):
             if int(chapter_id) < request.user.profile.currentexpression:
                 return JsonResponse(loop_data)
             elif int(chapter_id) == request.user.profile.currentexpression:
-                erecords = ExpressionRecord.objects.filter(user_id=request.user.id, express__chapter_id__exact=chapter_id, rating__lte=0)[:20]
+                erecords = ExpressionRecord.objects.filter(user_id=request.user.id, express__chapter_id__exact=chapter_id, rating__lte=0)[:10]
                 if erecords is None:
                     Profile.graduate_expression(request.user, chapter_id)
                     return HttpResponseRedirect(reverse('main:expressionsuccess', kwargs={'chapter_id': chapter_id}))
@@ -428,7 +428,7 @@ def sentencefinish(request, lesson_id):
             if int(lesson_id) < request.user.profile.currentlesson:
                 return JsonResponse(loop_data)
             elif int(lesson_id) == request.user.profile.currentlesson:
-                srecords = SentenceRecord.objects.filter(user_id=request.user.id, sentence__lesson__id__exact=lesson_id, rating__lte=0)[:20]
+                srecords = SentenceRecord.objects.filter(user_id=request.user.id, sentence__lesson__id__exact=lesson_id, rating__lte=0)[:10]
                 if srecords is None:
                     Profile.graduate_lesson(request.user, lesson_id)
                     return HttpResponseRedirect(reverse('main:sentencesuccess', kwargs={'lesson_id': lesson_id}))
@@ -484,20 +484,20 @@ def reviewvocabsave(request):
         return JsonResponse(error_data)
 
 
-@require_http_methods(["POST"])
-def reviewvocabfinish(request):
-    vr_queryset = VocabRecord.objects.filter(user_id=request.user.id, next_review__lte=datetime.now())
-    vrupdate = VocabRecordSerializer(vr_queryset, data=json.loads(request.POST.get('qdata')), partial=True, many=True)
-    if vrupdate.is_valid():
-        vrupdate.save()
-        vrecords = VocabRecord.objects.filter(user_id=request.user.id, next_review__lte=datetime.now())[:20]
-        if vrecords is None:
-            return HttpResponseRedirect(reverse('main:reviewvocabcurrent'))
-        else:
-            return JsonResponse(loop_data)
-    else:
-        messages.add_message(request, messages.ERROR, error_finish)
-        return JsonResponse(error_data)
+# @require_http_methods(["POST"])
+# def reviewvocabfinish(request):
+#     vr_queryset = VocabRecord.objects.filter(user_id=request.user.id, next_review__lte=datetime.now())
+#     vrupdate = VocabRecordSerializer(vr_queryset, data=json.loads(request.POST.get('qdata')), partial=True, many=True)
+#     if vrupdate.is_valid():
+#         vrupdate.save()
+#         vrecords = VocabRecord.objects.filter(user_id=request.user.id, next_review__lte=datetime.now())[:10]
+#         if vrecords is None:
+#             return HttpResponseRedirect(reverse('main:reviewvocabcurrent'))
+#         else:
+#             return JsonResponse(loop_data)
+#     else:
+#         messages.add_message(request, messages.ERROR, error_finish)
+#         return JsonResponse(error_data)
 
 
 class ReviewVocabCurrentView(LoginRequiredMixin, ListView):
@@ -530,20 +530,20 @@ def reviewexpressionsave(request):
         return JsonResponse(error_data)
 
 
-@require_http_methods(["POST"])
-def reviewexpressionfinish(request):
-    er_queryset = ExpressionRecord.objects.filter(user_id=request.user.id, next_review__lte=datetime.now())
-    erupdate = ExpressionRecordSerializer(er_queryset, data=json.loads(request.POST.get('qdata')), partial=True, many=True)
-    if erupdate.is_valid():
-        erupdate.save()
-        erecords = ExpressionRecord.objects.filter(user_id=request.user.id, next_review__lte=datetime.now())[:20]
-        if erecords is None:
-            return HttpResponseRedirect(reverse('main:reviewexpressioncurrent'))
-        else:
-            return JsonResponse(loop_data)
-    else:
-        messages.add_message(request, messages.ERROR, error_finish)
-        return JsonResponse(error_data)
+# @require_http_methods(["POST"])
+# def reviewexpressionfinish(request):
+#     er_queryset = ExpressionRecord.objects.filter(user_id=request.user.id, next_review__lte=datetime.now())
+#     erupdate = ExpressionRecordSerializer(er_queryset, data=json.loads(request.POST.get('qdata')), partial=True, many=True)
+#     if erupdate.is_valid():
+#         erupdate.save()
+#         erecords = ExpressionRecord.objects.filter(user_id=request.user.id, next_review__lte=datetime.now())[:10]
+#         if erecords is None:
+#             return HttpResponseRedirect(reverse('main:reviewexpressioncurrent'))
+#         else:
+#             return JsonResponse(loop_data)
+#     else:
+#         messages.add_message(request, messages.ERROR, error_finish)
+#         return JsonResponse(error_data)
 
 
 class ReviewExpressionCurrentView(LoginRequiredMixin, ListView):
@@ -576,20 +576,20 @@ def reviewsentencesave(request):
         return JsonResponse(error_data)
 
 
-@require_http_methods(["POST"])
-def reviewsentencefinish(request):
-    sr_queryset = SentenceRecord.objects.filter(user_id=request.user.id, next_review__lte=datetime.now())
-    srupdate = SentenceRecordSerializer(sr_queryset, data=json.loads(request.POST.get('qdata')), partial=True, many=True)
-    if srupdate.is_valid():
-        srupdate.save()
-        srecords = SentenceRecord.objects.filter(user_id=request.user.id, next_review__lte=datetime.now())[:20]
-        if srecords is None:
-            return HttpResponseRedirect(reverse('main:reviewsentencecurrent'))
-        else:
-            return JsonResponse(loop_data)
-    else:
-        messages.add_message(request, messages.ERROR, error_finish)
-        return JsonResponse(error_data)
+# @require_http_methods(["POST"])
+# def reviewsentencefinish(request):
+#     sr_queryset = SentenceRecord.objects.filter(user_id=request.user.id, next_review__lte=datetime.now())
+#     srupdate = SentenceRecordSerializer(sr_queryset, data=json.loads(request.POST.get('qdata')), partial=True, many=True)
+#     if srupdate.is_valid():
+#         srupdate.save()
+#         srecords = SentenceRecord.objects.filter(user_id=request.user.id, next_review__lte=datetime.now())[:10]
+#         if srecords is None:
+#             return HttpResponseRedirect(reverse('main:reviewsentencecurrent'))
+#         else:
+#             return JsonResponse(loop_data)
+#     else:
+#         messages.add_message(request, messages.ERROR, error_finish)
+#         return JsonResponse(error_data)
 
 
 class ReviewSentenceCurrentView(LoginRequiredMixin, ListView):

@@ -26,29 +26,11 @@
         bug = $('#bug-button');
 
     var qdata = [],
-        storage = "reviewsentence",
         qcount = 0,
         q = 0,
         totalq = 0,
         level = 3,
         repeat = 0;
-
-    function saveq() {
-        $.ajax({
-            type: "POST",
-            url: "{% url 'main:reviewsentencesave' %}",
-            dataType: 'json',
-            data: {qdata: JSON.stringify(qdata)},
-            success: function (data) {
-                if (data.error) {
-                    location.reload();
-                } else {
-                    qcount = 0;
-                    savestat.html('<i class=\'fa fa-save green-words\' aria-hidden=\'true\'></i>');
-                }
-            }
-        });
-    }
 
     function sentence() {
         context.html('&#8203;' + qdata[q]['sentence']['context'] + '&#8203;');
@@ -72,6 +54,43 @@
             default:
                 hint.html(qdata[q]['sentence']['f_kana']); break;
         }
+    }
+
+    function getq() {
+        $.get("{% url 'main:reviewsentencegrab' %}").done(function (data) {
+            qdata = data;
+            totalq = qdata.length;
+            q = 0;
+            if (totalq > 0) {
+                sentence();
+            } else {
+                $.get("{% url 'main:reviewsentencecurrent' %}").done(function (data) {
+                    pagewrap.html(data);
+                });
+            }
+        });
+    }
+
+    function saveq() {
+        $.ajax({
+            type: "POST",
+            url: "{% url 'main:reviewsentencesave' %}",
+            dataType: 'json',
+            data: {qdata: JSON.stringify(qdata)},
+            success: function (data) {
+                if (data.error) {
+                    location.reload();
+                } else {
+                    qcount = 0;
+                    savestat.html('<i class=\'fa fa-save green-words\' aria-hidden=\'true\'></i>');
+                    if (q < totalq) {
+                        sentence();
+                    } else {
+                        getq();
+                    }
+                }
+            }
+        });
     }
 
     function processQuiz(attempt) {
@@ -105,23 +124,11 @@
             if (level > 0) { level--; }
         }
         savestat.html('<a href=\'#\' onclick=\'saveq()\'><i class=\'fa fa-save\' aria-hidden=\'true\'></i></a>');
-        localStorage.setItem(storage, JSON.stringify(qdata));
-        if (q < totalq) {
-            quiz[0].reset();
-            if (qcount > 10) {
-                saveq();
-            }
-            sentence();
+        quiz[0].reset();
+        if (((q < totalq) && (qcount > 9)) || (q >= totalq)) {
+            saveq();
         } else {
-            $.ajax({
-                type: "POST",
-                url: "{% url 'main:reviewsentencefinish' %}",
-                dataType: 'json',
-                data: {qdata: JSON.stringify(qdata)},
-                success: function (data) {
-                    if ((data.error) || (data.loop)) { location.reload(); } else { pagewrap.html(data); }
-                }
-            });
+            sentence();
         }
     }
 
@@ -138,21 +145,7 @@
         }
     });
 
-    $(document).ready(function() {
-        localStorage.clear();
-        $.get("{% url 'main:reviewsentencegrab' %}").done(function (data) {
-            qdata = data;
-            localStorage.setItem(storage, JSON.stringify(qdata));
-            totalq = qdata.length;
-            if (totalq > 0) {
-                sentence();
-            } else {
-                $.get("{% url 'main:reviewsentencecurrent' %}").done(function (data) {
-                    pagewrap.html(data);
-                });
-            }
-        });
-    });
+    $(document).ready(function() { getq(); });
 </script>
 
 {% endblock %}

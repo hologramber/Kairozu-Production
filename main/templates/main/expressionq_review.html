@@ -48,29 +48,11 @@
         bug = $('#bug-button');
 
     var qdata = [],
-        storage = "reviewexpression",
         qcount = 0,
         q = 0,
         totalq = 0,
         level = 2,
         repeat = 0;
-
-    function saveq() {
-        $.ajax({
-            type: "POST",
-            url: "{% url 'main:reviewexpressionsave' %}",
-            dataType: 'json',
-            data: {qdata: JSON.stringify(qdata)},
-            success: function (data) {
-                if (data.error) {
-                    location.reload();
-                } else {
-                    qcount = 0;
-                    savestat.html('<i class=\'fa fa-save green-words\' aria-hidden=\'true\'></i>');
-                }
-            }
-        });
-    }
 
     function expression() {
         context.html('&#8203;' + qdata[q]['express']['context'] + '&#8203;');
@@ -94,9 +76,45 @@
         }
     }
 
+    function getq() {
+        $.get("{% url 'main:reviewexpressiongrab' %}").done(function (data) {
+            qdata = data;
+            totalq = qdata.length;
+            q = 0;
+            if (totalq > 0) {
+                sentence();
+            } else {
+                $.get("{% url 'main:reviewexpressioncurrent' %}").done(function (data) {
+                    pagewrap.html(data);
+                });
+            }
+        });
+    }
+
+    function saveq() {
+        $.ajax({
+            type: "POST",
+            url: "{% url 'main:reviewexpressionsave' %}",
+            dataType: 'json',
+            data: {qdata: JSON.stringify(qdata)},
+            success: function (data) {
+                if (data.error) {
+                    location.reload();
+                } else {
+                    qcount = 0;
+                    savestat.html('<i class=\'fa fa-save green-words\' aria-hidden=\'true\'></i>');
+                    if (q < totalq) {
+                        expression();
+                    } else {
+                        getq();
+                    }
+                }
+            }
+        });
+    }
+
     quiz.submit(function(event) {
         event.preventDefault();
-        qdata = JSON.parse(localStorage.getItem(storage));
         var clean = cleanInput(attempt.val());
         if (clean === qdata[q]['express']['kana_clean']) {
             bug.hide();
@@ -129,41 +147,15 @@
             if (level > 0) { level--; }
         }
         savestat.html('<a href=\'#\' onclick=\'saveq()\'><i class=\'fa fa-save\' aria-hidden=\'true\'></i></a>');
-        localStorage.setItem(storage, JSON.stringify(qdata));
-        if (q < totalq) {
-            quiz[0].reset();
-            if (qcount > 10) {
-                saveq();
-            }
-            expression();
+        quiz[0].reset();
+        if (((q < totalq) && (qcount > 9)) || (q >= totalq)) {
+            saveq();
         } else {
-            $.ajax({
-                type: "POST",
-                url: "{% url 'main:reviewexpressionfinish' %}",
-                dataType: 'json',
-                data: {qdata: JSON.stringify(qdata)},
-                success: function (data) {
-                    if ((data.error) || (data.loop)) { location.reload(); } else { pagewrap.html(data); }
-                }
-            });
+            expression();
         }
     });
 
-    $(document).ready(function() {
-        localStorage.clear();
-        $.get("{% url 'main:reviewexpressiongrab' %}").done(function (data) {
-            qdata = data;
-            localStorage.setItem(storage, JSON.stringify(qdata));
-            totalq = qdata.length;
-            if (totalq > 0) {
-                expression();
-            } else {
-                $.get("{% url 'main:reviewexpressioncurrent' %}").done(function (data) {
-                    pagewrap.html(data);
-                });
-            }
-        });
-    });
+    $(document).ready(function() { getq(); });
 </script>
 
 {% endblock %}

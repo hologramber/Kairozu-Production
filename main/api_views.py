@@ -26,7 +26,7 @@ class ReviewVocabRecordGrab(LoginRequiredMixin, generics.ListAPIView):
     serializer_class = serializers.VocabRecordSerializer
 
     def get_queryset(self):
-        vrecords = VocabRecord.objects.filter(user_id=self.request.user.id, next_review__lte=datetime.now())[:20]
+        vrecords = VocabRecord.objects.filter(user_id=self.request.user.id, next_review__lte=datetime.now())[:50]
         if vrecords is None:
             vrecords = VocabRecord.objects.none()
         return vrecords
@@ -53,7 +53,7 @@ class ReviewExpressionRecordGrab(LoginRequiredMixin, generics.ListAPIView):
     serializer_class = serializers.ExpressionRecordSerializer
 
     def get_queryset(self):
-        erecords = ExpressionRecord.objects.filter(user_id=self.request.user.id, next_review__lte=datetime.now())[:20]
+        erecords = ExpressionRecord.objects.filter(user_id=self.request.user.id, next_review__lte=datetime.now())[:50]
         if erecords is None:
             erecords = ExpressionRecord.objects.none()
         return erecords
@@ -92,7 +92,7 @@ class ReviewSentenceRecordGrab(LoginRequiredMixin, generics.ListAPIView):
     serializer_class = serializers.SentenceRecordSerializer
 
     def get_queryset(self):
-        srecords = SentenceRecord.objects.filter(user_id=self.request.user.id, next_review__lte=datetime.now())[:20]
+        srecords = SentenceRecord.objects.filter(user_id=self.request.user.id, next_review__lte=datetime.now())[:50]
         if srecords is None:
             srecords = SentenceRecord.objects.none()
         return srecords

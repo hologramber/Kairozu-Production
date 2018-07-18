@@ -47,19 +47,19 @@ urlpatterns = [
 
     # ################## REVIEWS #######################
     url(r'^reviewvocab/$', views.ReviewVocabView.as_view(), name='reviewvocab'),
-    url(r'^reviewvocab/finish/$', views.reviewvocabfinish, name='reviewvocabfinish'),
+    # url(r'^reviewvocab/finish/$', views.reviewvocabfinish, name='reviewvocabfinish'),
     url(r'^reviewvocab/save/$', views.reviewvocabsave, name='reviewvocabsave'),
     url(r'^reviewvocab/current/$', views.ReviewVocabCurrentView.as_view(), name='reviewvocabcurrent'),
     url(r'^reviewvocab/grab/$', api_views.ReviewVocabRecordGrab.as_view(), name='reviewvocabgrab'),
 
     url(r'^reviewexpression/$', views.ReviewExpressionView.as_view(), name='reviewexpression'),
-    url(r'^reviewexpression/finish/$', views.reviewexpressionfinish, name='reviewexpressionfinish'),
+    # url(r'^reviewexpression/finish/$', views.reviewexpressionfinish, name='reviewexpressionfinish'),
     url(r'^reviewexpression/save/$', views.reviewexpressionsave, name='reviewexpressionsave'),
     url(r'^reviewexpression/current/$', views.ReviewExpressionCurrentView.as_view(), name='reviewexpressioncurrent'),
     url(r'^reviewexpression/grab/$', api_views.ReviewExpressionRecordGrab.as_view(), name='reviewexpressiongrab'),
 
     url(r'^reviewsentence/$', views.ReviewSentenceView.as_view(), name='reviewsentence'),
-    url(r'^reviewsentence/finish/$', views.reviewsentencefinish, name='reviewsentencefinish'),
+    # url(r'^reviewsentence/finish/$', views.reviewsentencefinish, name='reviewsentencefinish'),
     url(r'^reviewsentence/save/$', views.reviewsentencesave, name='reviewsentencesave'),
     url(r'^reviewsentence/current/$', views.ReviewSentenceCurrentView.as_view(), name='reviewsentencecurrent'),
     url(r'^reviewsentence/grab/$', api_views.ReviewSentenceRecordGrab.as_view(), name='reviewsentencegrab'),
