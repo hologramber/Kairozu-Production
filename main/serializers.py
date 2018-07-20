@@ -21,7 +21,7 @@ class RecordListSerializer(serializers.ListSerializer):
             if record is not None:
                 record_multi.append(self.child.update(record, data))
 
-        # # deletions
+        # # if you want to delete records not in data_mapping
         # for record_id, record in record_mapping.items():
         #     if record_id not in data_mapping:
         #         print(record)

@@ -36,6 +36,7 @@
 
 
     function saveq() {
+        savestat.html('<i class=\'fa fa-save fa-spin orange-words\' aria-hidden=\'true\'></i>');
         $.ajax({
             type: "POST",
             url: "{% url 'main:sentencesave' lesson.id %}",
