@@ -1409,7 +1409,7 @@ span.step {
     input[type=submit].ksub_g,
     input[type=submit].ksub_red {
 		font-size: 15px;
-		margin-left: -20px;
+		margin-left: -15px;
 		min-width: 30px; }
 
 	.interface-fg, .quiz-tips { padding: 10px; }				/* tips on the interface page */
