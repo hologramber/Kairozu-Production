@@ -82,6 +82,9 @@
 
     function saveq() {
         savestat.html('<i class=\'fa fa-save fa-spin orange-words\' aria-hidden=\'true\'></i>');
+        if (q < totalq) {
+            vocab();
+        }
         $.ajax({
             type: "POST",
             url: "{% url 'main:reviewvocabsave' %}",
@@ -93,9 +96,7 @@
                 } else {
                     qcount = 0;
                     savestat.html('<i class=\'fa fa-save green-words\' aria-hidden=\'true\'></i>');
-                    if (q < totalq) {
-                        vocab();
-                    } else {
+                    if (q >= totalq) {
                         getq();
                     }
                 }
@@ -136,6 +137,7 @@
         }
         savestat.html('<a href=\'#\' onclick=\'saveq()\'><i class=\'fa fa-save\' aria-hidden=\'true\'></i></a>');
         quiz[0].reset();
+        // if the remaining number of questions in a set is less than 9, wait until the end to call save...
         if (((q < totalq) && (qcount > 9)) || (q >= totalq)) {
             saveq();
         } else {

@@ -93,6 +93,9 @@
 
     function saveq() {
         savestat.html('<i class=\'fa fa-save fa-spin orange-words\' aria-hidden=\'true\'></i>');
+        if (q < totalq) {
+            expression();
+        }
         $.ajax({
             type: "POST",
             url: "{% url 'main:reviewexpressionsave' %}",
@@ -104,9 +107,7 @@
                 } else {
                     qcount = 0;
                     savestat.html('<i class=\'fa fa-save green-words\' aria-hidden=\'true\'></i>');
-                    if (q < totalq) {
-                        expression();
-                    } else {
+                    if (q >= totalq) {
                         getq();
                     }
                 }
