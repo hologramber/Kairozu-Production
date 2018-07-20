@@ -1368,7 +1368,7 @@ span.step {
     .fc div, .fc-spaceb div { flex: 0 1 100%; }
 	.vocab-challenge {
 		font-size: 25px;
-		padding-top: 2px;
+		padding-top: 3px;
 		padding-bottom: 5px; }
 
 	.promptc, .vocab-promptc {
@@ -1386,8 +1386,8 @@ span.step {
     input[type=text].kbox1_g,
     input[type=text].kbox1_r,
     input[type=text].kbox1_red {
-		padding: 5px 10px;
-		font-size: 15px; }
+		padding: 3px 5px;
+		font-size: 16px; }
 
 	.abox_red > input[type=text],
 	.abox > input[type=text],
@@ -1397,8 +1397,8 @@ span.step {
     input[type=text].kbox2_g,
     input[type=text].kbox2_r,
     input[type=text].kbox2_red {
-		padding: 5px 10px;
-		font-size: 15px; }
+		padding: 3px 5px;
+		font-size: 16px; }
 
 	.abox_red > input[type=submit],
 	.abox > input[type=submit],
@@ -1408,8 +1408,8 @@ span.step {
     input[type=submit].ksub_r,
     input[type=submit].ksub_g,
     input[type=submit].ksub_red {
-		font-size: 15px;
-		margin-left: -15px;
+		font-size: 16px;
+		margin-left: -20px;
 		min-width: 30px; }
 
 	.interface-fg, .quiz-tips { padding: 10px; }				/* tips on the interface page */
