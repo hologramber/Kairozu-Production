@@ -808,8 +808,8 @@ input[type=text].kbox1_red {
 	text-align: left;
     -webkit-appearance: none;
     -moz-appearance: none;
-	padding: 5px 20px;
-	font-size: 60px;
+	padding: 8px 20px 3px 20px;
+	font-size: 50px;
 	margin-bottom: 5px;
 	float: left; 
 	width: 100%; }
@@ -832,8 +832,8 @@ input[type=text].kbox2_red {
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
 	text-align: left;
-	padding: 5px 20px;
-	font-size: 60px;
+	padding: 8px 20px 3px 20px;
+	font-size: 50px;
 	width: 94%;
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -872,8 +872,8 @@ input[type=submit].ksub_red {
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
 	text-align: center;
-	padding: 5px;
-	font-size: 60px;
+	padding: 8px 20px 3px 20px;
+	font-size: 50px;
 	margin-left: -40px;
 	width: 6%;
 	min-width: 40px;
@@ -952,7 +952,7 @@ span.step {
     transition: background 200ms ease-in-out; }
 .sbox .icon {
     color: #d92425;
-	font-size: 60px;
+	font-size: 50px;
 	margin-top: 20px;
 	margin-bottom: 35px;
     -webkit-transition: color 200ms ease-in-out;
@@ -1327,7 +1327,7 @@ span.step {
     input[type=text].kbox2_g,
     input[type=text].kbox2_r,
     input[type=text].kbox2_red {
-		padding: 5px 10px;
+		padding: 5px 10px 3px 10px;
 		font-size: 30px; }
 
 	.abox_red > input[type=submit],
@@ -1340,6 +1340,7 @@ span.step {
     input[type=submit].ksub_red {
 		font-size: 30px;
 		margin-left: -20px;
+        padding: 5px 10px 3px 10px;
 		min-width: 30px; }
 
 	.interface-fg, .quiz-tips { padding: 10px; }		/* tips on the interface page */
@@ -1386,7 +1387,7 @@ span.step {
     input[type=text].kbox1_g,
     input[type=text].kbox1_r,
     input[type=text].kbox1_red {
-		padding: 4px 8px 3px 8px;
+		padding: 4px 8px 2px 8px;
 		font-size: 16px; }
 
 	.abox_red > input[type=text],
@@ -1397,7 +1398,7 @@ span.step {
     input[type=text].kbox2_g,
     input[type=text].kbox2_r,
     input[type=text].kbox2_red {
-		padding: 4px 8px 3px 8px;
+		padding: 4px 8px 2px 8px;
 		font-size: 16px; }
 
 	.abox_red > input[type=submit],
@@ -1411,7 +1412,7 @@ span.step {
 		font-size: 16px;
 		margin-left: -20px;
 		min-width: 30px;
-        padding: 4px 8px 3px 8px; }
+        padding: 4px 8px 2px 8px; }
 
 	.interface-fg, .quiz-tips { padding: 10px; }				/* tips on the interface page */
 	.interface-fg, .interface-fg li, .interface-fg ul, .quiz-tips, .quiz-tips li, .quiz-tips ul {
