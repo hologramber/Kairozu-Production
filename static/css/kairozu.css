@@ -1386,7 +1386,7 @@ span.step {
     input[type=text].kbox1_g,
     input[type=text].kbox1_r,
     input[type=text].kbox1_red {
-		padding: 3px 5px;
+		padding: 3px 8px;
 		font-size: 16px; }
 
 	.abox_red > input[type=text],
@@ -1397,7 +1397,7 @@ span.step {
     input[type=text].kbox2_g,
     input[type=text].kbox2_r,
     input[type=text].kbox2_red {
-		padding: 3px 5px;
+		padding: 3px 8px;
 		font-size: 16px; }
 
 	.abox_red > input[type=submit],
@@ -1411,7 +1411,7 @@ span.step {
 		font-size: 16px;
 		margin-left: -20px;
 		min-width: 30px;
-        padding: 3px 5px; }
+        padding: 3px 8px; }
 
 	.interface-fg, .quiz-tips { padding: 10px; }				/* tips on the interface page */
 	.interface-fg, .interface-fg li, .interface-fg ul, .quiz-tips, .quiz-tips li, .quiz-tips ul {
