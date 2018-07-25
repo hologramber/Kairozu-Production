@@ -10,6 +10,7 @@
 <div id='wrapper'>
 {% include 'demo/sidebar.html' %}
     <div class="fc-general-col">
+
         <div id='sentenceholder'>
             <div id='sfield'>
                 <div id='english' class='challenge-grammar'></div>
@@ -17,13 +18,11 @@
                     <span id='hint' class='ls5r'>&#8203;</span>
                 </div>
 
-                <form id='quiz' class='abox' action='' method='post'>{% csrf_token %}
-                    <input id='attempt' type='text' autocomplete='off' autocorrect='off' autocapitalize='off' spellcheck='false' autofocus />
-                    <input type='submit' value='&#8680;' />
-                </form>
-                <div id='literal' class='lit-c'>&#8203;</div>
+                {% include 'main/quiz_answer.html' %}
+                <div id='literal' class='lit-c'></div>
             </div>  <!-- /#sfield -->
-        </div>  <!-- /#vocabholder -->
+        </div>  <!-- /#sentenceholder -->
+
     </div>
     <div class="fc-general-col">
         <div class="quiz-tips dashed-grey-2">
@@ -46,7 +45,7 @@
     var input = document.getElementById('attempt');
     wanakana.bind(input);
 
-    const english = $('#english'),
+    var english = $('#english'),
         hint = $('#hint'),
         quiz = $('#quiz'),
         attempt = $('#attempt'),

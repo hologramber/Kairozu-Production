@@ -763,35 +763,31 @@ table.gpt > tbody > tr > td.blankline { line-height: 5px; }
 
 /* kbox1 and kbox2 are the practice quiz boxes */
 /* abox is vocab, expression, sentence, dialogue, passage, all reviews */
-.abox_g > input[type=text],
-.abox_g > input[type=submit],
+.abox_g fieldset input[type=text],
 input[type=text].kbox1_g,
 input[type=text].kbox2_g,
-input[type=submit].ksub_g {
+button.ksub_g {
 	-webkit-animation:correctA;				/* call keyframe correctA, ease-in and repeat it only 1 time */
 	-moz-animation:correctA;
 	animation:correctA; }
 
-.abox_r > input[type=text],
-.abox_r > input[type=submit],
+.abox_r fieldset input[type=text],
 input[type=text].kbox1_r,
 input[type=text].kbox2_r,
-input[type=submit].ksub_r {
+button.ksub_r {
 	-webkit-animation:incorrectA;  			/* call keyframe correctA, ease-in and repeat it only 1 time */
 	-moz-animation:incorrectA;
 	animation:incorrectA; }
 
-.abox_g > input[type=text],
-.abox_g > input[type=submit],
-.abox_r > input[type=text],
-.abox_r > input[type=submit],
+.abox_g fieldset input[type=text],
+.abox_r fieldset input[type=text],
 input[type=text].kbox1_g,
 input[type=text].kbox2_g,
 input[type=text].kbox1_r,
 input[type=text].kbox2_r,
 input[type=text].kbox2_red,
-input[type=submit].ksub_g,
-input[type=submit].ksub_r {
+button.ksub_g,
+button.ksub_r {
 	-webkit-animation-fill-mode:forwards;	/* makes sure that after animation is done we remain @ last keyframe value (white bg) */
 	-moz-animation-fill-mode:forwards;
 	animation-fill-mode:forwards;
@@ -799,110 +795,48 @@ input[type=submit].ksub_r {
 	-moz-animation-duration:0.3s;
 	animation-duration:0.3s; }
 
-input[type=text].kbox1,
-input[type=text].kbox1_g,
-input[type=text].kbox1_r,
-input[type=text].kbox1_red {
-	background: #FFF;
-	border-radius: 5px;
-	text-align: left;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-	padding: 8px 20px 3px 20px;
-	font-size: 50px;
-	margin-bottom: 5px;
-	float: left; 
-	width: 100%; }
-
-input[type=text].kbox1,
-input[type=text].kbox1_g { border: 2px solid #242424; }
-input[type=text].kbox1_r,
-input[type=text].kbox1_red { border: 2px solid #d92425; }
-
-.abox_red > input[type=text],
-.abox > input[type=text],
-.abox_g > input[type=text],
-.abox_r > input[type=text],
-input[type=text].kbox2,
-input[type=text].kbox2_g,
-input[type=text].kbox2_r,
-input[type=text].kbox2_red {
-	background: #FFF;
-    border-radius: 0;
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
-	text-align: left;
-	padding: 8px 20px 3px 20px;
-	font-size: 50px;
-	width: 94%;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    margin-bottom: 5px;
-	float: left; 
-	border-right: 0; }
-
-.abox > input[type=text],
-.abox_g > input[type=text],
-input[type=text].kbox2,
-input[type=text].kbox2_g {
-	border-top: 2px solid #242424;
-	border-left: 2px solid #242424;
-	border-bottom: 2px solid #242424; }
-
-.abox_red > input[type=text],
-.abox_r > input[type=text],
-input[type=text].kbox2_r,
-input[type=text].kbox2_red {
-	border-top: 2px solid #d92425;
-	border-left: 2px solid #d92425;
-	border-bottom: 2px solid #d92425; }
-
-.abox_red > input[type=submit],
-.abox > input[type=submit],
-.abox_g > input[type=submit],
-.abox_r > input[type=submit],
-input[type=submit].ksub,
-input[type=submit].ksub_r,
-input[type=submit].ksub_g,
-input[type=submit].ksub_red {
-	background: #FFF;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    border-radius: 0;
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
-	text-align: center;
-	padding: 8px 20px 3px 20px;
-	font-size: 50px;
-	margin-left: -40px;
-	width: 6%;
-	min-width: 40px;
-	float: right;
-	border-left: 0 !important; }
-
-.abox > input[type=submit],
-.abox_g > input[type=submit],
-input[type=submit].ksub,
-input[type=submit].ksub_g {
-	border-top: 2px solid #242424;
-	border-right: 2px solid #242424;
-	border-bottom: 2px solid #242424; }
-
-.abox_red > input[type=submit],
-.abox_r > input[type=submit],
-input[type=submit].ksub_r ,
-input[type=submit].ksub_red {
-	border-top: 2px solid #d92425;
-	border-right: 2px solid #d92425;
-	border-bottom: 2px solid #d92425; }
-
-.abox > input[type=text]:disabled,
+.abox fieldset input[type=text]:disabled,
 input[type=text].kbox1:disabled,
 input[type=text].kbox2:disabled {
     color: #89AE13;
 	background: #fff;
     opacity: 1;
     -webkit-text-fill-color: #89AE13; }
+
+#answer fieldset {
+    position: relative;
+    margin: 0 0 10px 0;
+    padding: 0;
+    border: none; }
+
+#answer input[type=text] {
+    -webkit-appearance: none;
+    border-radius: 5px;
+    padding-right: 1.4em;
+    display: block;
+    width: 100%;
+    height: 2em;
+    font-size: 1.5em;
+    border: none;
+    box-sizing: border-box;
+    box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.2); }
+
+#answer button {
+    position: absolute;
+    padding: 0;
+    top: 10px;
+    right: 10px;
+    height: 1em;
+    background-color: rgba(255, 255, 255, 0);
+    font-size: 1.5em;
+    line-height: 1em;
+    border: none; }
+
+#answer .abox_red fieldset input[type=text] { box-shadow: 0 2px 6px 0 hsla(360, 72%, 50%, 1); }
+#answer .abox_red fieldset button { color: #d92425; }
+
+#answer fieldset input[type=text][class*="_red"] { box-shadow: 0 2px 6px 0 hsla(360, 72%, 50%, 1); }
+#answer fieldset button[class*="_red"] { color: #d92425; }
 
 .challenge-grammar, .practice-grammar {
 	padding-left: 5px;
@@ -952,7 +886,7 @@ span.step {
     transition: background 200ms ease-in-out; }
 .sbox .icon {
     color: #d92425;
-	font-size: 50px;
+	font-size: 60px;
 	margin-top: 20px;
 	margin-bottom: 35px;
     -webkit-transition: color 200ms ease-in-out;
@@ -1315,34 +1249,6 @@ span.step {
 		font-size: 35px;
 		padding-bottom: 5px; }
 
-	.abox_red > input[type=text],
-	.abox > input[type=text],
-    .abox_g > input[type=text],
-    .abox_r > input[type=text],
-	input[type=text].kbox1,
-    input[type=text].kbox1_g,
-    input[type=text].kbox1_r,
-    input[type=text].kbox1_red,
-	input[type=text].kbox2,
-    input[type=text].kbox2_g,
-    input[type=text].kbox2_r,
-    input[type=text].kbox2_red {
-		padding: 5px 10px 3px 10px;
-		font-size: 30px; }
-
-	.abox_red > input[type=submit],
-	.abox > input[type=submit],
-    .abox_g > input[type=submit],
-    .abox_r > input[type=submit],
-	input[type=submit].ksub,
-    input[type=submit].ksub_r,
-    input[type=submit].ksub_g,
-    input[type=submit].ksub_red {
-		font-size: 30px;
-		margin-left: -20px;
-        padding: 5px 10px 3px 10px;
-		min-width: 30px; }
-
 	.interface-fg, .quiz-tips { padding: 10px; }		/* tips on the interface page */
 	.interface-fg, .interface-fg li, .interface-fg ul, .quiz-tips, .quiz-tips li, .quiz-tips ul {
 		margin: 0;
@@ -1382,37 +1288,6 @@ span.step {
 	.challenge-grammar, .practice-grammar {
 		font-size: 20px;
 		padding-bottom: 5px; }
-
-	input[type=text].kbox1,
-    input[type=text].kbox1_g,
-    input[type=text].kbox1_r,
-    input[type=text].kbox1_red {
-		padding: 4px 8px 2px 8px;
-		font-size: 16px; }
-
-	.abox_red > input[type=text],
-	.abox > input[type=text],
-    .abox_g > input[type=text],
-    .abox_r > input[type=text],
-	input[type=text].kbox2,
-    input[type=text].kbox2_g,
-    input[type=text].kbox2_r,
-    input[type=text].kbox2_red {
-		padding: 4px 8px 2px 8px;
-		font-size: 16px; }
-
-	.abox_red > input[type=submit],
-	.abox > input[type=submit],
-    .abox_g > input[type=submit],
-    .abox_r > input[type=submit],
-	input[type=submit].ksub,
-    input[type=submit].ksub_r,
-    input[type=submit].ksub_g,
-    input[type=submit].ksub_red {
-		font-size: 16px;
-		margin-left: -20px;
-		min-width: 30px;
-        padding: 4px 8px 2px 8px; }
 
 	.interface-fg, .quiz-tips { padding: 10px; }				/* tips on the interface page */
 	.interface-fg, .interface-fg li, .interface-fg ul, .quiz-tips, .quiz-tips li, .quiz-tips ul {

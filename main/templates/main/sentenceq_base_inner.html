@@ -10,10 +10,7 @@
             </a>
         </div>
 
-        <form id='quiz' action='' class='abox' method='post'>{% csrf_token %}
-            <input id='attempt' type='text' autocomplete='off' autocorrect='off' autocapitalize='off' spellcheck='false' autofocus />
-            <input type='submit' value='&#8680;' />
-        </form>
+        {% include 'main/quiz_answer.html' %}
         <div id='literal' class='lit-c'></div>
     </div>  <!-- /#sfield -->
 </div>  <!-- /#sentenceholder -->

@@ -17,18 +17,24 @@
                     <span id='hint' class='ls5'>&#8203;</span>
                 </div>
 
-                <form id='quiz' action='' method='post'>{% csrf_token %}
-                    <input id='attempt' class='kbox1' type='text' autocomplete='off' autocorrect='off' autocapitalize='off' spellcheck='false' autofocus />
-                    <div id='literal' class='lit-c'>&#8203;</div>
+                <div id="answer">
+                    <form id='quiz' action='' method='post'>{% csrf_token %}
+                        <fieldset class>
+                            <input id='attempt' class='kbox1' type='text' autocomplete='off' autocorrect='off' autocapitalize='off' spellcheck='false' autofocus />
+                        </fieldset>
+                        <div id='literal' class='lit-c'>&#8203;</div>
 
-                    <div id='english_b' class='practice-grammar'></div>
-                    <div class='promptc'>
-                        <span id='hint_b' class='ls5'>&#8203;</span>
-                    </div>
+                        <div id='english_b' class='practice-grammar'></div>
+                        <div class='promptc'>
+                            <span id='hint_b' class='ls5'>&#8203;</span>
+                        </div>
 
-                    <input id='attempt_b' class='kbox2' type='text' autocomplete='off' autocorrect='off' autocapitalize='off' spellcheck='false' />
-                    <input id='ksubmit' type='submit' class='ksub' value='&#8680;' />
-                </form>
+                        <fieldset class>
+                            <input id='attempt_b' class='kbox2' type='text' autocomplete='off' autocorrect='off' autocapitalize='off' spellcheck='false' />
+                            <button id='ksubmit'><i class="fa fa-chevron-right"></i></button>
+                        </fieldset>
+                    </form>
+                </div>
                 <div id='literal_b' class='lit-c'>&#8203;</div>
             </div>  <!-- /#pfield -->
         </div>  <!-- /#practiceholder -->
@@ -56,7 +62,7 @@
     wanakana.bind(input);
     wanakana.bind(input_b);
 
-    const quiz = $('#quiz'),
+    var quiz = $('#quiz'),
         english = $('#english'),
         english_b = $('#english_b'),
         hint = $('#hint'),
