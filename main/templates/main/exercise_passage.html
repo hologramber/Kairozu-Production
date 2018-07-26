@@ -101,56 +101,58 @@
 
     quiz.submit(function(event) {
         event.preventDefault();
-        var clean = cleanInput(attempt.val()),
-            actual = qdata[q]['kana_clean'];
-        if (clean === actual) {
-            bug.hide();
-            quiz.removeClass("abox_red");
-            quiz.addClass("abox_g").one(
-                "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend",
-                function() { quiz.removeClass("abox_g"); });
-            english.attr('class', 'challenge-grammar');
-            if (level === 3) {
-                intotal++;
-                nextstep = 1;
-                wrongnew = 0;
-                $(currentline).removeClass('green-words-bold');
-                current_passage = current_passage + ' ' + qdata[q]['f_kana'];
-                q++;
-            } else {
-                if (wrongnew === 0) { inwrong++; }
-                wrongnew = 1;
-                nextstep = 0;
-                level = 3;
-            }
-        } else {
-            bug.show();
-            quiz.addClass("abox_red abox_r").one(
-                "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend",
-                function() { quiz.removeClass("abox_r"); });
-            english.attr('class', 'challenge-grammar red-words');
-            if (level > 0) { level--; }
-        }
-
-        if (q < totalq) {
-            quiz[0].reset();
-            passage();
-        } else {
-            var score = (intotal-inwrong)/intotal,
-                total_passage = $('#retain-passage').html();
-            $.ajax({
-                type: "POST",
-                url: "{% url 'main:passagefinish' chapter.id exercise.id %}",
-                data: {q: q, totalq: totalq, score: score},
-                success: function (data) {
-                    if (data.error) {
-                        location.reload();
-                    } else {
-                        pagewrap.html(data);
-                        $('#retain-passage').html(total_passage);
-                    }
+        if (attempt.val() !== '') {
+            var clean = cleanInput(attempt.val()),
+                actual = qdata[q]['kana_clean'];
+            if (clean === actual) {
+                bug.hide();
+                quiz.removeClass("abox_red");
+                quiz.addClass("abox_g").one(
+                    "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend",
+                    function() { quiz.removeClass("abox_g"); });
+                english.attr('class', 'challenge-grammar');
+                if (level === 3) {
+                    intotal++;
+                    nextstep = 1;
+                    wrongnew = 0;
+                    $(currentline).removeClass('green-words-bold');
+                    current_passage = current_passage + ' ' + qdata[q]['f_kana'];
+                    q++;
+                } else {
+                    if (wrongnew === 0) { inwrong++; }
+                    wrongnew = 1;
+                    nextstep = 0;
+                    level = 3;
                 }
-            });
+            } else {
+                bug.show();
+                quiz.addClass("abox_red abox_r").one(
+                    "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend",
+                    function() { quiz.removeClass("abox_r"); });
+                english.attr('class', 'challenge-grammar red-words');
+                if (level > 0) { level--; }
+            }
+
+            if (q < totalq) {
+                quiz[0].reset();
+                passage();
+            } else {
+                var score = (intotal-inwrong)/intotal,
+                    total_passage = $('#retain-passage').html();
+                $.ajax({
+                    type: "POST",
+                    url: "{% url 'main:passagefinish' chapter.id exercise.id %}",
+                    data: {q: q, totalq: totalq, score: score},
+                    success: function (data) {
+                        if (data.error) {
+                            location.reload();
+                        } else {
+                            pagewrap.html(data);
+                            $('#retain-passage').html(total_passage);
+                        }
+                    }
+                });
+            }
         }
     });
 

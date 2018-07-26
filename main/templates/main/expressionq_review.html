@@ -117,43 +117,52 @@
 
     quiz.submit(function(event) {
         event.preventDefault();
-        var clean = cleanInput(attempt.val());
-        if (clean === qdata[q]['express']['kana_clean']) {
-            bug.hide();
-            hint.attr('class', 'ls5');
-            quiz.removeClass("abox_red");
-            quiz.addClass("abox_g").one(
-                "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend",
-                function() { quiz.removeClass("abox_g"); });
-            qdata[q]['last_attempt'] = addTime(0);
-            if (level === 2) {
-                if (repeat) {
-                    qdata[q]['next_review'] = addTime(1);
-                    repeat = 0;
+        if (attempt.val() !== '') {
+            var clean = cleanInput(attempt.val());
+            if (clean === qdata[q]['express']['kana_clean']) {
+                bug.hide();
+                hint.attr('class', 'ls5');
+                quiz.removeClass("abox_red");
+                quiz.addClass("abox_g").one(
+                    "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend",
+                    function () {
+                        quiz.removeClass("abox_g");
+                    });
+                qdata[q]['last_attempt'] = addTime(0);
+                if (level === 2) {
+                    if (repeat) {
+                        qdata[q]['next_review'] = addTime(1);
+                        repeat = 0;
+                    } else {
+                        qdata[q]['score'] = qdata[q]['score'] + 1;
+                        qdata[q]['next_review'] = addTime(qdata[q]['score']);
+                    }
+                    q++;
+                    qcount++;
                 } else {
-                    qdata[q]['score'] = qdata[q]['score'] + 1;
-                    qdata[q]['next_review'] = addTime(qdata[q]['score']);
+                    level = 2;
+                    repeat = 1;
                 }
-                q++;
-                qcount++;
             } else {
-                level = 2;
-                repeat = 1; }
-        } else {
-            bug.show();
-            hint.attr('class', 'ls5r');
-            quiz.addClass("abox_red abox_r").one(
-                "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend",
-                function() { quiz.removeClass("abox_r"); });
-            qdata[q]['score'] = 0;
-            if (level > 0) { level--; }
-        }
-        savestat.html('<a href=\'#\' onclick=\'saveq()\'><i class=\'fa fa-save\' aria-hidden=\'true\'></i></a>');
-        quiz[0].reset();
-        if (((q < totalq) && (qcount > 9)) || (q >= totalq)) {
-            saveq();
-        } else {
-            expression();
+                bug.show();
+                hint.attr('class', 'ls5r');
+                quiz.addClass("abox_red abox_r").one(
+                    "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend",
+                    function () {
+                        quiz.removeClass("abox_r");
+                    });
+                qdata[q]['score'] = 0;
+                if (level > 0) {
+                    level--;
+                }
+            }
+            savestat.html('<a href=\'#\' onclick=\'saveq()\'><i class=\'fa fa-save\' aria-hidden=\'true\'></i></a>');
+            quiz[0].reset();
+            if (((q < totalq) && (qcount > 9)) || (q >= totalq)) {
+                saveq();
+            } else {
+                expression();
+            }
         }
     });
 

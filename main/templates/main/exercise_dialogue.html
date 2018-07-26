@@ -128,65 +128,67 @@
 
     quiz.submit(function(event) {
         event.preventDefault();
-        var clean = cleanInput(attempt.val()),
-            actual = qdata[q]['responses'][rindex]['response_kana_clean'];
-        if (clean === actual) {
-            bug.hide();
-            quiz.removeClass("abox_red");
-            quiz.addClass("abox_g").one(
-                "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend",
-                function() { quiz.removeClass("abox_g"); });
-            english.attr('class', 'challenge-grammar');
-            if (level === 3) {
-                intotal++;
-                next_step = 1;
-                wrongnew = 0;
-                current_dialogue = qdata[q]['responses'][rindex]['response_kana_f'];
-                $(current_response).html(current_dialogue);
-                if (rindex === rlength) {
-                    q++;
-                    rindex = 0;
-                    current_dialogue = '';
+        if (attempt.val() !== '') {
+            var clean = cleanInput(attempt.val()),
+                actual = qdata[q]['responses'][rindex]['response_kana_clean'];
+            if (clean === actual) {
+                bug.hide();
+                quiz.removeClass("abox_red");
+                quiz.addClass("abox_g").one(
+                    "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend",
+                    function() { quiz.removeClass("abox_g"); });
+                english.attr('class', 'challenge-grammar');
+                if (level === 3) {
+                    intotal++;
+                    next_step = 1;
+                    wrongnew = 0;
+                    current_dialogue = qdata[q]['responses'][rindex]['response_kana_f'];
+                    $(current_response).html(current_dialogue);
+                    if (rindex === rlength) {
+                        q++;
+                        rindex = 0;
+                        current_dialogue = '';
+                    } else {
+                        rindex++;
+                    }
                 } else {
-                    rindex++;
+                    if (wrongnew === 0) { inwrong++; }
+                    wrongnew = 1;
+                    next_step = 0;
+                    level = 3;
                 }
             } else {
-                if (wrongnew === 0) { inwrong++; }
-                wrongnew = 1;
-                next_step = 0;
-                level = 3;
-            }
-        } else {
-            bug.show();
-            quiz.addClass("abox_red abox_r").one(
-                "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend",
-                function() { quiz.removeClass("abox_r"); });
-            english.attr('class', 'challenge-grammar red-words');
-            if (level > 0) {
-                next_step = 0;
-                level--;
-            }
-        }
-
-        if (q < totalq) {
-            quiz[0].reset();
-            dialogue();
-        } else {
-            var score = (intotal-inwrong)/intotal,
-                total_passage = $('#dialogue-table').html();
-            $.ajax({
-                type: "POST",
-                url: "{% url 'main:dialoguefinish' chapter.id exercise.id %}",
-                data: {q: q, totalq: totalq, score: score},
-                success: function (data) {
-                    if (data.error) {
-                        location.reload();
-                    } else {
-                        pagewrap.html(data);
-                        $('#dialogue-table').html(total_passage);
-                    }
+                bug.show();
+                quiz.addClass("abox_red abox_r").one(
+                    "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend",
+                    function() { quiz.removeClass("abox_r"); });
+                english.attr('class', 'challenge-grammar red-words');
+                if (level > 0) {
+                    next_step = 0;
+                    level--;
                 }
-            });
+            }
+
+            if (q < totalq) {
+                quiz[0].reset();
+                dialogue();
+            } else {
+                var score = (intotal-inwrong)/intotal,
+                    total_passage = $('#dialogue-table').html();
+                $.ajax({
+                    type: "POST",
+                    url: "{% url 'main:dialoguefinish' chapter.id exercise.id %}",
+                    data: {q: q, totalq: totalq, score: score},
+                    success: function (data) {
+                        if (data.error) {
+                            location.reload();
+                        } else {
+                            pagewrap.html(data);
+                            $('#dialogue-table').html(total_passage);
+                        }
+                    }
+                });
+            }
         }
     });
 

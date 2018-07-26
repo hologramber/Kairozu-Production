@@ -136,14 +136,24 @@
 
     quiz.submit(function(event) {
         event.preventDefault();
-        var clean = cleanInput(attempt.val()),
-            actual = qdata[q]['sentence']['kana_clean'];
-        if ('{{ user.profile.strictmode }}' === 'True' || (qdata[q]['sentence']['strict'])) {
-            if (clean === actual) { processQuiz(1); } else { processQuiz(0); }
-        } else {
-            actual = actual.split("");
-            clean = clean.split("");
-            if (wanakana.compare(clean, actual)) { processQuiz(1); } else { processQuiz(0); }
+        if (attempt.val() !== '') {
+            var clean = cleanInput(attempt.val()),
+                actual = qdata[q]['sentence']['kana_clean'];
+            if ('{{ user.profile.strictmode }}' === 'True' || (qdata[q]['sentence']['strict'])) {
+                if (clean === actual) {
+                    processQuiz(1);
+                } else {
+                    processQuiz(0);
+                }
+            } else {
+                actual = actual.split("");
+                clean = clean.split("");
+                if (wanakana.compare(clean, actual)) {
+                    processQuiz(1);
+                } else {
+                    processQuiz(0);
+                }
+            }
         }
     });
 

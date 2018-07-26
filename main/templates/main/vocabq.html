@@ -86,59 +86,61 @@
 
     quiz.submit(function(event) {
         event.preventDefault();
-        var clean = cleanInput(attempt.val());
-        if (clean === qdata[q]['vocab']['kana_clean']) {
-            bug.hide();
-            quiz.removeClass("abox_red");
-            quiz.addClass("abox_g").one(
-                "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend",
-                function() { quiz.removeClass("abox_g"); });
-            qdata[q]['last_attempt'] = addTime(0);
-            if (level === 3) {
-                if (repeat) {
-                    qdata.push(qdata.splice(q,1)[0]);
-                    repeat = 0;
-                } else {
-                    qdata[q]['rating'] = qdata[q]['rating'] + 1;
-                    if (!qdata[q]['next_review']) {
-                        qdata[q]['next_review'] = addTime(1);
-                    }
-                }
-                q++;
-                qcount++;
-            } else { 
-                level = 3;
-                repeat = 1;
-            }
-        } else {
-            bug.show();
-            quiz.addClass("abox_red abox_r").one(
-                "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend",
-                function() { quiz.removeClass("abox_r"); });
-            qdata[q]['rating'] = 0;
-            if (level > 0) { level--; }
-        }
-        savestat.html('<a href=\'#\' onclick=\'saveq()\'><i class=\'fa fa-save\' aria-hidden=\'true\'></i></a>');
-        if (q < totalq) {
-            quiz[0].reset();
-            if (qcount > 9) {
-                saveq();
-            }
-            vocab();
-        } else {
-            $.ajax({
-                type: "POST",
-                url: "{% url 'main:vocabfinish' chapter.id %}",
-                dataType: 'json',
-                data: {qdata: JSON.stringify(qdata)},
-                success: function (data) {
-                    if ((data.error) || (data.loop)) {
-                        location.reload();
+        if (attempt.val() !== '') {
+            var clean = cleanInput(attempt.val());
+            if (clean === qdata[q]['vocab']['kana_clean']) {
+                bug.hide();
+                quiz.removeClass("abox_red");
+                quiz.addClass("abox_g").one(
+                    "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend",
+                    function() { quiz.removeClass("abox_g"); });
+                qdata[q]['last_attempt'] = addTime(0);
+                if (level === 3) {
+                    if (repeat) {
+                        qdata.push(qdata.splice(q,1)[0]);
+                        repeat = 0;
                     } else {
-                        pagewrap.html(data);
+                        qdata[q]['rating'] = qdata[q]['rating'] + 1;
+                        if (!qdata[q]['next_review']) {
+                            qdata[q]['next_review'] = addTime(1);
+                        }
                     }
+                    q++;
+                    qcount++;
+                } else {
+                    level = 3;
+                    repeat = 1;
                 }
-            });
+            } else {
+                bug.show();
+                quiz.addClass("abox_red abox_r").one(
+                    "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend",
+                    function() { quiz.removeClass("abox_r"); });
+                qdata[q]['rating'] = 0;
+                if (level > 0) { level--; }
+            }
+            savestat.html('<a href=\'#\' onclick=\'saveq()\'><i class=\'fa fa-save\' aria-hidden=\'true\'></i></a>');
+            if (q < totalq) {
+                quiz[0].reset();
+                if (qcount > 9) {
+                    saveq();
+                }
+                vocab();
+            } else {
+                $.ajax({
+                    type: "POST",
+                    url: "{% url 'main:vocabfinish' chapter.id %}",
+                    dataType: 'json',
+                    data: {qdata: JSON.stringify(qdata)},
+                    success: function (data) {
+                        if ((data.error) || (data.loop)) {
+                            location.reload();
+                        } else {
+                            pagewrap.html(data);
+                        }
+                    }
+                });
+            }
         }
     });
 

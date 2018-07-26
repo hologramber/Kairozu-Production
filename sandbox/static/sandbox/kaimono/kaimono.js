@@ -101,14 +101,14 @@ Kaimono.prototype.newQuestion = function() {
 		newObject.className = self.objectIcon[self.objectType];
 		self.objectBox.appendChild(newObject);
 	}
-	if (self.numOfObjects == 1) {
+	if (self.numOfObjects === 1) {
 		self.descriptionBox.textContent = self.numOfObjects + ' ' + self.objectDescriptionSingular[self.objectType];
 	} else {
 		self.descriptionBox.textContent = self.numOfObjects + ' ' + self.objectDescription[self.objectType];
 	}
 	var textInput = document.getElementById('counter_entry');
 
-    if (textInput.getAttribute('class') == 'kbox1 kbox1_g') {
+    if (textInput.getAttribute('class') === 'kbox1 kbox1_g') {
         textInput.setAttribute('class', 'kbox1 kbox1_g_flip');
     }
 
@@ -129,33 +129,34 @@ Kaimono.prototype.nextItems = function() {
 Kaimono.prototype.answerListener = function() {
 	var self = this;
 	var textInput = document.getElementById('counter_entry');
-	if (textInput.value == '') {
-	} else if (textInput.value == self.objectCounters[self.objectType][self.numOfObjects-1]) {
-		if (self.currentAttempts == 1) {
+	if (textInput.value !== '') {
+		if (textInput.value === self.objectCounters[self.objectType][self.numOfObjects-1]) {
+            if (self.currentAttempts === 1) {
 
-		} else {
-			self.currentScore++;
-			self.currentStreak++;
-		}
-		textInput.setAttribute('class', 'kbox1 kbox1_g');
-		self.scoreHolder.textContent = self.currentScore;
-		self.streakHolder.textContent = self.currentStreak;
-		self.currentAttempts = 0;
-		textInput.value = '';
-		textInput.style.color = "black";
-		self.nextItems();
-	} else {
-		textInput.value = self.objectCounters[self.objectType][self.numOfObjects-1];
-		self.currentStreak = 0;
-		self.streakHolder.textContent = self.currentStreak;
-		textInput.style.color = "#d92425";
-		textInput.setAttribute('class', 'kbox1 kbox1_r');
-		self.currentAttempts = 1;
-	}
+            } else {
+                self.currentScore++;
+                self.currentStreak++;
+            }
+            textInput.setAttribute('class', 'kbox1 kbox1_g');
+            self.scoreHolder.textContent = self.currentScore;
+            self.streakHolder.textContent = self.currentStreak;
+            self.currentAttempts = 0;
+            textInput.value = '';
+            textInput.style.color = "black";
+            self.nextItems();
+        } else {
+            textInput.value = self.objectCounters[self.objectType][self.numOfObjects-1];
+            self.currentStreak = 0;
+            self.streakHolder.textContent = self.currentStreak;
+            textInput.style.color = "#d92425";
+            textInput.setAttribute('class', 'kbox1 kbox1_red');
+            self.currentAttempts = 1;
+        }
+    }
 };
 
 Kaimono.prototype.switchCharacters = function () {
-	if (this.kOrK == 0) {
+	if (this.kOrK === 0) {
 		this.kkSwitch.textContent = '漢字';
 		this.kOrK = 1;
 		this.objectCounters = [

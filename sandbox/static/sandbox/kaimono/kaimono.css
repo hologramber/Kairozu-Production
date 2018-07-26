@@ -53,9 +53,9 @@
 	-webkit-animation-fill-mode:forwards;	/* makes sure that after animation is done we remain @ last keyframe value (white bg) */
 	-moz-animation-fill-mode:forwards;
 	animation-fill-mode:forwards;
-	-webkit-animation-duration:0.2s;
-	-moz-animation-duration:0.2s;
-	animation-duration:0.2s; }
+	-webkit-animation-duration:0.3s;
+	-moz-animation-duration:0.3s;
+	animation-duration:0.3s; }
 
 
 .ic {

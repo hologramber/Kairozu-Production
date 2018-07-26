@@ -55,26 +55,28 @@
 
     quiz.submit(function(event) {
         event.preventDefault();
-        var clean = cleanInput(attempt.val());
-        if (clean === qdata[q]['kana_clean']) {
-            quiz.removeClass("abox_red");
-            quiz.addClass("abox_g").one(
-                "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend",
-                function() { quiz.removeClass("abox_g"); });
-            if (level === 3) { q++; } else { level = 3; }
-        } else {
-            quiz.addClass("abox_red abox_r").one(
-                "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend",
-                function() { quiz.removeClass("abox_r"); });
-            if (level > 0) { level--; }
-        }
-        if (q < totalq) {
-            quiz[0].reset();
-            vocab();
-        } else {
-            $.get("{% url 'demo:demovocabsuccess' %}").done(function (data) {
-                pagewrap.html(data);
-            });
+        if (attempt.val() !== '') {
+            var clean = cleanInput(attempt.val());
+            if (clean === qdata[q]['kana_clean']) {
+                quiz.removeClass("abox_red");
+                quiz.addClass("abox_g").one(
+                    "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend",
+                    function() { quiz.removeClass("abox_g"); });
+                if (level === 3) { q++; } else { level = 3; }
+            } else {
+                quiz.addClass("abox_red abox_r").one(
+                    "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend",
+                    function() { quiz.removeClass("abox_r"); });
+                if (level > 0) { level--; }
+            }
+            if (q < totalq) {
+                quiz[0].reset();
+                vocab();
+            } else {
+                $.get("{% url 'demo:demovocabsuccess' %}").done(function (data) {
+                    pagewrap.html(data);
+                });
+            }
         }
     });
 

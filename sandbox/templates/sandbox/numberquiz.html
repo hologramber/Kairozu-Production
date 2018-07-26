@@ -67,27 +67,29 @@
     }
     quiz.submit(function(event) {
         event.preventDefault();
-        var clean_attempt = cleanInput(attempt.val());
-        $('#max_number').val($("input[name=optradio]:checked").val());
-        var form_data = quiz.serialize();
-        if (clean_attempt == vactual.val()) {
-            bug.hide();
-            quiz.removeClass("abox_red");
-            quiz.addClass("abox_g").one(
-                "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend",
-                function() { quiz.removeClass("abox_g"); });
-            hint.html('&#8203;');
-            $.post("{% url 'sandbox:numbergrab' %}", form_data).done(function(data) {
+        if (attempt.val() !== '') {
+            var clean_attempt = cleanInput(attempt.val());
+            $('#max_number').val($("input[name=optradio]:checked").val());
+            var form_data = quiz.serialize();
+            if (clean_attempt === vactual.val()) {
+                bug.hide();
+                quiz.removeClass("abox_red");
+                quiz.addClass("abox_g").one(
+                    "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend",
+                    function() { quiz.removeClass("abox_g"); });
+                hint.html('&#8203;');
+                $.post("{% url 'sandbox:numbergrab' %}", form_data).done(function(data) {
+                    quiz[0].reset();
+                    numberNext(data);
+                });
+            } else {
+                hint.html(vactual.val());
                 quiz[0].reset();
-                numberNext(data);
-            });
-        } else {
-            hint.html(vactual.val());
-            quiz[0].reset();
-            bug.show();
-            quiz.addClass("abox_red abox_r").one(
-                "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend",
-                function() { quiz.removeClass("abox_r"); });
+                bug.show();
+                quiz.addClass("abox_red abox_r").one(
+                    "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend",
+                    function() { quiz.removeClass("abox_r"); });
+            }
         }
     });
 
