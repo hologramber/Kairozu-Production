@@ -1,0 +1,163 @@
+{% extends 'kairozu.html' %}
+{% block title %}Kairozu Flashcard Review{% endblock %}
+
+{% load static %}
+{% block content %}
+
+{% include 'main/sentenceq_review_base.html' %}
+
+<!-- wanakana, menu toggle, and get/post mechanics -->
+<script type='text/javascript' src='{% static 'js/wanakana.js' %}'></script>
+<script type='text/javascript' src='{% static 'js/cookiemonster.js' %}'></script>
+
+<script type='text/javascript'>
+    var input = document.getElementById('attempt');
+    wanakana.bind(input);
+
+    var english = $('#english'),
+        literal = $('#literal'),
+        context = $('#context'),
+        hint = $('#hint'),
+        quiz = $('#quiz'),
+        attempt = $('#attempt'),
+        pagewrap = $('#allwrap'),
+        reflink = $("#reflink"),
+        savestat = $('#savenow'),
+        bug = $('#bug-button');
+
+    var qdata = [],
+        qcount = 0,
+        q = 0,
+        totalq = 0,
+        level = 3,
+        repeat = 0;
+
+    function flashcard() {
+        context.html('&#8203;' + qdata[q]['context'] + '&#8203;');
+        literal.html('<div class="white-words litcontextbox upper">literal</div>' + qdata[q]['literal'] + '&#8203;');
+        english.html(qdata[q]['english']);
+        reflink.attr("href", '/main/lesson/' + qdata[q]['lesson'] + '/');
+        switch(level) {
+            case 3:
+                if (qdata[q]['disamb_location'] != 0) {
+                    hint.html(qdata[q]['kana_all_blank']);
+                    hint.addClass('ls5y');
+                } else {
+                    hint.html('&#8203;');
+                } break;
+            case 2:
+                hint.html(qdata[q]['kana_all_blank']);
+                hint.removeClass('ls5y');
+                break;
+            case 1:
+                hint.html(qdata[q]['kana_alt_blank']); break;
+            default:
+                hint.html(qdata[q]['f_kana']); break;
+        }
+    }
+
+    function getq() {
+        $.get("{% url 'main:reviewflashcardgrab' %}").done(function (data) {
+            qdata = data;
+            totalq = qdata.length;
+            q = 0;
+            if (totalq > 0) {
+                flashcard();
+            } else {
+                $.get("{% url 'main:reviewflashcardcurrent' %}").done(function (data) {
+                    pagewrap.html(data);
+                });
+            }
+        });
+    }
+
+    function saveq() {
+        savestat.html('<i class=\'fa fa-save fa-spin orange-words\' aria-hidden=\'true\'></i>');
+        if (q < totalq) {
+            flashcard();
+        }
+        $.ajax({
+            type: "POST",
+            url: "{% url 'main:reviewflashcardsave' %}",
+            dataType: 'json',
+            data: {qdata: JSON.stringify(qdata)},
+            success: function (data) {
+                if (data.error) {
+                    location.reload();
+                } else {
+                    qcount = 0;
+                    savestat.html('<i class=\'fa fa-save green-words\' aria-hidden=\'true\'></i>');
+                     if (q >= totalq) {
+                        getq();
+                    }
+                }
+            }
+        });
+    }
+
+    function processQuiz(attempt) {
+        if (attempt === 1) {
+            bug.hide();
+            quiz.removeClass("abox_red");
+            quiz.addClass("abox_g").one(
+                "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend",
+                function() { quiz.removeClass("abox_g"); });
+            qdata[q]['last_attempt'] = addTime(0);
+            if (level === 3) {
+                if (repeat) {
+                    qdata[q]['next_review'] = addTime(1);
+                    repeat = 0;
+                } else {
+                    qdata[q]['score'] = qdata[q]['score'] + 1;
+                    qdata[q]['next_review'] = addTime(qdata[q]['score']);
+                }
+                q++;
+                qcount++;
+            } else {
+                level = 3;
+                repeat = 1;
+            }
+        } else {
+            bug.show();
+            quiz.addClass("abox_red abox_r").one(
+                "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend",
+                function() { quiz.removeClass("abox_r"); });
+            qdata[q]['score'] = 0;
+            if (level > 0) { level--; }
+        }
+        savestat.html('<a href=\'#\' onclick=\'saveq()\'><i class=\'fa fa-save\' aria-hidden=\'true\'></i></a>');
+        quiz[0].reset();
+        if (((q < totalq) && (qcount > 9)) || (q >= totalq)) {
+            saveq();
+        } else {
+            flashcard();
+        }
+    }
+
+    quiz.submit(function(event) {
+        event.preventDefault();
+        if (attempt.val() !== '') {
+            var clean = cleanInput(attempt.val()),
+                actual = qdata[q]['kana_clean'];
+            if ('{{ user.profile.strictmode }}' === 'True' || (qdata[q]['strict'])) {
+                if (clean === actual) {
+                    processQuiz(1);
+                } else {
+                    processQuiz(0);
+                }
+            } else {
+                actual = actual.split("");
+                clean = clean.split("");
+                if (wanakana.compare(clean, actual)) {
+                    processQuiz(1);
+                } else {
+                    processQuiz(0);
+                }
+            }
+        }
+    });
+
+    $(document).ready(function() { getq(); });
+</script>
+
+{% endblock %}

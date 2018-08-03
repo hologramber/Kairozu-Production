@@ -1,0 +1,37 @@
+{% extends 'kairozu.html' %}
+{% block title %}Kairozu Flashcards{% endblock %}
+
+{% load static %}
+{% block content %}
+
+<div id="allwrap">
+    <div class="fc-general-col">
+        <h1>Flashcards</h1>
+        <div class="s-5"></div>
+        <div class="table-responsive">
+            <table class="vocablist">
+            <thead>
+                <tr>
+                    <th>English・英語</th>
+                    <th>Kana・仮名</th>
+                    <th>Strict</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for flashcard in object_list %}
+                    <tr>
+                        <td>{{ flashcard.english }}</td>
+                        <td>{{ flashcard.kana }}</td>
+                        <td>{{ flashcard.strict }}</td>
+                        <td><a href="{% url 'main:flashcardupdate' flashcard.id %}">Edit</a> / <a href="{% url 'main:flashcarddelete' flashcard.id %}">Delete</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+            </table>
+        </div>
+        <a href="{% url 'main:flashcardcreate' %}">Create New Flashcard</a>
+    </div>
+</div>
+{% endblock %}
+

@@ -58,6 +58,11 @@
                                     {% else %}
                                         <a href="{% url 'main:reviewsentence' %}">{{ user.profile.srcount }}&nbsp;SENTENCES</a>
                                     {% endif %}
+                                    {% if user.profile.frcount == 0 %}
+                                        <span>0&nbsp;FLASHCARDS</span>
+                                    {% else %}
+                                        <a href="{% url 'main:reviewflashcard' %}">{{ user.profile.frcount }}&nbsp;FLASHCARDS</a>
+                                    {% endif %}
                                 </div>
                             </div>
                             <div><a class="headlink" href="{% url 'sandbox:main' %}">SANDBOX</a></div>
@@ -69,6 +74,7 @@
                                     <a href="{% url 'news:faq' %}">FAQ</a>
                                     <a href="{% url 'account' %}">YOUR&nbsp;ACCOUNT</a>
                                     <a href="{% url 'main:progress' %}">YOUR&nbsp;PROGRESS</a>
+                                    <a href="{% url 'main:flashcard' %}">FLASHCARDS</a>
                                     <a id="comment-button" href="#"><i class="fa fa-bug red-words" aria-hidden="true"></i>&nbsp;&nbsp;REPORT&nbsp;BUG</a>
                                     <a href="{% url 'logout' %}">LOG&nbsp;OUT</a>
                                 </div>

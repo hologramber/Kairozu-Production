@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from main.models import Profile
+from main.models import Profile, Flashcard
 
 
 class SignUpForm(UserCreationForm):
@@ -29,3 +29,14 @@ class ValidateExerciseFinish(forms.Form):
     q = forms.IntegerField(max_value=50)
     totalq = forms.IntegerField(max_value=50)
     score = forms.FloatField(max_value=1.1)
+
+
+class FlashcardForm(forms.ModelForm):
+    strict = forms.BooleanField(label='Strict Mode', help_text='Force exact matching on word & character order.')
+    literal = forms.CharField(label='Literal Meaning', help_text='Literal translation between English and Japanese.', required=False)
+    context = forms.CharField(help_text='Additional context, e.g. speech used in a formal setting.', required=False)
+    note = forms.CharField(help_text='Other information or additional notes regarding this flashcard.', required=False)
+    kanji = forms.CharField(required=False)
+    class Meta:
+        model = Flashcard
+        fields = ['english', 'kana', 'kanji', 'strict', 'literal', 'context', 'note']

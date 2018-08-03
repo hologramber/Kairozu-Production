@@ -84,7 +84,7 @@
         savestat.html('<i class=\'fa fa-save fa-spin orange-words\' aria-hidden=\'true\'></i>');
         if (q < totalq) {
             vocab();
-        }
+        } // add an else here to disable input while saving?
         $.ajax({
             type: "POST",
             url: "{% url 'main:reviewvocabsave' %}",

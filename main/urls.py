@@ -11,6 +11,10 @@ urlpatterns = [
     url(r'^chapter/(?P<chapter_id>[0-9]+)/summary/$', views.SummaryView.as_view(), name='summary'),       # summary of ch lessons
     url(r'^progress/$', views.ProgressView.as_view(), name='progress'),
 
+    url(r'^flashcard/$', views.FlashcardListView.as_view(), name='flashcard'),
+    url(r'^flashcard/create/$', views.FlashcardCreateView.as_view(), name='flashcardcreate'),
+    url(r'^flashcard/(?P<pk>[0-9]+)/$', views.FlashcardUpdateView.as_view(), name='flashcardupdate'),
+    url(r'^flashcard/(?P<pk>[0-9]+)/delete/$', views.FlashcardDeleteView.as_view(), name='flashcarddelete'),
 
     # ################## VOCABULARY ####################
     url(r'^chapter/(?P<chapter_id>[0-9]+)/vocablist/$', views.VocabListView.as_view(), name='vocablist'), # /main/chapter/1/vocablist
@@ -63,6 +67,11 @@ urlpatterns = [
     url(r'^reviewsentence/save/$', views.reviewsentencesave, name='reviewsentencesave'),
     url(r'^reviewsentence/current/$', views.ReviewSentenceCurrentView.as_view(), name='reviewsentencecurrent'),
     url(r'^reviewsentence/grab/$', api_views.ReviewSentenceRecordGrab.as_view(), name='reviewsentencegrab'),
+
+    url(r'^reviewflashcard/$', views.ReviewFlashcardView.as_view(), name='reviewflashcard'),
+    url(r'^reviewflashcard/save/$', views.reviewflashcardsave, name='reviewflashcardsave'),
+    url(r'^reviewflashcard/current/$', views.ReviewFlashcardCurrentView.as_view(), name='reviewflashcardcurrent'),
+    url(r'^reviewflashcard/grab/$', api_views.ReviewFlashcardGrab.as_view(), name='reviewflashcardgrab'),
 
 
     # ################## EXERCISES #####################

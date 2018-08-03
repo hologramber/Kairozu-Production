@@ -4,14 +4,15 @@ from datetime import datetime
 
 from django.shortcuts import get_object_or_404
 from django.views.generic import TemplateView, ListView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.http import HttpResponseRedirect, JsonResponse
 from django.views.decorators.http import require_http_methods
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from .models import Profile, Expression, ExpressionRecord, Vocabulary, Practice, Lesson, Chapter, VocabRecord, SentenceRecord, Exercise, ExerciseRecord, ExerciseSentence, ExercisePrompt, GrammarNote
-from .forms import ValidateFinishForm, ValidateExerciseFinish
-from .serializers import VocabRecordSerializer, ExpressionRecordSerializer, SentenceRecordSerializer
+from .models import Profile, Expression, ExpressionRecord, Vocabulary, Practice, Lesson, Chapter, VocabRecord, SentenceRecord, Exercise, ExerciseRecord, ExerciseSentence, ExercisePrompt, GrammarNote, Flashcard
+from .forms import ValidateFinishForm, ValidateExerciseFinish, FlashcardForm
+from .serializers import VocabRecordSerializer, ExpressionRecordSerializer, SentenceRecordSerializer, FlashcardSerializer
 
 error_finish = 'There was a problem with saving your current progress. Please e-mail kairozu@kairozu.com if you suspect this is an error.'
 error_data = {'error': True}
@@ -606,6 +607,36 @@ class ReviewSentenceCurrentView(LoginRequiredMixin, ListView):
         return SentenceRecord.objects.filter(user_id=self.request.user.id).exclude(next_review__isnull=True).order_by('next_review')[:10]
 
 
+class ReviewFlashcardView(LoginRequiredMixin, TemplateView):
+    template_name = 'main/flashcardq_review.html'
+
+
+@require_http_methods(["POST"])
+def reviewflashcardsave(request):
+    fr_queryset = Flashcard.objects.filter(user_id=request.user.id, next_review__lte=datetime.now())
+    frupdate = FlashcardSerializer(fr_queryset, data=json.loads(request.POST.get('qdata')), partial=True, many=True)
+    if frupdate.is_valid():
+        frupdate.save()
+        return JsonResponse(save_data)
+    else:
+        messages.add_message(request, messages.ERROR, error_finish)
+        return JsonResponse(error_data)
+
+
+class ReviewFlashcardCurrentView(LoginRequiredMixin, ListView):
+    template_name = 'main/flashcardq_review_current.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ReviewFlashcardCurrentView, self).get_context_data(**kwargs)
+        currentchapter = get_object_or_404(Chapter, pk=self.request.user.profile.currentchapter)
+        context['currentchapter'] = currentchapter
+        Profile.has_reviews(self.request.user)
+        return context
+
+    def get_queryset(self):
+        return Flashcard.objects.filter(user_id=self.request.user.id).order_by('next_review')[:10]
+
+
 # #################################################################################
 # ################################ END REVIEWS ####################################
 # #################################################################################
@@ -764,3 +795,38 @@ class DialogueSuccessView(LoginRequiredMixin, UserPassesTestMixin, TemplateView)
 # #################################################################################
 # ############################ END EXERCISES ######################################
 # #################################################################################
+
+class FlashcardListView(LoginRequiredMixin, ListView):
+    template_name = 'main/flashcard_list.html'
+
+    def get_queryset(self):
+        queryset = Flashcard.objects.filter(user_id=self.request.user.id)
+        return queryset
+
+class FlashcardCreateView(LoginRequiredMixin, CreateView):
+    model = Flashcard
+    template_name = 'main/flashcard_new.html'
+    form_class = FlashcardForm
+    success_url = reverse_lazy('main:flashcard')
+
+    def form_valid(self, form):
+        # form.instance.user = Profile.objects.get(user=self.request.user)
+        # form.instance.created_by = self.request.user
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+class FlashcardUpdateView(LoginRequiredMixin, UpdateView):
+    model = Flashcard
+    template_name = 'main/flashcard_update.html'
+    form_class = FlashcardForm
+    success_url = reverse_lazy('main:flashcard')
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        # form.instance.created_by = self.request.user
+        return super().form_valid(form)
+
+class FlashcardDeleteView(LoginRequiredMixin, DeleteView):
+    model = Flashcard
+    template_name = 'main/flashcard_delete.html'
+    success_url = reverse_lazy('main:flashcard')

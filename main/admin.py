@@ -1,6 +1,6 @@
 from django.contrib import admin
 import nested_admin
-from .models import Profile, Chapter, Lesson, PointTable, Block, Exercise, ExerciseResponse, ExerciseSentence, ExerciseRecord, ExercisePrompt, DivBlock, TwoTable, TwoTableData, FourTable, FourTableData, Example, MoreInfo, Practice, Sentence, Vocabulary, VocabRecord, SentenceRecord, Expression, ExpressionRecord, GrammarNote, InfoLink
+from .models import Profile, Chapter, Lesson, PointTable, Block, Exercise, ExerciseResponse, ExerciseSentence, ExerciseRecord, ExercisePrompt, DivBlock, TwoTable, TwoTableData, FourTable, FourTableData, Example, MoreInfo, Practice, Sentence, Vocabulary, VocabRecord, SentenceRecord, Expression, ExpressionRecord, GrammarNote, InfoLink, Flashcard
 
 
 class FourTableDataInline(nested_admin.NestedTabularInline):
@@ -142,6 +142,9 @@ class GrammarNoteAdmin(admin.ModelAdmin):
     list_display = ('title', 'lesson')
 
 
+class FlashcardAdmin(admin.ModelAdmin):
+    list_display = ('user', 'english', 'kana')
+
 admin.site.register(GrammarNote, GrammarNoteAdmin)
 admin.site.register(Sentence, SentenceAdmin)
 admin.site.register(Practice, PracticeAdmin)
@@ -151,6 +154,7 @@ admin.site.register(Chapter, ChapterAdmin)
 admin.site.register(Exercise, ExerciseAdmin)
 admin.site.register(Lesson, LessonAdmin)
 admin.site.register(Profile)
+admin.site.register(Flashcard, FlashcardAdmin)
 admin.site.register(VocabRecord, VocabRecordAdmin)
 admin.site.register(SentenceRecord, SentenceRecordAdmin)
 admin.site.register(ExerciseRecord, ExerciseRecordAdmin)

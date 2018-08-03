@@ -1,7 +1,7 @@
 from datetime import datetime
 from rest_framework import generics
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import Practice, VocabRecord, Profile, SentenceRecord, ExpressionRecord, ExercisePrompt, ExerciseSentence
+from .models import Practice, VocabRecord, Profile, SentenceRecord, ExpressionRecord, ExercisePrompt, ExerciseSentence, Flashcard
 from . import serializers
 
 
@@ -120,3 +120,13 @@ class DialogueGrab(LoginRequiredMixin, generics.ListAPIView):
         else:
             exercise_prompts = ExercisePrompt.objects.none()
         return exercise_prompts
+
+
+class ReviewFlashcardGrab(LoginRequiredMixin, generics.ListAPIView):
+    serializer_class = serializers.FlashcardSerializer
+
+    def get_queryset(self):
+        frecords = Flashcard.objects.filter(user_id=self.request.user.id, next_review__lte=datetime.now())[:50]
+        if frecords is None:
+            frecords = Flashcard.objects.none()
+        return frecords

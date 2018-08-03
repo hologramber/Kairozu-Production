@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Sentence, Practice, Vocabulary, VocabRecord, SentenceRecord, Expression, ExpressionRecord, ExerciseResponse, ExercisePrompt, ExerciseSentence
+from .models import Sentence, Practice, Vocabulary, VocabRecord, SentenceRecord, Expression, ExpressionRecord, ExerciseResponse, ExercisePrompt, ExerciseSentence, Flashcard
 
 
 class VocabularySerializer(serializers.ModelSerializer):
@@ -27,6 +27,16 @@ class RecordListSerializer(serializers.ListSerializer):
         #         print(record)
 
         return record_multi
+
+
+class FlashcardSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField()
+    user = serializers.StringRelatedField()
+    class Meta:
+        model = Flashcard
+        exclude = ('kana', 'kanji',)
+        list_serializer_class = RecordListSerializer
+
 
 class VocabRecordSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField()

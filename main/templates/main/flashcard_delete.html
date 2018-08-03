@@ -1,0 +1,17 @@
+{% extends 'kairozu.html' %}
+{% block title %}Kairozu Delete Flashcard{% endblock %}
+
+{% load static %}
+{% block content %}
+
+<div id="allwrap">
+    <div class="fc-general-col">
+        <h3>Are you sure you want to delete the flashcard for "{{ object.english }}"?</h3>
+        <form method="post">{% csrf_token %}
+            <input class="btn btn-default" type="submit" value="DELETE" />
+        </form>
+    </div>
+</div>
+
+<a href="{% url 'main:flashcard' %}">Return to Flashcard List</a>
+{% endblock %}

@@ -132,6 +132,7 @@ class Profile(models.Model):
     vrcount = models.PositiveIntegerField(default=0)
     srcount = models.PositiveIntegerField(default=0)
     ercount = models.PositiveIntegerField(default=0)
+    frcount = models.PositiveIntegerField(default=0)
 
     @receiver(post_save, sender=User)
     def create_user_profile(sender, instance, created, **kwargs):
@@ -169,6 +170,7 @@ class Profile(models.Model):
         user.profile.vrcount = VocabRecord.objects.filter(user_id=user.id, next_review__lte=now).count()
         user.profile.srcount = SentenceRecord.objects.filter(user_id=user.id, next_review__lte=now).count()
         user.profile.ercount = ExpressionRecord.objects.filter(user_id=user.id, next_review__lte=now).count()
+        user.profile.frcount = Flashcard.objects.filter(user_id=user.id, next_review__lte=now).count()
         Profile.ok_to_graduate(user)
         user.profile.save()
 
@@ -934,6 +936,39 @@ class SentenceRecord(models.Model):
 
     class Meta:
         ordering = ['next_review']
+
+
+class Flashcard(models.Model):
+    """adding user personalized study content"""
+    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=False, null=False)
+    strict = models.BooleanField(default=False)
+    english = models.CharField(max_length=250, blank=False)
+    kana = models.CharField(max_length=250, blank=False)
+    kanji = models.CharField(max_length=250, blank=True)
+    literal = models.CharField(max_length=250, blank=True)
+    context = models.CharField(max_length=250, blank=True)
+    note = models.CharField(max_length=500, blank=True)
+    kana_all_blank = models.CharField(max_length=250, blank=True)
+    kana_alt_blank = models.CharField(max_length=250, blank=True)
+    kana_clean = models.CharField(max_length=250, blank=True)
+    f_kana = models.CharField(max_length=250, blank=True)
+    f_kanji = models.CharField(max_length=250, blank=True)
+    last_attempt = models.DateTimeField(default=timezone.now)
+    next_review = models.DateTimeField(default=timezone.now)
+    score = models.IntegerField(default=0)                          # number of consecutive corrects
+
+    def save(self, *args, **kwargs):
+        self.kana = hw_punctuation(self.kana)
+        self.kanji = hw_punctuation(self.kanji)
+        self.kana_all_blank, self.kana_alt_blank, self.kana_clean = create_blanks(self.kana, 0, False)
+        self.f_kana = create_splits(self.kana)
+        self.f_kanji = create_splits(self.kanji)
+        self.kana_all_blank = create_splits(self.kana_all_blank)
+        self.kana_alt_blank = create_splits(self.kana_alt_blank)
+        super(Flashcard, self).save(*args, **kwargs)
+
+    class Meta:
+        ordering = ['user']
 
 
 @receiver(user_logged_in)

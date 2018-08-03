@@ -1,0 +1,37 @@
+{% load humanize %}
+
+<div class="fc-basic">
+    <div id='vocabholder'>
+        <div id='vfield'>
+
+            <h1>おめでとう～！ You're caught up with your Flashcards!</h1>
+            {% include 'main/review_current.html' %}
+
+            <h3>Preview your upcoming flashcard reviews～</h3>
+            <div class="table-responsive">
+                <table class="vocablist">
+                    <thead>
+                        <tr class="text-align-left">
+                            <th>English・英語</th>
+                            <th>Kana・仮名</th>
+                            <th>Next Review</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for flashcard in object_list %}
+                            <tr>
+                                <td>{{ flashcard.english }}</td>
+                                <td>{{ flashcard.kana }}</td>
+                                <td>{{ flashcard.next_review|naturaltime }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+        </div>  <!-- /#vfield -->
+    </div>  <!-- /#vocabholder -->
+
+    <div class="s-100"></div>
+
+</div>

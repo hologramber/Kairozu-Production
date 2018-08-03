@@ -1,0 +1,23 @@
+{% extends 'kairozu.html' %}
+{% block title %}Kairozu Create Flashcard{% endblock %}
+
+{% load static %}
+{% block content %}
+
+<div id="allwrap">
+    <div class="fc-general-col">
+        <h1>Create New Flashcard</h1>
+
+        <form method="post">{% csrf_token %}
+            <table>
+                {{ form.as_table }}
+            </table>
+            <input class="btn btn-success" type="submit" value="SAVE" />
+        </form>
+
+
+        <a href="{% url 'main:flashcard' %}">Return to Flashcard List</a>
+    </div>
+</div>
+
+{% endblock %}
