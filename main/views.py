@@ -214,6 +214,9 @@ class VocabSuccessView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
 
     def test_func(self, **kwargs):
         if int(self.kwargs['chapter_id']) <= self.request.user.profile.currentvocab:
+            vrecords = VocabRecord.objects.filter(user_id=self.request.user.id, vocab__chapter__id__exact=self.kwargs['chapter_id'], rating__lte=0)
+            if vrecords is None:
+                Profile.graduate_vocab(self.request.user, self.kwargs['chapter_id'])
             return True
 
 
