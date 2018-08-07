@@ -5,7 +5,7 @@ from datetime import datetime
 from django.shortcuts import get_object_or_404
 from django.views.generic import TemplateView, ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.http import HttpResponseRedirect, JsonResponse
+from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
 from django.views.decorators.http import require_http_methods
 from django.urls import reverse, reverse_lazy
 from django.contrib import messages
@@ -188,7 +188,7 @@ def vocabfinish(request, chapter_id):
                 return JsonResponse(loop_data)
             elif int(chapter_id) == request.user.profile.currentvocab:
                 vrecords = VocabRecord.objects.filter(user_id=request.user.id, vocab__chapter__id__exact=chapter_id, rating__lte=0)
-                if vrecords is None:
+                if not vrecords:
                     Profile.graduate_vocab(request.user, chapter_id)
                     return HttpResponseRedirect(reverse('main:vocabsuccess', kwargs={'chapter_id': chapter_id}))
                 else:
@@ -214,9 +214,6 @@ class VocabSuccessView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
 
     def test_func(self, **kwargs):
         if int(self.kwargs['chapter_id']) <= self.request.user.profile.currentvocab:
-            vrecords = VocabRecord.objects.filter(user_id=self.request.user.id, vocab__chapter__id__exact=self.kwargs['chapter_id'], rating__lte=0)
-            if vrecords is None:
-                Profile.graduate_vocab(self.request.user, self.kwargs['chapter_id'])
             return True
 
 
@@ -289,7 +286,7 @@ def expressionfinish(request, chapter_id):
                 return JsonResponse(loop_data)
             elif int(chapter_id) == request.user.profile.currentexpression:
                 erecords = ExpressionRecord.objects.filter(user_id=request.user.id, express__chapter_id__exact=chapter_id, rating__lte=0)
-                if erecords is None:
+                if not erecords:
                     Profile.graduate_expression(request.user, chapter_id)
                     return HttpResponseRedirect(reverse('main:expressionsuccess', kwargs={'chapter_id': chapter_id}))
                 else:
@@ -433,7 +430,7 @@ def sentencefinish(request, lesson_id):
                 return JsonResponse(loop_data)
             elif int(lesson_id) == request.user.profile.currentlesson:
                 srecords = SentenceRecord.objects.filter(user_id=request.user.id, sentence__lesson__id__exact=lesson_id, rating__lte=0)
-                if srecords is None:
+                if not srecords:
                     Profile.graduate_lesson(request.user, lesson_id)
                     return HttpResponseRedirect(reverse('main:sentencesuccess', kwargs={'lesson_id': lesson_id}))
                 else:

@@ -14,7 +14,7 @@ class VocabRecordGrab(LoginRequiredMixin, generics.ListAPIView):
             vrecords = VocabRecord.objects.filter(user_id=self.request.user.id, vocab__chapter__id__exact=chapter_id).order_by('last_attempt')
         elif chapter_id == self.request.user.profile.currentvocab:
             vrecords = VocabRecord.objects.filter(user_id=self.request.user.id, vocab__chapter__id__exact=chapter_id, rating__lte=0).order_by('last_attempt')
-            if vrecords is None:
+            if not vrecords:
                 Profile.graduate_vocab(self.request.user, chapter_id)
                 vrecords = VocabRecord.objects.none()
         else:
@@ -27,7 +27,7 @@ class ReviewVocabRecordGrab(LoginRequiredMixin, generics.ListAPIView):
 
     def get_queryset(self):
         vrecords = VocabRecord.objects.filter(user_id=self.request.user.id, next_review__lte=datetime.now())[:50]
-        if vrecords is None:
+        if not vrecords:
             vrecords = VocabRecord.objects.none()
         return vrecords
 
@@ -41,7 +41,7 @@ class ExpressionRecordGrab(LoginRequiredMixin, generics.ListAPIView):
             erecords = ExpressionRecord.objects.filter(user_id=self.request.user.id, express__chapter__id__exact=chapter_id).order_by('last_attempt')
         elif chapter_id == self.request.user.profile.currentexpression:
             erecords = ExpressionRecord.objects.filter(user_id=self.request.user.id, express__chapter__id__exact=chapter_id, rating__lte=0).order_by('last_attempt')
-            if erecords is None:
+            if not erecords:
                 Profile.graduate_expression(self.request.user, chapter_id)
                 erecords = ExpressionRecord.objects.none()
         else:
@@ -54,7 +54,7 @@ class ReviewExpressionRecordGrab(LoginRequiredMixin, generics.ListAPIView):
 
     def get_queryset(self):
         erecords = ExpressionRecord.objects.filter(user_id=self.request.user.id, next_review__lte=datetime.now())[:50]
-        if erecords is None:
+        if not erecords:
             erecords = ExpressionRecord.objects.none()
         return erecords
 
@@ -80,7 +80,7 @@ class SentenceRecordGrab(LoginRequiredMixin, generics.ListAPIView):
             srecords = SentenceRecord.objects.filter(user_id=self.request.user.id, sentence__lesson__id__exact=lesson_id).order_by('last_attempt')
         elif lesson_id == self.request.user.profile.currentlesson:
             srecords = SentenceRecord.objects.filter(user_id=self.request.user.id, sentence__lesson__id__exact=lesson_id, rating__lte=0).order_by('last_attempt')
-            if srecords is None:
+            if not srecords:
                 Profile.graduate_lesson(self.request.user, lesson_id)
                 srecords = SentenceRecord.objects.none()
         else:
@@ -93,7 +93,7 @@ class ReviewSentenceRecordGrab(LoginRequiredMixin, generics.ListAPIView):
 
     def get_queryset(self):
         srecords = SentenceRecord.objects.filter(user_id=self.request.user.id, next_review__lte=datetime.now())[:50]
-        if srecords is None:
+        if not srecords:
             srecords = SentenceRecord.objects.none()
         return srecords
 
@@ -127,6 +127,6 @@ class ReviewFlashcardGrab(LoginRequiredMixin, generics.ListAPIView):
 
     def get_queryset(self):
         frecords = Flashcard.objects.filter(user_id=self.request.user.id, next_review__lte=datetime.now())[:50]
-        if frecords is None:
+        if not frecords:
             frecords = Flashcard.objects.none()
         return frecords

@@ -142,7 +142,6 @@
                 $.ajax({
                     type: "POST",
                     url: "{% url 'main:expressionfinish' chapter.id %}",
-                    dataType: 'json',
                     data: {qdata: JSON.stringify(qdata)},
                     success: function (data) {
                         if ((data.error) || (data.loop)) {

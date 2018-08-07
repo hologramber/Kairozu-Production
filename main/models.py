@@ -849,7 +849,7 @@ class ExerciseRecord(models.Model):
     @staticmethod
     def check_chapter_exercises(user, chapter_id):
         exerciserecord_check = ExerciseRecord.objects.filter(user_id=user.id, exercise__chapter__id=chapter_id, rating__lt=2).first()
-        if exerciserecord_check is None and user.profile.pendingchapter == chapter_id:
+        if not exerciserecord_check and user.profile.pendingchapter == chapter_id:
             Profile.graduate_pending(user, chapter_id)
             Profile.ok_to_graduate(user)
 
