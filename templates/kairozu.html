@@ -37,7 +37,7 @@
                         {% if user.is_authenticated %}
                             <div><a class="headlink" href="{% url 'main:main' %}">MAIN</a></div>
                             <div id="dropdown1" class="dropdown">
-                                {% if user.profile.vrcount == 0 and user.profile.srcount == 0 and user.profile.ercount == 0 %}
+                                {% if user.profile.vrcount == 0 and user.profile.srcount == 0 and user.profile.ercount == 0 and user.profile.frcount == 0 %}
                                     <div class="dropbtn">REVIEWS <i class="fa fa-caret-down"></i></div>
                                 {% else %}
                                     <div class="dropbtn">REVIEWS <i class="fa red-words fa-caret-down"></i></div>

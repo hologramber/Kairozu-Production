@@ -115,6 +115,9 @@
                         repeat = 0;
                     } else {
                         qdata[q]['rating'] = qdata[q]['rating'] + 1;
+                        if (!qdata[q]['next_review']) {
+                            qdata[q]['next_review'] = addTime(1);
+                        }
                     }
                     q++;
                     qcount++;

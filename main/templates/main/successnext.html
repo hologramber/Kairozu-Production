@@ -29,9 +29,9 @@
         <li><a href="{% url 'main:exercises' currentc.id %}">Exercises</a> for <a href="{% url 'main:interface' currentc.id %}">{{ currentc.title }}</a>. These summarize the grammar you've learned learned thus far; they attempt to mix previously encountered grammar constructs into cohesive paragraphs and interactions.</li>
         <ul>
             {% if exercisec.exercise_type == 'dialogue' %}
-                <li class="bold">Your next exercise is "<a href="{% url 'main:exercisedialogue' chapter.id exercisec.id %}">{{ exercisec.exercise_word }}</a>"&nbsp;--&nbsp;
+                <li class="bold">Your next exercise is "<a href="{% url 'main:dialogue' chapter.id exercisec.id %}">{{ exercisec.exercise_word }}</a>"&nbsp;--&nbsp;
             {% else %}
-                <li class="bold">Your next exercise is "<a href="{% url 'main:exercisepassage' chapter.id exercisec.id %}">{{ exercisec.exercise_word }}</a>"&nbsp;--&nbsp;
+                <li class="bold">Your next exercise is "<a href="{% url 'main:passage' chapter.id exercisec.id %}">{{ exercisec.exercise_word }}</a>"&nbsp;--&nbsp;
             {% endif %}
             {{ exercisec.description }}</li>
         </ul>

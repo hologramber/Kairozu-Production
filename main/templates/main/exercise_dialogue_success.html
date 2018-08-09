@@ -12,9 +12,9 @@
 
         {% if erecord.rating < 2 %}
             {% if user.profile.currentexercise > erecord.exercise.exercise_order %}
-                You've already completed this dialogue, but <a href="{% url 'main:exercisedialogue' chapter.id erecord.exercise.id %}">perhaps you want to give it another try and raise your score</a>?
+                You've already completed this dialogue, but <a href="{% url 'main:dialogue' chapter.id erecord.exercise.id %}">perhaps you want to give it another try and raise your score</a>?
             {% else %}
-                To unlock more content, you need to answer at least 70% of the lines correctly on the first attempt. <a href="{% url 'main:exercisedialogue' chapter.id erecord.exercise.id %}">Give it another try</a>?
+                To unlock more content, you need to answer at least 70% of the lines correctly on the first attempt. <a href="{% url 'main:dialogue' chapter.id erecord.exercise.id %}">Give it another try</a>?
             {% endif %}
         {% endif %}
 

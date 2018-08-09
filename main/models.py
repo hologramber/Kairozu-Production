@@ -199,8 +199,8 @@ class Profile(models.Model):
     @staticmethod
     def attempted_exercise(user, exercise_view):
         """if user has attempted an exercise, but not necessarily completed it successfully"""
-        if user.profile.currentexercise == exercise_view:
-            user.profile.attemptexercise = exercise_view
+        if user.profile.currentexercise == int(exercise_view):
+            user.profile.attemptexercise = int(exercise_view)
         user.profile.save()
 
     @staticmethod
@@ -243,7 +243,7 @@ class Profile(models.Model):
         if int(lesson_id) == lastlesson.id:
             if user.profile.currentstory == currentchapter.id:
                 user.profile.currentstory = currentchapter.id + 1
-        if user.profile.currentlesson == lesson_id:
+        if user.profile.currentlesson == int(lesson_id):
             user.profile.currentlesson = int(lesson_id) + 1
         user.profile.save()
         SentenceRecord.objects.update_sentence_record(profile=user.profile)

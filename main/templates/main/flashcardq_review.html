@@ -4,7 +4,13 @@
 {% load static %}
 {% block content %}
 
-{% include 'main/sentenceq_review_base.html' %}
+<div id="allwrap">
+    <div class="fc-basic">
+        {% include 'main/sentenceq_base_inner.html' %}
+    </div>
+</div>
+
+<div class="s-100"></div>
 
 <!-- wanakana, menu toggle, and get/post mechanics -->
 <script type='text/javascript' src='{% static 'js/wanakana.js' %}'></script>

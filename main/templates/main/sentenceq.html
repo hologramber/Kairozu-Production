@@ -112,7 +112,9 @@
         savestat.html('<a href=\'#\' onclick=\'saveq()\'><i class=\'fa fa-save\' aria-hidden=\'true\'></i></a>');
         if (q < totalq) {
             quiz[0].reset();
-            if (qcount > 9) { saveq(); }
+            if (qcount > 9) {
+                saveq();
+            }
             sentence();
         } else {
             $.ajax({
@@ -120,7 +122,11 @@
                 url: "{% url 'main:sentencefinish' lesson.id %}",
                 data: {qdata: JSON.stringify(qdata)},
                 success: function (data) {
-                    if ((data.error) || (data.loop)) { location.reload(); } else { pagewrap.html(data); }
+                    if ((data.error) || (data.loop)) {
+                        location.reload();
+                    } else {
+                        pagewrap.html(data);
+                    }
                 }
             });
         }
