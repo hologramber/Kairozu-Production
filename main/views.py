@@ -15,6 +15,7 @@ from .forms import ValidateFinishForm, ValidateExerciseFinish, FlashcardForm
 from .serializers import VocabRecordSerializer, ExpressionRecordSerializer, SentenceRecordSerializer, FlashcardSerializer
 
 error_finish = 'There was a problem with saving your current progress. Please e-mail kairozu@kairozu.com if you suspect this is an error.'
+loop_finish = 'You\'ve successfully completed this quiz; it will loop for as long as you\'d like to practice.'
 error_data = {'error': True}
 loop_data = {'loop': True}
 save_data = {'save': True}
@@ -189,6 +190,7 @@ def vocabfinish(request, chapter_id):
         if vrupdate.is_valid():
             vrupdate.save()
             if int(chapter_id) < request.user.profile.currentvocab:
+                messages.add_message(request, messages.SUCCESS, loop_finish)
                 return JsonResponse(loop_data)
             elif int(chapter_id) == request.user.profile.currentvocab:
                 vrecords = VocabRecord.objects.filter(user_id=request.user.id, vocab__chapter__id__exact=chapter_id, rating__lte=0)
@@ -287,6 +289,7 @@ def expressionfinish(request, chapter_id):
         if erupdate.is_valid():
             erupdate.save()
             if int(chapter_id) < request.user.profile.currentexpression:
+                messages.add_message(request, messages.SUCCESS, loop_finish)
                 return JsonResponse(loop_data)
             elif int(chapter_id) == request.user.profile.currentexpression:
                 erecords = ExpressionRecord.objects.filter(user_id=request.user.id, express__chapter_id__exact=chapter_id, rating__lte=0)
@@ -431,6 +434,7 @@ def sentencefinish(request, lesson_id):
         if srupdate.is_valid():
             srupdate.save()
             if int(lesson_id) < request.user.profile.currentlesson:
+                messages.add_message(request, messages.SUCCESS, loop_finish)
                 return JsonResponse(loop_data)
             elif int(lesson_id) == request.user.profile.currentlesson:
                 srecords = SentenceRecord.objects.filter(user_id=request.user.id, sentence__lesson__id__exact=lesson_id, rating__lte=0)

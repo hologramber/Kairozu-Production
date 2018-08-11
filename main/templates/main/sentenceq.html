@@ -117,6 +117,11 @@
             }
             sentence();
         } else {
+            savestat.hide();
+            quiz.hide();
+            literal.html('&#8203;');
+            context.html('&#8203;');
+            english.html('<i class=\'fa fa-refresh fa-4x fa-spin orange-words\' aria-hidden=\'true\'></i>');
             $.ajax({
                 type: "POST",
                 url: "{% url 'main:sentencefinish' lesson.id %}",
