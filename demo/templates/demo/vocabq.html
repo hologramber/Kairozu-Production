@@ -12,7 +12,7 @@
     <div class="fc-basic">
         {% include 'main/vocabq_base.html' %}
     </div>
-    <div class="fc-basic">
+    <div id='extra' class="fc-basic">
         {% include 'demo/demo_hints.html' %}
     </div>
     <div class="s-100"></div>
@@ -73,6 +73,8 @@
                 quiz[0].reset();
                 vocab();
             } else {
+                $('#extra').hide();
+                $('#vocabholder').html('<div class=\'text-align-center vocab-challenge\'><i class=\'fa fa-refresh fa-4x fa-spin orange-words\' aria-hidden=\'true\'></i></div>');
                 $.get("{% url 'demo:demovocabsuccess' %}").done(function (data) {
                     pagewrap.html(data);
                 });
