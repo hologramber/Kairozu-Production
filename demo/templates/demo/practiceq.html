@@ -39,7 +39,7 @@
             </div>  <!-- /#pfield -->
         </div>  <!-- /#practiceholder -->
     </div>
-    <div class="fc-general-col">
+    <div id="extra" class="fc-general-col">
         {% include 'demo/demo_hints.html' %}
     </div>
     <div class="s-100"></div>
@@ -194,6 +194,7 @@
             if (q < totalq) {
                 practice();
             } else {
+                $('#extra').hide();
                 $('#practiceholder').html('<div class=\'text-align-center vocab-challenge\'><i class=\'fa fa-refresh fa-4x fa-spin orange-words\' aria-hidden=\'true\'></i></div>');
                 $.get("{% url 'demo:demopracticesuccess' %}").done(function (data) {
                     pagewrap.html(data);
