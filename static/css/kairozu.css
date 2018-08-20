@@ -222,6 +222,7 @@ ul, ol {
 .fc-flex-70 { flex: 0 1 70%; }
 .order1 { order: 1; }
 .order2 { order: 2; }
+.order3 { order: 3; }
 
 .fc-about {
     display: flex;
@@ -341,17 +342,17 @@ span.footer-sm-text {
 .chartable > tbody tr td { padding: 2px 14px; }
 .blogtable > tbody tr td { padding: 0 5px; }
 
-.interface-fg, .quiz-tips {						/* tips on the interface page */
+.interface-fg {						/* tips on the interface page */
     border-radius: 5px;
-	display: table;
-	padding: 15px; }
+	display: table; }
 #katakana, #finished-quiz, #example, .visible-block, .reference-link { display: table; }
 .interface-fg, .interface-fg li, .interface-fg ul, #katakana, #finished-quiz, .reference-link, #example, .quiz-tips, .quiz-tips li, .quiz-tips ul { font-family: 'Raleway', sans-serif; margin: 0; }
 .quiz-tips, #katakana, #finished-quiz, #example { margin-top: 30px; }
 
+.info-table { display: table; margin: 25px 0 15px 0; }
 .spot-table { display: table; margin: 20px 30px 0 30px; }
 .spot-tablei { display: table; margin: 25px 10px 15px 0; }
-.spot-image { display: table-cell; }
+.spot-image, .info-image { display: table-cell; }
 .spot-text {
 	display: table-cell;
 	vertical-align: middle;
@@ -363,6 +364,11 @@ span.footer-sm-text {
 	vertical-align: middle;
 	font-size: 22px;
 	padding-left: 10px; }
+.info-text {
+    display: table-cell;
+	vertical-align: middle;
+	padding-left: 20px;
+}
 
 #nav-toggle { display: none; }
 #menu-toggle {
@@ -1249,7 +1255,6 @@ span.step {
 		font-size: 35px;
 		padding-bottom: 5px; }
 
-	.interface-fg, .quiz-tips { padding: 10px; }		/* tips on the interface page */
 	.interface-fg, .interface-fg li, .interface-fg ul, .quiz-tips, .quiz-tips li, .quiz-tips ul {
 		margin: 0;
 		font-size: 12px;
@@ -1289,7 +1294,6 @@ span.step {
 		font-size: 20px;
 		padding-bottom: 5px; }
 
-	.interface-fg, .quiz-tips { padding: 10px; }				/* tips on the interface page */
 	.interface-fg, .interface-fg li, .interface-fg ul, .quiz-tips, .quiz-tips li, .quiz-tips ul {
 		margin: 0;
 		font-size: 12px;
