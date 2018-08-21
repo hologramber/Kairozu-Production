@@ -118,7 +118,7 @@
             sentence();
         } else {
             $('#extra').hide();
-            $('#sentenceholder').html('<div class=\'text-align-center vocab-challenge\'><i class=\'fa fa-refresh fa-4x fa-spin orange-words\' aria-hidden=\'true\'></i></div>');
+            $('#sentenceholder').html('<div class=\'text-align-center vocab-challenge\'><i class=\'fa fa-refresh fa-3x fa-spin orange-words\' aria-hidden=\'true\'></i></div>');
             $.ajax({
                 type: "POST",
                 url: "{% url 'main:sentencefinish' lesson.id %}",

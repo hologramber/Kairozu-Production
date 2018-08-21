@@ -65,7 +65,7 @@
                 sentence();
             } else {
                 $('#extra').hide();
-                $('#sentenceholder').html('<div class=\'text-align-center vocab-challenge\'><i class=\'fa fa-refresh fa-4x fa-spin orange-words\' aria-hidden=\'true\'></i></div>');
+                $('#sentenceholder').html('<div class=\'text-align-center vocab-challenge\'><i class=\'fa fa-refresh fa-3x fa-spin orange-words\' aria-hidden=\'true\'></i></div>');
                 $.get("{% url 'main:reviewsentencecurrent' %}").done(function (data) {
                     pagewrap.html(data);
                 });
@@ -81,7 +81,7 @@
             literal.html('&#8203;');
             hint.html('&#8203;');
             context.html('&#8203;');
-            english.html('<div class=\'text-align-center vocab-challenge\'><i class=\'fa fa-refresh fa-4x fa-spin orange-words\' aria-hidden=\'true\'></i></div>');
+            english.html('<div class=\'text-align-center vocab-challenge\'><i class=\'fa fa-refresh fa-3x fa-spin orange-words\' aria-hidden=\'true\'></i></div>');
         }
         $.ajax({
             type: "POST",
