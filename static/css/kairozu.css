@@ -276,6 +276,13 @@ ul, ol {
     transform: skewY(-1.5deg);
     transform-origin: 0 100%; }
 
+.front-smalltext { display: none; }
+.front-smalltext-title {
+    font-size: 25vw;
+    line-height: 1.1em;
+    font-family: serif;
+    font-weight: bold; }
+
 .front-text {
     font-size: x-large;
     font-family: 'Raleway', sans-serif;
@@ -1410,6 +1417,8 @@ span.step {
 
 @media all and (max-width: 550px) {
     .fc-footer-1 { flex-wrap: wrap; }
+    .hide550 { display: none; }
+    .front-smalltext { display: block; }
 }
 
 @media all and (max-width: 400px) {
