@@ -242,6 +242,40 @@ ul, ol {
     line-height: 1.4em;
     color: #8a8a8a; }
 
+.front-bigleft, .front-bigright {
+    background: #2b2b2b;
+    color: #fff;
+    position: relative;
+    z-index: 1;
+    max-width: unset;
+    margin-right: -20px;
+    margin-left: -20px; }
+.front-bigleft:after, .front-bigleft:before, .front-bigright:after, .front-bigright:before {
+    background: inherit;
+    content: '';
+    display: block;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    right: 0;
+    z-index: -1; }
+.front-bigleft:after {
+    bottom: 0;
+    transform: skewY(-1.5deg);
+    transform-origin: 100% 0; }
+.front-bigleft:before {
+    top: 0;
+    transform: skewY(1.5deg);
+    transform-origin: 100% 0; }
+.front-bigright:after {
+    bottom: 0;
+    transform: skewY(1.5deg);
+    transform-origin: 0 100%; }
+.front-bigright:before {
+    top: 0;
+    transform: skewY(-1.5deg);
+    transform-origin: 0 100%; }
+
 .front-text {
     font-size: x-large;
     font-family: 'Raleway', sans-serif;
