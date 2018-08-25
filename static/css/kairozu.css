@@ -211,7 +211,7 @@ ul, ol {
 
 .fishimg {
     height: 200px;
-    min-width: 150px;
+    min-width: 140px;
     margin-left: 0; }
 
 .fc-flex-20 { flex: 0 1 20%; }
@@ -312,6 +312,19 @@ ul, ol {
     color: #2b2b2b;
     box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.2); }
 .shadowfish:hover { background: #f7f7f7; }
+.shadowfish-box {
+    position: relative;
+    min-width: 140px;
+    height: 200px;
+}
+.shadowfish table tr td div img.fishimg {
+    position: absolute;
+    left: 0;
+    -webkit-transition: opacity 200ms ease-in-out;
+    -moz-transition: opacity 200ms ease-in-out;
+    -o-transition: opacity 200ms ease-in-out;
+    transition: opacity 200ms ease-in-out; }
+.shadowfish:hover table tr td div img.fishimg.top { opacity: 0; }
 .shadowfish:hover span.red-words-bold, .shadowfish:hover i.fa { color: #FF9729; }
 .fronticons { padding: 0 10px; }
 
