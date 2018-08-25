@@ -1,0 +1,55 @@
+{% load static %}
+<div class="fc-center fc-flex-40">
+    {% if user.is_authenticated %}
+        <a href="{% url 'main:progress' %}">
+            <div class="shadowfish">
+                <table class="width-100">
+                    <tr><td>
+                            <div class="shadowfish-box">
+                                <img class='fishimg bottom' alt="nikai the koi" src="{% static 'img/fish2-orange.svg' %}" />
+                                <img class='fishimg top' alt="nikai the koi" src="{% static 'img/fish2.svg' %}" />
+                            </div>
+                        </td>
+                        <td class="text-align-right">
+                            <span class="fish-text-lg red-words-bold trans">VIEW ACCOUNT</span>
+                            <div class="s-5"></div>
+                            <span class="fish-text-sm opensans grey-words">Welcome back! View your pending reviews and current progress.</span><br />
+                            <i class="fa fa-3x red-words fa-arrow-circle-right trans"></i>
+                        </td></tr>
+                </table>
+            </div>
+        </a>
+    {% else %}
+        <a href="{% url 'register' %}">
+            <div class="shadowfish">
+                <table class="width-100">
+                    <tr><td>
+                            <div class="shadowfish-box">
+                                <img class='fishimg bottom' alt="nikai the koi" src="{% static 'img/fish2-orange.svg' %}" />
+                                <img class='fishimg top' alt="nikai the koi" src="{% static 'img/fish2.svg' %}" />
+                            </div>
+                        </td>
+                        <td class="text-align-right">
+                            <span class="fish-text-lg red-words-bold trans">JOIN KAIROZU</span>
+                            <div class="s-5"></div>
+                            <span class="fish-text-sm opensans grey-words">Create an account on Kairozu to access the rest of the site. やった！</span><br />
+                            <i class="fa fa-3x red-words fa-arrow-circle-right trans"></i>
+                        </td></tr>
+                </table>
+            </div>
+        </a>
+        <div class="s-10"></div>
+        <a href="{% url 'login' %}">
+            <div class="shadowfish text-align-right">
+                <table class="width-100">
+                    <tr>
+                        <td class="upper fs1-5 lh1-0">ALREADY HAVE AN ACCOUNT?</td><td rowspan="2"></td>
+                    </tr>
+                    <tr>
+                        <td><span class="red-words-bold fs1-5 lh1-0 trans">LOG IN</span></td>
+                    </tr>
+                </table>
+            </div>
+        </a>
+    {% endif %}
+</div>
