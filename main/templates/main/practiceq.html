@@ -47,36 +47,69 @@
         literal_b.html('<div class="white-words litcontextbox upper">literal</div>' + qdata[q]['ptwo_literal'] + '&#8203;');
         context.html(qdata[q]['pone_context'] + '&#8203;');
         context_b.html(qdata[q]['ptwo_context'] + '&#8203;');
-        switch(pcode) {
-            case 'BC':
-                hint.html(qdata[q]['pone_kana_all'] + '&#8203;');
-                hint_b.html(qdata[q]['ptwo_kana_all'] + '&#8203;');
-                break;
-            case 'OC':
-                if (level === 1) {
-                    hint.html(qdata[q]['pone_kana_f'] + '&#8203;');
-                    hint_b.html(qdata[q]['ptwo_kana_alt'] + '&#8203;');
-                } else {
-                    hint.html(qdata[q]['pone_kana_f'] + '&#8203;');
-                    hint_b.html(qdata[q]['ptwo_kana_f'] + '&#8203;');
-                } break;
-            case 'TC':
-                if (level === 1) {
-                    hint.html(qdata[q]['pone_kana_alt'] + '&#8203;');
-                    hint_b.html(qdata[q]['ptwo_kana_f'] + '&#8203;');
-                } else {
-                    hint.html(qdata[q]['pone_kana_f'] + '&#8203;');
-                    hint_b.html(qdata[q]['ptwo_kana_f'] + '&#8203;');
-                } break;
-            default:
-                if (level === 1) {
-                    hint.html(qdata[q]['pone_kana_alt'] + '&#8203;');
-                    hint_b.html(qdata[q]['ptwo_kana_alt'] + '&#8203;');
-                } else {
-                    hint.html(qdata[q]['pone_kana_f'] + '&#8203;');
-                    hint_b.html(qdata[q]['ptwo_kana_f'] + '&#8203;');
-                } break;
-        }
+        {% if user.profile.preferkanji %}
+            switch(pcode) {
+                case 'BC':
+                    hint.html(qdata[q]['pone_kanji_all'] + '&#8203;');
+                    hint_b.html(qdata[q]['ptwo_kanji_all'] + '&#8203;');
+                    break;
+                case 'OC':
+                    if (level === 1) {
+                        hint.html(qdata[q]['pone_kanji_f'] + '&#8203;');
+                        hint_b.html(qdata[q]['ptwo_kanji_alt'] + '&#8203;');
+                    } else {
+                        hint.html(qdata[q]['pone_kanji_f'] + '&#8203;');
+                        hint_b.html(qdata[q]['ptwo_kanji_f'] + '&#8203;');
+                    } break;
+                case 'TC':
+                    if (level === 1) {
+                        hint.html(qdata[q]['pone_kanji_alt'] + '&#8203;');
+                        hint_b.html(qdata[q]['ptwo_kanji_f'] + '&#8203;');
+                    } else {
+                        hint.html(qdata[q]['pone_kanji_f'] + '&#8203;');
+                        hint_b.html(qdata[q]['ptwo_kanji_f'] + '&#8203;');
+                    } break;
+                default:
+                    if (level === 1) {
+                        hint.html(qdata[q]['pone_kanji_alt'] + '&#8203;');
+                        hint_b.html(qdata[q]['ptwo_kanji_alt'] + '&#8203;');
+                    } else {
+                        hint.html(qdata[q]['pone_kanji_f'] + '&#8203;');
+                        hint_b.html(qdata[q]['ptwo_kanji_f'] + '&#8203;');
+                    } break;
+            }
+        {% else %}
+            switch(pcode) {
+                case 'BC':
+                    hint.html(qdata[q]['pone_kana_all'] + '&#8203;');
+                    hint_b.html(qdata[q]['ptwo_kana_all'] + '&#8203;');
+                    break;
+                case 'OC':
+                    if (level === 1) {
+                        hint.html(qdata[q]['pone_kana_f'] + '&#8203;');
+                        hint_b.html(qdata[q]['ptwo_kana_alt'] + '&#8203;');
+                    } else {
+                        hint.html(qdata[q]['pone_kana_f'] + '&#8203;');
+                        hint_b.html(qdata[q]['ptwo_kana_f'] + '&#8203;');
+                    } break;
+                case 'TC':
+                    if (level === 1) {
+                        hint.html(qdata[q]['pone_kana_alt'] + '&#8203;');
+                        hint_b.html(qdata[q]['ptwo_kana_f'] + '&#8203;');
+                    } else {
+                        hint.html(qdata[q]['pone_kana_f'] + '&#8203;');
+                        hint_b.html(qdata[q]['ptwo_kana_f'] + '&#8203;');
+                    } break;
+                default:
+                    if (level === 1) {
+                        hint.html(qdata[q]['pone_kana_alt'] + '&#8203;');
+                        hint_b.html(qdata[q]['ptwo_kana_alt'] + '&#8203;');
+                    } else {
+                        hint.html(qdata[q]['pone_kana_f'] + '&#8203;');
+                        hint_b.html(qdata[q]['ptwo_kana_f'] + '&#8203;');
+                    } break;
+            }
+        {% endif %}
     }
 
     function processPractice(status) {
@@ -186,9 +219,14 @@
         event.preventDefault();
         if ((attempt.val() !== '') && (attempt_b.val() !== '')) {
             var clean = cleanInput(attempt.val()),
-                clean_b = cleanInput(attempt_b.val()),
-                actual = qdata[q]['pone_kana_clean'],
+                clean_b = cleanInput(attempt_b.val());
+            {% if user.profile.preferkanji %}
+                var actual = qdata[q]['pone_kanji_clean'],
+                actual_b = qdata[q]['ptwo_kanji_clean'];
+            {% else %}
+                var actual = qdata[q]['pone_kana_clean'],
                 actual_b = qdata[q]['ptwo_kana_clean'];
+            {% endif %}
             if ('{{ user.profile.strictmode }}' === 'True' || (qdata[q]['strict'])) {
                 if ((clean === actual) && (clean_b === actual_b)) {
                     processPractice(1);

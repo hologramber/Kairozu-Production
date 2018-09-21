@@ -105,32 +105,58 @@
         literal.html('<div class="white-words litcontextbox upper">literal</div>' + qdata[q]['responses'][rindex]['response_literal'] + '&#8203;');
         context.html(qdata[q]['responses'][rindex]['response_context'] + '&#8203;');
 
-        switch (level) {
-            case 3:
-                if (qdata[q]['responses'][rindex]['response_disamb_location'] != 0) {
+        {% if user.profile.preferkanji %}
+            switch (level) {
+                case 3:
+                    if (qdata[q]['responses'][rindex]['response_disamb_location'] != 0) {
+                        hint.html(qdata[q]['responses'][rindex]['response_kanji_all_blank']);
+                        hint.addClass('ls5y');
+                    } else {
+                        hint.html('&#8203;');
+                    } break;
+                case 2:
+                    hint.html(qdata[q]['responses'][rindex]['response_kanji_all_blank']);
+                    hint.removeClass('ls5y');
+                    break;
+                case 1:
+                    hint.html(qdata[q]['responses'][rindex]['response_kanji_alt_blank']); break;
+                case 0:
+                    hint.html(qdata[q]['responses'][rindex]['response_kanji_f']); break;
+                default:
+                    hint.html('&#8203;'); break;
+            }
+        {% else %}
+            switch (level) {
+                case 3:
+                    if (qdata[q]['responses'][rindex]['response_disamb_location'] != 0) {
+                        hint.html(qdata[q]['responses'][rindex]['response_kana_all_blank']);
+                        hint.addClass('ls5y');
+                    } else {
+                        hint.html('&#8203;');
+                    } break;
+                case 2:
                     hint.html(qdata[q]['responses'][rindex]['response_kana_all_blank']);
-                    hint.addClass('ls5y');
-                } else {
-                    hint.html('&#8203;');
-                } break;
-            case 2:
-                hint.html(qdata[q]['responses'][rindex]['response_kana_all_blank']);
-                hint.removeClass('ls5y');
-                break;
-            case 1:
-                hint.html(qdata[q]['responses'][rindex]['response_kana_alt_blank']); break;
-            case 0:
-                hint.html(qdata[q]['responses'][rindex]['response_kana_f']); break;
-            default:
-                hint.html('&#8203;'); break;
-        }
+                    hint.removeClass('ls5y');
+                    break;
+                case 1:
+                    hint.html(qdata[q]['responses'][rindex]['response_kana_alt_blank']); break;
+                case 0:
+                    hint.html(qdata[q]['responses'][rindex]['response_kana_f']); break;
+                default:
+                    hint.html('&#8203;'); break;
+            }
+        {% endif %}
     }
 
     quiz.submit(function(event) {
         event.preventDefault();
         if (attempt.val() !== '') {
-            var clean = cleanInput(attempt.val()),
-                actual = qdata[q]['responses'][rindex]['response_kana_clean'];
+            var clean = cleanInput(attempt.val());
+            {% if user.profile.preferkanji %}
+                var actual = qdata[q]['responses'][rindex]['response_kanji_clean'];
+            {% else %}
+                var actual = qdata[q]['responses'][rindex]['response_kana_clean'];
+            {% endif %}
             if (clean === actual) {
                 bug.hide();
                 quiz.removeClass("abox_red");
@@ -142,7 +168,11 @@
                     intotal++;
                     next_step = 1;
                     wrongnew = 0;
-                    current_dialogue = qdata[q]['responses'][rindex]['response_kana_f'];
+                    {% if user.profile.preferkanji %}
+                        current_dialogue = qdata[q]['responses'][rindex]['response_kanji_f'];
+                    {% else %}
+                        current_dialogue = qdata[q]['responses'][rindex]['response_kana_f'];
+                    {% endif %}
                     $(current_response).html(current_dialogue);
                     if (rindex === rlength) {
                         q++;

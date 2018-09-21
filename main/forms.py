@@ -14,10 +14,11 @@ class SignUpForm(UserCreationForm):
 
 class ChangeStrictModeForm(forms.ModelForm):
     strictmode = forms.BooleanField(label='Strict Mode', help_text='<ul><li>Force exact matching on word order when evaluating practice and quiz sentences.</li></ul>', required=False)
+    preferkanji = forms.BooleanField(label='Prefer Kanji', help_text='<ul><li>Display hints in kanji and accept kanji input when appropriate.</li></ul>', required=False)
 
     class Meta:
         model = Profile
-        fields = ('strictmode',)
+        fields = ('strictmode', 'preferkanji')
 
 
 class ValidateFinishForm(forms.Form):

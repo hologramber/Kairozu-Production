@@ -698,10 +698,6 @@ class Practice(models.Model):
         if '(' in self.ptwo_english:
             self.ptwo_context = create_context(self.ptwo_english)
 
-        if self.force_strict == 1:
-            self.strict = True
-        else:
-            self.strict = False
         self.pone_kana = hw_punctuation(self.pone_kana)
         self.ptwo_kana = hw_punctuation(self.ptwo_kana)
         self.pone_kanji = hw_punctuation(self.pone_kanji)
@@ -995,6 +991,7 @@ class Flashcard(models.Model):
     """adding user personalized study content"""
     user = models.ForeignKey(User, on_delete=models.CASCADE, blank=False, null=False)
     strict = models.BooleanField(default=False)
+    active = models.BooleanField(default=True)
     english = models.CharField(max_length=250, blank=False)
     kana = models.CharField(max_length=250, blank=False)
     kanji = models.CharField(max_length=250, blank=True)

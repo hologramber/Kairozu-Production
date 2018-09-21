@@ -43,23 +43,43 @@
         literal.html('<div class="white-words litcontextbox upper">literal</div>' + qdata[q]['literal'] + '&#8203;');
         english.html(qdata[q]['english']);
         reflink.attr("href", '/main/lesson/' + qdata[q]['lesson'] + '/');
-        switch(level) {
-            case 3:
-                if (qdata[q]['disamb_location'] != 0) {
+        {% if user.profile.preferkanji %}
+            switch(level) {
+                case 3:
+                    if (qdata[q]['disamb_location'] != 0) {
+                        hint.html(qdata[q]['kanji_all_blank']);
+                        hint.addClass('ls5y');
+                    } else {
+                        hint.html('&#8203;');
+                    } break;
+                case 2:
+                    hint.html(qdata[q]['kanji_all_blank']);
+                    hint.removeClass('ls5y');
+                    break;
+                case 1:
+                    hint.html(qdata[q]['kanji_alt_blank']); break;
+                default:
+                    hint.html(qdata[q]['f_kanji']); break;
+            }
+        {% else %}
+            switch(level) {
+                case 3:
+                    if (qdata[q]['disamb_location'] != 0) {
+                        hint.html(qdata[q]['kana_all_blank']);
+                        hint.addClass('ls5y');
+                    } else {
+                        hint.html('&#8203;');
+                    } break;
+                case 2:
                     hint.html(qdata[q]['kana_all_blank']);
-                    hint.addClass('ls5y');
-                } else {
-                    hint.html('&#8203;');
-                } break;
-            case 2:
-                hint.html(qdata[q]['kana_all_blank']);
-                hint.removeClass('ls5y');
-                break;
-            case 1:
-                hint.html(qdata[q]['kana_alt_blank']); break;
-            default:
-                hint.html(qdata[q]['f_kana']); break;
-        }
+                    hint.removeClass('ls5y');
+                    break;
+                case 1:
+                    hint.html(qdata[q]['kana_alt_blank']); break;
+                default:
+                    hint.html(qdata[q]['f_kana']); break;
+            }
+        {% endif %}
     }
 
     function getq() {
@@ -149,8 +169,12 @@
     quiz.submit(function(event) {
         event.preventDefault();
         if (attempt.val() !== '') {
-            var clean = cleanInput(attempt.val()),
-                actual = qdata[q]['kana_clean'];
+            var clean = cleanInput(attempt.val());
+            {% if user.profile.preferkanji %}
+                var actual = qdata[q]['kanji_clean'];
+            {% else %}
+                var actual = qdata[q]['kana_clean'];
+            {% endif %}
             if ('{{ user.profile.strictmode }}' === 'True' || (qdata[q]['strict'])) {
                 if (clean === actual) {
                     processQuiz(1);

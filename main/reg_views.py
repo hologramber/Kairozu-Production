@@ -62,7 +62,7 @@ def account(request):
     currentchapter = get_object_or_404(Chapter, pk=request.user.profile.currentchapter)
     currentlesson = get_object_or_404(Lesson, pk=request.user.profile.currentlesson)
     form = PasswordChangeForm(request.user)
-    strictdata = {'strictmode': request.user.profile.strictmode}
+    strictdata = {'strictmode': request.user.profile.strictmode, 'preferkanji': request.user.profile.preferkanji}
     strictform = ChangeStrictModeForm(strictdata)
     if 'passchange' in request.POST:
         form = PasswordChangeForm(request.user, request.POST)

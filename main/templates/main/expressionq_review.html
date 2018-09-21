@@ -59,14 +59,25 @@
         english.html(qdata[q]['express']['english']);
         literal.html('<div class="white-words litcontextbox upper">literal</div>' + qdata[q]['express']['literal'] + '&#8203;');
         reflink.attr("href", '/main/chapter/' + qdata[q]['express']['chapter'] + '/expressionlist/');
-        switch(level) {
-            case 2:
-                hint.html(qdata[q]['express']['kana_all_blank']); break;
-            case 1:
-                hint.html(qdata[q]['express']['kana_alt_blank']); break;
-            default:
-                hint.html(qdata[q]['express']['f_kana']); break;
-        }
+        {% if user.profile.preferkanji %}
+            switch(level) {
+                case 2:
+                    hint.html(qdata[q]['express']['kanji_all_blank']); break;
+                case 1:
+                    hint.html(qdata[q]['express']['kanji_alt_blank']); break;
+                default:
+                    hint.html(qdata[q]['express']['f_kanji']); break;
+            }
+        {% else %}
+            switch(level) {
+                case 2:
+                    hint.html(qdata[q]['express']['kana_all_blank']); break;
+                case 1:
+                    hint.html(qdata[q]['express']['kana_alt_blank']); break;
+                default:
+                    hint.html(qdata[q]['express']['f_kana']); break;
+            }
+        {% endif %}
         if (qdata[q]['express']['katakana']) { katakana.show(); } else { katakana.hide(); }
         if (qdata[q]['express']['example']) {
             example.show();
@@ -128,7 +139,12 @@
         event.preventDefault();
         if (attempt.val() !== '') {
             var clean = cleanInput(attempt.val());
-            if (clean === qdata[q]['express']['kana_clean']) {
+            {% if user.profile.preferkanji %}
+                var actual = qdata[q]['express']['kanji_clean'];
+            {% else %}
+                var actual = qdata[q]['express']['kana_clean'];
+            {% endif %}
+            if (clean === actual) {
                 bug.hide();
                 hint.attr('class', 'ls5');
                 quiz.removeClass("abox_red");
