@@ -129,6 +129,7 @@ class Profile(models.Model):
     currentvocab = models.PositiveSmallIntegerField(default=1)
     currentstory = models.PositiveSmallIntegerField(default=1)
     strictmode = models.BooleanField(default=False)
+    preferkanji = models.BooleanField(default=False)
     vrcount = models.PositiveIntegerField(default=0)
     srcount = models.PositiveIntegerField(default=0)
     ercount = models.PositiveIntegerField(default=0)
@@ -289,8 +290,11 @@ class Expression(models.Model):
     kana = models.CharField(max_length=250, blank=False)
     kanji = models.CharField(max_length=250, unique=True, blank=False)
     kana_clean = models.CharField(max_length=250, blank=True)
+    kanji_clean = models.CharField(max_length=250, blank=True)
     kana_all_blank = models.CharField(max_length=250, blank=True)
+    kanji_all_blank = models.CharField(max_length=250, blank=True)
     kana_alt_blank = models.CharField(max_length=250, blank=True)
+    kanji_alt_blank = models.CharField(max_length=250, blank=True)
     f_kana = models.CharField(max_length=250, blank=True)
     f_kanji = models.CharField(max_length=250, blank=True)
 
@@ -298,10 +302,13 @@ class Expression(models.Model):
         self.kana = hw_punctuation(self.kana)
         self.kanji = hw_punctuation(self.kanji)
         self.kana_all_blank, self.kana_alt_blank, self.kana_clean = create_blanks(self.kana, 0, False)
+        self.kanji_all_blank, self.kanji_alt_blank, self.kanji_clean = create_blanks(self.kanji, 0, False)
         self.f_kana = create_splits(self.kana)
         self.f_kanji = create_splits(self.kanji)
         self.kana_all_blank = create_splits(self.kana_all_blank)
+        self.kanji_all_blank = create_splits(self.kanji_all_blank)
         self.kana_alt_blank = create_splits(self.kana_alt_blank)
+        self.kanji_alt_blank = create_splits(self.kanji_alt_blank)
         super(Expression, self).save(*args, **kwargs)
 
 
@@ -346,8 +353,11 @@ class Vocabulary(models.Model):
     kana = models.CharField(max_length=250, blank=False)
     kanji = models.CharField(max_length=250, unique=True, blank=False)
     kana_clean = models.CharField(max_length=250, blank=True)
+    kanji_clean = models.CharField(max_length=250, blank=True)
     kana_all_blank = models.CharField(max_length=250, blank=True)
+    kanji_all_blank = models.CharField(max_length=250, blank=True)
     kana_alt_blank = models.CharField(max_length=250, blank=True)
+    kanji_alt_blank = models.CharField(max_length=250, blank=True)
     f_kana = models.CharField(max_length=250, blank=True)
     f_kanji = models.CharField(max_length=250, blank=True)
 
@@ -408,6 +418,7 @@ class Vocabulary(models.Model):
         self.kana = hw_punctuation(self.kana)
         self.kanji = hw_punctuation(self.kanji)
         self.kana_all_blank = all_blanks(self.kana)
+        self.kanji_all_blank = all_blanks(self.kanji)
         alt_blank = ''
         count = 0
         for k in self.kana:
@@ -416,12 +427,24 @@ class Vocabulary(models.Model):
             else:
                 alt_blank += '＿'
             count += 1
+        alt_blank_kanji = ''
+        count_kanji = 0
+        for j in self.kanji:
+            if count_kanji % 2 == 0:
+                alt_blank_kanji += j
+            else:
+                alt_blank_kanji += '＿'
+            count_kanji += 1
         self.kana_alt_blank = alt_blank
+        self.kanji_alt_blank = alt_blank_kanji
         self.kana_clean = clean_sentence(self.kana)
+        self.kanji_clean = clean_sentence(self.kanji)
         self.f_kana = create_splits(self.kana)
         self.f_kanji = create_splits(self.kanji)
         self.kana_alt_blank = create_splits(self.kana_alt_blank)
+        self.kanji_alt_blank = create_splits(self.kanji_alt_blank)
         self.kana_all_blank = create_splits(self.kana_all_blank)
+        self.kanji_all_blank = create_splits(self.kanji_all_blank)
         super(Vocabulary, self).save(*args, **kwargs)
 
     class Meta:
@@ -654,10 +677,16 @@ class Practice(models.Model):
     vieworder = models.PositiveSmallIntegerField(default=1)
     pone_kana_clean = models.CharField(max_length=250, blank=True)
     ptwo_kana_clean = models.CharField(max_length=250, blank=True)
+    pone_kanji_clean = models.CharField(max_length=250, blank=True)
+    ptwo_kanji_clean = models.CharField(max_length=250, blank=True)
     pone_kana_all = models.CharField(max_length=250, blank=True)
     ptwo_kana_all = models.CharField(max_length=250, blank=True)
+    pone_kanji_all = models.CharField(max_length=250, blank=True)
+    ptwo_kanji_all = models.CharField(max_length=250, blank=True)
     pone_kana_alt = models.CharField(max_length=250, blank=True)
     ptwo_kana_alt = models.CharField(max_length=250, blank=True)
+    pone_kanji_alt = models.CharField(max_length=250, blank=True)
+    ptwo_kanji_alt = models.CharField(max_length=250, blank=True)
     pone_kana_f = models.CharField(max_length=250, blank=True)
     ptwo_kana_f = models.CharField(max_length=250, blank=True)
     pone_kanji_f = models.CharField(max_length=250, blank=True)
@@ -679,14 +708,20 @@ class Practice(models.Model):
         self.ptwo_kanji = hw_punctuation(self.ptwo_kanji)
         self.pone_kana_all, self.pone_kana_alt, self.pone_kana_clean = create_blanks(self.pone_kana, self.pone_disamb_location, True)
         self.ptwo_kana_all, self.ptwo_kana_alt, self.ptwo_kana_clean = create_blanks(self.ptwo_kana, self.ptwo_disamb_location, False)
+        self.pone_kanji_all, self.pone_kanji_alt, self.pone_kanji_clean = create_blanks(self.pone_kanji, self.pone_disamb_location, True)
+        self.ptwo_kanji_all, self.ptwo_kanji_alt, self.ptwo_kanji_clean = create_blanks(self.ptwo_kanji, self.ptwo_disamb_location, False)
         self.pone_kana_f = create_splits(self.pone_kana)
         self.ptwo_kana_f = create_splits(self.ptwo_kana)
         self.pone_kanji_f = create_splits(self.pone_kanji)
         self.ptwo_kanji_f = create_splits(self.ptwo_kanji)
         self.pone_kana_all = create_splits(self.pone_kana_all)
         self.pone_kana_alt = create_splits(self.pone_kana_alt)
+        self.pone_kanji_all = create_splits(self.pone_kanji_all)
+        self.pone_kanji_alt = create_splits(self.pone_kanji_alt)
         self.ptwo_kana_all = create_splits(self.ptwo_kana_all)
         self.ptwo_kana_alt = create_splits(self.ptwo_kana_alt)
+        self.ptwo_kanji_all = create_splits(self.ptwo_kanji_all)
+        self.ptwo_kanji_alt = create_splits(self.ptwo_kanji_alt)
         super(Practice, self).save(*args, **kwargs)
 
     class Meta:
@@ -750,6 +785,9 @@ class ExerciseSentence(ExercisePiece):
     kana_all_blank = models.CharField(max_length=250, blank=True)
     kana_alt_blank = models.CharField(max_length=250, blank=True)
     kana_clean = models.CharField(max_length=250, blank=True)
+    kanji_all_blank = models.CharField(max_length=250, blank=True)
+    kanji_alt_blank = models.CharField(max_length=250, blank=True)
+    kanji_clean = models.CharField(max_length=250, blank=True)
     f_kana = models.CharField(max_length=250, blank=True)
     f_kanji = models.CharField(max_length=250, blank=True)
 
@@ -760,10 +798,13 @@ class ExerciseSentence(ExercisePiece):
         self.kana = hw_punctuation(self.kana)
         self.kanji = hw_punctuation(self.kanji)
         self.kana_all_blank, self.kana_alt_blank, self.kana_clean = create_blanks(self.kana, self.disamb_location, False)
+        self.kanji_all_blank, self.kanji_alt_blank, self.kanji_clean = create_blanks(self.kanji, self.disamb_location, False)
         self.f_kana = create_splits(self.kana)
         self.f_kanji = create_splits(self.kanji)
         self.kana_alt_blank = create_splits(self.kana_alt_blank)
         self.kana_all_blank = create_splits(self.kana_all_blank)
+        self.kanji_alt_blank = create_splits(self.kanji_alt_blank)
+        self.kanji_all_blank = create_splits(self.kanji_all_blank)
         super(ExerciseSentence, self).save(*args, **kwargs)
 
     class Meta:
@@ -797,6 +838,9 @@ class ExerciseResponse(models.Model):
     response_kana_all_blank = models.CharField(max_length=250, blank=True)
     response_kana_alt_blank = models.CharField(max_length=250, blank=True)
     response_kana_clean = models.CharField(max_length=250, blank=True)
+    response_kanji_all_blank = models.CharField(max_length=250, blank=True)
+    response_kanji_alt_blank = models.CharField(max_length=250, blank=True)
+    response_kanji_clean = models.CharField(max_length=250, blank=True)
     response_kana_f = models.CharField(max_length=250, blank=True)
     response_kanji_f = models.CharField(max_length=250, blank=True)
 
@@ -810,10 +854,13 @@ class ExerciseResponse(models.Model):
         self.response_kana = hw_punctuation(self.response_kana)
         self.response_kanji = hw_punctuation(self.response_kanji)
         self.response_kana_all_blank, self.response_kana_alt_blank, self.response_kana_clean = create_blanks(self.response_kana, self.response_disamb_location, False)
+        self.response_kanji_all_blank, self.response_kanji_alt_blank, self.response_kanji_clean = create_blanks(self.response_kanji, self.response_disamb_location, False)
         self.response_kana_f = create_splits(self.response_kana)
         self.response_kanji_f = create_splits(self.response_kanji)
         self.response_kana_alt_blank = create_splits(self.response_kana_alt_blank)
         self.response_kana_all_blank = create_splits(self.response_kana_all_blank)
+        self.response_kanji_alt_blank = create_splits(self.response_kanji_alt_blank)
+        self.response_kanji_all_blank = create_splits(self.response_kanji_all_blank)
         super(ExerciseResponse, self).save(*args, **kwargs)
 
 
@@ -882,8 +929,11 @@ class Sentence(models.Model):
     context = models.CharField(max_length=250, blank=True)
     disamb_location = models.PositiveSmallIntegerField(default=0)
     kana_all_blank = models.CharField(max_length=250, blank=True)
+    kanji_all_blank = models.CharField(max_length=250, blank=True)
     kana_alt_blank = models.CharField(max_length=250, blank=True)
+    kanji_alt_blank = models.CharField(max_length=250, blank=True)
     kana_clean = models.CharField(max_length=250, blank=True)
+    kanji_clean = models.CharField(max_length=250, blank=True)
     f_kana = models.CharField(max_length=250, blank=True)
     f_kanji = models.CharField(max_length=250, blank=True)
 
@@ -894,10 +944,13 @@ class Sentence(models.Model):
         self.kana = hw_punctuation(self.kana)
         self.kanji = hw_punctuation(self.kanji)
         self.kana_all_blank, self.kana_alt_blank, self.kana_clean = create_blanks(self.kana, self.disamb_location, False)
+        self.kanji_all_blank, self.kanji_alt_blank, self.kanji_clean = create_blanks(self.kanji, self.disamb_location, False)
         self.f_kana = create_splits(self.kana)
         self.f_kanji = create_splits(self.kanji)
         self.kana_all_blank = create_splits(self.kana_all_blank)
+        self.kanji_all_blank = create_splits(self.kanji_all_blank)
         self.kana_alt_blank = create_splits(self.kana_alt_blank)
+        self.kanji_alt_blank = create_splits(self.kanji_alt_blank)
         super(Sentence, self).save(*args, **kwargs)
 
     class Meta:
@@ -951,6 +1004,9 @@ class Flashcard(models.Model):
     kana_all_blank = models.CharField(max_length=250, blank=True)
     kana_alt_blank = models.CharField(max_length=250, blank=True)
     kana_clean = models.CharField(max_length=250, blank=True)
+    kanji_all_blank = models.CharField(max_length=250, blank=True)
+    kanji_alt_blank = models.CharField(max_length=250, blank=True)
+    kanji_clean = models.CharField(max_length=250, blank=True)
     f_kana = models.CharField(max_length=250, blank=True)
     f_kanji = models.CharField(max_length=250, blank=True)
     last_attempt = models.DateTimeField(default=timezone.now)
@@ -961,10 +1017,13 @@ class Flashcard(models.Model):
         self.kana = hw_punctuation(self.kana)
         self.kanji = hw_punctuation(self.kanji)
         self.kana_all_blank, self.kana_alt_blank, self.kana_clean = create_blanks(self.kana, 0, False)
+        self.kanji_all_blank, self.kanji_alt_blank, self.kanji_clean = create_blanks(self.kanji, 0, False)
         self.f_kana = create_splits(self.kana)
         self.f_kanji = create_splits(self.kanji)
         self.kana_all_blank = create_splits(self.kana_all_blank)
         self.kana_alt_blank = create_splits(self.kana_alt_blank)
+        self.kanji_all_blank = create_splits(self.kanji_all_blank)
+        self.kanji_alt_blank = create_splits(self.kanji_alt_blank)
         super(Flashcard, self).save(*args, **kwargs)
 
     class Meta:

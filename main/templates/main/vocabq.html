@@ -78,11 +78,26 @@
             case 3:
                 hint.html('&#8203;'); break;
             case 2:
-                hint.html(qdata[q]['vocab']['kana_all_blank']); break;
+                {% if user.profile.preferkanji %}
+                    hint.html(qdata[q]['vocab']['kanji_all_blank']);
+                {% else %}
+                    hint.html(qdata[q]['vocab']['kana_all_blank']);
+                {% endif %}
+                break;
             case 1:
-                hint.html(qdata[q]['vocab']['kana_alt_blank']); break;
+                {% if user.profile.preferkanji %}
+                    hint.html(qdata[q]['vocab']['kanji_alt_blank']);
+                {% else %}
+                    hint.html(qdata[q]['vocab']['kana_alt_blank']);
+                {% endif %}
+                break;
             default:
-                hint.html(qdata[q]['vocab']['f_kana']); break;
+                {% if user.profile.preferkanji %}
+                    hint.html(qdata[q]['vocab']['f_kanji']);
+                {% else %}
+                    hint.html(qdata[q]['vocab']['f_kana']);
+                {% endif %}
+                break;
         }
         if (qdata[q]['vocab']['katakana']) { katakana.show(); } else { katakana.hide(); }
     }
@@ -91,7 +106,7 @@
         event.preventDefault();
         if (attempt.val() !== '') {
             var clean = cleanInput(attempt.val());
-            if (clean === qdata[q]['vocab']['kana_clean']) {
+            if (clean === qdata[q]['vocab']['kana_clean'] || clean === qdata[q]['vocab']['kanji_clean']) {
                 bug.hide();
                 quiz.removeClass("abox_red");
                 quiz.addClass("abox_g").one(
