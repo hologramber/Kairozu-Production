@@ -15,7 +15,7 @@
             {% else %}
                 <p>{{ post.text|safe|truncatewords_html:100 }}</p>
             {% endif %}
-            <p><a class="read-more" href="{{ post.get_absolute_url }}">View Full Post &raquo;</a></p>
+            <p><a class="read-more" href="{{ post.get_absolute_url }}">View Full Post <i class="fa fa-arrow-right" aria-hidden="true"></i></a></p>
             <div class="s-5"></div>
         {% endfor %}
     </div>
