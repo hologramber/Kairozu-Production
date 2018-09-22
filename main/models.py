@@ -14,7 +14,7 @@ from pygments.formatters import KairozuFormatter
 
 def create_context(sentence):
     whowhat = sentence[sentence.find("(") + 1:sentence.find(")")].lower()
-    if whowhat == 'it' and 'half past' or 'clock' or 'PM' or 'AM' or ':' in sentence:
+    if whowhat == 'it' and (('half past' in sentence) or ('clock' in sentence) or ('PM' in sentence) or ('AM' in sentence) or (':' in sentence)):
         context = "Listener understands you're referring to the time."
     elif whowhat == 'it':
         context = "Listener can infer what 'it' is from the context of the conversation."
