@@ -113,12 +113,7 @@
         event.preventDefault();
         if (attempt.val() !== '') {
             var clean = cleanInput(attempt.val());
-            {% if user.profile.preferkanji %}
-                var actual = qdata[q]['express']['kanji_clean'];
-            {% else %}
-                var actual = qdata[q]['express']['kana_clean'];
-            {% endif %}
-            if (clean === actual) {
+            if (clean === qdata[q]['express']['kana_clean'] || clean === qdata[q]['express']['kanji_clean']) {
                 bug.hide();
                 hint.attr('class', 'ls5');
                 quiz.removeClass("abox_red");

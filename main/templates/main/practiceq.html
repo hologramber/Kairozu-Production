@@ -219,20 +219,17 @@
         event.preventDefault();
         if ((attempt.val() !== '') && (attempt_b.val() !== '')) {
             var clean = cleanInput(attempt.val()),
-                clean_b = cleanInput(attempt_b.val());
-            {% if user.profile.preferkanji %}
-                var actual = qdata[q]['pone_kanji_clean'],
-                actual_b = qdata[q]['ptwo_kanji_clean'];
-            {% else %}
-                var actual = qdata[q]['pone_kana_clean'],
+                clean_b = cleanInput(attempt_b.val()),
+                actual_kanji = qdata[q]['pone_kanji_clean'],
+                actual_b_kanji = qdata[q]['ptwo_kanji_clean'],
+                actual = qdata[q]['pone_kana_clean'],
                 actual_b = qdata[q]['ptwo_kana_clean'];
-            {% endif %}
             if ('{{ user.profile.strictmode }}' === 'True' || (qdata[q]['strict'])) {
-                if ((clean === actual) && (clean_b === actual_b)) {
+                if (((clean === actual) || (clean ===actual_kanji)) && ((clean_b === actual_b) || (clean_b === actual_b_kanji))) {
                     processPractice(1);
-                } else if (clean === actual) {
+                } else if ((clean === actual) || (clean === actual_kanji)) {
                     processPractice(2);
-                } else if (clean_b === actual_b) {
+                } else if ((clean_b === actual_b) || (clean_b === actual_b_kanji)) {
                     processPractice(3);
                 } else {
                     processPractice(4);
@@ -240,13 +237,15 @@
             } else {
                 actual = actual.split("");
                 actual_b = actual_b.split("");
+                actual_kanji = actual_kanji.split("");
+                actual_b_kanji = actual_b_kanji.split("");
                 clean = clean.split("");
                 clean_b = clean_b.split("");
-                if ((wanakana.compare(clean, actual)) && (wanakana.compare(clean_b, actual_b))) {
+                if ((wanakana.compare(clean, actual) || wanakana.compare(clean, actual_kanji)) && (wanakana.compare(clean_b, actual_b) || wanakana.compare(clean_b, actual_b_kanji))) {
                     processPractice(1);
-                } else if (wanakana.compare(clean, actual)) {
+                } else if (wanakana.compare(clean, actual) || wanakana.compare(clean, actual_kanji)) {
                     processPractice(2);
-                } else if (wanakana.compare(clean_b, actual_b)) {
+                } else if (wanakana.compare(clean_b, actual_b) || wanakana.compare(clean_b, actual_b_kanji)) {
                     processPractice(3);
                 } else {
                     processPractice(4);

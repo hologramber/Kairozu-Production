@@ -13,7 +13,7 @@
 
                 <tr style="border-bottom: none;"><td class="resourceheader" colspan="3"><h2>General</h2></td></tr>
                 {% for resource in general %}
-                    <tr>
+                    <tr{% if forloop.last %} class='nobottom'{% endif %}>
                         <td width="18%"><a href="{{ resource.url_one }}">{{ resource.name }}</a></td>
                         <td class="smaller raleway">{{ resource.description }}</td>
                         <td width="10%" class="text-align-right">
@@ -32,7 +32,7 @@
 
                 <tr style="border-bottom: none;"><td class="resourceheader" colspan="3"><br /><h2>Dictionaries</h2></td></tr>
                 {% for resource in dictionary %}
-                    <tr>
+                    <tr{% if forloop.last %} class='nobottom'{% endif %}>
                         <td width="18%"><a href="{{ resource.url_one }}">{{ resource.name }}</a></td>
                         <td class="smaller raleway">{{ resource.description }}</td>
                         <td width="10%" class="text-align-right">
@@ -51,7 +51,7 @@
 
                 <tr style="border-bottom: none;"><td class="resourceheader" colspan="3"><br /><h2>Utilities</h2></td></tr>
                 {% for resource in edutility %}
-                    <tr>
+                    <tr{% if forloop.last %} class='nobottom'{% endif %}>
                         <td width="18%"><a href="{{ resource.url_one }}">{{ resource.name }}</a></td>
                         <td class="smaller raleway">{{ resource.description }}</td>
                         <td width="10%" class="text-align-right">
@@ -71,7 +71,7 @@
 
                 <tr style="border-bottom: none;"><td class="resourceheader" colspan="3"><br /><h2>Kanji</h2></td></tr>
                 {% for resource in kanji %}
-                    <tr>
+                    <tr{% if forloop.last %} class='nobottom'{% endif %}>
                         <td width="18%"><a href="{{ resource.url_one }}">{{ resource.name }}</a></td>
                         <td class="smaller raleway">{{ resource.description }}</td>
                         <td width="10%" class="text-align-right">
@@ -90,7 +90,7 @@
 
                 <tr style="border-bottom: none;"><td class="resourceheader" colspan="3"><br /><h2>Hiragana & Katakana</h2></td></tr>
                 {% for resource in kana %}
-                    <tr>
+                    <tr{% if forloop.last %} class='nobottom'{% endif %}>
                         <td width="18%"><a href="{{ resource.url_one }}">{{ resource.name }}</a></td>
                         <td class="smaller raleway">{{ resource.description }}</td>
                         <td width="10%" class="text-align-right">
@@ -109,7 +109,7 @@
 
                 <tr style="border-bottom: none;"><td class="resourceheader" colspan="3"><br /><h2>Educational Reading</h2></td></tr>
                 {% for resource in edureading %}
-                    <tr>
+                    <tr{% if forloop.last %} class='nobottom'{% endif %}>
                         <td width="18%"><a href="{{ resource.url_one }}">{{ resource.name }}</a></td>
                         <td class="smaller raleway">{{ resource.description }}</td>
                         <td width="10%" class="text-align-right">
@@ -128,7 +128,7 @@
 
                 <tr style="border-bottom: none;"><td class="resourceheader" colspan="3"><br /><h2>References</h2></td></tr>
                 {% for resource in reference %}
-                    <tr>
+                    <tr{% if forloop.last %} class='nobottom'{% endif %}>
                         <td width="18%"><a href="{{ resource.url_one }}">{{ resource.name }}</a></td>
                         <td class="smaller raleway">{{ resource.description }}</td>
                         <td width="10%" class="text-align-right">
@@ -147,7 +147,7 @@
 
                 <tr style="border-bottom: none;"><td class="resourceheader" colspan="3"><br /><h2>Language Exchange & Practice</h2></td></tr>
                 {% for resource in exchange %}
-                    <tr>
+                    <tr{% if forloop.last %} class='nobottom'{% endif %}>
                         <td width="18%"><a href="{{ resource.url_one }}">{{ resource.name }}</a></td>
                         <td class="smaller raleway">{{ resource.description }}</td>
                         <td width="10%" class="text-align-right">
@@ -166,7 +166,7 @@
 
                 <tr style="border-bottom: none;"><td class="resourceheader" colspan="3"><br /><h2>Audio & Video</h2></td></tr>
                 {% for resource in video %}
-                    <tr>
+                    <tr{% if forloop.last %} class='nobottom'{% endif %}>
                         <td width="18%"><a href="{{ resource.url_one }}">{{ resource.name }}</a></td>
                         <td class="smaller raleway">{{ resource.description }}</td>
                         <td width="10%" class="text-align-right">
@@ -185,7 +185,7 @@
 
                 <tr style="border-bottom: none;"><td class="resourceheader" colspan="3"><br /><h2>Japan</h2></td></tr>
                 {% for resource in japan %}
-                    <tr>
+                    <tr{% if forloop.last %} class='nobottom'{% endif %}>
                         <td width="18%"><a href="{{ resource.url_one }}">{{ resource.name }}</a></td>
                         <td class="smaller raleway">{{ resource.description }}</td>
                         <td width="10%" class="text-align-right">
@@ -204,7 +204,7 @@
 
                 <tr style="border-bottom: none;"><td class="resourceheader" colspan="3"><br /><h2>Other</h2></td></tr>
                 {% for resource in other %}
-                    <tr>
+                    <tr{% if forloop.last %} class='nobottom'{% endif %}>
                         <td width="18%"><a href="{{ resource.url_one }}">{{ resource.name }}</a></td>
                         <td class="smaller raleway">{{ resource.description }}</td>
                         <td width="10%" class="text-align-right">
@@ -223,7 +223,7 @@
 
                 <tr style="border-bottom: none;"><td class="resourceheader" colspan="3"><br /><h2>Technical</h2></td></tr>
                 {% for resource in technical %}
-                    <tr>
+                    <tr{% if forloop.last %} class='nobottom'{% endif %}>
                         <td width="18%"><a href="{{ resource.url_one }}">{{ resource.name }}</a></td>
                         <td class="smaller raleway">{{ resource.description }}</td>
                         <td width="10%" class="text-align-right">

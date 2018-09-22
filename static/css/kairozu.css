@@ -130,6 +130,8 @@ ul, ol {
 .groupdt > tbody tr { border-bottom: 1px solid #bcbcbc66; }
 .chartable > tbody tr:last-child,
 .vocablist > tbody tr:last-child,
+.vocablist > tbody tr.nobottom,
+.rlist > tbody tr.nobottom,
 .exprlist > tbody tr:last-child,
 .groupdt > tbody tr:last-child { border-bottom: none; }
 
@@ -685,15 +687,17 @@ table.gpt > tbody > tr > td.blankline { line-height: 5px; }
 
 #vocabholder, #sentenceholder, #practiceholder { margin-top: 20px; }
 .vocablist, .exprlist { width: 100%; max-width: 1400px; margin-bottom: 10px; }
-.vocablist > thead th {
+.vocablist > thead th, .vocablist > tbody th {
     padding: 10px 10px 5px 10px;
     white-space: nowrap;
     text-align: left; }
+.vocablist > tbody th { padding: 0px 10px 5px 10px; }
 .exprlist > thead th {
     padding: 10px 10px 0 10px;
     white-space: nowrap;
     text-align: left; }
 .vocablist > thead th:first-child { padding: 10px 10px 5px 0; }
+.vocablist > tbody th:first-child { padding: 0px 10px 5px 0; }
 .exprlist > thead th:first-child { padding: 10px 10px 0 0; }
 
 .vocablist > tbody td { padding: 5px 10px; }

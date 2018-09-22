@@ -50,42 +50,86 @@
     </div>
 </div>
 <div class="fc-basic">
-    <h4>Below is a sampling of upcoming reviews for the vocabulary words, expressions, and sentences you're in the process of mastering. Each correct answer will increase the level of that review by 1 star; incorrect answers will reset the level to 0 stars. Material that you've already mastered (3+ stars) isn't shown on this list, but will continue to appear in your reviews.</h4>
-    <div class="s-20"></div>
+    <h4>Preview upcoming reviews for material you're in the process of mastering below. Each correct answer will increase the level of that review by 1 star; incorrect answers will reset the level to 0 stars. Material that you've already mastered with 3+ stars isn't shown on this list, but will continue to appear in your reviews according to the <a href="https://en.wikipedia.org/wiki/Spaced_repetition">spaced repetition algorithm</a>.</h4>
+
     <div class="table-responsive">
         <table class="vocablist">
-            <thead>
-                <tr class="text-align-left">
+            <tbody>
+                <tr class="nobottom">
+                    <td colspan="4" class="resourceheader"><h3><i class="fa fa-fw fa-rotate-180 fa-puzzle-piece"></i> Vocabulary</h3></td>
+                </tr>
+                <tr class="text-align-left nobottom">
                     <th>Chapter</th><th>English</th><th>Review Available</th><th>Level</th>
                 </tr>
-            </thead>
-            <tbody>
-                {% for obj in object_list %}
-                    <tr>
-                    {% if obj.vocab %}
-                        <td><a href="{% url 'main:vocablist' obj.vocab.chapter.id %}">第 {{ obj.vocab.chapter.id }} 章</a></td>
-                        <td class="min300">{{ obj.vocab.english }}</td>
-                    {% elif obj.sentence %}
-                        <td><a href="{% url 'main:lesson' obj.sentence.lesson.id %}">第 {{ obj.sentence.lesson.chapter.id }} 章</a></td>
-                        <td>{{ obj.sentence.english }}</td>
-                    {% elif obj.express %}
-                        <td><a href="{% url 'main:expressionlist' obj.express.chapter.id %}">第 {{ obj.express.chapter.id }} 章</a></td>
-                        <td>{{ obj.express.english }}</td>
-                    {% else %}
-                        <td>? - ?</td>
-                        <td>unknown</td>
-                    {% endif %}
-                        {% if 'ago' in obj.next_review|naturaltime %}
+                {% for v in vocabs %}
+                    <tr{% if forloop.last %} class='nobottom'{% endif %}>
+                        <td><a href="{% url 'main:vocablist' v.vocab.chapter.id %}">第 {{ v.vocab.chapter.id }} 章</a></td>
+                        <td class="min300">{{ v.vocab.english }}</td>
+                        {% if 'ago' in v.next_review|naturaltime %}
                             <td>Available now!</td>
                         {% else %}
-                            <td>{{ obj.next_review|naturaltime }}</td>
+                            <td>{{ v.next_review|naturaltime }}</td>
                         {% endif %}
 
-                        {% if obj.score == 0 %}
+                        {% if v.score == 0 %}
                             <td class="green-words nowrap"><i class="fa fa-star-o" aria-hidden="true"></i>&nbsp;<i class="fa fa-star-o" aria-hidden="true"></i>&nbsp;<i class="fa fa-star-o" aria-hidden="true"></i></td>
-                        {% elif obj.score == 1 %}
+                        {% elif v.score == 1 %}
                             <td class="green-words nowrap"><i class="fa fa-star" aria-hidden="true"></i>&nbsp;<i class="fa fa-star-o" aria-hidden="true"></i>&nbsp;<i class="fa fa-star-o" aria-hidden="true"></i></td>
-                        {% elif obj.score == 2 %}
+                        {% elif v.score == 2 %}
+                            <td class="green-words nowrap"><i class="fa fa-star" aria-hidden="true"></i>&nbsp;<i class="fa fa-star" aria-hidden="true"></i>&nbsp;<i class="fa fa-star-o" aria-hidden="true"></i></td>
+                        {% else %}
+                            <td></td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+                <tr class="nobottom">
+                    <td colspan="4"><h3><i class="fa fa-fw fa-commenting-o"></i> Expressions</h3></td>
+                </tr>
+                <tr class="text-align-left nobottom">
+                    <th>Chapter</th><th>English</th><th>Review Available</th><th>Level</th>
+                </tr>
+                {% for e in expressions %}
+                    <tr{% if forloop.last %} class='nobottom'{% endif %}>
+                        <td><a href="{% url 'main:expressionlist' e.express.chapter.id %}">第 {{ e.express.chapter.id }} 章</a></td>
+                        <td>{{ e.express.english }}</td>
+                        {% if 'ago' in e.next_review|naturaltime %}
+                            <td>Available now!</td>
+                        {% else %}
+                            <td>{{ e.next_review|naturaltime }}</td>
+                        {% endif %}
+
+                        {% if e.score == 0 %}
+                            <td class="green-words nowrap"><i class="fa fa-star-o" aria-hidden="true"></i>&nbsp;<i class="fa fa-star-o" aria-hidden="true"></i>&nbsp;<i class="fa fa-star-o" aria-hidden="true"></i></td>
+                        {% elif e.score == 1 %}
+                            <td class="green-words nowrap"><i class="fa fa-star" aria-hidden="true"></i>&nbsp;<i class="fa fa-star-o" aria-hidden="true"></i>&nbsp;<i class="fa fa-star-o" aria-hidden="true"></i></td>
+                        {% elif e.score == 2 %}
+                            <td class="green-words nowrap"><i class="fa fa-star" aria-hidden="true"></i>&nbsp;<i class="fa fa-star" aria-hidden="true"></i>&nbsp;<i class="fa fa-star-o" aria-hidden="true"></i></td>
+                        {% else %}
+                            <td></td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+                <tr class="nobottom">
+                    <td colspan="4"><h3><i class="fa fa-fw fa-book"></i> Sentences</h3></td>
+                </tr>
+                <tr class="text-align-left nobottom">
+                    <th>Lesson</th><th>English</th><th>Review Available</th><th>Level</th>
+                </tr>
+                {% for s in sentences %}
+                    <tr{% if forloop.last %} class='nobottom'{% endif %}>
+                        <td><a href="{% url 'main:lesson' s.sentence.lesson.id %}">第 {{ s.sentence.lesson.chapter.id }} 章</a></td>
+                        <td>{{ s.sentence.english }}</td>
+                        {% if 'ago' in s.next_review|naturaltime %}
+                            <td>Available now!</td>
+                        {% else %}
+                            <td>{{ s.next_review|naturaltime }}</td>
+                        {% endif %}
+
+                        {% if s.score == 0 %}
+                            <td class="green-words nowrap"><i class="fa fa-star-o" aria-hidden="true"></i>&nbsp;<i class="fa fa-star-o" aria-hidden="true"></i>&nbsp;<i class="fa fa-star-o" aria-hidden="true"></i></td>
+                        {% elif s.score == 1 %}
+                            <td class="green-words nowrap"><i class="fa fa-star" aria-hidden="true"></i>&nbsp;<i class="fa fa-star-o" aria-hidden="true"></i>&nbsp;<i class="fa fa-star-o" aria-hidden="true"></i></td>
+                        {% elif s.score == 2 %}
                             <td class="green-words nowrap"><i class="fa fa-star" aria-hidden="true"></i>&nbsp;<i class="fa fa-star" aria-hidden="true"></i>&nbsp;<i class="fa fa-star-o" aria-hidden="true"></i></td>
                         {% else %}
                             <td></td>
@@ -95,6 +139,7 @@
             </tbody>
         </table>
     </div>
+
 </div>
 <div class="s-100"></div>
 

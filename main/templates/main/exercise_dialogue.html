@@ -152,12 +152,7 @@
         event.preventDefault();
         if (attempt.val() !== '') {
             var clean = cleanInput(attempt.val());
-            {% if user.profile.preferkanji %}
-                var actual = qdata[q]['responses'][rindex]['response_kanji_clean'];
-            {% else %}
-                var actual = qdata[q]['responses'][rindex]['response_kana_clean'];
-            {% endif %}
-            if (clean === actual) {
+            if (clean === qdata[q]['responses'][rindex]['response_kana_clean'] || clean === qdata[q]['responses'][rindex]['response_kanji_clean']) {
                 bug.hide();
                 quiz.removeClass("abox_red");
                 quiz.addClass("abox_g").one(

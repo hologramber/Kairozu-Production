@@ -104,12 +104,7 @@
         event.preventDefault();
         if (attempt.val() !== '') {
             var clean = cleanInput(attempt.val());
-            {% if user.profile.preferkanji %}
-                var actual = qdata[q]['vocab']['kanji_clean'];
-            {% else %}
-                var actual = qdata[q]['vocab']['kana_clean'];
-            {% endif %}
-            if (clean === actual) {
+            if (clean === qdata[q]['vocab']['kana_clean'] || clean === qdata[q]['vocab']['kanji_clean']) {
                 bug.hide();
                 quiz.removeClass("abox_red");
                 quiz.addClass("abox_g").one(

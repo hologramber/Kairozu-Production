@@ -157,22 +157,20 @@
     quiz.submit(function(event) {
         event.preventDefault();
         if (attempt.val() !== '') {
-            var clean = cleanInput(attempt.val());
-            {% if user.profile.preferkanji %}
-                var actual = qdata[q]['sentence']['kanji_clean'];
-            {% else %}
-                var actual = qdata[q]['sentence']['kana_clean'];
-            {% endif %}
+            var clean = cleanInput(attempt.val()),
+                actual_kanji = qdata[q]['sentence']['kanji_clean'],
+                actual = qdata[q]['sentence']['kana_clean'];
             if ('{{ user.profile.strictmode }}' === 'True' || (qdata[q]['sentence']['strict'])) {
-                if (clean === actual) {
+                if (clean === actual || clean === actual_kanji) {
                     processQuiz(1);
                 } else {
                     processQuiz(0);
                 }
             } else {
                 actual = actual.split("");
+                actual_kanji = actual_kanji.split("");
                 clean = clean.split("");
-                if (wanakana.compare(clean, actual)) {
+                if (wanakana.compare(clean, actual) || wanakana.compare(clean, actual_kanji)) {
                     processQuiz(1);
                 } else {
                     processQuiz(0);

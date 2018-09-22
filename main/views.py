@@ -102,25 +102,17 @@ class SummaryView(LoginRequiredMixin, UserPassesTestMixin, ListView):
             return True
 
 
-class ProgressView(LoginRequiredMixin, ListView):
+class ProgressView(LoginRequiredMixin, TemplateView):
     template_name = 'main/progress.html'
 
     def get_context_data(self, **kwargs):
         context = super(ProgressView, self).get_context_data(**kwargs)
         Profile.has_reviews(self.request.user)
         context['vmastery'] = Profile.chapter_mastery_level(self.request.user)
+        context['vocabs'] = VocabRecord.objects.filter(user_id=self.request.user.id, rating__gt=0, score__lte=2)[:20]
+        context['expressions'] = ExpressionRecord.objects.filter(user_id=self.request.user.id, rating__gt=0, score__lte=2)[:20]
+        context['sentences'] = SentenceRecord.objects.filter(user_id=self.request.user.id, rating__gt=0, score__lte=2)[:20]
         return context
-
-    def get_queryset(self):
-        vocabs = VocabRecord.objects.filter(user_id=self.request.user.id, rating__gt=0, score__lte=2)[:40]
-        expressions = ExpressionRecord.objects.filter(user_id=self.request.user.id, rating__gt=0, score__lte=2)[:20]
-        sentences = SentenceRecord.objects.filter(user_id=self.request.user.id, rating__gt=0, score__lte=2)[:40]
-        result_list = sorted(chain(vocabs, expressions, sentences), key=lambda instance: instance.next_review)
-        # vocabs = VocabRecord.objects.filter(user_id=self.request.user.id, rating__gt=0, score__lte=2)[:40]
-        # #expressions = ExpressionRecord.objects.filter(user_id=self.request.user.id, rating__gt=0, score__lte=2)[:20]
-        # sentences = SentenceRecord.objects.filter(user_id=self.request.user.id, rating__gt=0, score__lte=2)[:40]
-        # result_list = sorted(chain(vocabs, sentences), key=lambda instance: instance.next_review)
-        return result_list
 
 
 def last_query(request, query_type, query_id):
