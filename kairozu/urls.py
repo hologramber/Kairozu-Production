@@ -19,7 +19,6 @@ urlpatterns = [
     url(r'^robots\.txt$', TemplateView.as_view(template_name="robots.txt", content_type='text/plain')),
     url(r'^$', TemplateView.as_view(template_name='index.html'), name='index'),
     url(r'^about/', TemplateView.as_view(template_name='about.html'), name='about'),
-    url(r'^contact/', TemplateView.as_view(template_name='contact.html'), name='contact'),
     url(r'^privacy/', TemplateView.as_view(template_name='privacy.html'), name='privacy'),
     url(r'^hikai/', admin.site.urls),
     url(r'^nested_admin/', include('nested_admin.urls')),

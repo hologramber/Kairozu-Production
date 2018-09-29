@@ -6,7 +6,7 @@
 
 <div class="fc-spaceb">
     <div class="fc-flex-60">
-        <h1>Kairozu Blog & Site Updates</h1>
+        <h1>Kairozu News & Site Updates</h1>
         {% for post in posts %}
             <h3><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
             <span class="smaller">Posted on <time datetime="{{ post.published_date|date:"c" }}"> {{ post.published_date|date }}</time></span>
@@ -39,7 +39,7 @@
         <div class="s-10"></div>
         <i class="fa fa-instagram fa-fw fa-lg"></i>&nbsp;&nbsp;<a class="raleway" href="https://instagram.com/kairozu">kairozu</a>
         <div class="s-10"></div>
-        <i class="fa fa-envelope-square fa-fw fa-lg"></i>&nbsp;&nbsp;<a class="raleway" href="{% url 'contact' %}">kai@kairozu.com</a>
+        <i class="fa fa-envelope-square fa-fw fa-lg"></i>&nbsp;&nbsp;kai@kairozu.com
         <div class="s-10"></div>
         <i class="fa fa-rss-square fa-fw fa-lg"></i>&nbsp;&nbsp;<a class="raleway" href="https://kairozu.com/news/rss/">RSS</a> & <a class="raleway" href="https://kairozu.com/news/atom/">Atom</a>
 
@@ -50,16 +50,6 @@
         <ul>
             {% for kai in kaiposts %}
                 <li><a class="raleway" href="{{ kai.get_absolute_url }}">{{ kai.title }}</a></li>
-            {% endfor %}
-        </ul>
-
-        <div class="s-15"></div>
-
-        <span class="opensans bold larger">Fun with NLP</span>
-        <div class="s-5"></div>
-        <ul>
-            {% for nlp in nlpposts %}
-                <li><a class="raleway" href="{{ nlp.get_absolute_url }}">{{ nlp.title }}</a></li>
             {% endfor %}
         </ul>
     </div>

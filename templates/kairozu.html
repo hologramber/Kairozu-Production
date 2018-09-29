@@ -70,8 +70,8 @@
                                 <div class="dropbtn">KAIROZU <i class="fa red-words fa-caret-down"></i></div>
                                 <div class="dropdown-content">
                                     <a href="{% url 'about' %}">ABOUT</a>
-                                    <a href="{% url 'news:main' %}">KAIROZU&nbsp;BLOG</a>
                                     <a href="{% url 'news:faq' %}">FAQ</a>
+                                    <a href="{% url 'news:main' %}">KAIROZU&nbsp;NEWS</a>
                                     <a href="{% url 'account' %}">YOUR&nbsp;ACCOUNT</a>
                                     <a href="{% url 'main:progress' %}">YOUR&nbsp;PROGRESS</a>
                                     <a href="{% url 'main:flashcard' %}">FLASHCARDS</a>
@@ -82,8 +82,8 @@
                         {% else %}
                         	<div><a class="headlink" href="{% url 'demo:demointerface' %}">DEMO</a></div>
 							<div><a class="headlink" href="{% url 'about' %}">ABOUT</a></div>
-                            <div><a class="headlink" href="{% url 'news:main' %}">BLOG</a></div>
                             <div><a class="headlink" href="{% url 'news:faq' %}">FAQ</a></div>
+                            <div><a class="headlink" href="{% url 'news:main' %}">NEWS</a></div>
 							<div><a class="headlink" href="{% url 'login' %}">SIGN&nbsp;IN</a></div>
 							<div><a class="headlink" href="{% url 'register' %}">SIGN&nbsp;UP</a></div>
                         {% endif %}
