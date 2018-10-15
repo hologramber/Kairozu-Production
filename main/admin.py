@@ -1,6 +1,6 @@
 from django.contrib import admin
 import nested_admin
-from .models import Profile, Chapter, Lesson, PointTable, Block, DivBlock, TwoTable, TwoTableData, FourTable, FourTableData, Example, MoreInfo, Practice, Sentence, Vocabulary, GrammarNote, InfoLink, Flashcard
+from .models import Profile, Chapter, Lesson, PointTable, Block, DivBlock, TwoTable, TwoTableData, FourTable, FourTableData, Example, MoreInfo, Practice, Sentence, Vocabulary, GrammarNote, InfoLink, Flashcard, BetaEmail
 
 class FourTableDataInline(nested_admin.NestedTabularInline):
     model = FourTableData
@@ -64,11 +64,6 @@ class VocabularyAdmin(nested_admin.NestedModelAdmin):
     list_filter = ('chapter',)
     search_fields = ['english', 'kana', 'kanji']
 
-class ExpressionAdmin(nested_admin.NestedModelAdmin):
-    list_display = ('english', 'kana', 'literal', 'chapter')
-    list_filter = ('chapter',)
-    search_fields = ['english', 'kana', 'literal']
-
 class PracticeAdmin(admin.ModelAdmin):
     list_display = ('pone_english', 'pone_literal', 'pone_kana_all', 'ptwo_english', 'ptwo_literal', 'ptwo_kana_all', 'vieworder', 'strict')
     list_filter = ('lesson',)
@@ -80,28 +75,13 @@ class SentenceAdmin(admin.ModelAdmin):
     list_filter = ('lesson',)
     search_fields = ['english', 'kana', 'kanji', 'context', 'literal']
 
-class VocabRecordAdmin(admin.ModelAdmin):
-    list_display = ('user', 'id', 'score', 'rating', 'last_attempt', 'next_review')
-    list_filter = ('user',)
-
-class ExpressionRecordAdmin(admin.ModelAdmin):
-    list_display = ('user', 'id', 'score', 'rating', 'last_attempt', 'next_review')
-    list_filter = ('user',)
-
-class SentenceRecordAdmin(admin.ModelAdmin):
-    list_display = ('user', 'id', 'score', 'rating', 'last_attempt', 'next_review')
-    list_filter = ('user',)
-
-class ExerciseRecordAdmin(admin.ModelAdmin):
-    list_display = ('user', 'id', 'score', 'rating')
-    list_filter = ('user',)
-
 class GrammarNoteAdmin(admin.ModelAdmin):
     list_display = ('title', 'lesson')
 
 class FlashcardAdmin(admin.ModelAdmin):
     list_display = ('user', 'english', 'kana')
 
+admin.site.register(BetaEmail)
 admin.site.register(GrammarNote, GrammarNoteAdmin)
 admin.site.register(Sentence, SentenceAdmin)
 admin.site.register(Practice, PracticeAdmin)
