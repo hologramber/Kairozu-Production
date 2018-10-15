@@ -1,6 +1,6 @@
 <div id="sidebar-wrapper">
 	<ul class="sidebar-nav">
-		<li class="sidebar-brand"><a href="{% url 'main:interface' chapter.id %}">第{{ chapter.title }}</a></li>
+		<li class="sidebar-brand"><a href="{% url 'main:interface' chapter.id %}">{{ chapter.title }}</a></li>
         <div class="s-5"></div>
         <li class="bold">
             <a href="{% url 'main:vocablist' chapter.id %}">{{ chapter.title }} VOCABULARY</a>
