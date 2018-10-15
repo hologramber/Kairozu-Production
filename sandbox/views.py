@@ -1,6 +1,5 @@
 from django.shortcuts import render
 from django.views.generic import ListView, TemplateView
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 from main.models import Profile
 from .models import Sandcastle, Resource
@@ -8,13 +7,12 @@ from .num2jp_kana import num2jp_kana
 import json
 
 
-class SandboxView(LoginRequiredMixin, ListView):
+class SandboxView(ListView):
     model = Sandcastle
     template_name = 'sandbox/index.html'
 
     def get_context_data(self, **kwargs):
         context = super(SandboxView, self).get_context_data(**kwargs)
-        Profile.has_reviews(self.request.user)
         return context
 
 
@@ -38,7 +36,7 @@ def hiragana(request):
     return render(request, 'sandbox/hiragana.html')
 
 
-class ResourcesView(LoginRequiredMixin, TemplateView):
+class ResourcesView(TemplateView):
     template_name = 'sandbox/resources.html'
 
     def get_context_data(self, **kwargs):
@@ -59,7 +57,7 @@ class ResourcesView(LoginRequiredMixin, TemplateView):
         return context
 
 
-class NumberQuizView(LoginRequiredMixin, TemplateView):
+class NumberQuizView(TemplateView):
     template_name = 'sandbox/numberquiz.html'
 
 

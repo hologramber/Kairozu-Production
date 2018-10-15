@@ -5,15 +5,9 @@
                 <div class="s-5"></div>
                 <h3>回路図・Kairozu</h3>
                 <p class="ltgrey-words">
-                    {% if user.is_authenticated %}
-                        <a href="{% url 'main:main' %}">Main</a>
-                    {% else %}
-                        <a href="{% url 'demo:demointerface' %}">Demo</a>
-                    {% endif %}
+                    <a href="{% url 'main:main' %}">Index</a>
                     <strong>・</strong>
-                    <a href="{% url 'about' %}">About</a>
-                    <strong>・</strong>
-                    <a href="{% url 'news:faq' %}">FAQ</a>
+                    <a href="{% url 'sandbox:main' %}">Sandbox</a>
                     <strong>・</strong>
                     <a href="{% url 'news:main' %}">News</a>
                 </p>

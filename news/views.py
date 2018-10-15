@@ -1,6 +1,5 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, CreateView
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from .models import Post, FAQ, KnownIssue, SiteIssue
 
@@ -39,16 +38,15 @@ class AjaxTemplateMixin(object):
         return super(AjaxTemplateMixin, self).dispatch(request, *args, **kwargs)
 
 
-class NewIssueView(LoginRequiredMixin, AjaxTemplateMixin, CreateView):
+class NewIssueView(AjaxTemplateMixin, CreateView):
     template_name = 'news/siteissue_form.html'
     model = SiteIssue
     fields = ['report_type', 'report_comment']
 
     def form_valid(self, form):
-        if SiteIssue.objects.filter(report_by_user=self.request.user.id).count() >= 15:
-            messages.add_message(self.request, messages.ERROR, 'Sorry! For the sake of my database, only 15 bug reports per day/user. Email kairozu@kairozu.com for help.')
+        if SiteIssue.objects.all().count() >= 250:
+            messages.add_message(self.request, messages.ERROR, 'Sorry! For the sake of my database, I limit the current number of bug reports allowed in the database. It appears I\'m already drowning in bugs. The shame! Email kairozu@kairozu.com for help.')
         else:
-            form.instance.report_by_user = self.request.user.id
             form.instance.report_from_url = self.request.META.get("HTTP_REFERER")
             form.save()
             messages.add_message(self.request, messages.SUCCESS, 'Bug submitted! Apologies for the trouble, but thank you for letting me know!')

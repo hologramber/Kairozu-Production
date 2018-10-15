@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Sentence, Practice, Vocabulary, VocabRecord, SentenceRecord, Expression, ExpressionRecord, ExerciseResponse, ExercisePrompt, ExerciseSentence, Flashcard
+from .models import Sentence, Practice, Vocabulary, Flashcard
 
 
 class VocabularySerializer(serializers.ModelSerializer):
@@ -38,72 +38,13 @@ class FlashcardSerializer(serializers.ModelSerializer):
         list_serializer_class = RecordListSerializer
 
 
-class VocabRecordSerializer(serializers.ModelSerializer):
-    id = serializers.IntegerField()
-    user = serializers.StringRelatedField()
-    vocab = VocabularySerializer(read_only=True)
-
-    class Meta:
-        model = VocabRecord
-        fields = '__all__'
-        list_serializer_class = RecordListSerializer
-
-
-class ExpressionSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Expression
-        exclude = ('kana','kanji',)
-
-
-class ExpressionRecordSerializer(serializers.ModelSerializer):
-    id = serializers.IntegerField()
-    user = serializers.StringRelatedField()
-    express = ExpressionSerializer(read_only=True)
-
-    class Meta:
-        model = ExpressionRecord
-        fields = '__all__'
-        list_serializer_class = RecordListSerializer
-
-
 class SentenceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Sentence
         exclude = ('kana','kanji',)
 
 
-class SentenceRecordSerializer(serializers.ModelSerializer):
-    id = serializers.IntegerField()
-    user = serializers.StringRelatedField()
-    sentence = SentenceSerializer(read_only=True)
-
-    class Meta:
-        model = SentenceRecord
-        fields = '__all__'
-        list_serializer_class = RecordListSerializer
-
-
 class PracticeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Practice
         exclude = ('pone_kana','ptwo_kana','pone_kanji','ptwo_kanji',)
-
-
-class ExerciseResponseSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = ExerciseResponse
-        exclude = ('response_order','response_kana','response_kanji',)
-
-
-class ExercisePromptSerializer(serializers.ModelSerializer):
-    responses = ExerciseResponseSerializer(many=True, read_only=True)
-
-    class Meta:
-        model = ExercisePrompt
-        exclude = ('prompt_kana',)
-
-
-class ExerciseSentenceSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = ExerciseSentence
-        exclude = ('kana','kanji','display_order',)

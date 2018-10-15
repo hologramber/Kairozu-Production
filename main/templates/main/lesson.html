@@ -62,31 +62,27 @@
                         </div>
                     </div>
 
-                    {% if user.profile.currentpractice > lesson.id %}
-                        <div class="fc-flex-20 order1">
-                            <div class="center-table">
-                                <a id="qlink" href="{% url 'main:sentencequiz' lesson.id %}">
-                                    <div id="quizbg">
-                                        <img class="bottom" src="{% static 'img/quiz-orange.svg' %}" />
-                                        <img class="top" src="{% static 'img/quiz-red.svg' %}" />
-                                    </div>
-                                </a>
-                            </div>
+                    <div class="fc-flex-20 order1">
+                        <div class="center-table">
+                            <a id="qlink" href="{% url 'main:sentencequiz' lesson.id %}">
+                                <div id="quizbg">
+                                    <img class="bottom" src="{% static 'img/quiz-orange.svg' %}" />
+                                    <img class="top" src="{% static 'img/quiz-red.svg' %}" />
+                                </div>
+                            </a>
                         </div>
-                    {% endif %}
+                    </div>
 
-                    {% if user.profile.currentlesson >= lesson.id or lesson.id == 1 %}
-                        <div class="fc-flex-20 order1">
-                            <div class="center-table">
-                                <a id="qlink" href="{% url 'main:practicequiz' lesson.id %}">
-                                    <div id="practbg">
-                                        <img class="bottom" src="{% static 'img/practice-orange.svg' %}" />
-                                        <img class="top" src="{% static 'img/practice-red.svg' %}" />
-                                    </div>
-                                </a>
-                            </div>
+                    <div class="fc-flex-20 order1">
+                        <div class="center-table">
+                            <a id="qlink" href="{% url 'main:practicequiz' lesson.id %}">
+                                <div id="practbg">
+                                    <img class="bottom" src="{% static 'img/practice-orange.svg' %}" />
+                                    <img class="top" src="{% static 'img/practice-red.svg' %}" />
+                                </div>
+                            </a>
                         </div>
-                    {% endif %}
+                    </div>
                 </div>
             </div>
         {% else %}

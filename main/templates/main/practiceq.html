@@ -47,7 +47,7 @@
         literal_b.html('<div class="white-words litcontextbox upper">literal</div>' + qdata[q]['ptwo_literal'] + '&#8203;');
         context.html(qdata[q]['pone_context'] + '&#8203;');
         context_b.html(qdata[q]['ptwo_context'] + '&#8203;');
-        {% if user.profile.preferkanji %}
+        {% if user.profile and user.profile.preferkanji %}
             switch(pcode) {
                 case 'BC':
                     hint.html(qdata[q]['pone_kanji_all'] + '&#8203;');

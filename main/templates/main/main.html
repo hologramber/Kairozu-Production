@@ -1,13 +1,21 @@
 {% extends 'kairozu.html' %}
-{% block title %}Kairozu Main{% endblock %}
+{% block title %}Kairozu Index{% endblock %}
 {% load static %}
 
 {% block content %}
 
+<div class="s-20"></div>
+<div class="fc-center text-align-center">
+    <div class="width-75 fs1-2 raleway smaller hi-texts">
+        A solid grasp on <a href="https://en.wikipedia.org/wiki/Hiragana">hiragana</a> and <a href="https://en.wikipedia.org/wiki/Katakana">katakana</a> is <span class="underline">necessary before attempting any of the material on this site</span>! There are many internet resources available for studying the Japanese syllabaries, a few of them are listed here: <a href="{% url 'sandbox:japanesekana' %}">Japanese Kana</a>.<br /><br />
+        Within a chapter, the left sidebar is a linear guide to the vocabulary and grammar sections. Each chapter has ~100 new vocabulary that will be used throughout the grammar sections; it's important to learn these <span class="bold">first</span>. Once you've read the grammar notes, start the practice exercises; these are pairs of computer-generated English sentences which you translate to Japanese. Finally, complete the クイズ to test yourself on what you've learned in each lesson.
+    </div>
+</div>
+
 <div class="fc-wrap pad-left-40">
     {% for chapter in object_list %}
         {% if chapter.status == 'H' %}
-        {% elif user.profile.currentchapter >= chapter.id and chapter.status != 'A' %}
+        {% elif chapter.status != 'A' %}
             <a class="chlink" href="{% url 'main:interface' chapter.id %}">
                 <div class="chapterbox">
                     <img class="bottom" src="{% static 'img/blossom-orange.svg' %}" />
@@ -15,30 +23,8 @@
                     <h1 class="dashtitle">{{ chapter.title }}
                     {% if chapter.status == 'B' %}<span class="betatag red-words bold">[BETA]</span>{% endif %}</h1>
                     <h4 class="dashsubtitle">{{ chapter.subtitle }}</h4>
-                    <div class="dashprogress">
-                        {% if user.profile.currentvocab > chapter.id %}<i class="fa fa-check-circle" aria-hidden="true"></i>
-                        {% else %}<i class="fa fa-circle" aria-hidden="true"></i>{% endif %} Vocabulary<br />
-                        {% if user.profile.currentexpression > chapter.id %}<i class="fa fa-check-circle" aria-hidden="true"></i>
-                        {% else %}<i class="fa fa-circle" aria-hidden="true"></i>{% endif %} Expressions<br />
-                        {% if user.profile.currentstory > chapter.id %}<i class="fa fa-check-circle" aria-hidden="true"></i>
-                        {% else %}<i class="fa fa-circle" aria-hidden="true"></i>{% endif %} Lessons<br />
-                        {% if user.profile.pendingchapter > chapter.id %}<i class="fa fa-check-circle" aria-hidden="true"></i>
-                        {% else %}<i class="fa fa-circle" aria-hidden="true"></i>{% endif %} Exercises<br />
-                    </div>
                 </div>
             </a>
-        {% elif user.profile.pendingchapter >= chapter.id and user.profile.pendingchapter > user.profile.currentchapter and chapter.status != 'A' %}
-            <span>
-                <div class="chapterbox-dim">
-                    <img src="{% static 'img/blossom-grey.svg' %}" />
-                    <h1 class="dashtitle-dim">{{ chapter.title }}
-                    {% if chapter.status == 'B' %}<span class="betatag ltgrey-words bold">[BETA]</span>{% endif %}</h1>
-                    <h4 class="dashsubtitle-dim">{{ chapter.subtitle }}</h4>
-                    <div class="text-align-center raleway">
-                        <a href="{% url "main:progress" %}">Unlock this chapter<br />by mastering<br />what you've learned<br />so far! <i class="fa fa-arrow-right" aria-hidden="true"></i></a>
-                    </div>
-                </div>
-            </span>
         {% else %}
             <span>
                 <div class="chapterbox-dim">
@@ -46,11 +32,6 @@
                     <h1 class="dashtitle-dim">{{ chapter.title }}
                     {% if chapter.status == 'B' %}<span class="betatag ltgrey-words bold">[BETA]</span>{% endif %}</h1>
                     <h4 class="dashsubtitle-dim">{{ chapter.subtitle }}</h4>
-                    <div class="dashprogress">
-                        <span class="smaller ltgrey-words">
-                            {% if chapter.status == 'A' %}In Development!{% endif %}</span>
-                        <br /><br /><br /><br />
-                    </div>
                 </div>
             </span>
         {% endif %}

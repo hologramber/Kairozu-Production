@@ -21,11 +21,7 @@
                     {% for lesson in object_list %}
                         <tr>
                             <td><span class="bold">{{ lesson.title }}</span></td>
-                            {% if user.profile.currentexpression > chapter.id and user.profile.currentlesson >= lesson.id %}
-                                <td><a href="{% url 'main:lesson' lesson.id %}">{{ lesson.overview }}</a></td>
-                            {% else %}
-                                <td class="grey-words">{{ lesson.overview }}</td>
-                            {% endif %}
+                            <td><a href="{% url 'main:lesson' lesson.id %}">{{ lesson.overview }}</a></td>
                         </tr>
                     {% endfor %}
                 </table>

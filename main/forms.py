@@ -26,12 +26,6 @@ class ValidateFinishForm(forms.Form):
     totalq = forms.IntegerField(max_value=50)
 
 
-class ValidateExerciseFinish(forms.Form):
-    q = forms.IntegerField(max_value=50)
-    totalq = forms.IntegerField(max_value=50)
-    score = forms.FloatField(max_value=1.1)
-
-
 class FlashcardForm(forms.ModelForm):
     strict = forms.BooleanField(label='Strict Mode', help_text='Force exact matching on word & character order.')
     literal = forms.CharField(label='Literal Meaning', help_text='Literal translation between English and Japanese.', required=False)

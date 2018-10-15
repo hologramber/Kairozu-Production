@@ -1,125 +1,35 @@
 from datetime import datetime
 from rest_framework import generics
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import Practice, VocabRecord, Profile, SentenceRecord, ExpressionRecord, ExercisePrompt, ExerciseSentence, Flashcard
+from .models import Vocabulary, Practice, Sentence, Flashcard
 from . import serializers
 
 
-class VocabRecordGrab(LoginRequiredMixin, generics.ListAPIView):
-    serializer_class = serializers.VocabRecordSerializer
+class VocabGrab(generics.ListAPIView):
+    serializer_class = serializers.VocabularySerializer
 
     def get_queryset(self):
         chapter_id = int(self.kwargs['chapter_id'])
-        if chapter_id < self.request.user.profile.currentvocab:
-            vrecords = VocabRecord.objects.filter(user_id=self.request.user.id, vocab__chapter__id__exact=chapter_id).order_by('last_attempt')
-        elif chapter_id == self.request.user.profile.currentvocab:
-            vrecords = VocabRecord.objects.filter(user_id=self.request.user.id, vocab__chapter__id__exact=chapter_id, rating__lte=0).order_by('last_attempt')
-            if not vrecords:
-                Profile.graduate_vocab(self.request.user, chapter_id)
-                vrecords = VocabRecord.objects.none()
-        else:
-            vrecords = VocabRecord.objects.none()
-        return vrecords
+        vocabwords = Vocabulary.objects.filter(chapter_id__exact=chapter_id)
+        return vocabwords
 
 
-class ReviewVocabRecordGrab(LoginRequiredMixin, generics.ListAPIView):
-    serializer_class = serializers.VocabRecordSerializer
-
-    def get_queryset(self):
-        vrecords = VocabRecord.objects.filter(user_id=self.request.user.id, next_review__lte=datetime.now())[:50]
-        if not vrecords:
-            vrecords = VocabRecord.objects.none()
-        return vrecords
-
-
-class ExpressionRecordGrab(LoginRequiredMixin, generics.ListAPIView):
-    serializer_class = serializers.ExpressionRecordSerializer
-
-    def get_queryset(self):
-        chapter_id = int(self.kwargs['chapter_id'])
-        if chapter_id < self.request.user.profile.currentexpression:
-            erecords = ExpressionRecord.objects.filter(user_id=self.request.user.id, express__chapter__id__exact=chapter_id).order_by('last_attempt')
-        elif chapter_id == self.request.user.profile.currentexpression:
-            erecords = ExpressionRecord.objects.filter(user_id=self.request.user.id, express__chapter__id__exact=chapter_id, rating__lte=0).order_by('last_attempt')
-            if not erecords:
-                Profile.graduate_expression(self.request.user, chapter_id)
-                erecords = ExpressionRecord.objects.none()
-        else:
-            erecords = ExpressionRecord.objects.none()
-        return erecords
-
-
-class ReviewExpressionRecordGrab(LoginRequiredMixin, generics.ListAPIView):
-    serializer_class = serializers.ExpressionRecordSerializer
-
-    def get_queryset(self):
-        erecords = ExpressionRecord.objects.filter(user_id=self.request.user.id, next_review__lte=datetime.now())[:50]
-        if not erecords:
-            erecords = ExpressionRecord.objects.none()
-        return erecords
-
-
-class PracticeGrab(LoginRequiredMixin, generics.ListAPIView):
+class PracticeGrab(generics.ListAPIView):
     serializer_class = serializers.PracticeSerializer
 
     def get_queryset(self):
         lesson_id = int(self.kwargs['lesson_id'])
-        if lesson_id <= self.request.user.profile.currentpractice:
-            practices = Practice.objects.filter(lesson_id__exact=lesson_id)
-        else:
-            practices = Practice.objects.none()
+        practices = Practice.objects.filter(lesson_id__exact=lesson_id)
         return practices
 
 
-class SentenceRecordGrab(LoginRequiredMixin, generics.ListAPIView):
-    serializer_class = serializers.SentenceRecordSerializer
+class SentenceGrab(generics.ListAPIView):
+    serializer_class = serializers.SentenceSerializer
 
     def get_queryset(self):
         lesson_id = int(self.kwargs['lesson_id'])
-        if lesson_id < self.request.user.profile.currentlesson:
-            srecords = SentenceRecord.objects.filter(user_id=self.request.user.id, sentence__lesson__id__exact=lesson_id).order_by('last_attempt')
-        elif lesson_id == self.request.user.profile.currentlesson:
-            srecords = SentenceRecord.objects.filter(user_id=self.request.user.id, sentence__lesson__id__exact=lesson_id, rating__lte=0).order_by('last_attempt')
-            if not srecords:
-                Profile.graduate_lesson(self.request.user, lesson_id)
-                srecords = SentenceRecord.objects.none()
-        else:
-            srecords = SentenceRecord.objects.none()
+        srecords = Sentence.objects.filter(lesson__id__exact=lesson_id)
         return srecords
-
-
-class ReviewSentenceRecordGrab(LoginRequiredMixin, generics.ListAPIView):
-    serializer_class = serializers.SentenceRecordSerializer
-
-    def get_queryset(self):
-        srecords = SentenceRecord.objects.filter(user_id=self.request.user.id, next_review__lte=datetime.now())[:50]
-        if not srecords:
-            srecords = SentenceRecord.objects.none()
-        return srecords
-
-
-class PassageGrab(LoginRequiredMixin, generics.ListAPIView):
-    serializer_class = serializers.ExerciseSentenceSerializer
-
-    def get_queryset(self):
-        exercise_id = int(self.kwargs['exercise_id'])
-        if exercise_id <= self.request.user.profile.currentexercise:
-            exercise_sentences = ExerciseSentence.objects.filter(exercise_id=exercise_id)
-        else:
-            exercise_sentences = ExerciseSentence.objects.none()
-        return exercise_sentences
-
-
-class DialogueGrab(LoginRequiredMixin, generics.ListAPIView):
-    serializer_class = serializers.ExercisePromptSerializer
-
-    def get_queryset(self):
-        exercise_id = int(self.kwargs['exercise_id'])
-        if exercise_id <= self.request.user.profile.currentexercise:
-            exercise_prompts = ExercisePrompt.objects.filter(exercise_id=exercise_id)
-        else:
-            exercise_prompts = ExercisePrompt.objects.none()
-        return exercise_prompts
 
 
 class ReviewFlashcardGrab(LoginRequiredMixin, generics.ListAPIView):

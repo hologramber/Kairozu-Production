@@ -34,58 +34,13 @@
                 <div class="topnav" id="myTopnav">
                     <div id="sitename"><a href="{% url 'index' %}">回路図</a></div>
                     <div id="header-links">
+                        <div><a class="headlink" href="{% url 'main:main' %}">INDEX</a></div>
+                        <div><a class="headlink" href="{% url 'sandbox:main' %}">SANDBOX</a></div>
+                        <div><a class="headlink" href="{% url 'news:main' %}">NEWS</a></div>
                         {% if user.is_authenticated %}
-                            <div><a class="headlink" href="{% url 'main:main' %}">MAIN</a></div>
-                            <div id="dropdown1" class="dropdown">
-                                {% if user.profile.vrcount == 0 and user.profile.srcount == 0 and user.profile.ercount == 0 and user.profile.frcount == 0 %}
-                                    <div class="dropbtn">REVIEWS <i class="fa fa-caret-down"></i></div>
-                                {% else %}
-                                    <div class="dropbtn">REVIEWS <i class="fa red-words fa-caret-down"></i></div>
-                                {% endif %}
-                                <div class="dropdown-content">
-                                    {% if user.profile.vrcount == 0 %}
-                                        <span>0&nbsp;VOCABULARY</span>
-                                    {% else %}
-                                        <a href="{% url 'main:reviewvocab' %}">{{ user.profile.vrcount }}&nbsp;VOCABULARY</a>
-                                    {% endif %}
-                                    {% if user.profile.ercount == 0 %}
-                                        <span>0&nbsp;EXPRESSIONS</span>
-                                    {% else %}
-                                        <a href="{% url 'main:reviewexpression' %}">{{ user.profile.ercount }}&nbsp;EXPRESSIONS</a>
-                                    {% endif %}
-                                    {% if user.profile.srcount == 0 %}
-                                        <span>0&nbsp;SENTENCES</span>
-                                    {% else %}
-                                        <a href="{% url 'main:reviewsentence' %}">{{ user.profile.srcount }}&nbsp;SENTENCES</a>
-                                    {% endif %}
-                                    {% if user.profile.frcount == 0 %}
-                                        <span>0&nbsp;FLASHCARDS</span>
-                                    {% else %}
-                                        <a href="{% url 'main:reviewflashcard' %}">{{ user.profile.frcount }}&nbsp;FLASHCARDS</a>
-                                    {% endif %}
-                                </div>
-                            </div>
-                            <div><a class="headlink" href="{% url 'sandbox:main' %}">SANDBOX</a></div>
-                            <div id="dropdown2" class="dropdown">
-                                <div class="dropbtn">KAIROZU <i class="fa red-words fa-caret-down"></i></div>
-                                <div class="dropdown-content">
-                                    <a href="{% url 'about' %}">ABOUT</a>
-                                    <a href="{% url 'news:faq' %}">FAQ</a>
-                                    <a href="{% url 'news:main' %}">KAIROZU&nbsp;NEWS</a>
-                                    <a href="{% url 'account' %}">YOUR&nbsp;ACCOUNT</a>
-                                    <a href="{% url 'main:progress' %}">YOUR&nbsp;PROGRESS</a>
-                                    <a href="{% url 'main:flashcard' %}">FLASHCARDS</a>
-                                    <a id="comment-button" href="#"><i class="fa fa-bug red-words" aria-hidden="true"></i>&nbsp;&nbsp;REPORT&nbsp;BUG</a>
-                                    <a href="{% url 'logout' %}">LOG&nbsp;OUT</a>
-                                </div>
-                            </div>
+                            <div><a class="headlink" href="{% url 'account' %}">ACCOUNT</a></div>
                         {% else %}
-                        	<div><a class="headlink" href="{% url 'demo:demointerface' %}">DEMO</a></div>
-							<div><a class="headlink" href="{% url 'about' %}">ABOUT</a></div>
-                            <div><a class="headlink" href="{% url 'news:faq' %}">FAQ</a></div>
-                            <div><a class="headlink" href="{% url 'news:main' %}">NEWS</a></div>
-							<div><a class="headlink" href="{% url 'login' %}">SIGN&nbsp;IN</a></div>
-							<div><a class="headlink" href="{% url 'register' %}">SIGN&nbsp;UP</a></div>
+                            <div><a class="headlink" href="{% url 'login' %}">SIGN&nbsp;IN</a></div>
                         {% endif %}
                     </div>
 
@@ -114,45 +69,43 @@
         {% block content %}
         {% endblock %}
 
-        {% if user.is_authenticated %}
-            <div class="modal fade" id="form-modal" tabindex="-1">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <input id="byemodal" type="button" class="close" data-dismiss="modal" aria-hidden="true" value="&times;" />
-                        <span class="modal-title">Report Problems with Kairozu</span>
-                    </div>
-                    <div id="form-modal-body" class="modal-body"></div>
+        <div class="modal fade" id="form-modal" tabindex="-1">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <input id="byemodal" type="button" class="close" data-dismiss="modal" aria-hidden="true" value="&times;" />
+                    <span class="modal-title">Report Problems with Kairozu</span>
                 </div>
+                <div id="form-modal-body" class="modal-body"></div>
             </div>
+        </div>
 
-            <script type="text/javascript">
-                var modal = document.getElementById('form-modal');
-                var formAjaxSubmit = function(form) {
-                    $(form).submit(function (bugevent) {
-                        bugevent.preventDefault();
-                        $.ajax({
-                            type: $(this).attr('method'),
-                            url: $(this).attr('action'),
-                            data: $(this).serialize(),
-                            success: function (xhr) {
-                                modal.style.display = "none";
-                                $('#show-message').html(xhr);
-                            }
-                        });
-                    });
-                };
-                $('#comment-button').click(function() {
-                    $('#myTopnav').removeClass('responsive');
-                    //$('.dropdown-content').hide();
-                    //$('.dropdown').removeClass('active');
-                    $('#form-modal-body').load('/news/newissue/', function () {
-                        modal.style.display = "block";
-                        formAjaxSubmit('#form-modal-body form');
+        <script type="text/javascript">
+            var modal = document.getElementById('form-modal');
+            var formAjaxSubmit = function(form) {
+                $(form).submit(function (bugevent) {
+                    bugevent.preventDefault();
+                    $.ajax({
+                        type: $(this).attr('method'),
+                        url: $(this).attr('action'),
+                        data: $(this).serialize(),
+                        success: function (xhr) {
+                            modal.style.display = "none";
+                            $('#show-message').html(xhr);
+                        }
                     });
                 });
-                $('#byemodal').click(function() { modal.style.display = "none"; });
-            </script>
-        {% endif %}
+            };
+            $('#comment-button').click(function() {
+                $('#myTopnav').removeClass('responsive');
+                //$('.dropdown-content').hide();
+                //$('.dropdown').removeClass('active');
+                $('#form-modal-body').load('/news/newissue/', function () {
+                    modal.style.display = "block";
+                    formAjaxSubmit('#form-modal-body form');
+                });
+            });
+            $('#byemodal').click(function() { modal.style.display = "none"; });
+        </script>
 	</main>
 </body>
 </html>

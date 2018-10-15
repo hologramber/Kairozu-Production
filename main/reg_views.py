@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth import login, update_session_auth_hash
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.encoding import force_bytes, force_text
@@ -54,13 +55,11 @@ from main.tokens import activationtoken
 #         return render(request, 'email/activation_invalid.html')
 
 
-def newuser(request):
-    return render(request, 'account_newuser.html')
+# def newuser(request):
+#     return render(request, 'account_newuser.html')
 
-
+@login_required
 def account(request):
-    currentchapter = get_object_or_404(Chapter, pk=request.user.profile.currentchapter)
-    currentlesson = get_object_or_404(Lesson, pk=request.user.profile.currentlesson)
     form = PasswordChangeForm(request.user)
     strictdata = {'strictmode': request.user.profile.strictmode, 'preferkanji': request.user.profile.preferkanji}
     strictform = ChangeStrictModeForm(strictdata)
@@ -82,4 +81,4 @@ def account(request):
             return redirect('account')
         else:
             messages.add_message(request, messages.ERROR, 'Settings have not been updated. Contact kairozu@kairozu.com for help.')
-    return render(request, 'account.html', {'form': form, 'strictform': strictform, 'currentchapter': currentchapter, 'currentlesson': currentlesson})
+    return render(request, 'account.html', {'form': form, 'strictform': strictform})

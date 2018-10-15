@@ -16,21 +16,21 @@
 <div class="fc">
 
     <div class="fc-flex-50 text-align-right margin-20">
-        <div class="front-text fs2-0">Kairozu uses programmed learning to build an understanding of Japanese grammar using English-to-Japanese sentence construction.</div>
+        <div class="front-text fs2-0">Kairozu uses <a href="https://en.wikipedia.org/wiki/Programmed_learning">programmed learning</a> to build an understanding of Japanese grammar using English-to-Japanese sentence construction.</div>
         <div class="s-20"></div>
         <div class="front-text fs1-5">Learn grammar and relevant vocabulary in small, logical steps. Less focus on reading <span class="italics">about</span> grammar and more focus on using grammar in context.</div>
 
         <div class="s-10"></div>
-        <h5 class="roboto"><a href="{% url 'demo:demointerface' %}">See the general structure of Kairozu <i class="fa fa-arrow-right"></i></a></h5>
+        <h5 class="roboto"><a href="{% url 'sandbox:japanesekana' %}">Need to brush up on your hiragana/katakana? <i class="fa fa-arrow-right"></i></a></h5>
     </div>
 
     <div class="fc-center fc-flex-50">
-        <a href="{% url 'demo:demointerface' %}">
+        <a href="/main/">
             <div class="fc-red-button transbg">
                 <table>
-                    <tr><td class="white-words fs2-0">Kairozu Demo</td><td rowspan="2" class="pad-left-15"><i class="fa fa-3x white-words fa-arrow-circle-right"></i></td></tr>
-                    <tr><td><div class="fish-text-sm rc-red-b-tiny">SEE HOW KAIROZU WORKS!</div></td></tr>
-                </table>
+                    <tbody><tr><td class="white-words fs2-0">回路図 Index</td><td rowspan="2" class="pad-left-15"><i class="fa fa-3x white-words fa-arrow-circle-right"></i></td></tr>
+                    <tr><td><div class="fish-text-sm rc-red-b-tiny">行きましょう〜</div></td></tr>
+                </tbody></table>
             </div>
         </a>
     </div>
@@ -84,34 +84,6 @@
             <li><a href="https://mainichi.jp/maisho/">毎日 小学生 新聞</a></li>
         </ul>
     </div>
-
-</div>
-
-<div class="s-60"></div>
-<div class="fc front-bigright">
-
-    <div class="fc-center text-align-center">
-        <div class="front-text width-60">Each chapter consists of four sections: vocabulary, colloquial expressions, grammar, and exercises.</div>
-        <div class="s-20"></div>
-        <div class="fc-general">
-            <div class="fronticons"><a href="{% url 'demo:demovocablist' %}"><i class="fa fa-fw fa-rotate-180 fa-3x fa-puzzle-piece"></i></a></div>
-            <div class="fronticons"><a href="{% url 'demo:demoexpressionlist' %}"><i class="fa fa-fw fa-3x fa-commenting-o"></i></a></div>
-            <div class="fronticons"><a href="{% url 'demo:demolesson' %}"><i class="fa fa-fw fa-3x fa-book"></i></a></div>
-            <div class="fronticons"><a href="{% url 'demo:storydemo' %}"><i class="fa fa-fw fa-3x fa-edit"></i></a></div>
-        </div>
-        <div class="s-5"></div>
-    </div>
-
-</div>
-<div class="s-60"></div>
-
-<div class="fc">
-
-    <div class="fc-center fc-flex-60 text-align-right">
-        <div class="front-text">Review vocabulary and grammar via spaced-repetition to practice recognition; avoid the visual memorization-recognition trap that usually occurs when using flashcards.</div>
-    </div>
-
-    {% include 'account_boxes.html' %}
 
 </div>
 

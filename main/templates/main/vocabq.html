@@ -17,13 +17,6 @@
         <div id="katakana" style="display: none;">
             <i class="fa fa-star red-words" aria-hidden="true"></i><span class="grey-words smaller"> This vocabulary uses katakana characters (press shift when typing).</span>
         </div>
-
-        {% if user.profile.currentvocab > chapter.id %}
-            <div id="finished-quiz">
-                <i class="fa fa-star green-words" aria-hidden="true"></i><span class="grey-words smaller"> You've successfully completed this quiz; words will loop for as long as you'd like to practice.</span>
-            </div>
-        {% endif %}
-
     </div>
     <div class="s-100"></div>
 </div>  <!-- /#wrapper -->
@@ -43,7 +36,6 @@
         attempt = $('#attempt'),
         pagewrap = $('#wrapper'),
         katakana = $('#katakana'),
-        savestat = $('#savenow'),
         bug = $('#bug-button');
 
     var qdata = [],
@@ -53,73 +45,50 @@
         level = 3,
         repeat = 0;
 
-    function saveq() {
-        savestat.html('<i class=\'fa fa-save fa-spin orange-words\' aria-hidden=\'true\'></i>');
-        $.ajax({
-            type: "POST",
-            url: "{% url 'main:vocabsave' chapter.id %}",
-            dataType: 'json',
-            data: {qdata: JSON.stringify(qdata)},
-            success: function (data) {
-                if (data.error) {
-                    location.reload();
-                } else {
-                    qcount = 0;
-                    savestat.html('<i class=\'fa fa-save green-words\' aria-hidden=\'true\'></i>');
-                }
-            }
-        });
-    }
-
     function vocab() {
-        context.html('&#8203;' + qdata[q]['vocab']['context'] + '&#8203;');
-        english.html(qdata[q]['vocab']['english']);
+        context.html('&#8203;' + qdata[q]['context'] + '&#8203;');
+        english.html(qdata[q]['english']);
         {% if user.profile.preferkanji %}
             switch(level) {
                 case 3:
                     hint.html('&#8203;'); break;
                 case 2:
-                    hint.html(qdata[q]['vocab']['kanji_all_blank']); break;
+                    hint.html(qdata[q]['kanji_all_blank']); break;
                 case 1:
-                    hint.html(qdata[q]['vocab']['kanji_alt_blank']); break;
+                    hint.html(qdata[q]['kanji_alt_blank']); break;
                 default:
-                    hint.html(qdata[q]['vocab']['f_kanji']); break;
+                    hint.html(qdata[q]['f_kanji']); break;
             }
         {% else %}
             switch(level) {
                 case 3:
                     hint.html('&#8203;'); break;
                 case 2:
-                    hint.html(qdata[q]['vocab']['kana_all_blank']); break;
+                    hint.html(qdata[q]['kana_all_blank']); break;
                 case 1:
-                    hint.html(qdata[q]['vocab']['kana_alt_blank']); break;
+                    hint.html(qdata[q]['kana_alt_blank']); break;
                 default:
-                    hint.html(qdata[q]['vocab']['f_kana']); break;
+                    hint.html(qdata[q]['f_kana']); break;
             }
         {% endif %}
-        if (qdata[q]['vocab']['katakana']) { katakana.show(); } else { katakana.hide(); }
+        if (qdata[q]['katakana']) { katakana.show(); } else { katakana.hide(); }
     }
 
     quiz.submit(function(event) {
         event.preventDefault();
         if (attempt.val() !== '') {
             var clean = cleanInput(attempt.val());
-            if (clean === qdata[q]['vocab']['kana_clean'] || clean === qdata[q]['vocab']['kanji_clean']) {
+            if (clean === qdata[q]['kana_clean'] || clean === qdata[q]['kanji_clean']) {
                 bug.hide();
                 quiz.removeClass("abox_red");
                 quiz.addClass("abox_g").one(
                     "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend",
                     function() { quiz.removeClass("abox_g"); });
-                qdata[q]['last_attempt'] = addTime(0);
                 if (level === 3) {
                     if (repeat) {
                         qdata.push(qdata.splice(q,1)[0]);
                         repeat = 0;
                     } else {
-                        qdata[q]['rating'] = qdata[q]['rating'] + 1;
-                        if (!qdata[q]['next_review']) {
-                            qdata[q]['next_review'] = addTime(1);
-                        }
                         q++;
                     }
                     qcount++;
@@ -132,15 +101,10 @@
                 quiz.addClass("abox_red abox_r").one(
                     "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend",
                     function() { quiz.removeClass("abox_r"); });
-                qdata[q]['rating'] = 0;
                 if (level > 0) { level--; }
             }
-            savestat.html('<a href=\'#\' onclick=\'saveq()\'><i class=\'fa fa-save\' aria-hidden=\'true\'></i></a>');
             if (q < totalq) {
                 quiz[0].reset();
-                if (qcount > 9) {
-                    saveq();
-                }
                 vocab();
             } else {
                 $('#extra').hide();
@@ -148,7 +112,7 @@
                 $.ajax({
                     type: "POST",
                     url: "{% url 'main:vocabfinish' chapter.id %}",
-                    data: {qdata: JSON.stringify(qdata)},
+                    data: {q: q, totalq: totalq},
                     success: function (data) {
                         if ((data.error) || (data.loop)) {
                             location.reload();
@@ -167,10 +131,6 @@
             totalq = qdata.length;
             if (totalq > 0) {
                 vocab();
-            } else {
-                $.get("{% url 'main:vocabsuccess' chapter.id %}").done(function (data) {
-                    pagewrap.html(data);
-                });
             }
         });
     });

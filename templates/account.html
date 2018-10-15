@@ -11,20 +11,7 @@
 
     <div class="spot-tablei">
         <div class="margin-bottom-20">
-            {% if user.profile.pendingchapter > user.profile.currentchapter %}
-                <div class="spot-image"><i class='fa fa-star fa-2x red-words'></i></div>
-                <div class="spot-texti">
-                    You've finished the material for <a href="{% url 'main:interface' user.profile.currentchapter %}">{{ currentchapter.title }}</a>. Check your <a href="{% url 'main:progress' %}">current progress</a> toward unlocking the next chapter.
-                </div>
-            {% else %}
-                <div class="spot-image"><i class='fa fa-star fa-2x red-words'></i></div>
-                <div class="spot-texti">
-                    You're currently working on <a href="{% url 'main:interface' user.profile.currentchapter %}">{{ currentchapter.title }}</a>.
-                </div>
-            {% endif %}
-        </div>
-        <div class="margin-bottom-20">
-            {% if user.profile.vrcount == 0 and user.profile.srcount == 0 %}
+            {% if user.profile.frcount == 0 %}
                 <div class="spot-image"><i class='fa fa-star-o fa-2x grey-words'></i></div>
                 <div class="spot-texti">
                     You have no pending reviews.
@@ -32,13 +19,11 @@
             {% else %}
                 <div class="spot-image"><i class='fa fa-star fa-2x red-words'></i></div>
                 <div class="spot-texti">
-                    You have <a href="{% url 'main:reviewvocab' %}">{{ user.profile.vrcount }} vocabulary words</a>, <a href="{% url 'main:reviewexpression' %}">{{ user.profile.ercount }} expressions</a>, and <a href="{% url 'main:reviewsentence' %}">{{ user.profile.srcount }} sentences</a> to review.
+                    You have <a href="{% url 'main:reviewflashcard' %}">{{ user.profile.frcount }} flashcard reviews</a>.
                 </div>
             {% endif %}
         </div>
     </div>
-
-    <div class="s-20"></div>
 
     <script type="text/javascript">
     $(document).ready(function($) {

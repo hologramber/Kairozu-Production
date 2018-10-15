@@ -119,141 +119,25 @@ class Profile(models.Model):
     """track and update user progress"""
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     emailconfirmed = models.BooleanField(default=False)
-    currentchapter = models.PositiveSmallIntegerField(default=1)
-    pendingchapter = models.PositiveSmallIntegerField(default=1)
-    currentlesson = models.PositiveSmallIntegerField(default=1)
-    currentpractice = models.PositiveSmallIntegerField(default=1)
-    currentexpression = models.PositiveSmallIntegerField(default=1)
-    currentexercise = models.PositiveSmallIntegerField(default=1)
-    attemptexercise = models.PositiveSmallIntegerField(default=0)
-    currentvocab = models.PositiveSmallIntegerField(default=1)
-    currentstory = models.PositiveSmallIntegerField(default=1)
     strictmode = models.BooleanField(default=False)
     preferkanji = models.BooleanField(default=False)
-    vrcount = models.PositiveIntegerField(default=0)
-    srcount = models.PositiveIntegerField(default=0)
-    ercount = models.PositiveIntegerField(default=0)
     frcount = models.PositiveIntegerField(default=0)
 
     @receiver(post_save, sender=User)
     def create_user_profile(sender, instance, created, **kwargs):
         if created:
             Profile.objects.create(user=instance)
-            VocabRecord.objects.initial_vocab_record(user=instance)
-            SentenceRecord.objects.initial_sentence_record(user=instance)
-            ExerciseRecord.objects.initial_exercise_record(user=instance)
-            ExpressionRecord.objects.initial_expression_record(user=instance)
             instance.profile.save()
 
     @receiver(post_save, sender=User)
     def save_user_profile(sender, instance, **kwargs):
-        # Profile.objects.create(user=instance)
         instance.profile.save()
-
-    # @receiver(post_save, sender=Profile)
-    # def update_records(sender, instance, **kwargs):
-    #     VocabRecord.objects.update_vocab_record(profile=instance)
-    #     SentenceRecord.objects.update_sentence_record(profile=instance)
-    #     ExerciseRecord.objects.update_exercise_record(profile=instance)
-    #     ExpressionRecord.objects.update_expression_record(profile=instance)
-
-    @staticmethod
-    def ok_to_graduate(user):
-        """check to see if user has too many pending reviews"""
-        if user.profile.vrcount < 75 and user.profile.srcount < 100 and user.profile.ercount < 25:
-            if Profile.chapter_mastery_level(user) > 80 and user.profile.pendingchapter == int(user.profile.currentchapter)+1:
-                Profile.graduate_chapter(user, user.profile.currentchapter)
 
     @staticmethod
     def has_reviews(user):
         """check to see if a user has any pending reviews, and if so, how many"""
         now = timezone.now()
-        user.profile.vrcount = VocabRecord.objects.filter(user_id=user.id, next_review__lte=now).count()
-        user.profile.srcount = SentenceRecord.objects.filter(user_id=user.id, next_review__lte=now).count()
-        user.profile.ercount = ExpressionRecord.objects.filter(user_id=user.id, next_review__lte=now).count()
         user.profile.frcount = Flashcard.objects.filter(user_id=user.id, next_review__lte=now).count()
-        Profile.ok_to_graduate(user)
-        user.profile.save()
-
-
-    @staticmethod
-    def chapter_mastery_level(user):
-        vtotal = VocabRecord.objects.filter(user_id=user.id, rating__gt=0).count()
-        vbeginner = VocabRecord.objects.filter(user_id=user.id, rating__gt=0, score__lte=2).count()
-        stotal = SentenceRecord.objects.filter(user_id=user.id, rating__gt=0).count()
-        sbeginner = SentenceRecord.objects.filter(user_id=user.id, rating__gt=0, score__lte=2).count()
-        etotal = ExpressionRecord.objects.filter(user_id=user.id, rating__gt=0).count()
-        ebeginner = ExpressionRecord.objects.filter(user_id=user.id, rating__gt=0, score__lte=2).count()
-        if vtotal+stotal+etotal > 0:
-            vmastery = int((1-((vbeginner+sbeginner+ebeginner)/(vtotal+stotal+etotal)))*100)
-        else:
-            vmastery = 0
-        return vmastery
-
-    @staticmethod
-    def graduate_exercise(user, exercise_view):
-        """increase user's current exercise to exercise_view+1 -- allows access to next exercise"""
-        if user.profile.currentexercise == int(exercise_view):
-            user.profile.currentexercise = int(exercise_view) + 1
-        user.profile.save()
-
-    @staticmethod
-    def attempted_exercise(user, exercise_view):
-        """if user has attempted an exercise, but not necessarily completed it successfully"""
-        if user.profile.currentexercise == int(exercise_view):
-            user.profile.attemptexercise = int(exercise_view)
-        user.profile.save()
-
-    @staticmethod
-    def graduate_vocab(user, chapter_id):
-        """increase user's currentvocab to chapter.id+1 -- allows access to first lesson"""
-        if user.profile.currentvocab == int(chapter_id):
-            user.profile.currentvocab = int(chapter_id) + 1
-        user.profile.save()
-        VocabRecord.objects.update_vocab_record(profile=user.profile)
-
-    @staticmethod
-    def graduate_expression(user, chapter_id):
-        """increase user's currentvocab to chapter.id+1 -- allows access to first lesson"""
-        if user.profile.currentexpression == int(chapter_id):
-            user.profile.currentexpression = int(chapter_id) + 1
-        user.profile.save()
-        ExpressionRecord.objects.update_expression_record(profile=user.profile)
-
-    @staticmethod
-    def graduate_chapter(user, chapter_id):
-        """increase user's currentchapter to chapter.id+1 -- allows access to next chapter"""
-        if user.profile.currentchapter == int(chapter_id):
-            user.profile.currentchapter = int(chapter_id) + 1
-        user.profile.save()
-        ExerciseRecord.objects.update_exercise_record(profile=user.profile)
-
-    @staticmethod
-    def graduate_pending(user, chapter_id):
-        """increase user's pendingchapter to chapter.id+1 -- allows grad to next chapter after reviews"""
-        if user.profile.pendingchapter == int(chapter_id):
-            user.profile.pendingchapter = int(chapter_id) + 1
-        user.profile.save()
-
-    @staticmethod
-    def graduate_lesson(user, lesson_id):
-        """increase user's currentlesson to lesson.id+1 -- allows access to next lesson"""
-        currentlesson = Lesson.objects.get(id=lesson_id)    # Chapter.objects.get(id=chapter_id)
-        currentchapter = currentlesson.chapter
-        lastlesson = currentchapter.lesson_set.last()
-        if int(lesson_id) == lastlesson.id:
-            if user.profile.currentstory == currentchapter.id:
-                user.profile.currentstory = currentchapter.id + 1
-        if user.profile.currentlesson == int(lesson_id):
-            user.profile.currentlesson = int(lesson_id) + 1
-        user.profile.save()
-        SentenceRecord.objects.update_sentence_record(profile=user.profile)
-
-    @staticmethod
-    def graduate_practice(user, lesson_id):
-        """increase user's currentpractice to lesson.id+1 -- allows access to sentences"""
-        if user.profile.currentpractice == int(lesson_id):
-            user.profile.currentpractice = int(lesson_id) + 1
         user.profile.save()
 
 
@@ -278,71 +162,6 @@ class Chapter(models.Model):
 
     def __str__(self):
         return self.title
-
-
-class Expression(models.Model):
-    chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE, blank=False, null=False)
-    english = models.CharField(max_length=250, blank=False)
-    example = models.CharField(max_length=250, blank=True)
-    literal = models.CharField(max_length=250, blank=True)
-    katakana = models.BooleanField(default=False)
-    context = models.CharField(max_length=250, blank=True)
-    kana = models.CharField(max_length=250, blank=False)
-    kanji = models.CharField(max_length=250, unique=True, blank=False)
-    kana_clean = models.CharField(max_length=250, blank=True)
-    kanji_clean = models.CharField(max_length=250, blank=True)
-    kana_all_blank = models.CharField(max_length=250, blank=True)
-    kanji_all_blank = models.CharField(max_length=250, blank=True)
-    kana_alt_blank = models.CharField(max_length=250, blank=True)
-    kanji_alt_blank = models.CharField(max_length=250, blank=True)
-    f_kana = models.CharField(max_length=250, blank=True)
-    f_kanji = models.CharField(max_length=250, blank=True)
-
-    def save(self, *args, **kwargs):
-        self.kana = hw_punctuation(self.kana)
-        self.kanji = hw_punctuation(self.kanji)
-        self.kana_all_blank, self.kana_alt_blank, self.kana_clean = create_blanks(self.kana, 0, False)
-        self.kanji_all_blank, self.kanji_alt_blank, self.kanji_clean = create_blanks(self.kanji, 0, False)
-        self.f_kana = create_splits(self.kana)
-        self.f_kanji = create_splits(self.kanji)
-        self.kana_all_blank = create_splits(self.kana_all_blank)
-        self.kanji_all_blank = create_splits(self.kanji_all_blank)
-        self.kana_alt_blank = create_splits(self.kana_alt_blank)
-        self.kanji_alt_blank = create_splits(self.kanji_alt_blank)
-        super(Expression, self).save(*args, **kwargs)
-
-
-class ExpressionRecordManager(models.Manager):
-    """create and manage expressionrecords for each user"""
-    def update_expression_record(self, profile):
-        userexpression = profile.currentexpression
-        expressions = Expression.objects.filter(chapter_id__exact=userexpression)
-        user = profile.user
-
-        if not ExpressionRecord.objects.filter(user=user, express__chapter_id__exact=userexpression).exists() and len(expressions) > 0:
-            for exp in expressions:
-                self.create(user=user, express=exp)
-
-    def initial_expression_record(self, user):   # create the vocab records for chapter 1 when user is created
-        expressions = Expression.objects.filter(chapter_id__exact=1)
-
-        if len(expressions) > 0:
-            for exp in expressions:
-                self.get_or_create(user=user, express=exp)
-
-
-class ExpressionRecord(models.Model):
-    """tracking user progress for each expression"""
-    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=False, null=False)
-    express = models.ForeignKey(Expression, on_delete=models.CASCADE, blank=False, null=False)
-    last_attempt = models.DateTimeField(default=timezone.now, blank=True)
-    next_review = models.DateTimeField(null=True, blank=True)
-    score = models.IntegerField(default=0)
-    rating = models.IntegerField(default=0)
-    objects = ExpressionRecordManager()
-
-    class Meta:
-        ordering = ['next_review']
 
 
 class Vocabulary(models.Model):
@@ -452,39 +271,6 @@ class Vocabulary(models.Model):
 
     def __unicode__(self):
         return self.english
-
-
-class VocabRecordManager(models.Manager):
-    """create and manage vocabrecords for each user"""
-    def update_vocab_record(self, profile):
-        uservocab = profile.currentvocab
-        vocabularies = Vocabulary.objects.filter(chapter_id__exact=uservocab)
-        user = profile.user
-
-        if not VocabRecord.objects.filter(user=user, vocab__chapter_id__exact=uservocab).exists() and len(vocabularies) > 0:
-            for voc in vocabularies:
-                self.create(user=user, vocab=voc)
-
-    def initial_vocab_record(self, user):   # create the vocab records for chapter 1 when user is created
-        vocabularies = Vocabulary.objects.filter(chapter_id__exact=1)
-
-        if len(vocabularies) > 0:
-            for voc in vocabularies:
-                self.get_or_create(user=user, vocab=voc)
-
-
-class VocabRecord(models.Model):
-    """tracking user progress for each vocabulary word"""
-    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=False, null=False)
-    vocab = models.ForeignKey(Vocabulary, on_delete=models.CASCADE, blank=False, null=False)
-    last_attempt = models.DateTimeField(default=timezone.now, blank=True)
-    next_review = models.DateTimeField(null=True, blank=True)
-    score = models.IntegerField(default=0)
-    rating = models.PositiveSmallIntegerField(default=0)
-    objects = VocabRecordManager()
-
-    class Meta:
-        ordering = ['next_review']
 
 
 class Lesson(models.Model):
@@ -736,185 +522,6 @@ class GrammarNote(models.Model):
         ordering = ['lesson', 'id']
 
 
-class Exercise(models.Model):
-    chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE, blank=False, null=False)
-    description = models.CharField(max_length=250, default='', blank=True)
-    exercise_order = models.PositiveSmallIntegerField(default=1)
-    EXERCISE_TYPE_CHOICES = Choices('passage', 'dialogue')
-    exercise_type = models.CharField(choices=EXERCISE_TYPE_CHOICES, default=EXERCISE_TYPE_CHOICES.passage, max_length=10)
-    exercise_word = models.CharField(max_length=25, default='')
-
-    def exercise_pieces(self):
-        pieces_by_displayorder = ExercisePiece.objects.filter(exercise_id__in=[self.id]).select_subclasses(ExercisePrompt)
-        return pieces_by_displayorder
-
-    @staticmethod
-    def exercise_pieces_admin_prompt(chapter_id):
-        prompt_admin = ExercisePiece.objects.filter(exercise__chapter__id__in=chapter_id).select_subclasses(ExercisePrompt)
-        return prompt_admin
-
-    @staticmethod
-    def exercise_pieces_admin_sentence(chapter_id):
-        sentence_admin = ExercisePiece.objects.filter(exercise__chapter__id__in=chapter_id).select_subclasses(ExercisePrompt)
-        return sentence_admin
-
-    class Meta:
-        ordering = ['exercise_order']
-
-
-class ExercisePiece(models.Model):
-    exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE, blank=False, null=False)
-    objects = InheritanceManager()
-
-    class Meta:
-        ordering = ['exercise']
-
-
-class ExerciseSentence(ExercisePiece):
-    display_order = models.PositiveSmallIntegerField(default=1)
-    english = models.CharField(max_length=250, blank=False)
-    kana = models.CharField(max_length=250, blank=False)
-    kanji = models.CharField(max_length=250, blank=False)
-    literal = models.CharField(max_length=250, blank=True)
-    context = models.CharField(max_length=250, blank=True)
-    disamb_location = models.PositiveSmallIntegerField(default=0)
-    kana_all_blank = models.CharField(max_length=250, blank=True)
-    kana_alt_blank = models.CharField(max_length=250, blank=True)
-    kana_clean = models.CharField(max_length=250, blank=True)
-    kanji_all_blank = models.CharField(max_length=250, blank=True)
-    kanji_alt_blank = models.CharField(max_length=250, blank=True)
-    kanji_clean = models.CharField(max_length=250, blank=True)
-    f_kana = models.CharField(max_length=250, blank=True)
-    f_kanji = models.CharField(max_length=250, blank=True)
-
-    def save(self, *args, **kwargs):
-        if '(' in self.english:
-            self.context = create_context(self.english)
-
-        self.kana = hw_punctuation(self.kana)
-        self.kanji = hw_punctuation(self.kanji)
-        self.kana_all_blank, self.kana_alt_blank, self.kana_clean = create_blanks(self.kana, self.disamb_location, False)
-        self.kanji_all_blank, self.kanji_alt_blank, self.kanji_clean = create_blanks(self.kanji, self.disamb_location, False)
-        self.f_kana = create_splits(self.kana)
-        self.f_kanji = create_splits(self.kanji)
-        self.kana_alt_blank = create_splits(self.kana_alt_blank)
-        self.kana_all_blank = create_splits(self.kana_all_blank)
-        self.kanji_alt_blank = create_splits(self.kanji_alt_blank)
-        self.kanji_all_blank = create_splits(self.kanji_all_blank)
-        super(ExerciseSentence, self).save(*args, **kwargs)
-
-    class Meta:
-        ordering = ['display_order']
-
-
-class ExercisePrompt(ExercisePiece):
-    prompt_name = models.CharField(max_length=250, blank=False)
-    prompt_order = models.PositiveSmallIntegerField(default=1)
-    prompt_kana = models.CharField(max_length=250, blank=False)
-    prompt_kana_f = models.CharField(max_length=250, blank=True)
-
-    def save(self, *args, **kwargs):
-        self.prompt_kana = hw_punctuation(self.prompt_kana)
-        self.prompt_kana_f = create_splits(self.prompt_kana)
-        super(ExercisePrompt, self).save(*args, **kwargs)
-
-    class Meta:
-        ordering = ['prompt_order']
-
-
-class ExerciseResponse(models.Model):
-    exercise_prompt = models.ForeignKey(ExercisePrompt, related_name='responses', on_delete=models.CASCADE, blank=False, null=False)
-    response_order = models.PositiveSmallIntegerField(default=1)
-    response_english = models.CharField(max_length=250, blank=False)
-    response_kana = models.CharField(max_length=250, blank=False)
-    response_kanji = models.CharField(max_length=250, blank=False)
-    response_literal = models.CharField(max_length=250, blank=True)
-    response_context = models.CharField(max_length=250, blank=True)
-    response_disamb_location = models.PositiveSmallIntegerField(default=0)
-    response_kana_all_blank = models.CharField(max_length=250, blank=True)
-    response_kana_alt_blank = models.CharField(max_length=250, blank=True)
-    response_kana_clean = models.CharField(max_length=250, blank=True)
-    response_kanji_all_blank = models.CharField(max_length=250, blank=True)
-    response_kanji_alt_blank = models.CharField(max_length=250, blank=True)
-    response_kanji_clean = models.CharField(max_length=250, blank=True)
-    response_kana_f = models.CharField(max_length=250, blank=True)
-    response_kanji_f = models.CharField(max_length=250, blank=True)
-
-    class Meta:
-        ordering = ['exercise_prompt', 'response_order']
-
-    def save(self, *args, **kwargs):
-        if '(' in self.response_english:
-            self.response_context = create_context(self.response_english)
-
-        self.response_kana = hw_punctuation(self.response_kana)
-        self.response_kanji = hw_punctuation(self.response_kanji)
-        self.response_kana_all_blank, self.response_kana_alt_blank, self.response_kana_clean = create_blanks(self.response_kana, self.response_disamb_location, False)
-        self.response_kanji_all_blank, self.response_kanji_alt_blank, self.response_kanji_clean = create_blanks(self.response_kanji, self.response_disamb_location, False)
-        self.response_kana_f = create_splits(self.response_kana)
-        self.response_kanji_f = create_splits(self.response_kanji)
-        self.response_kana_alt_blank = create_splits(self.response_kana_alt_blank)
-        self.response_kana_all_blank = create_splits(self.response_kana_all_blank)
-        self.response_kanji_alt_blank = create_splits(self.response_kanji_alt_blank)
-        self.response_kanji_all_blank = create_splits(self.response_kanji_all_blank)
-        super(ExerciseResponse, self).save(*args, **kwargs)
-
-
-class ExerciseRecordManager(models.Manager):
-    def update_exercise_record(self, profile):
-        userstory = profile.currentstory
-        exercises = Exercise.objects.filter(chapter_id__exact=userstory)
-        user = profile.user
-
-        if len(exercises) > 0:
-            for exer in exercises:
-                self.get_or_create(user=user, exercise=exer)
-
-    def initial_exercise_record(self, user):
-        exercises = Exercise.objects.filter(chapter_id__exact=1)
-
-        if len(exercises) > 0:
-            for exer in exercises:
-                self.get_or_create(user=user, exercise=exer)
-
-
-class ExerciseRecord(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=False, null=False)
-    exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE, blank=False, null=False)
-    last_attempt = models.DateTimeField(null=True, blank=True)
-    score = models.FloatField(default=0.0)
-    rating = models.PositiveSmallIntegerField(default=0)
-    objects = ExerciseRecordManager()
-
-    class Meta:
-        ordering = ['user', 'last_attempt']
-
-    @staticmethod
-    def check_chapter_exercises(user, chapter_id):
-        exerciserecord_check = ExerciseRecord.objects.filter(user_id=user.id, exercise__chapter__id=chapter_id, rating__lt=2).first()
-        if not exerciserecord_check and user.profile.pendingchapter == chapter_id:
-            Profile.graduate_pending(user, chapter_id)
-            Profile.ok_to_graduate(user)
-
-    @staticmethod
-    def update_score(exerciserecord_id, exercise_score, user):
-        score = float(exercise_score)
-        exerciserecord = ExerciseRecord.objects.get(id=exerciserecord_id)
-        exerciserecord.last_attempt = timezone.now()
-        exerciserecord.score = score
-        if score >= 0.98:
-            exerciserecord.rating = 3
-            Profile.graduate_exercise(user, exerciserecord.exercise.exercise_order)
-        elif score >= 0.70:
-            exerciserecord.rating = 2
-            Profile.graduate_exercise(user, exerciserecord.exercise.exercise_order)
-        else:
-            exerciserecord.rating = 1
-            Profile.attempted_exercise(user, exerciserecord.exercise.exercise_order)
-        exerciserecord.save()
-        ExerciseRecord.check_chapter_exercises(user, exerciserecord.exercise.chapter.id)
-
-
 class Sentence(models.Model):
     lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, blank=False, null=False)
     strict = models.BooleanField(default=False)
@@ -951,40 +558,6 @@ class Sentence(models.Model):
 
     class Meta:
         ordering = ['lesson']
-
-
-class SentenceRecordManager(models.Manager):
-    """create and manage sentencerecords for each user"""
-
-    def update_sentence_record(self, profile):
-        usersentence = profile.currentlesson
-        user = profile.user
-        sentences = Sentence.objects.filter(lesson_id__exact=usersentence)
-
-        if not SentenceRecord.objects.filter(user=user, sentence__lesson_id__exact=usersentence).exists() and len(sentences) > 0:
-            for sen in sentences:
-                self.create(user=user, sentence=sen)
-
-    def initial_sentence_record(self, user):   # create the sentence records for lesson 1 when user is created
-        sentences = Sentence.objects.filter(lesson_id__exact=1)
-
-        if len(sentences) > 0:
-            for sen in sentences:
-                self.get_or_create(user=user, sentence=sen)
-
-
-class SentenceRecord(models.Model):
-    """tracking user progress for each sentence"""
-    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=False, null=False)
-    sentence = models.ForeignKey(Sentence, on_delete=models.CASCADE, blank=False, null=False)
-    last_attempt = models.DateTimeField(default=timezone.now, blank=True)
-    next_review = models.DateTimeField(null=True, blank=True)
-    score = models.IntegerField(default=0)                          # number of consecutive corrects
-    rating = models.IntegerField(default=0)                 # turns 1 if completed successfully in quiz
-    objects = SentenceRecordManager()
-
-    class Meta:
-        ordering = ['next_review']
 
 
 class Flashcard(models.Model):

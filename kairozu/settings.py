@@ -29,7 +29,6 @@ INSTALLED_APPS = [
 	'anymail',
 	'rest_framework',
 	'main.apps.MainConfig',
-	'demo.apps.DemoConfig',
 	'news.apps.NewsConfig',
 	'sandbox.apps.SandboxConfig'
 ]

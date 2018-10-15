@@ -12,11 +12,7 @@
         <div class="fc-general-col">
             <h1>{{ chapter.title }} Vocabulary</h1>
 
-            {% if user.profile.currentvocab > chapter.id %}
-                <p class="raleway">Congrats! You've finished the vocabulary for this chapter, but the <a href="{% url 'main:vocabquiz' chapter.id %}">Vocabulary Quiz</a> interface is always available if you want more practice.</p>
-            {% else %}
-                <p class="raleway">This is a list of the vocabulary used in the {{ chapter.title }} sentences. Complete the <a href="{% url 'main:vocabquiz' chapter.id %}">Vocabulary Quiz</a> to unlock the expressions for this chapter.</p>
-            {% endif %}
+            <p class="raleway">This is a list of the vocabulary used in {{ chapter.title }}. Complete the <a href="{% url 'main:vocabquiz' chapter.id %}">Vocabulary Quiz</a> to test your memory.</p>
 
             <span class="smaller bold raleway">Guide to Vocabulary List Symbols</span>
             <ul class="thin-list raleway">
