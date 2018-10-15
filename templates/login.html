@@ -5,6 +5,7 @@
 {% block content %}
 
 <div class="fc-basic-center">
+    <h3 class="raleway">Kairozu is maintained for the benefit of current users, but we sometimes add new users and will happily <a href="{% url "register" %}">send you an e-mail</a> if we open registration to the public.</h3>
     <div class="kairozu-authform width-60">
         {% if form.errors %}
             <p class="red-words">Your username and password didn't match. Please try again.</p>

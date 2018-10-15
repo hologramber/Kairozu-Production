@@ -1,6 +1,8 @@
 from django.contrib import messages
 from django.contrib.auth import login, update_session_auth_hash
 from django.contrib.auth.models import User
+from django.urls import reverse
+from django.views.generic import TemplateView, CreateView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
 from django.shortcuts import render, redirect, get_object_or_404
@@ -11,6 +13,7 @@ from django.template.loader import render_to_string
 from main.models import Chapter, Lesson, Profile
 from main.forms import SignUpForm, ChangeStrictModeForm
 from main.tokens import activationtoken
+from .forms import EmailBetaForm
 
 # def register(request):
 #     if request.method == 'POST':
@@ -57,6 +60,18 @@ from main.tokens import activationtoken
 
 # def newuser(request):
 #     return render(request, 'account_newuser.html')
+
+class BetaEmailView(CreateView):
+    template_name = 'closed_register.html'
+    form_class = EmailBetaForm
+
+    def get_success_url(self):
+        return reverse('betaconfirm')
+
+
+class BetaConfirmView(TemplateView):
+    template_name = 'closed_success.html'
+
 
 @login_required
 def account(request):

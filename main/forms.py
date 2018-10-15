@@ -26,6 +26,16 @@ class ValidateFinishForm(forms.Form):
     totalq = forms.IntegerField(max_value=50)
 
 
+from .models import BetaEmail
+
+class EmailBetaForm(forms.ModelForm):
+    user_beta_email = forms.EmailField(label="", max_length=50)
+
+    class Meta:
+        model = BetaEmail
+        exclude = ('user_beta_submitted',)
+
+
 class FlashcardForm(forms.ModelForm):
     strict = forms.BooleanField(label='Strict Mode', help_text='Force exact matching on word & character order.')
     literal = forms.CharField(label='Literal Meaning', help_text='Literal translation between English and Japanese.', required=False)

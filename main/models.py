@@ -141,6 +141,11 @@ class Profile(models.Model):
         user.profile.save()
 
 
+class BetaEmail(models.Model):
+    user_beta_email = models.EmailField(max_length=50, unique=True)
+    user_beta_submitted = models.DateTimeField(auto_now_add=True, blank=True)
+
+
 class Chapter(models.Model):
     title = models.CharField(max_length=254, unique=True, blank=False)
     subtitle = models.CharField(max_length=254, blank=False)

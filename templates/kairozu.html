@@ -38,6 +38,7 @@
                         <div><a class="headlink" href="{% url 'sandbox:main' %}">SANDBOX</a></div>
                         <div><a class="headlink" href="{% url 'news:main' %}">NEWS</a></div>
                         {% if user.is_authenticated %}
+                            <div><a class="headlink" href="{% url 'main:flashcard' %}">CARDS</a></div>
                             <div><a class="headlink" href="{% url 'account' %}">ACCOUNT</a></div>
                         {% else %}
                             <div><a class="headlink" href="{% url 'login' %}">SIGN&nbsp;IN</a></div>
