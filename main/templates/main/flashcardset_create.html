@@ -1,12 +1,12 @@
 {% extends 'kairozu.html' %}
-{% block title %}Kairozu Create Flashcard{% endblock %}
+{% block title %}Kairozu Create Flashcard Set{% endblock %}
 
 {% load static %}
 {% block content %}
 
 <div id="allwrap">
     <div class="fc-general-col">
-        <h1>Create New Flashcard</h1>
+        <h1>Create/Update Flashcard Set</h1>
 
         <form method="post">{% csrf_token %}
             <table>
@@ -18,5 +18,5 @@
 </div>
 
 <div class="s-20"></div>
-<h3><a href="{% url 'main:flashcard' %}"><i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;&nbsp;Return to Flashcard List</a></h3>
+<h3><a href="{% url 'main:flashcardsetlist' %}"><i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;&nbsp;Return to Flashcard Sets</a></h3>
 {% endblock %}

@@ -1,0 +1,19 @@
+{% extends 'kairozu.html' %}
+{% block title %}Kairozu Delete Flashcard Set{% endblock %}
+
+{% load static %}
+{% block content %}
+
+<div id="allwrap">
+    <div class="fc-general-col">
+        <h3>Are you sure you want to delete the flashcard set "{{ object.name }}"?</h3>
+        <h5>(This won't delete the flashcards themselves.)</h5>
+        <form method="post">{% csrf_token %}
+            <input class="btn btn-default" type="submit" value="DELETE" />
+        </form>
+    </div>
+</div>
+
+<div class="s-20"></div>
+<h3><a href="{% url 'main:flashcardsetlist' %}"><i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;&nbsp;Return to Flashcard Sets</a></h3>
+{% endblock %}

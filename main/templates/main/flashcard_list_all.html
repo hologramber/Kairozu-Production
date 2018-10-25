@@ -1,0 +1,47 @@
+{% extends 'kairozu.html' %}
+{% block title %}Kairozu Flashcards{% endblock %}
+
+{% load kairozu_filters %}
+{% load static %}
+{% block content %}
+
+<div id="allwrap">
+    <div class="fc-general-col">
+        <h1>All Flashcards</h1>
+        <div class="s-5"></div>
+        <a href="{% url 'main:flashcardcreate' "default-"|addstr:user.id %}">New Flashcard</a>
+        <a href="{% url 'main:flashcardbatch' %}">Import Flashcards via CSV</a>
+        <div class="s-5"></div>
+        <div class="table-responsive">
+            <table class="vocablist">
+            <thead>
+                <tr>
+                    <th>Set</th>
+                    <th>English・英語</th>
+                    <th>Kana・仮名</th>
+                    <th>Strict</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for flashcardset in object_list %}
+                    {% for flashcard in flashcardset.flashcard_set.all %}
+                        <tr>
+                            <td><a href="{% url 'main:flashcardsetdetail' flashcardset.slug %}">{{ flashcardset.name }}</a></td>
+                            <td>{{ flashcard.english }}</td>
+                            <td>{{ flashcard.kana }}</td>
+                            <td>{{ flashcard.strict }}</td>
+                            <td><a href="{% url 'main:flashcardupdate' flashcardset.slug flashcard.id %}">Edit</a> / <a href="{% url 'main:flashcarddelete' flashcardset.slug flashcard.id %}">Delete</a></td>
+                        </tr>
+                    {% endfor %}
+                {% endfor %}
+            </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="s-20"></div>
+<h3><a href="{% url 'main:flashcardsetlist' %}"><i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;&nbsp;Return to Flashcard Sets</a></h3>
+{% endblock %}
+

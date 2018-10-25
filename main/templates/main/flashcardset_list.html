@@ -1,0 +1,44 @@
+{% extends 'kairozu.html' %}
+{% block title %}Kairozu Flashcard Boxes{% endblock %}
+
+{% load static %}
+{% block content %}
+
+<div id="allwrap">
+    <div class="fc-general-col">
+        <h1>Flashcard Sets</h1>
+        <div class="s-5"></div>
+        <a href="{% url 'main:flashcardsetcreate' %}">New Flashcard Set</a>
+        <a href="{% url 'main:flashcardbatch' %}">Import Flashcards via CSV</a>
+        <a href="{% url 'main:flashcardlist' %}">View All Flashcards</a>
+        <div class="s-5"></div>
+        <div class="table-responsive">
+            <table class="vocablist">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th># of Cards</th>
+                    <th>Description</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for fset in object_list %}
+                    <tr>
+                        <td><a href="{% url 'main:flashcardsetdetail' fset.slug %}">{{ fset.name }}</a></td>
+                        <td>{{ fset.flashcard_set.count }}</td>
+                        <td>{{ fset.description }}</td>
+                        {% if fset.name == "default" %}
+                            <td><span class="ltgrey-words">Edit</span> / <span class="ltgrey-words">Delete</span></td>
+                        {% else %}
+                            <td><a href="{% url 'main:flashcardsetupdate' fset.slug %}">Edit</a> / <a href="{% url 'main:flashcardsetdelete' fset.slug %}">Delete</a></td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

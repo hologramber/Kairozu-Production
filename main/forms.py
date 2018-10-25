@@ -1,8 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from main.models import Profile, Flashcard
-
+from main.models import Profile, Flashcard, FlashcardSet, BetaEmail
 
 class SignUpForm(UserCreationForm):
     email = forms.EmailField(max_length=50, help_text='Required. Enter a valid email address.')
@@ -26,8 +25,6 @@ class ValidateFinishForm(forms.Form):
     totalq = forms.IntegerField(max_value=50)
 
 
-from .models import BetaEmail
-
 class EmailBetaForm(forms.ModelForm):
     user_beta_email = forms.EmailField(label="", max_length=50)
 
@@ -37,11 +34,21 @@ class EmailBetaForm(forms.ModelForm):
 
 
 class FlashcardForm(forms.ModelForm):
-    strict = forms.BooleanField(label='Strict Mode', help_text='Force exact matching on word & character order.')
+    strict = forms.BooleanField(label='Strict Mode', help_text='Force exact matching on word & character order.', required=False)
     literal = forms.CharField(label='Literal Meaning', help_text='Literal translation between English and Japanese.', required=False)
     context = forms.CharField(help_text='Additional context, e.g. speech used in a formal setting.', required=False)
     note = forms.CharField(help_text='Other information or additional notes regarding this flashcard.', required=False)
     kanji = forms.CharField(required=False)
+
     class Meta:
         model = Flashcard
-        fields = ['english', 'kana', 'kanji', 'strict', 'literal', 'context', 'note']
+        fields = ['english', 'set', 'kana', 'kanji', 'strict', 'literal', 'context', 'note']
+
+
+class FlashcardSetForm(forms.ModelForm):
+    name = forms.CharField(label='Flashcard set name', help_text='10 character limit; must be unique!', required=True)
+    description = forms.CharField(help_text='Additional description for this set of flashcards.', required=False)
+
+    class Meta:
+        model = FlashcardSet
+        fields = ['name', 'description']

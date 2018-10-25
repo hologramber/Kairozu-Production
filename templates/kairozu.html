@@ -35,12 +35,36 @@
                     <div id="sitename"><a href="{% url 'index' %}">回路図</a></div>
                     <div id="header-links">
                         <div><a class="headlink" href="{% url 'main:main' %}">INDEX</a></div>
-                        <div><a class="headlink" href="{% url 'sandbox:main' %}">SANDBOX</a></div>
-                        <div><a class="headlink" href="{% url 'news:main' %}">NEWS</a></div>
                         {% if user.is_authenticated %}
-                            <div><a class="headlink" href="{% url 'main:flashcard' %}">CARDS</a></div>
-                            <div><a class="headlink" href="{% url 'account' %}">ACCOUNT</a></div>
+                            <div id="dropdown1" class="dropdown">
+                                {% if user.profile.frcount == 0 %}
+                                    <div class="dropbtn">REVIEW <i class="fa fa-caret-down"></i></div>
+                                {% else %}
+                                    <div class="dropbtn">REVIEW <i class="fa red-words fa-caret-down"></i></div>
+                                {% endif %}
+                                <div class="dropdown-content">
+                                    {% if user.profile.frcount == 0 %}
+                                        <span>0&nbsp;FLASHCARDS</span>
+                                    {% else %}
+                                        <a href="{% url 'main:reviewflashcard' %}">{{ user.profile.frcount }}&nbsp;FLASHCARDS</a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div><a class="headlink" href="{% url 'main:flashcardsetlist' %}">FLASHCARDS</a></div>
+                            <div id="dropdown2" class="dropdown">
+                                <div class="dropbtn">KAIROZU <i class="fa red-words fa-caret-down"></i></div>
+                                <div class="dropdown-content">
+                                    <a href="{% url 'news:main' %}">KAIROZU&nbsp;NEWS</a>
+                                    <a href="{% url 'sandbox:main' %}">SANDBOX</a>
+                                    <a href="{% url 'account' %}">VIEW&nbsp;ACCOUNT</a>
+                                    <a href="">YOUR&nbsp;PROGRESS</a>
+                                    <a id="comment-button" href="#"><i class="fa fa-bug red-words" aria-hidden="true"></i>&nbsp;&nbsp;REPORT&nbsp;BUG</a>
+                                    <a href="{% url 'logout' %}">LOG&nbsp;OUT</a>
+                                </div>
+                            </div>
                         {% else %}
+                            <div><a class="headlink" href="{% url 'sandbox:main' %}">SANDBOX</a></div>
+                            <div><a class="headlink" href="{% url 'news:main' %}">NEWS</a></div>
                             <div><a class="headlink" href="{% url 'login' %}">SIGN&nbsp;IN</a></div>
                         {% endif %}
                     </div>

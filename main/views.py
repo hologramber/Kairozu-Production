@@ -1,7 +1,8 @@
 import json
 from datetime import datetime
+from django.contrib.auth.decorators import login_required
 
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render
 from django.views.generic import TemplateView, ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.http import HttpResponseRedirect, JsonResponse
@@ -9,8 +10,8 @@ from django.views.decorators.http import require_http_methods
 from django.urls import reverse, reverse_lazy
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import Profile, Vocabulary, Practice, Sentence, Lesson, Chapter, GrammarNote, Flashcard
-from .forms import ValidateFinishForm, FlashcardForm
+from .models import Profile, Vocabulary, Practice, Sentence, Lesson, Chapter, GrammarNote, Flashcard, FlashcardSet
+from .forms import ValidateFinishForm, FlashcardForm, FlashcardSetForm
 from .serializers import FlashcardSerializer
 
 error_finish = 'There was a problem with saving your current progress. Please e-mail kairozu@kairozu.com if you suspect this is an error.'
@@ -33,6 +34,7 @@ class ChapterInterfaceView(ListView):
         context = super(ChapterInterfaceView, self).get_context_data(**kwargs)
         chapter = get_object_or_404(Chapter, pk=self.kwargs['chapter_id'])
         context['chapter'] = chapter
+        Profile.has_reviews(self.request.user)
         return context
 
     def get_queryset(self):
@@ -49,6 +51,7 @@ class LessonView(TemplateView):
         context['lesson'] = lesson
         context['chapter'] = lesson.chapter
         context['pieces'] = lesson.lesson_pieces()
+        Profile.has_reviews(self.request.user)
         return context
 
 
@@ -73,6 +76,7 @@ class SummaryView(ListView):
         context = super(SummaryView, self).get_context_data(**kwargs)
         chapter = get_object_or_404(Chapter, pk=self.kwargs['chapter_id'])
         context['chapter'] = chapter
+        Profile.has_reviews(self.request.user)
         return context
 
     def get_queryset(self):
@@ -92,6 +96,7 @@ class VocabListView(ListView):
         context = super(VocabListView, self).get_context_data(**kwargs)
         chapter = get_object_or_404(Chapter, pk=self.kwargs['chapter_id'])
         context['chapter'] = chapter
+        Profile.has_reviews(self.request.user)
         return context
 
     def get_queryset(self):
@@ -135,6 +140,7 @@ class VocabSuccessView(TemplateView):
         context['chapter'] = chapter
         context['which_success'] = chapter.title + " Vocabulary Quiz."
         context['chapter_all'] = Chapter.objects.all()
+        Profile.has_reviews(self.request.user)
         return context
 
 
@@ -184,6 +190,7 @@ class PracticeSuccessView(TemplateView):
         context['which_success'] = "Practice Quiz for \"" + lesson.title + "\""
         context['chapter'] = lesson.chapter
         context['chapter_all'] = Chapter.objects.all()
+        Profile.has_reviews(self.request.user)
         return context
 
 
@@ -232,6 +239,7 @@ class SentenceSuccessView(TemplateView):
         context['which_success'] = "Sentence Quiz for \"" + lesson.title + "\""
         context['chapter'] = lesson.chapter
         context['chapter_all'] = Chapter.objects.all()
+        Profile.has_reviews(self.request.user)
         return context
 
 
@@ -264,8 +272,6 @@ class ReviewFlashcardCurrentView(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super(ReviewFlashcardCurrentView, self).get_context_data(**kwargs)
-        currentchapter = get_object_or_404(Chapter, pk=self.request.user.profile.currentchapter)
-        context['currentchapter'] = currentchapter
         Profile.has_reviews(self.request.user)
         return context
 
@@ -277,18 +283,39 @@ class ReviewFlashcardCurrentView(LoginRequiredMixin, ListView):
 # ################################ END REVIEWS ####################################
 # #################################################################################
 
-class FlashcardListView(LoginRequiredMixin, ListView):
-    template_name = 'main/flashcard_list.html'
+class FlashcardSetListView(LoginRequiredMixin, ListView):
+    template_name = 'main/flashcardset_list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(FlashcardSetListView, self).get_context_data(**kwargs)
+        Profile.has_reviews(self.request.user)
+        return context
 
     def get_queryset(self):
-        queryset = Flashcard.objects.filter(user_id=self.request.user.id)
+        queryset = FlashcardSet.objects.filter(user_id=self.request.user.id)
         return queryset
 
-class FlashcardCreateView(LoginRequiredMixin, CreateView):
-    model = Flashcard
-    template_name = 'main/flashcard_new.html'
-    form_class = FlashcardForm
-    success_url = reverse_lazy('main:flashcard')
+
+class FlashcardSetDetailView(LoginRequiredMixin, ListView):
+    template_name = 'main/flashcardset_list_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(FlashcardSetDetailView, self).get_context_data(**kwargs)
+        fset = get_object_or_404(FlashcardSet, slug=self.kwargs['slug'])
+        context['fset'] = fset
+        Profile.has_reviews(self.request.user)
+        return context
+
+    def get_queryset(self):
+        queryset = Flashcard.objects.filter(set__slug__exact=self.kwargs['slug'])
+        return queryset
+
+
+class FlashcardSetCreateView(LoginRequiredMixin, CreateView):
+    model = FlashcardSet
+    template_name = 'main/flashcardset_create.html'
+    form_class = FlashcardSetForm
+    success_url = reverse_lazy('main:flashcardsetlist')
 
     def form_valid(self, form):
         # form.instance.user = Profile.objects.get(user=self.request.user)
@@ -296,18 +323,155 @@ class FlashcardCreateView(LoginRequiredMixin, CreateView):
         form.instance.user = self.request.user
         return super().form_valid(form)
 
-class FlashcardUpdateView(LoginRequiredMixin, UpdateView):
-    model = Flashcard
-    template_name = 'main/flashcard_update.html'
-    form_class = FlashcardForm
-    success_url = reverse_lazy('main:flashcard')
+
+class FlashcardSetUpdateView(LoginRequiredMixin, UpdateView):
+    model = FlashcardSet
+    template_name = 'main/flashcard_create.html'
+    form_class = FlashcardSetForm
+    success_url = reverse_lazy('main:flashcardsetlist')
 
     def form_valid(self, form):
         form.instance.user = self.request.user
         # form.instance.created_by = self.request.user
         return super().form_valid(form)
 
+
+class FlashcardSetDeleteView(LoginRequiredMixin, DeleteView):
+    model = FlashcardSet
+    template_name = 'main/flashcardset_delete.html'
+    success_url = reverse_lazy('main:flashcardsetlist')
+
+    def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        if self.object.name != "default":
+            self.object.delete()
+            return HttpResponseRedirect(self.get_success_url())
+        else:
+            messages.add_message(request, messages.ERROR, "Cannot delete the default flashcard set.")
+            return HttpResponseRedirect(self.get_success_url())
+
+class FlashcardListViewAll(LoginRequiredMixin, ListView):
+    template_name = 'main/flashcard_list_all.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(FlashcardListViewAll, self).get_context_data(**kwargs)
+        Profile.has_reviews(self.request.user)
+        return context
+
+    def get_queryset(self):
+        queryset = FlashcardSet.objects.filter(user_id=self.request.user.id)
+        return queryset
+
+
+class FlashcardCreateView(LoginRequiredMixin, CreateView):
+    model = Flashcard
+    template_name = 'main/flashcard_create.html'
+    form_class = FlashcardForm
+
+    def get_initial(self):
+      slug = self.kwargs['slug']
+      set = FlashcardSet.objects.filter(slug__exact=slug).first()
+      return {
+        'set': set,
+      }
+
+    def form_valid(self, form):
+        # form.instance.user = Profile.objects.get(user=self.request.user)
+        # form.instance.created_by = self.request.user
+        form.instance.user = self.request.user
+        form.instance.set = FlashcardSet.objects.filter(slug__exact=self.kwargs['slug']).first()
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        if 'slug' in self.kwargs:
+            slug = self.kwargs['slug']
+        else:
+            slug = 'default-' + self.request.user.id
+        return reverse('main:flashcardsetdetail', kwargs={'slug': slug})
+
+class FlashcardUpdateView(LoginRequiredMixin, UpdateView):
+    model = Flashcard
+    template_name = 'main/flashcard_create.html'
+    form_class = FlashcardForm
+    pk_url_kwarg = "card_id"
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        form.instance.set = FlashcardSet.objects.filter(slug__exact=self.kwargs['slug']).first()
+        # form.instance.created_by = self.request.user
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        if 'slug' in self.kwargs:
+            slug = self.kwargs['slug']
+        else:
+            slug = 'default-' + self.request.user.id
+        return reverse('main:flashcardsetdetail', kwargs={'slug': slug})
+
 class FlashcardDeleteView(LoginRequiredMixin, DeleteView):
     model = Flashcard
     template_name = 'main/flashcard_delete.html'
-    success_url = reverse_lazy('main:flashcard')
+    pk_url_kwarg = "card_id"
+
+    def get_success_url(self):
+        if 'slug' in self.kwargs:
+            slug = self.kwargs['slug']
+        else:
+            slug = 'default-' + self.request.user.id
+        return reverse('main:flashcardsetdetail', kwargs={'slug': slug})
+
+@login_required
+def flashcard_batch_csv(request):
+    data = {}
+    availsets = FlashcardSet.objects.filter(user_id__exact=request.user.id)
+    if "GET" == request.method:
+        return render(request, "main/flashcard_batch_csv.html", {'data': data, 'availsets': availsets})
+    # if not GET, then proceed
+    try:
+        savetoset_id = request.POST["desiredSet"]
+        savetoset = FlashcardSet.objects.get(id=savetoset_id)
+        csv_file = request.FILES["csv_file"]
+        if not csv_file.name.endswith('.csv'):
+            messages.error(request,'Uploaded file isn\'t a CSV (comma separated value) file.')
+            return HttpResponseRedirect(reverse("main:flashcardbatch"))
+        #if file is too large, return
+        if csv_file.multiple_chunks():
+            messages.error(request,"Uploaded file is too big (%.2f MB)." % (csv_file.size/(1000*1000),))
+            return HttpResponseRedirect(reverse("main:flashcardbatch"))
+
+        file_data = csv_file.read().decode("utf-8")
+
+        lines = file_data.split("\n")
+        importsuccess = True
+        #loop over the lines and save them in db. If error , store as string and then display
+        for line in lines:
+            fields = line.split(",")
+            data_dict = {}
+            # ['english', 'set', 'kana', 'kanji', 'strict', 'literal', 'context', 'note']
+
+            data_dict["english"] = fields[0]
+            data_dict["set"] = savetoset.id
+            data_dict["kana"] = fields[1]
+            data_dict["kanji"] = fields[2]
+            data_dict["strict"] = fields[3]
+            data_dict["literal"] = fields[4]
+            data_dict["context"] = fields[5]
+            data_dict["note"] = fields[6]
+            try:
+                form = FlashcardForm(data_dict)
+                form.instance.user = request.user
+                if form.is_valid():
+                    form.save()
+                else:
+                    importsuccess = False
+            except Exception as e:
+                messages.error(request, "Unable to save card. " + repr(e))
+                pass
+        if importsuccess:
+            messages.add_message(request, messages.SUCCESS, 'Flashcards successfully imported!')
+        else:
+            messages.add_message(request, messages.ERROR, 'There was a problem with flashcard import. Contact kairozu@kairozu.com for assistance.')
+    except Exception as e:
+        messages.error(request, "Unable to upload file. " + repr(e))
+
+    return HttpResponseRedirect(reverse("main:flashcardbatch"))

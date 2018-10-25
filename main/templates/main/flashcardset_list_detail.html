@@ -6,7 +6,10 @@
 
 <div id="allwrap">
     <div class="fc-general-col">
-        <h1>Flashcards</h1>
+        <h1><a href="{% url 'main:flashcardsetlist' %}">Flashcard Sets</a> > {{ fset.name }}</h1>
+        <div class="s-5"></div>
+        <a href="{% url 'main:flashcardcreate' view.kwargs.slug %}">New Flashcard</a>
+        <a href="{% url 'main:flashcardbatch' %}">Import Flashcards via CSV</a>
         <div class="s-5"></div>
         <div class="table-responsive">
             <table class="vocablist">
@@ -24,14 +27,16 @@
                         <td>{{ flashcard.english }}</td>
                         <td>{{ flashcard.kana }}</td>
                         <td>{{ flashcard.strict }}</td>
-                        <td><a href="{% url 'main:flashcardupdate' flashcard.id %}">Edit</a> / <a href="{% url 'main:flashcarddelete' flashcard.id %}">Delete</a></td>
+                        <td><a href="{% url 'main:flashcardupdate' view.kwargs.slug flashcard.id %}">Edit</a> / <a href="{% url 'main:flashcarddelete' view.kwargs.slug flashcard.id %}">Delete</a></td>
                     </tr>
                 {% endfor %}
             </tbody>
             </table>
         </div>
-        <a href="{% url 'main:flashcardcreate' %}">Create New Flashcard</a>
     </div>
 </div>
+
+<div class="s-20"></div>
+<h3><a href="{% url 'main:flashcardsetlist' %}"><i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;&nbsp;Return to Flashcard Sets</a></h3>
 {% endblock %}
 

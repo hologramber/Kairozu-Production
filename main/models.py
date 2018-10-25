@@ -1,4 +1,5 @@
 import re
+from django.core.validators import RegexValidator
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
@@ -127,10 +128,16 @@ class Profile(models.Model):
     def create_user_profile(sender, instance, created, **kwargs):
         if created:
             Profile.objects.create(user=instance)
+            FlashcardSet.objects.create(user=instance, name="default", description="Flashcards without an assigned set.")
+            # VocabRecord.objects.initial_vocab_record(user=instance)
+            # SentenceRecord.objects.initial_sentence_record(user=instance)
             instance.profile.save()
 
     @receiver(post_save, sender=User)
     def save_user_profile(sender, instance, **kwargs):
+        FlashcardSet.objects.create(user=instance, name="default", description="Flashcards without an assigned set.")
+        # VocabRecord.objects.initial_vocab_record(user=instance)
+        # SentenceRecord.objects.initial_sentence_record(user=instance)
         instance.profile.save()
 
     @staticmethod
@@ -565,9 +572,33 @@ class Sentence(models.Model):
         ordering = ['lesson']
 
 
+class FlashcardSet(models.Model):
+    alphanumeric = RegexValidator(r'^[0-9a-zA-Z]*$', 'Only alphanumeric characters are allowed.')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=False, null=False)
+    name = models.CharField(max_length=10, unique=True, blank=False, validators=[alphanumeric])
+    slug = models.SlugField(max_length=20, unique=True)
+    description = models.CharField(max_length=250, blank=False)
+
+    def save(self, *args, **kwargs):
+        self.slug = self.name + "-" + str(self.user.id)
+        super(FlashcardSet, self).save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        cards = self.flashcard_set.all()
+        defaultset = FlashcardSet.objects.filter(user_id__exact=self.user.id, name="default").first()
+        for card in cards:
+            card.set = defaultset
+            card.save()
+        super(FlashcardSet, self).delete(*args, **kwargs)
+
+    def __str__(self):
+        return self.name
+
+
 class Flashcard(models.Model):
     """adding user personalized study content"""
     user = models.ForeignKey(User, on_delete=models.CASCADE, blank=False, null=False)
+    set = models.ForeignKey(FlashcardSet, on_delete=models.DO_NOTHING, blank=False, null=False)
     strict = models.BooleanField(default=False)
     active = models.BooleanField(default=True)
     english = models.CharField(max_length=250, blank=False)
@@ -599,6 +630,8 @@ class Flashcard(models.Model):
         self.kana_alt_blank = create_splits(self.kana_alt_blank)
         self.kanji_all_blank = create_splits(self.kanji_all_blank)
         self.kanji_alt_blank = create_splits(self.kanji_alt_blank)
+        if not self.set:
+            self.set = FlashcardSet.objects.filter(user_id__exact=self.user.id, name__exact="default").first()
         super(Flashcard, self).save(*args, **kwargs)
 
     class Meta:
