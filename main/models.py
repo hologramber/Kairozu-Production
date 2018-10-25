@@ -598,7 +598,7 @@ class FlashcardSet(models.Model):
 class Flashcard(models.Model):
     """adding user personalized study content"""
     user = models.ForeignKey(User, on_delete=models.CASCADE, blank=False, null=False)
-    set = models.ForeignKey(FlashcardSet, on_delete=models.DO_NOTHING, blank=True, null=True)
+    set = models.ForeignKey(FlashcardSet, on_delete=models.DO_NOTHING, blank=False, null=True)
     strict = models.BooleanField(default=False)
     active = models.BooleanField(default=True)
     english = models.CharField(max_length=250, blank=False)
