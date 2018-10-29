@@ -37,7 +37,7 @@ class FlashcardForm(forms.ModelForm):
     strict = forms.BooleanField(label='Strict Mode', help_text='Force exact matching on word & character order.', required=False)
     literal = forms.CharField(label='Literal Meaning', help_text='Literal translation between English and Japanese.', required=False)
     context = forms.CharField(help_text='Additional context, e.g. speech used in a formal setting.', required=False)
-    note = forms.CharField(help_text='Other information or additional notes regarding this flashcard.', required=False)
+    note = forms.CharField(required=False)
     kanji = forms.CharField(required=False)
 
     class Meta:

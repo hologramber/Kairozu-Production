@@ -502,7 +502,7 @@ a.headlink {
     top: 100%;
     right: 0;
     text-align: right;
-    padding: 5px 0 10px 0;
+    padding: 5px 0 5px 0;
     border-radius: 5px;
     border-top-left-radius: 0px;
     border-top-right-radius: 0px;
@@ -830,6 +830,23 @@ table.gpt > tbody > tr > td.blankline { line-height: 5px; }
 .importTable td {
     padding: 10px 15px;
     max-width: 150px;
+}
+.flashcardTable {
+    width: 100%;
+    max-width: 800px;
+    min-width: 280px; }
+.flashcardTable label {
+    width: 110px;
+    display: inline-block;
+}
+.flashcardTable input { width:80%; }
+.flashcardTable input.btn {
+    width: unset;
+    margin-top: 30px; }
+.flashcardTable .helptext {
+    display: block;
+    font-size: smaller;
+
 }
 
 .pass-j, .pass-e {

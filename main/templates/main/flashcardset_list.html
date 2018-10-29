@@ -8,9 +8,11 @@
     <div class="fc-general-col">
         <h1>Flashcard Sets</h1>
         <div class="s-5"></div>
-        <a href="{% url 'main:flashcardsetcreate' %}">New Flashcard Set</a>
-        <a href="{% url 'main:flashcardbatch' %}">Import Flashcards via CSV</a>
-        <a href="{% url 'main:flashcardlist' %}">View All Flashcards</a>
+        <ul class="fa-ul">
+            <li><a href="{% url 'main:flashcardsetcreate' %}"><i class="fa-li fa fa-star" aria-hidden="true"></i> New Flashcard Set</a></li>
+            <li><a href="{% url 'main:flashcardbatch' %}"><i class="fa-li fa fa-star" aria-hidden="true"></i> Import Flashcards via CSV</a></li>
+            <li><a href="{% url 'main:flashcardlist' %}"> <i class="fa-li fa fa-star" aria-hidden="true"></i>View All Flashcards</a></li>
+        </ul>
         <div class="s-5"></div>
         <div class="table-responsive">
             <table class="vocablist">
@@ -40,5 +42,6 @@
         </div>
     </div>
 </div>
+<div class="s-50"></div>
 {% endblock %}
 

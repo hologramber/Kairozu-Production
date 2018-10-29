@@ -34,7 +34,8 @@ class ChapterInterfaceView(ListView):
         context = super(ChapterInterfaceView, self).get_context_data(**kwargs)
         chapter = get_object_or_404(Chapter, pk=self.kwargs['chapter_id'])
         context['chapter'] = chapter
-        Profile.has_reviews(self.request.user)
+        if self.request.user.is_authenticated:
+            Profile.has_reviews(self.request.user)
         return context
 
     def get_queryset(self):
@@ -51,7 +52,8 @@ class LessonView(TemplateView):
         context['lesson'] = lesson
         context['chapter'] = lesson.chapter
         context['pieces'] = lesson.lesson_pieces()
-        Profile.has_reviews(self.request.user)
+        if self.request.user.is_authenticated:
+            Profile.has_reviews(self.request.user)
         return context
 
 
@@ -76,7 +78,8 @@ class SummaryView(ListView):
         context = super(SummaryView, self).get_context_data(**kwargs)
         chapter = get_object_or_404(Chapter, pk=self.kwargs['chapter_id'])
         context['chapter'] = chapter
-        Profile.has_reviews(self.request.user)
+        if self.request.user.is_authenticated:
+            Profile.has_reviews(self.request.user)
         return context
 
     def get_queryset(self):
@@ -96,7 +99,8 @@ class VocabListView(ListView):
         context = super(VocabListView, self).get_context_data(**kwargs)
         chapter = get_object_or_404(Chapter, pk=self.kwargs['chapter_id'])
         context['chapter'] = chapter
-        Profile.has_reviews(self.request.user)
+        if self.request.user.is_authenticated:
+            Profile.has_reviews(self.request.user)
         return context
 
     def get_queryset(self):
@@ -140,7 +144,8 @@ class VocabSuccessView(TemplateView):
         context['chapter'] = chapter
         context['which_success'] = chapter.title + " Vocabulary Quiz."
         context['chapter_all'] = Chapter.objects.all()
-        Profile.has_reviews(self.request.user)
+        if self.request.user.is_authenticated:
+            Profile.has_reviews(self.request.user)
         return context
 
 
@@ -190,7 +195,8 @@ class PracticeSuccessView(TemplateView):
         context['which_success'] = "Practice Quiz for \"" + lesson.title + "\""
         context['chapter'] = lesson.chapter
         context['chapter_all'] = Chapter.objects.all()
-        Profile.has_reviews(self.request.user)
+        if self.request.user.is_authenticated:
+            Profile.has_reviews(self.request.user)
         return context
 
 
@@ -239,7 +245,8 @@ class SentenceSuccessView(TemplateView):
         context['which_success'] = "Sentence Quiz for \"" + lesson.title + "\""
         context['chapter'] = lesson.chapter
         context['chapter_all'] = Chapter.objects.all()
-        Profile.has_reviews(self.request.user)
+        if self.request.user.is_authenticated:
+            Profile.has_reviews(self.request.user)
         return context
 
 

@@ -6,10 +6,12 @@
 
 <div id="allwrap">
     <div class="fc-general-col">
-        <h1><a href="{% url 'main:flashcardsetlist' %}">Flashcard Sets</a> > {{ fset.name }}</h1>
+        <h1><a href="{% url 'main:flashcardsetlist' %}">Flashcard Sets</a> <span class="h3"><i class="fa fa-chevron-right" aria-hidden="true"></i></span> {{ fset.name }}</h1>
         <div class="s-5"></div>
-        <a href="{% url 'main:flashcardcreate' view.kwargs.slug %}">New Flashcard</a>
-        <a href="{% url 'main:flashcardbatch' %}">Import Flashcards via CSV</a>
+        <ul class="fa-ul">
+            <li><a href="{% url 'main:flashcardcreate' view.kwargs.slug %}"><i class="fa-li fa fa-star" aria-hidden="true"></i> New Flashcard</a></li>
+            <li><a href="{% url 'main:flashcardbatch' %}"><i class="fa-li fa fa-star" aria-hidden="true"></i> Import Flashcards via CSV</a></li>
+        </ul>
         <div class="s-5"></div>
         <div class="table-responsive">
             <table class="vocablist">
@@ -38,5 +40,6 @@
 
 <div class="s-20"></div>
 <h3><a href="{% url 'main:flashcardsetlist' %}"><i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;&nbsp;Return to Flashcard Sets</a></h3>
+<div class="s-50"></div>
 {% endblock %}
 
