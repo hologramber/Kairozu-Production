@@ -129,14 +129,11 @@ class Profile(models.Model):
             Profile.objects.create(user=instance)
             FlashcardSet.objects.create(user=instance, name="default", description="Flashcards without an assigned set.")
             # VocabRecord.objects.initial_vocab_record(user=instance)
-            # SentenceRecord.objects.initial_sentence_record(user=instance)
             instance.profile.save()
 
     @receiver(post_save, sender=User)
     def save_user_profile(sender, instance, **kwargs):
-        # FlashcardSet.objects.create(user=instance, name="default", description="Flashcards without an assigned set.")
         # VocabRecord.objects.initial_vocab_record(user=instance)
-        # SentenceRecord.objects.initial_sentence_record(user=instance)
         instance.profile.save()
 
     @staticmethod
@@ -144,6 +141,9 @@ class Profile(models.Model):
         """check to see if a user has any pending reviews, and if so, how many"""
         now = timezone.now()
         user.profile.frcount = Flashcard.objects.filter(user_id=user.id, next_review__lte=now).count()
+        fsets = FlashcardSet.objects.filter(user_id=user.id)
+        for fset in fsets:
+            fset.update_fsrcount()
         user.profile.save()
 
 
@@ -575,6 +575,7 @@ class FlashcardSet(models.Model):
     alphanumeric = RegexValidator(r'^[0-9a-zA-Z]*$', 'Only alphanumeric characters are allowed.')
     user = models.ForeignKey(User, on_delete=models.CASCADE, blank=False, null=False)
     name = models.CharField(max_length=10, unique=True, blank=False, validators=[alphanumeric])
+    fsrcount = models.PositiveIntegerField(default=0)
     slug = models.SlugField(max_length=20, unique=True)
     description = models.CharField(max_length=250, blank=False)
 
@@ -589,6 +590,11 @@ class FlashcardSet(models.Model):
             card.set = defaultset
             card.save()
         super(FlashcardSet, self).delete(*args, **kwargs)
+
+    def update_fsrcount(self, *args, **kwargs):
+        now = timezone.now()
+        self.fsrcount = self.flashcard_set.filter(next_review__lte=now).count()
+        super(FlashcardSet, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.name
@@ -614,7 +620,6 @@ class Flashcard(models.Model):
     kanji_clean = models.CharField(max_length=250, blank=True)
     f_kana = models.CharField(max_length=250, blank=True)
     f_kanji = models.CharField(max_length=250, blank=True)
-    last_attempt = models.DateTimeField(default=timezone.now)
     next_review = models.DateTimeField(default=timezone.now)
     score = models.IntegerField(default=0)                          # number of consecutive corrects
 

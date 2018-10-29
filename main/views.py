@@ -262,6 +262,10 @@ class ReviewFlashcardView(LoginRequiredMixin, TemplateView):
     template_name = 'main/flashcardq_review.html'
 
 
+class ReviewFlashcardQuickView(LoginRequiredMixin, TemplateView):
+    template_name = 'main/flashcardq_review_quick.html'
+
+
 @require_http_methods(["POST"])
 def reviewflashcardsave(request):
     fr_queryset = Flashcard.objects.filter(user_id=request.user.id, next_review__lte=datetime.now())

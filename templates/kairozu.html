@@ -46,7 +46,28 @@
                                     {% if user.profile.frcount == 0 %}
                                         <span>0&nbsp;FLASHCARDS</span>
                                     {% else %}
-                                        <a href="{% url 'main:reviewflashcard' %}">{{ user.profile.frcount }}&nbsp;FLASHCARDS</a>
+                                        <div class="dropdown-sub">
+                                            <div class="dropbtn-sub">TEXT REVIEWS&nbsp;<i class="fa red-words fa-caret-down"></i></div>
+                                            <div class="dropdown-sub-content">
+                                                <a href="{% url 'main:reviewflashcard' %}">ALL SETS&nbsp;({{ user.profile.frcount }})</a>
+                                                {% for fset in user.flashcardset_set.all %}
+                                                    {% if fset.fsrcount > 0 %}
+                                                        <a href="{% url 'main:reviewflashcard' fset.slug %}">{{ fset.name|upper }}&nbsp;({{ fset.fsrcount }})</a>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                        <div class="dropdown-sub">
+                                            <div class="dropbtn-sub">QUICK REVIEWS&nbsp;<i class="fa red-words fa-caret-down"></i></div>
+                                            <div class="dropdown-sub-content">
+                                                <a href="{% url 'main:reviewflashcardquick' %}">ALL SETS&nbsp;({{ user.profile.frcount }})</a>
+                                                {% for fset in user.flashcardset_set.all %}
+                                                    {% if fset.fsrcount > 0 %}
+                                                        <a href="{% url 'main:reviewflashcard' fset.slug %}">{{ fset.name|upper }}&nbsp;({{ fset.fsrcount }})</a>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </div>
+                                        </div>
                                     {% endif %}
                                 </div>
                             </div>

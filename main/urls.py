@@ -43,9 +43,13 @@ urlpatterns = [
 
     # ################## REVIEWS #######################
     url(r'^reviewflashcard/$', views.ReviewFlashcardView.as_view(), name='reviewflashcard'),
+    url(r'^reviewflashcard/quick/$', views.ReviewFlashcardQuickView.as_view(), name='reviewflashcardquick'),
     url(r'^reviewflashcard/save/$', views.reviewflashcardsave, name='reviewflashcardsave'),
     url(r'^reviewflashcard/current/$', views.ReviewFlashcardCurrentView.as_view(), name='reviewflashcardcurrent'),
+    url(r'^reviewflashcard/grab/(?P<set_slug>[\w\-]+)/$', api_views.ReviewFlashcardGrab.as_view()),
     url(r'^reviewflashcard/grab/$', api_views.ReviewFlashcardGrab.as_view(), name='reviewflashcardgrab'),
+    url(r'^reviewflashcard/(?P<set_slug>[\w\-]+)/quick/$', views.ReviewFlashcardQuickView.as_view(), name='reviewflashcardquick'),
+    url(r'^reviewflashcard/(?P<set_slug>[\w\-]+)/$', views.ReviewFlashcardView.as_view(), name='reviewflashcard'),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

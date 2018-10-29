@@ -36,7 +36,10 @@ class ReviewFlashcardGrab(LoginRequiredMixin, generics.ListAPIView):
     serializer_class = serializers.FlashcardSerializer
 
     def get_queryset(self):
-        frecords = Flashcard.objects.filter(user_id=self.request.user.id, next_review__lte=datetime.now())[:50]
+        if 'set_slug' in self.kwargs:
+            frecords = Flashcard.objects.filter(user_id=self.request.user.id, set__slug__exact=self.kwargs['set_slug'], next_review__lte=datetime.now())[:50]
+        else:
+            frecords = Flashcard.objects.filter(user_id=self.request.user.id, next_review__lte=datetime.now())[:50]
         if not frecords:
             frecords = Flashcard.objects.none()
         return frecords

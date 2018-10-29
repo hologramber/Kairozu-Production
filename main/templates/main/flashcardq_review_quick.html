@@ -18,7 +18,24 @@
                     </a>
                 </div>
 
-                {% include 'main/quiz_answer.html' %}
+                <div id='answer' style="display: none;">
+                    <form id='quiz' action='' class='abox' method='post'>{% csrf_token %}
+                        <fieldset class>
+                            <input id='attempt' type='text' autocomplete='off' autocorrect='off' autocapitalize='off' spellcheck='false' autofocus />
+                            <button><i class="fa fa-chevron-right"></i></button>
+                        </fieldset>
+                    </form>
+                </div>
+
+                <div id='buttons'>
+                    <button id="hintbutton" onclick="showHint()">Show Hint</button>
+                    <button id="ansbutton" onclick="showAnswer()">Show Answer</button>
+                    <button id="correct" onclick="buttonCorrect()" style="display: none;">Correct</button>
+                    <button id="incorrect" onclick="buttonIncorrect()" style="display: none;">Incorrect (Next Flashcard)</button>
+                    <button id="practice" onclick="buttonPractice()" style="display: none;">Incorrect (Practice)</button>
+                    <br /><br />
+                </div>
+
                 <div id='literal' class='lit-c'></div>
                 <div id='notes' class='lit-c'></div>
             </div>  <!-- /#sfield -->
@@ -46,6 +63,13 @@
         pagewrap = $('#allwrap'),
         reflink = $("#reflink"),
         savestat = $('#savenow'),
+        hintbutton = $('#hintbutton'),
+        ansbutton = $('#ansbutton'),
+        answer = $('#answer'),
+        buttons = $('#buttons'),
+        correct = $('#correct'),
+        incorrect = $('#incorrect'),
+        practice = $('#practice'),
         bug = $('#bug-button'),
         set_slug = "{{ view.kwargs.set_slug }}";
 
@@ -53,8 +77,66 @@
         qcount = 0,
         q = 0,
         totalq = 0,
-        level = 3,
-        repeat = 0;
+        level = 3;
+
+    function nextQ() {
+        savestat.html('<a href=\'#\' onclick=\'saveq()\'><i class=\'fa fa-save\' aria-hidden=\'true\'></i></a>');
+        q++;
+        qcount++;
+        if (((q < totalq) && (qcount > 9)) || (q >= totalq)) {
+            saveq();
+        } else {
+            flashcard();
+        }
+        correct.hide();
+        incorrect.hide();
+        practice.hide();
+        ansbutton.show();
+        hintbutton.show();
+    }
+
+    function buttonCorrect() {
+        qdata[q]['score'] = qdata[q]['score'] + 1;
+        qdata[q]['next_review'] = addTime(qdata[q]['score']);
+        nextQ();
+    }
+
+    function buttonIncorrect() {
+        qdata[q]['score'] = 0;
+        qdata[q]['next_review'] = addTime(0);
+        nextQ();
+    }
+
+    function buttonPractice() {
+        qdata[q]['next_review'] = addTime(0);
+        savestat.html('<a href=\'#\' onclick=\'saveq()\'><i class=\'fa fa-save\' aria-hidden=\'true\'></i></a>');
+        qdata[q]['score'] = 0;
+        answer.show();
+        buttons.hide();
+        level = 3;
+        flashcard();
+    }
+
+    function showAnswer() {
+        {% if user.profile.preferkanji %}
+            hint.html(qdata[q]['f_kanji']);
+        {% else %}
+            hint.html(qdata[q]['f_kana']);
+        {% endif %}
+        correct.show();
+        incorrect.show();
+        practice.show();
+        ansbutton.hide();
+        hintbutton.hide();
+    }
+
+    function showHint() {
+        {% if user.profile.preferkanji %}
+            hint.html(qdata[q]['kanji_alt_blank']);
+        {% else %}
+            hint.html(qdata[q]['kana_alt_blank']);
+        {% endif %}
+    }
 
     function flashcard() {
         context.html('&#8203;' + qdata[q]['context'] + '&#8203;');
@@ -171,25 +253,23 @@
                 "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend",
                 function() { quiz.removeClass("abox_g"); });
             if (level === 3) {
-                if (repeat) {
-                    qdata[q]['next_review'] = addTime(1);
-                    repeat = 0;
-                } else {
-                    qdata[q]['score'] = qdata[q]['score'] + 1;
-                    qdata[q]['next_review'] = addTime(qdata[q]['score']);
-                }
+                answer.hide();
+                buttons.show();
+                correct.hide();
+                incorrect.hide();
+                practice.hide();
+                ansbutton.show();
+                hintbutton.show();
                 q++;
                 qcount++;
             } else {
                 level = 3;
-                repeat = 1;
             }
         } else {
             bug.show();
             quiz.addClass("abox_red abox_r").one(
                 "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend",
                 function() { quiz.removeClass("abox_r"); });
-            qdata[q]['score'] = 0;
             if (level > 0) { level--; }
         }
         savestat.html('<a href=\'#\' onclick=\'saveq()\'><i class=\'fa fa-save\' aria-hidden=\'true\'></i></a>');
