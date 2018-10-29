@@ -470,7 +470,10 @@ span.footer-sm-text {
     padding-bottom: 4px;
     float: left;
     padding-left: 15px;
-    padding-right: 15px; }
+    padding-right: 20px; }
+#header-links > div.dropdown-kai {
+    padding-right: 15px;
+    margin-bottom: 0 }
 a.headlink {
     font-variant: all-small-caps;
     font-size: 1.3em; }
@@ -495,7 +498,7 @@ a.headlink {
     -moz-transition: color 200ms ease-in-out;
     -o-transition: color 200ms ease-in-out;
     transition: color 200ms ease-in-out; }
-.dropdown .dropbtn:hover > i, .dropdown-content a:hover > i { color: #FF9729; }
+.dropdown .dropbtn:hover > i, .dropdown-content a:hover > i, .dropbtn-sub:hover > i, .dropbtn-sub a:hover > i { color: #FF9729; }
 .dropdown-content {
     display: none;
     position: absolute;
@@ -514,9 +517,12 @@ a.headlink {
 .dropdown-content a, .dropdown-content span, .dropdown-sub-content a, .dropdown-sub-content span, .dropbtn-sub {
     padding: 10px 20px;
     display: block; }
+.dropbtn-sub { line-height: 1em; }
 .dropdown-content span, .dropdown-sub-content span { color: #585858; }
-.dropdown.active, .dropdown-sub.active { background: #080808; }
-.dropdown.active .dropbtn > i { color: #FF9729; }
+.dropdown.active, .dropdown-sub.active {
+    background: #080808;
+    border-radius: 0; }
+.dropdown.active .dropbtn > i, .dropdown-sub.active .dropbtn-sub > i { color: #FF9729; }
 .dropdown.active .dropdown-content, .dropdown-sub.active .dropdown-sub-content { display: block; }
 #sidecollapse {				/* collapse-sidebar button in upper left corner on pages w/sidebar */
     font-size: 20px;
@@ -1446,28 +1452,42 @@ span.step {
         display: flex;
         flex-direction: column;
         align-items: flex-start;
-        margin-top: 70px; }
+        margin-top: 70px;
+        width: 100%; }
     .topnav.responsive #header-links > div {
         display: inline-flex;
         flex-direction: column;
-        padding-left: 0; }
+        padding-top: 10px;
+        width: 100%;
+        margin-left: -20px; }
+    #header-links > div.dropdown-kai { margin-bottom: 15px; }
     .topnav.responsive a {
         float: none;
         display: block;
-        text-align: left; }
+        text-align: left;
+        width: 100%; }
+    .topnav.responsive .dropbtn-sub { text-align: left; }
     .topnav.responsive .dropdown { float: none; }
     .topnav.responsive .dropdown-content {
         position: static;
         float: none;
-        width: auto;
         margin-top: 0;
         background: transparent;
         border: 0;
         -webkit-box-shadow: none;
-        box-shadow: none; }
+        box-shadow: none;
+        width: 100%; }
+    .topnav.responsive .dropdown-sub-content { padding-left: 20px; }
+    .dropdown.active, .dropdown-sub.active { border-radius: 5px; }
     .dropdown.active { background: #2b2b2b; color: white; }
     .dropdown.active .dropbtn { color: white; }
-    .dropdown:hover { background: #2b2b2b; color: white; }
+    .dropdown:hover {
+        background: #2b2b2b;
+        color: white;
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+        border-bottom-left-radius: 0px;
+        border-top-left-radius: 0px; }
     .topnav.responsive .dropdown .dropbtn {
         display: block;
         width: 100%;

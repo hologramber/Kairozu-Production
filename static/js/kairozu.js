@@ -40,11 +40,11 @@ $(function() {
     });
 
     $('.dropdown').click(function(e) {
+        $('.dropdown-sub-content').not($(this).children()).hide();
         $(this).children('.dropdown-content').slideToggle();
         this.classList.toggle('active');
         $('.dropdown-content').not($(this).children()).hide();
         $('.dropdown').not($(this)).removeClass('active');
-        $('.dropdown-sub-content').not($(this).children()).hide();
         $('.dropdown-sub').not($(this)).removeClass('active');
         e.stopPropagation();
     });

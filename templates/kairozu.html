@@ -44,12 +44,12 @@
                                 {% endif %}
                                 <div class="dropdown-content">
                                     {% if user.profile.frcount == 0 %}
-                                        <span>0&nbsp;FLASHCARDS</span>
+                                        <span>ALL&nbsp;SETS&nbsp;(0)</span>
                                     {% else %}
                                         <div class="dropdown-sub">
-                                            <div class="dropbtn-sub">TEXT REVIEWS&nbsp;<i class="fa red-words fa-caret-down"></i></div>
+                                            <div class="dropbtn-sub">TEXT&nbsp;REVIEWS&nbsp;<i class="fa red-words fa-caret-down"></i></div>
                                             <div class="dropdown-sub-content">
-                                                <a href="{% url 'main:reviewflashcard' %}">ALL SETS&nbsp;({{ user.profile.frcount }})</a>
+                                                <a href="{% url 'main:reviewflashcard' %}">ALL&nbsp;SETS&nbsp;({{ user.profile.frcount }})</a>
                                                 {% for fset in user.flashcardset_set.all %}
                                                     {% if fset.fsrcount > 0 %}
                                                         <a href="{% url 'main:reviewflashcard' fset.slug %}">{{ fset.name|upper }}&nbsp;({{ fset.fsrcount }})</a>
@@ -58,9 +58,9 @@
                                             </div>
                                         </div>
                                         <div class="dropdown-sub">
-                                            <div class="dropbtn-sub">QUICK REVIEWS&nbsp;<i class="fa red-words fa-caret-down"></i></div>
+                                            <div class="dropbtn-sub">FAST&nbsp;REVIEWS&nbsp;<i class="fa red-words fa-caret-down"></i></div>
                                             <div class="dropdown-sub-content">
-                                                <a href="{% url 'main:reviewflashcardquick' %}">ALL SETS&nbsp;({{ user.profile.frcount }})</a>
+                                                <a href="{% url 'main:reviewflashcardquick' %}">ALL&nbsp;SETS&nbsp;({{ user.profile.frcount }})</a>
                                                 {% for fset in user.flashcardset_set.all %}
                                                     {% if fset.fsrcount > 0 %}
                                                         <a href="{% url 'main:reviewflashcard' fset.slug %}">{{ fset.name|upper }}&nbsp;({{ fset.fsrcount }})</a>
@@ -72,13 +72,12 @@
                                 </div>
                             </div>
                             <div><a class="headlink" href="{% url 'main:flashcardsetlist' %}">FLASHCARDS</a></div>
-                            <div id="dropdown2" class="dropdown">
+                            <div id="dropdown2" class="dropdown dropdown-kai">
                                 <div class="dropbtn">KAIROZU <i class="fa red-words fa-caret-down"></i></div>
                                 <div class="dropdown-content">
                                     <a href="{% url 'news:main' %}">KAIROZU&nbsp;NEWS</a>
                                     <a href="{% url 'sandbox:main' %}">SANDBOX</a>
                                     <a href="{% url 'account' %}">VIEW&nbsp;ACCOUNT</a>
-                                    <a href="">YOUR&nbsp;PROGRESS</a>
                                     <a id="comment-button" href="#"><i class="fa fa-bug red-words" aria-hidden="true"></i>&nbsp;&nbsp;REPORT&nbsp;BUG</a>
                                     <a href="{% url 'logout' %}">LOG&nbsp;OUT</a>
                                 </div>
