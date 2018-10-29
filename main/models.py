@@ -7,7 +7,6 @@ from django.contrib.auth.signals import user_logged_in
 from django.dispatch import receiver
 from django.utils import timezone
 from model_utils.managers import InheritanceManager
-from model_utils import Choices
 from pygments import highlight
 from pygments.lexers import KairozuLexer
 from pygments.formatters import KairozuFormatter
@@ -135,7 +134,7 @@ class Profile(models.Model):
 
     @receiver(post_save, sender=User)
     def save_user_profile(sender, instance, **kwargs):
-        FlashcardSet.objects.create(user=instance, name="default", description="Flashcards without an assigned set.")
+        # FlashcardSet.objects.create(user=instance, name="default", description="Flashcards without an assigned set.")
         # VocabRecord.objects.initial_vocab_record(user=instance)
         # SentenceRecord.objects.initial_sentence_record(user=instance)
         instance.profile.save()

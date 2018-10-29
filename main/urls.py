@@ -10,11 +10,6 @@ urlpatterns = [
     url(r'^lesson/(?P<lesson_id>[0-9]+)/notes/$', views.GrammarNoteView.as_view(), name='grammarnote'),
     url(r'^chapter/(?P<chapter_id>[0-9]+)/summary/$', views.SummaryView.as_view(), name='summary'),       # summary of ch lessons
 
-    # url(r'^flashcard/$', views.FlashcardListViewAll.as_view(), name='flashcard'),
-    # url(r'^flashcard/create/$', views.FlashcardCreateView.as_view(), name='flashcardcreate'),
-    # url(r'^flashcard/(?P<pk>[0-9]+)/$', views.FlashcardUpdateView.as_view(), name='flashcardupdate'),
-    # url(r'^flashcard/(?P<pk>[0-9]+)/delete/$', views.FlashcardDeleteView.as_view(), name='flashcarddelete'),
-
     url(r'^flashcards/$', views.FlashcardSetListView.as_view(), name='flashcardsetlist'),
     url(r'^flashcards/create/$', views.FlashcardSetCreateView.as_view(), name='flashcardsetcreate'),
     url(r'^flashcards/all/$', views.FlashcardListViewAll.as_view(), name='flashcardlist'),
