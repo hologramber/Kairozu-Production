@@ -64,14 +64,13 @@
             If you include commas in any field, make sure to enclose the whole field in quotes!
         </div>
         <h3>Examples:</h3>
-            My name is Amber, わたし　の　なまえ　は　アンバー　です。, 私　の　名前　は　アンバー　です。, True, "as for my name, Amber is",,
+            My name is Amber,わたし　の　なまえ　は　アンバー　です。,私　の　名前　は　アンバー　です。,True,"as for my name, Amber is",,
             <div class="s-5"></div>
-            green, みどり, 緑, True,,,
+            green,みどり,緑,True,,,
             <div class="s-5"></div>
-            (I'm) home!, ただいま, 只今, True, safely now, said when arriving home, usually written in kana
+            (I'm) home!,ただいま,只今,True,safely now,said when arriving home,usually written in kana
             <div class="s-5"></div>
-            The dog is black., いぬ　は　くろい　です。, 犬　は　黒い　です。, True, "as for dog, (it) is black", uses i-adjective for color, this is a simple sentence
-
+            The dog is black.,いぬ　は　くろい　です。,犬　は　黒い　です。,True,"as for dog, (it) is black",uses i-adjective for color,this is a simple sentence
         </p>
         <form action="{% url 'main:flashcardbatch' %}" method="POST" enctype="multipart/form-data">
             {% csrf_token %}

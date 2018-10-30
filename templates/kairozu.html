@@ -47,7 +47,7 @@
                                         <span>ALL&nbsp;SETS&nbsp;(0)</span>
                                     {% else %}
                                         <div class="dropdown-sub">
-                                            <div class="dropbtn-sub">TEXT&nbsp;REVIEWS&nbsp;<i class="fa red-words fa-caret-down"></i></div>
+                                            <div class="dropbtn-sub mobile-top-margin-10">TEXT&nbsp;REVIEWS&nbsp;<i class="fa red-words fa-caret-down"></i></div>
                                             <div class="dropdown-sub-content">
                                                 <a href="{% url 'main:reviewflashcard' %}">ALL&nbsp;SETS&nbsp;({{ user.profile.frcount }})</a>
                                                 {% for fset in user.flashcardset_set.all %}
@@ -75,7 +75,7 @@
                             <div id="dropdown2" class="dropdown dropdown-kai">
                                 <div class="dropbtn">KAIROZU <i class="fa red-words fa-caret-down"></i></div>
                                 <div class="dropdown-content">
-                                    <a href="{% url 'news:main' %}">KAIROZU&nbsp;NEWS</a>
+                                    <a class="mobile-top-margin-10" href="{% url 'news:main' %}">KAIROZU&nbsp;NEWS</a>
                                     <a href="{% url 'sandbox:main' %}">SANDBOX</a>
                                     <a href="{% url 'account' %}">VIEW&nbsp;ACCOUNT</a>
                                     <a id="comment-button" href="#"><i class="fa fa-bug red-words" aria-hidden="true"></i>&nbsp;&nbsp;REPORT&nbsp;BUG</a>

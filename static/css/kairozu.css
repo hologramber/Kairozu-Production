@@ -506,7 +506,6 @@ a.headlink {
     top: 100%;
     right: 0;
     text-align: right;
-    padding: 5px 0 5px 0;
     border-radius: 5px;
     border-top-left-radius: 0px;
     border-top-right-radius: 0px;
@@ -515,12 +514,21 @@ a.headlink {
     width: max-content;
     box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.2);
     z-index: 1; }
-.dropdown-content a, .dropdown-content span, .dropdown-sub-content a, .dropdown-sub-content span, .dropbtn-sub {
-    padding: 10px 20px;
+.dropdown-content a, .dropdown-content span {
+    padding: 16px 20px;
     display: block;
     font-size: 0.95em; }
-.dropbtn-sub { line-height: 1em; }
+.dropdown-content a:last-child, .dropdown-content span:last-child, .dropdown-content div:last-child {
+    border-radius: 0;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px; }
+.dropbtn-sub {
+    display: block;
+    line-height: 1em;
+    padding: 16px 20px; }
+.dropdown-content a:hover, .dropdown-sub:hover { background: #080808; }
 .dropdown-content span, .dropdown-sub-content span { color: #585858; }
+.dropdown-sub-content { background: #2b2b2b; }
 .dropdown.active, .dropdown-sub.active {
     background: #080808;
     border-radius: 0; }
@@ -1155,13 +1163,17 @@ span.step {
 	box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.2); }
 .btn-default:hover { background: #8a8a8a; }
 .btn-success {
-    background: #C3E457;
+    background: #b4d44e;
 	box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.2); }
-.btn-success:hover { background: #AAD12E; }
+.btn-success:hover { background: #89ae13; }
 .btn-danger {
     background: #e47857;
 	box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.2); }
 .btn-danger:hover { background: #d1552e; }
+.btn-warning {
+    background: #ff9729;
+	box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.2); }
+.btn-warning:hover { background: #c7741c; }
 .btn-flashcard {
     font-size: 16px;
     min-width: 170px;
@@ -1399,18 +1411,20 @@ span.step {
 		font-size: 25px;
 		padding-top: 3px;
 		padding-bottom: 5px; }
-
 	.promptc, .vocab-promptc {
-		font-size: 15px;
+		font-size: 16px;
 		margin-bottom: 5px; }
-
 	.lit-c, .vocab-note, .context-container { font-size: 8px; }
     .context-container, .vocab-note { padding-top: 0; }
-
 	.challenge-grammar, .practice-grammar {
-		font-size: 20px;
+		font-size: 15px;
 		padding-bottom: 5px; }
-
+    #answer input[type=text] {
+        font-size: 1em; }
+    #answer button {
+        top: 9px;
+        right: 5px;
+        font-size: 0.9em; }
 	.interface-fg, .interface-fg li, .interface-fg ul, .quiz-tips, .quiz-tips li, .quiz-tips ul {
 		margin: 0;
 		font-size: 12px;
@@ -1489,7 +1503,13 @@ span.step {
         box-shadow: none;
         width: 100%; }
     .topnav.responsive .dropdown-sub-content { padding-left: 20px; }
+    .mobile-top-margin-10 { margin-top: 10px; }
     .dropdown.active, .dropdown-sub.active { border-radius: 5px; }
+    .dropdown-sub-content { background: #080808; }
+    .dropdown-content a:last-child, .dropdown-content span:last-child {
+        border-bottom-left-radius: 0px;
+        border-bottom-right-radius: 5px; }
+    .dropdown-content div:last-child { border-radius: 5px; }
     .dropdown.active { background: #2b2b2b; color: white; }
     .dropdown.active .dropbtn { color: white; }
     .dropdown:hover {
@@ -1505,8 +1525,8 @@ span.step {
         text-align: left; }
     .btn-flashcard {
         width: 100%;
-        height: 3em;
-    }
+        height: 3em; }
+    .btn-fa { font-family: FontAwesome, 'Raleway', sans-serif; }
 }
 
 @media all and (max-width: 550px) {

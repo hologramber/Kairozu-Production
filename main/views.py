@@ -1,4 +1,4 @@
-import json
+import json, csv
 from datetime import datetime
 from django.contrib.auth.decorators import login_required
 
@@ -450,24 +450,25 @@ def flashcard_batch_csv(request):
             messages.error(request,"Uploaded file is too big (%.2f MB)." % (csv_file.size/(1000*1000),))
             return HttpResponseRedirect(reverse("main:flashcardbatch"))
 
-        file_data = csv_file.read().decode("utf-8")
+        csv_reader = csv.reader((x.decode("utf-8") for x in csv_file.readlines()), delimiter=',')
 
-        lines = file_data.split("\n")
+        # file_data = csv_file.read().decode("utf-8")
+        # lines = file_data.split("\n")
         importsuccess = True
         #loop over the lines and save them in db. If error , store as string and then display
-        for line in lines:
-            fields = line.split(",")
+        for line in csv_reader:
+            # fields = line.split(",")
             data_dict = {}
             # ['english', 'set', 'kana', 'kanji', 'strict', 'literal', 'context', 'note']
 
-            data_dict["english"] = fields[0]
+            data_dict["english"] = line[0]
             data_dict["set"] = savetoset.id
-            data_dict["kana"] = fields[1]
-            data_dict["kanji"] = fields[2]
-            data_dict["strict"] = fields[3]
-            data_dict["literal"] = fields[4]
-            data_dict["context"] = fields[5]
-            data_dict["note"] = fields[6]
+            data_dict["kana"] = line[1]
+            data_dict["kanji"] = line[2]
+            data_dict["strict"] = line[3]
+            data_dict["literal"] = line[4]
+            data_dict["context"] = line[5]
+            data_dict["note"] = line[6]
             try:
                 form = FlashcardForm(data_dict)
                 form.instance.user = request.user
