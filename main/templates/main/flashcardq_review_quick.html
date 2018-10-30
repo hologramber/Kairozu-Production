@@ -28,12 +28,11 @@
                 </div>
 
                 <div id='buttons'>
-                    <button id="hintbutton" onclick="showHint()">Show Hint</button>
-                    <button id="ansbutton" onclick="showAnswer()">Show Answer</button>
-                    <button id="correct" onclick="buttonCorrect()" style="display: none;">Correct</button>
-                    <button id="incorrect" onclick="buttonIncorrect()" style="display: none;">Incorrect (Next Flashcard)</button>
-                    <button id="practice" onclick="buttonPractice()" style="display: none;">Incorrect (Practice)</button>
-                    <br /><br />
+                    <input id="hintbutton" class="btn btn-default btn-flashcard" onclick="showHint()" value="Hint" />
+                    <input id="ansbutton" class="btn btn-default btn-flashcard" onclick="showAnswer()" value="Answer" />
+                    <input id="correct" class="btn btn-success btn-flashcard" onclick="buttonCorrect()" style="display: none;" value="Correct" />
+                    <input id="incorrect" class="btn btn-danger btn-flashcard" onclick="buttonIncorrect()" style="display: none;" value="Incorrect (Next)" />
+                    <input id="practice" class="btn btn-danger btn-flashcard" onclick="buttonPractice()" style="display: none;" value="Incorrect (Practice)" />
                 </div>
 
                 <div id='literal' class='lit-c'></div>
