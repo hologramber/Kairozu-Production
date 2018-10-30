@@ -420,6 +420,7 @@ span.footer-sm-text {
 	vertical-align: middle;
 	font-size: 22px;
 	padding-left: 10px; }
+table.lessonlist { margin-left: 75px; }
 .lessonlist tr td {
     font-size: 14px;
     padding-right: 10px; }
@@ -560,7 +561,7 @@ table.kaitable > tbody > tr > td {
     font-family: 'Roboto', sans-serif;
 	text-align: left;
 	border: none; }
-table.kaitable { white-space:nowrap; width: initial; padding: 10px 0; }
+table.kaitable, table.lessonlist { white-space:nowrap; width: initial; padding: 10px 0; }
 table.kaitable-left-30 { margin-left: 30px; }
 table.kaitable td, table.kaitable th {
 	padding: 5px 20px 5px 20px;

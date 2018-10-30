@@ -13,33 +13,33 @@
 
         <h1>{{ chapter.title }} ようこそ！</h1>
         <div class="spot-table">
-                <div class="margin-bottom-20">
-                    <div class="spot-image"><i class='fa fa-star fa-3x red-words' aria-hidden='true'></i></div>
-                    <div class="spot-text">
-                        Study the <a href="{% url 'main:vocablist' chapter.id %}">Vocabulary List</a> and complete the <a href="{% url 'main:vocabquiz' chapter.id %}">Vocabulary Quiz</a> to test your memory.<br />
-                        <div class="grey-words is-small">&nbsp;<i class="fa fa-exclamation-circle fa-fw"></i> Kana entry is automatic (hold shift for katakana), but answers can also be submitted in kanji using an <a href="https://www.google.co.jp/ime/">IME</a>.</div>
-                    </div>
+            <div class="margin-bottom-20">
+                <div class="spot-image"><i class='fa fa-star fa-3x red-words' aria-hidden='true'></i></div>
+                <div class="spot-text">
+                    Study the <a href="{% url 'main:vocablist' chapter.id %}">Vocabulary List</a> and complete the <a href="{% url 'main:vocabquiz' chapter.id %}">Vocabulary Quiz</a> to test your memory.<br />
+                    <div class="grey-words is-small">&nbsp;<i class="fa fa-exclamation-circle fa-fw"></i> Kana entry is automatic (hold shift for katakana), but answers can also be submitted in kanji using an <a href="https://www.google.co.jp/ime/">IME</a>.</div>
                 </div>
+            </div>
 
-                <div class="margin-bottom-20">
-                    <div class="spot-image"><i class='fa fa-star fa-3x red-words' aria-hidden='true'></i></div>
-                    <div class="spot-text">
-                        Each Lesson introduces new grammar; apply what you've learned with the Practice Sentences and test yourself with each Lesson's クイズ.<br />
-                        <div class="grey-words is-small">&nbsp;<i class="fa fa-exclamation-circle fa-fw"></i> Type the whole word or sentence, including any hints provided (spaces and punctuation are okay, but unnecessary).</div>
-                        <div class="s-30"></div>
-                        <div class="table-responsive">
-                            <table class="lessonlist">
-                                {% for lesson in object_list %}
-                                    <tr>
-                                        <td><i class='fa fa-star fa-fw red-words' aria-hidden='true'></i></td>
-                                        <td><span class="bold">{{ lesson.title }}</span></td>
-                                        <td><a href="{% url 'main:lesson' lesson.id %}">{{ lesson.overview }}</a></td>
-                                    </tr>
-                                {% endfor %}
-                            </table>
-                        </div>
-                    </div>
+            <div class="margin-bottom-20">
+                <div class="spot-image"><i class='fa fa-star fa-3x red-words' aria-hidden='true'></i></div>
+                <div class="spot-text">
+                    Each Lesson introduces new grammar; apply what you've learned with the Practice Sentences and test yourself with each Lesson's クイズ.<br />
+                    <div class="grey-words is-small">&nbsp;<i class="fa fa-exclamation-circle fa-fw"></i> Type the whole word or sentence, including any hints provided (spaces and punctuation are okay, but unnecessary).</div>
                 </div>
+            </div>
+        </div>
+        <div class="s-10"></div>
+        <div class="table-responsive">
+            <table class="lessonlist">
+                {% for lesson in object_list %}
+                    <tr>
+                        <td><i class='fa fa-star fa-fw red-words' aria-hidden='true'></i></td>
+                        <td><span class="bold">{{ lesson.title }}</span></td>
+                        <td><a href="{% url 'main:lesson' lesson.id %}">{{ lesson.overview }}</a></td>
+                    </tr>
+                {% endfor %}
+            </table>
         </div>
         <div class="s-100"></div>
 
