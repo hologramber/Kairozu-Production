@@ -271,6 +271,7 @@
             }
         } else {
             bug.show();
+            hint.attr('class', 'ls5r');
             quiz.addClass("abox_red abox_r").one(
                 "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend",
                 function() { quiz.removeClass("abox_r"); });
