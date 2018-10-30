@@ -1163,7 +1163,7 @@ span.step {
 .btn-danger:hover { background: #d1552e; }
 .btn-flashcard {
     height: 2em;
-    font-size: 1.5em;
+    font-size: 16px;
     margin-bottom: 10px;
 }
 
@@ -1431,7 +1431,7 @@ span.step {
         -ms-overflow-style: -ms-autohiding-scrollbar; }
 
     .btn-flashcard {
-        font-size: 1em;
+        font-size: 16px;
     }
 }
 
