@@ -785,7 +785,7 @@ table.gpt > tbody > tr > td.blankline { line-height: 5px; }
 .lit-c, .vocab-note, .context-container {
 	color: #bcbcbc;
 	font-family: 'Raleway', sans-serif; }
-.lit-c { margin-bottom: 20px; clear: both; }
+.lit-c { margin-bottom: 10px; clear: both; }
 .context-container { padding-top: 20px; }
 .vocab-note { padding-top: 100px; }
 
@@ -1505,6 +1505,9 @@ span.step {
         text-align: left; }
     .btn-flashcard {
         width: 100%;
+        height: 4em;
+        margin-bottom: 20px;
+
     }
 }
 
