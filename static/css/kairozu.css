@@ -1177,8 +1177,8 @@ span.step {
 .btn-flashcard {
     font-size: 16px;
     min-width: 170px;
-    margin-bottom: 10px;
-}
+    margin-bottom: 10px; }
+.btn-fa { font-family: FontAwesome, 'Raleway', sans-serif; }
 
 .close {
     -webkit-appearance: none;
@@ -1412,19 +1412,13 @@ span.step {
 		padding-top: 3px;
 		padding-bottom: 5px; }
 	.promptc, .vocab-promptc {
-		font-size: 16px;
+		font-size: 20px;
 		margin-bottom: 5px; }
 	.lit-c, .vocab-note, .context-container { font-size: 8px; }
     .context-container, .vocab-note { padding-top: 0; }
 	.challenge-grammar, .practice-grammar {
-		font-size: 15px;
+		font-size: 20px;
 		padding-bottom: 5px; }
-    #answer input[type=text] {
-        font-size: 1em; }
-    #answer button {
-        top: 9px;
-        right: 5px;
-        font-size: 0.9em; }
 	.interface-fg, .interface-fg li, .interface-fg ul, .quiz-tips, .quiz-tips li, .quiz-tips ul {
 		margin: 0;
 		font-size: 12px;
@@ -1526,7 +1520,6 @@ span.step {
     .btn-flashcard {
         width: 100%;
         height: 3em; }
-    .btn-fa { font-family: FontAwesome, 'Raleway', sans-serif; }
 }
 
 @media all and (max-width: 550px) {
