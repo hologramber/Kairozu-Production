@@ -11,7 +11,7 @@ from django.urls import reverse, reverse_lazy
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Profile, Vocabulary, Practice, Sentence, Lesson, Chapter, GrammarNote, Flashcard, FlashcardSet
-from .forms import ValidateFinishForm, FlashcardForm, FlashcardSetForm
+from .forms import ValidateFinishForm, FlashcardForm, FlashcardSetForm, FlashcardFromVocabForm, FlashcardFromQuizForm
 from .serializers import FlashcardSerializer
 
 error_finish = 'There was a problem with saving your current progress. Please e-mail kairozu@kairozu.com if you suspect this is an error.'
@@ -487,3 +487,66 @@ def flashcard_batch_csv(request):
         messages.error(request, "Unable to upload file. " + repr(e))
 
     return HttpResponseRedirect(reverse("main:flashcardbatch"))
+
+
+@login_required
+def flashcard_from_vocab(request):
+    chapters = Chapter.objects.all()
+    sets = FlashcardSet.objects.filter(user_id__exact=request.user.id)
+    if "GET" == request.method:
+        return render(request, "main/flashcard_from_vocab.html", {'sets': sets, 'chapters': chapters})
+    elif request.method == 'POST':
+        new_cards_from_vocab = FlashcardFromVocabForm(request.POST)
+        if new_cards_from_vocab.is_valid():
+            from_chapter = new_cards_from_vocab.cleaned_data['desiredChapter']
+            to_set = new_cards_from_vocab.cleaned_data['desiredSet']
+            vocabs = Vocabulary.objects.filter(chapter_id__exact=from_chapter)
+            targetset = FlashcardSet.objects.get(id=to_set)
+            for vocab in vocabs:
+                flashcard = Flashcard()
+                flashcard.user = request.user
+                flashcard.set = targetset
+                flashcard.strict = True
+                flashcard.english = vocab.english
+                flashcard.kana = vocab.kana
+                flashcard.kanji = vocab.kanji
+                flashcard.context = vocab.context
+                flashcard.save()
+            messages.add_message(request, messages.SUCCESS, 'Flashcards successfully imported!')
+            return HttpResponseRedirect(reverse('main:flashcardsetdetail', kwargs={'slug': targetset.slug }))
+        else:
+            messages.add_message(request, messages.ERROR, 'There was a problem with flashcard import. Contact kairozu@kairozu.com for assistance.')
+            return HttpResponseRedirect(reverse('main:flashcardfromvocab'))
+
+
+@login_required
+def flashcard_from_quiz(request):
+    lessons = Lesson.objects.all()
+    sets = FlashcardSet.objects.filter(user_id__exact=request.user.id)
+    if "GET" == request.method:
+        return render(request, "main/flashcard_from_quiz.html", {'sets': sets, 'lessons': lessons})
+    elif request.method == 'POST':
+        new_cards_from_quiz = FlashcardFromQuizForm(request.POST)
+        if new_cards_from_quiz.is_valid():
+            from_lesson = new_cards_from_quiz.cleaned_data['desiredLesson']
+            to_set = new_cards_from_quiz.cleaned_data['desiredSet']
+            sentences = Sentence.objects.filter(lesson_id__exact=from_lesson)
+            targetset = FlashcardSet.objects.get(id=to_set)
+            for sentence in sentences:
+                flashcard = Flashcard()
+                flashcard.user = request.user
+                flashcard.set = targetset
+                flashcard.strict = sentence.strict
+                flashcard.english = sentence.english
+                flashcard.kana = sentence.kana
+                flashcard.kanji = sentence.kanji
+                flashcard.literal = sentence.literal
+                flashcard.context = sentence.context
+                flashcard.disamb_location = sentence.disamb_location
+                flashcard.save()
+
+            messages.add_message(request, messages.SUCCESS, 'Flashcards successfully imported!')
+            return HttpResponseRedirect(reverse('main:flashcardsetdetail', kwargs={'slug': targetset.slug }))
+        else:
+            messages.add_message(request, messages.ERROR, 'There was a problem with flashcard import. Contact kairozu@kairozu.com for assistance.')
+            return HttpResponseRedirect(reverse('main:flashcardfromvocab'))

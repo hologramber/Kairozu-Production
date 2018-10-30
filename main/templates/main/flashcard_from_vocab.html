@@ -1,0 +1,37 @@
+{% extends 'kairozu.html' %}
+{% block title %}Kairozu Vocabulary Flashcards{% endblock %}
+
+{% load static %}
+{% block content %}
+
+<div id="allwrap">
+    <div class="fc-general-col">
+        <h1>Import Flashcards from Vocabulary Lists</h1>
+
+        <form action="{% url 'main:flashcardfromvocab' %}" method="POST">
+            {% csrf_token %}
+            <h3>Import vocabulary list from Chapter:</h3>
+            <select id="desiredChapter" name="desiredChapter">
+                {% for chapter in chapters %}
+                    <option value="{{ chapter.id }}">{{ chapter.title }} -- {{ chapter.subtitle }}</option>
+                {% endfor %}
+            </select>
+            <div class="s-10"></div>
+            <h3>Assign new vocabulary flashcards to set:</h3>
+            <select id="desiredSet" name="desiredSet">
+                {% for set in sets %}
+                    <option value="{{ set.id }}">{{ set.name }}</option>
+                {% endfor %}
+            </select>
+             <div class="s-40"></div>
+            <p>
+            <input class="btn btn-success" type="submit" value="Import Vocab Flashcards" />
+            </p>
+        </form>
+    </div>
+</div>
+
+<div class="s-20"></div>
+<h3><a href="{% url 'main:flashcardsetlist' %}"><i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;&nbsp;Return to Flashcard Sets</a></h3>
+<div class="s-50"></div>
+{% endblock %}

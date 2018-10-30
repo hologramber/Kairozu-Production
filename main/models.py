@@ -612,6 +612,7 @@ class Flashcard(models.Model):
     literal = models.CharField(max_length=250, blank=True)
     context = models.CharField(max_length=250, blank=True)
     note = models.CharField(max_length=500, blank=True)
+    disamb_location = models.PositiveSmallIntegerField(default=0)
     kana_all_blank = models.CharField(max_length=250, blank=True)
     kana_alt_blank = models.CharField(max_length=250, blank=True)
     kana_clean = models.CharField(max_length=250, blank=True)

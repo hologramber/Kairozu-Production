@@ -52,3 +52,13 @@ class FlashcardSetForm(forms.ModelForm):
     class Meta:
         model = FlashcardSet
         fields = ['name', 'description']
+
+
+class FlashcardFromVocabForm(forms.Form):
+    desiredChapter = forms.IntegerField(required=True)
+    desiredSet = forms.IntegerField(required=True)
+
+
+class FlashcardFromQuizForm(forms.Form):
+    desiredLesson = forms.IntegerField(required=True)
+    desiredSet = forms.IntegerField(required=True)
