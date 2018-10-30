@@ -7,12 +7,11 @@
 <div id="allwrap">
     <div class="fc-general-col">
         <h1>Create/Update Flashcard Set</h1>
-
         <form method="post">{% csrf_token %}
-            <table>
-                {{ form.as_table }}
-            </table>
-            <input class="btn btn-success" type="submit" value="SAVE" />
+            <div class="flashcardTable">
+                {{ form.as_p }}
+                <input class="btn btn-success" type="submit" value="SAVE" />
+            </div>
         </form>
     </div>
 </div>

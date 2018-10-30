@@ -46,7 +46,7 @@ class FlashcardForm(forms.ModelForm):
 
 
 class FlashcardSetForm(forms.ModelForm):
-    name = forms.CharField(label='Flashcard set name', help_text='10 character limit; must be unique!', required=True)
+    name = forms.CharField(label='Set name', help_text='10 character limit; must be unique!', required=True)
     description = forms.CharField(help_text='Additional description for this set of flashcards.', required=False)
 
     class Meta:

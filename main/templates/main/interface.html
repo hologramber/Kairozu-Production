@@ -27,15 +27,17 @@
                         Each Lesson introduces new grammar; apply what you've learned with the Practice Sentences and test yourself with each Lesson's クイズ.<br />
                         <div class="grey-words is-small">&nbsp;<i class="fa fa-exclamation-circle fa-fw"></i> Type the whole word or sentence, including any hints provided (spaces and punctuation are okay, but unnecessary).</div>
                         <div class="s-30"></div>
-                        <table class="lessonlist">
-                            {% for lesson in object_list %}
-                                <tr>
-                                    <td><i class='fa fa-star fa-fw red-words' aria-hidden='true'></i></td>
-                                    <td><span class="bold">{{ lesson.title }}</span></td>
-                                    <td><a href="{% url 'main:lesson' lesson.id %}">{{ lesson.overview }}</a></td>
-                                </tr>
-                            {% endfor %}
-                        </table>
+                        <div class="table-responsive">
+                            <table class="lessonlist">
+                                {% for lesson in object_list %}
+                                    <tr>
+                                        <td><i class='fa fa-star fa-fw red-words' aria-hidden='true'></i></td>
+                                        <td><span class="bold">{{ lesson.title }}</span></td>
+                                        <td><a href="{% url 'main:lesson' lesson.id %}">{{ lesson.overview }}</a></td>
+                                    </tr>
+                                {% endfor %}
+                            </table>
+                        </div>
                     </div>
                 </div>
         </div>
