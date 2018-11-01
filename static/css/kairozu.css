@@ -836,7 +836,7 @@ table.gpt > tbody > tr > td.blankline { line-height: 5px; }
     margin-right: 10px;
     font-size: smaller;
 }
-#desiredSet, #desiredChapter {
+#desiredSet, #desiredChapter, #desiredLesson {
     background: white;
     border: 1px solid #bcbcbc;
     border-radius: 5px;
@@ -856,17 +856,15 @@ table.gpt > tbody > tr > td.blankline { line-height: 5px; }
     min-width: 280px; }
 .flashcardTable label {
     width: 110px;
-    display: inline-block;
-}
+    display: inline-block; }
 .flashcardTable input { width:80%; }
 .flashcardTable input.btn {
     width: unset;
-    margin-top: 30px; }
+    margin-top: 20px; }
 .flashcardTable .helptext {
     display: block;
     font-size: smaller;
-
-}
+    color: #8a8a8a; }
 
 .pass-j, .pass-e {
 	width: 49%;
@@ -1144,7 +1142,7 @@ span.step {
     display: inline-block;
     padding: 6px 12px;
     margin-bottom: 0;
-    font-size: 13px;
+    font-size: 14px;
     font-weight: normal;
     text-align: center;
     white-space: nowrap;

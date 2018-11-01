@@ -10,20 +10,20 @@
 
         <form action="{% url 'main:flashcardfromquiz' %}" method="POST">
             {% csrf_token %}
-            <h3>Import sentences from Lesson Quiz:</h3>
+            <div class="h4 inline-block raleway">Import sentences from lesson quiz:</div>
             <select id="desiredLesson" name="desiredLesson">
                 {% for lesson in lessons %}
                     <option value="{{ lesson.id }}">{{ lesson.title }}</option>
                 {% endfor %}
             </select>
-            <div class="s-10"></div>
-            <h3>Assign new sentence flashcards to set:</h3>
+            <div class="s-5"></div>
+            <div class="h4 inline-block raleway">Assign new sentence flashcards to set:</div>
             <select id="desiredSet" name="desiredSet">
                 {% for set in sets %}
                     <option value="{{ set.id }}">{{ set.name }}</option>
                 {% endfor %}
             </select>
-             <div class="s-40"></div>
+             <div class="s-20"></div>
             <p>
             <input class="btn btn-success" type="submit" value="Import Sentence Flashcards" />
             </p>

@@ -8,12 +8,10 @@
 <div id="allwrap">
     <div class="fc-general-col">
         <h1><a href="{% url 'main:flashcardsetlist' %}">Flashcard Sets</a> <span class="h3"><i class="fa fa-chevron-right" aria-hidden="true"></i></span> All Flashcards</h1>
-        <div class="s-5"></div>
         <ul class="fa-ul">
             <li><a href="{% url 'main:flashcardcreate' "default-"|addstr:user.id %}"><i class="fa-li fa fa-star" aria-hidden="true"></i> New Flashcard</a></li>
-            <li><a href="{% url 'main:flashcardbatch' %}"><i class="fa-li fa fa-star" aria-hidden="true"></i> Import Flashcards via CSV File</a></li>
+            {% include 'main/flashcard_import_options.html' %}
         </ul>
-        <div class="s-5"></div>
         <div class="table-responsive">
             <table class="vocablist">
             <thead>

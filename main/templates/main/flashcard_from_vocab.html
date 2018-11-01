@@ -10,20 +10,20 @@
 
         <form action="{% url 'main:flashcardfromvocab' %}" method="POST">
             {% csrf_token %}
-            <h3>Import vocabulary list from Chapter:</h3>
+            <div class="h4 inline-block raleway">Import vocabulary list from Chapter:</div>
             <select id="desiredChapter" name="desiredChapter">
                 {% for chapter in chapters %}
                     <option value="{{ chapter.id }}">{{ chapter.title }} -- {{ chapter.subtitle }}</option>
                 {% endfor %}
             </select>
-            <div class="s-10"></div>
-            <h3>Assign new vocabulary flashcards to set:</h3>
+            <div class="s-5"></div>
+            <div class="h4 inline-block raleway">Assign new vocabulary flashcards to set:</div>
             <select id="desiredSet" name="desiredSet">
                 {% for set in sets %}
                     <option value="{{ set.id }}">{{ set.name }}</option>
                 {% endfor %}
             </select>
-             <div class="s-40"></div>
+             <div class="s-20"></div>
             <p>
             <input class="btn btn-success" type="submit" value="Import Vocab Flashcards" />
             </p>

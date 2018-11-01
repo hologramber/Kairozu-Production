@@ -6,10 +6,10 @@
 
 <div id="allwrap">
     <div class="fc-general-col">
-        <h1>Import Flashcards via CSV</h1>
+        <h1>Import Flashcards via CSV File</h1>
 
         <p>
-        Your CSV file should have no header row, and should have one vocabulary word per row, with data in the following order: <br />
+        Your CSV file should have no header row, and should have one vocabulary word per row, with data in the order below. If you include commas in any field, make sure to enclose the whole field in quotes.<br />
         <div class="table-responsive">
             <table class="importTable">
             <tr class="bold">
@@ -60,21 +60,9 @@
             </tr>
         </table>
         </div>
-        <div class="tinyred">
-            If you include commas in any field, make sure to enclose the whole field in quotes!
-        </div>
-        <h3>Examples:</h3>
-            My name is Amber,わたし　の　なまえ　は　アンバー　です。,私　の　名前　は　アンバー　です。,True,"as for my name, Amber is",,
-            <div class="s-5"></div>
-            green,みどり,緑,True,,,
-            <div class="s-5"></div>
-            (I'm) home!,ただいま,只今,True,safely now,said when arriving home,usually written in kana
-            <div class="s-5"></div>
-            The dog is black.,いぬ　は　くろい　です。,犬　は　黒い　です。,True,"as for dog, (it) is black",uses i-adjective for color,this is a simple sentence
-        </p>
         <form action="{% url 'main:flashcardbatch' %}" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
-            <h3>Save new flashcards to set:</h3>
+            <div class="h4 inline-block raleway">Save new flashcards to set:</div>
             <select id="desiredSet" name="desiredSet">
                 {% for set in availsets %}
                     <option value="{{ set.id }}">{{ set.name }}</option>
@@ -83,7 +71,7 @@
             <div class="s-30"></div>
             <p>
             <input class="selectfile" type="file" name="csv_file" />
-            <input class="btn btn-success" type="submit" value="Upload" />
+            <input class="btn btn-success" type="submit" value="UPLOAD" />
             </p>
         </form>
     </div>
