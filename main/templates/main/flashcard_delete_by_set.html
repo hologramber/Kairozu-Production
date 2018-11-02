@@ -1,0 +1,30 @@
+{% extends 'kairozu.html' %}
+{% block title %}Kairozu Delete Multi{% endblock %}
+
+{% load static %}
+{% block content %}
+
+<div id="allwrap">
+    <div class="fc-general-col">
+        <h1>Delete Flashcards by Set</h1>
+
+        <form action="{% url 'main:flashcarddeletebyset' %}" method="POST">
+            {% csrf_token %}
+            <div class="h4 inline-block raleway">Delete ALL flashcards from set:</div>
+            <select id="desiredSet" name="desiredSet">
+                {% for set in sets %}
+                    <option value="{{ set.id }}">{{ set.name }}</option>
+                {% endfor %}
+            </select>
+             <div class="s-20"></div>
+            <p>
+            <input class="btn btn-danger" type="submit" value="Delete Flashcards" />
+            </p>
+        </form>
+    </div>
+</div>
+
+<div class="s-20"></div>
+<h3><a href="{% url 'main:flashcardsetlist' %}"><i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;&nbsp;Return to Flashcard Sets</a></h3>
+<div class="s-50"></div>
+{% endblock %}
