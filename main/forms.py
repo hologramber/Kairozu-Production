@@ -62,3 +62,7 @@ class FlashcardFromVocabForm(forms.Form):
 class FlashcardFromQuizForm(forms.Form):
     desiredLesson = forms.IntegerField(required=True)
     desiredSet = forms.IntegerField(required=True)
+
+
+class FlashcardDeleteBySet(forms.Form):
+    desiredSet = forms.IntegerField(required=True)

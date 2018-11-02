@@ -14,6 +14,7 @@ urlpatterns = [
     url(r'^flashcards/create/$', views.FlashcardSetCreateView.as_view(), name='flashcardsetcreate'),
     url(r'^flashcards/all/$', views.FlashcardListViewAll.as_view(), name='flashcardlist'),
     url(r'^flashcards/batch/$', views.flashcard_batch_csv, name='flashcardbatch'),
+    url(r'^flashcards/deletebyset/$', views.flashcard_delete_by_set, name='flashcarddeletebyset'),
     url(r'^flashcards/fromvocab/$', views.flashcard_from_vocab, name='flashcardfromvocab'),
     url(r'^flashcards/fromquiz/$', views.flashcard_from_quiz, name='flashcardfromquiz'),
     url(r'^flashcards/(?P<slug>[\w\-]+)/$', views.FlashcardSetDetailView.as_view(), name='flashcardsetdetail'),

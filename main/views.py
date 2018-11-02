@@ -11,7 +11,7 @@ from django.urls import reverse, reverse_lazy
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Profile, Vocabulary, Practice, Sentence, Lesson, Chapter, GrammarNote, Flashcard, FlashcardSet
-from .forms import ValidateFinishForm, FlashcardForm, FlashcardSetForm, FlashcardFromVocabForm, FlashcardFromQuizForm
+from .forms import ValidateFinishForm, FlashcardForm, FlashcardSetForm, FlashcardFromVocabForm, FlashcardFromQuizForm, FlashcardDeleteBySet
 from .serializers import FlashcardSerializer
 
 error_finish = 'There was a problem with saving your current progress. Please e-mail kairozu@kairozu.com if you suspect this is an error.'
@@ -550,3 +550,23 @@ def flashcard_from_quiz(request):
         else:
             messages.add_message(request, messages.ERROR, 'There was a problem with flashcard import. Contact kairozu@kairozu.com for assistance.')
             return HttpResponseRedirect(reverse('main:flashcardfromvocab'))
+
+
+@login_required
+def flashcard_delete_by_set(request):
+    sets = FlashcardSet.objects.filter(user_id__exact=request.user.id)
+    if "GET" == request.method:
+        return render(request, "main/flashcard_delete_by_set.html", {'sets': sets})
+    elif request.method == 'POST':
+        new_cards_from_quiz = FlashcardDeleteBySet(request.POST)
+        if new_cards_from_quiz.is_valid():
+            delete_from_set = new_cards_from_quiz.cleaned_data['desiredSet']
+            flashcards = Flashcard.objects.filter(set_id=delete_from_set)
+            for flashcard in flashcards:
+                flashcard.delete()
+
+            messages.add_message(request, messages.SUCCESS, 'Flashcards successfully deleted.')
+            return HttpResponseRedirect(reverse('main:flashcardsetlist'))
+        else:
+            messages.add_message(request, messages.ERROR, 'There was a problem with flashcard import. Contact kairozu@kairozu.com for assistance.')
+            return HttpResponseRedirect(reverse('main:flashcardsetlist'))

@@ -7,7 +7,7 @@
 <div id="allwrap">
     <div class="fc-general-col">
         <h3>Are you sure you want to delete the flashcard set "{{ object.name }}"?</h3>
-        <h5>(This won't delete the flashcards themselves.)</h5>
+        <h5>This won't delete the flashcards themselves, they will be assigned to the default set. If you wish to delete all flashcards in a set, go here: <a href="{% url 'main:flashcarddeletebyset' %}">Delete Flashcards By Set</a>.</h5>
         <form method="post">{% csrf_token %}
             <input class="btn btn-default" type="submit" value="DELETE" />
         </form>
