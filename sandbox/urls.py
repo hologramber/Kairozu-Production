@@ -11,5 +11,4 @@ urlpatterns = [
     url(r'^numbers/$', views.NumberQuizView.as_view(), name='numberquiz'),
     url(r'^numbers/grab/$', views.numquiz_grab, name='numbergrab'),
     url(r'^hiragana/$', views.hiragana, name='hiragana'),
-    url(r'^resources/$', views.ResourcesView.as_view(), name='resources'),
 ]
