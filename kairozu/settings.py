@@ -8,7 +8,8 @@ from django.contrib.messages import constants as messages
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '(ds98#%m4v-=^5o53q+vh5za=zhjzs#ra@9eizbhqw2e+(qm#g'
+# Note: the secret key in previous GH commits is no longer valid, don't worry
+SECRET_KEY = ''
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = False 
@@ -34,11 +35,12 @@ INSTALLED_APPS = [
 ]
 
 ANYMAIL = {
-    'MANDRILL_API_KEY': 'b8gjHsYDRN-a45pqf73FsA',
+    # Note: the API key in previous GH commits is no longer valid, don't worry
+    'MANDRILL_API_KEY': '',
     'MANDRILL_API_URL': 'https://mandrillapp.com/api/1.0',
 }
 EMAIL_BACKEND = 'anymail.backends.mandrill.EmailBackend'
-DEFAULT_FROM_EMAIL = 'kairozu@kairozu.com'
+DEFAULT_FROM_EMAIL = 'your-from-email-here'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
